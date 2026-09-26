@@ -15,7 +15,13 @@ from msa.api.portfolio_draft import PortfolioDraft
 from msa.api.portfolio_draft import build as build_draft
 from msa.contracts.domain import contexts
 from msa.contracts.evidence import Evidence
-from msa.contracts.graph import Edge, Node, PointDistribution, TransmissionGraph
+from msa.contracts.graph import (
+    Edge,
+    Node,
+    PointDistribution,
+    TransmissionGraph,
+    TriangularDistribution,
+)
 from msa.engine.runner import run_batch
 from msa.platform.registry import registry
 
@@ -105,6 +111,31 @@ def graph_to(factor_id):
 NO_GRAPH = TransmissionGraph(
     event_id="event", nodes=[Node(id="event", kind="event", label="e")], edges=[]
 )
+
+
+def graph_to_with_channel_sector_elasticity(factor_id, elasticity):
+    """Like ``graph_to`` but the channel->sector edge carries the given elasticity."""
+    return TransmissionGraph(
+        event_id="event",
+        nodes=[
+            Node(id="event", kind="event", label="e"),
+            Node(id="channel", kind="channel", label="c"),
+            Node(id="sector", kind="sector", label="s", okved=OKVED),
+            Node(id="factor", kind="factor", label="f", factor=factor_id),
+        ],
+        edges=[
+            edge("event", "channel"),
+            Edge(
+                src="channel",
+                dst="sector",
+                sign=1,
+                elasticity=elasticity,
+                lag_months=0,
+                evidence=evidence(),
+            ),
+            edge("sector", "factor"),
+        ],
+    )
 
 
 def shock(factor, value, channel="channel"):
@@ -223,3 +254,30 @@ def test_zero_shock_still_calculates_the_icr_covenant_and_flags_reverse_stress_u
     assert result.details["covenants"]
     assert result.details["reverse_stress"] == []
     assert "reverse_stress_direction_undefined" in result.flags
+
+
+# -- B10: channel->sector elasticity uncertainty widens the delta EL quantiles --------------
+
+
+def test_triangular_channel_sector_elasticity_widens_delta_expected_loss_quantiles():
+    result = run_position(
+        loan_row(),
+        graph=graph_to_with_channel_sector_elasticity(
+            "credit.revenue", TriangularDistribution(low=0.5, mode=0.8, high=1.2)
+        ),
+        parameters={"rev": shock("credit.revenue", -0.1)},
+    )
+    quantiles = result.metrics["credit.delta_expected_loss"].quantiles
+    assert quantiles.p05 < quantiles.p95
+
+
+def test_point_channel_sector_elasticity_keeps_delta_expected_loss_quantiles_equal():
+    result = run_position(
+        loan_row(),
+        graph=graph_to_with_channel_sector_elasticity(
+            "credit.revenue", PointDistribution(value=0.8)
+        ),
+        parameters={"rev": shock("credit.revenue", -0.1)},
+    )
+    quantiles = result.metrics["credit.delta_expected_loss"].quantiles
+    assert quantiles.p05 == pytest.approx(quantiles.p95, abs=1e-12)

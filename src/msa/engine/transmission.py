@@ -110,7 +110,8 @@ class TemporalEdge:
     src: str
     dst: str
     sign: int
-    sensitivity: float
+    #: A number, or its realisations ``(..., )`` broadcasting over the draw axes.
+    sensitivity: float | np.ndarray
     kernel: DelayKernel
     #: Required when the edge joins nodes of different coordinates.
     conversion: Conversion | None = None
@@ -118,7 +119,7 @@ class TemporalEdge:
     def __post_init__(self):
         if self.sign not in (-1, 1):
             raise ValueError("edge sign must be -1 or +1")
-        if self.sensitivity < 0:
+        if np.any(np.asarray(self.sensitivity) < 0):
             raise ValueError("edge sensitivity must be non-negative")
 
     def gain(self) -> float:
@@ -239,7 +240,8 @@ class TemporalGraph:
 
         order = self.topological_order()
         incoming = self.incoming()
-        shape = _broadcast_shape(direct.values(), horizon)
+        gains = [np.shape(edge.gain()) for edge in self.edges]
+        shape = _broadcast_shape(direct.values(), horizon, gains)
         signals = {node.id: np.zeros(shape, dtype=float) for node in self.nodes}
         inputs = {
             node.id: np.broadcast_to(np.asarray(direct.get(node.id, 0.0), dtype=float), shape)
@@ -302,8 +304,9 @@ def _edges_reaching_before_horizon(edges: list[TemporalEdge]) -> bool:
     return any(edge.kernel.max_lag > 0 for edge in edges)
 
 
-def _broadcast_shape(arrays, horizon: int) -> tuple[int, ...]:
-    shapes = []
+def _broadcast_shape(arrays, horizon: int, leads=()) -> tuple[int, ...]:
+    """The signals' shape: the draw axes of the inputs and of the edge gains, then months."""
+    shapes = list(leads)
     for array in arrays:
         value = np.asarray(array, dtype=float)
         if value.ndim == 0:

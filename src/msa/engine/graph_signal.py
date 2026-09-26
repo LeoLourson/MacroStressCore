@@ -14,18 +14,24 @@ from .okved import okved_covers
 from .transmission import direct_input, relative_change
 
 
-def factor_signal(graph, parameter, factor, okved, value, horizon, *, flags) -> np.ndarray | None:
+def factor_signal(
+    graph, parameter, factor, okved, value, horizon, *, flags, elasticities=None
+) -> np.ndarray | None:
     """The signal of ``parameter`` (moving ``factor``, a ``FactorSpec``) for ``okved``.
 
     ``None`` when the parameter's channel does not reach that factor through the sector.
     The signal is a log factor for proportional factors and days or rate points for
-    additive ones.
+    additive ones. ``elasticities`` are realisations of the graph's uncertain edges
+    (``edge_elasticities``), matching the draw axes of ``value``; without them every edge
+    carries its central elasticity.
     """
     source = parameter.channel
     target, depth = target_node(graph, factor.factor_id, okved, source)
     if target is None or source not in {node.id for node in graph.nodes}:
         return None
-    temporal = temporal_graph(own_sectors(graph, target, okved, depth), factor, horizon)
+    temporal = temporal_graph(
+        own_sectors(graph, target, okved, depth), factor, horizon, elasticities
+    )
     raw = np.asarray(value, dtype=float)
     natural = np.broadcast_to(raw[..., None], raw.shape + (horizon,))
     source_node = next(node for node in temporal.nodes if node.id == source)

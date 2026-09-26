@@ -1,40 +1,669 @@
 {
  "as_of": "2026-09-11",
+ "draws": {
+  "capex": {
+   "count": 4096,
+   "head": [
+    0.1,
+    0.1,
+    0.1,
+    0.1,
+    0.1,
+    0.1,
+    0.1,
+    0.1
+   ],
+   "p05": 0.1,
+   "p50": 0.1,
+   "p95": 0.1,
+   "sum": 409.6000000000001,
+   "sum_sq": 40.96000000000002
+  },
+  "costs": {
+   "count": 4096,
+   "head": [
+    0.07881735924631357,
+    0.05078144928440451,
+    0.09807951504364609,
+    0.032396750971674916,
+    0.11749511983245611,
+    0.03319582192227244,
+    0.08597727136686444,
+    0.06403185844421386
+   ],
+   "p05": 0.024968446027487518,
+   "p50": 0.0700167435966432,
+   "p95": 0.11497383933048694,
+   "sum": 286.7199998092651,
+   "sum_sq": 23.483730865145038
+  },
+  "demand": {
+   "count": 4096,
+   "head": [
+    -0.06336482684541894,
+    -0.1190589928719246,
+    -0.10117900052626629,
+    -0.1328592777164693,
+    -0.11107729234141174,
+    -0.07496115786679051,
+    -0.16466056589392333,
+    -0.08767728575899231
+   ],
+   "p05": -0.15538467348331803,
+   "p50": -0.10253940202136065,
+   "p95": -0.05292544450243807,
+   "sum": -423.25473355508495,
+   "sum_sq": 47.58298126284285
+  },
+  "payments": {
+   "count": 4096,
+   "head": [
+    24.062259907933832,
+    15.798081072803553,
+    16.894780582775876,
+    10.170494046666818,
+    10.781292882966467,
+    19.4207595517653,
+    13.788362952049352,
+    23.017744778241067
+   ],
+   "p05": 8.531321497655094,
+   "p50": 16.31076142553686,
+   "p95": 25.670134945495057,
+   "sum": 68267.95429610478,
+   "sum_sq": 1245963.6256700251
+  },
+  "rate": {
+   "count": 4096,
+   "head": [
+    0.028419364157440036,
+    0.03332209971521898,
+    0.039496082418262315,
+    0.017534603863985546,
+    0.019966929553190342,
+    0.042812972528937995,
+    0.03193003287582191,
+    0.02652679713094029
+   ],
+   "p05": 0.01366806815714364,
+   "p50": 0.029997787568344914,
+   "p95": 0.046341565052460676,
+   "sum": 122.87902637855608,
+   "sum_sq": 4.08510228938027
+  }
+ },
  "horizon": 12,
- "note": "Results of the credit model on the demo portfolios MULTI-ASSET and ATYPICAL-BORROWERS. Inputs are stored here; the reference test rebuilds them.",
- "points": 256,
+ "note": "Results of the credit model on the demo portfolios MULTI-ASSET and ATYPICAL-BORROWERS, written by capture_reference.py.",
+ "points": 512,
  "portfolios": {
   "ATYPICAL-BORROWERS": {
-   "assets": {
-    "CASE-COVENANT-BREACHED": {
-     "dq": 0.75,
-     "loss_draws": {
-      "count": 2048,
-      "head": [
-       82.78073358190616,
-       37.90848189806747,
-       69.41394766526912,
-       21.17042335133396,
-       56.06662992810595,
-       62.88649420522773,
-       58.57593585889281,
-       54.96602060744339,
-       59.50051864698663,
-       37.71703665457377,
-       64.93622470354723,
-       48.23634121471968,
-       76.0100170940232,
-       42.04600664862584,
-       66.32885020205833,
-       44.70115038802157
+   "graph": {
+    "edges": [
+     {
+      "dst": "ch_demand",
+      "elasticity": {
+       "family": "point",
+       "value": 1.0
+      },
+      "evidence": [
+       {
+        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
+        "kind": "document",
+        "locator": "p1",
+        "source_id": "golden-event"
+       }
       ],
-      "p05": 30.401411333432122,
-      "p50": 53.510585492058674,
-      "p95": 89.04149268356952,
-      "sum": 114265.02240428282,
-      "sum_sq": 7047063.210365543
+      "lag_months": 0,
+      "sign": 1,
+      "src": "event"
      },
-     "result": {
+     {
+      "dst": "ch_costs",
+      "elasticity": {
+       "family": "point",
+       "value": 1.0
+      },
+      "evidence": [
+       {
+        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
+        "kind": "document",
+        "locator": "p1",
+        "source_id": "golden-event"
+       }
+      ],
+      "lag_months": 0,
+      "sign": 1,
+      "src": "event"
+     },
+     {
+      "dst": "ch_rate",
+      "elasticity": {
+       "family": "point",
+       "value": 1.0
+      },
+      "evidence": [
+       {
+        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
+        "kind": "document",
+        "locator": "p1",
+        "source_id": "golden-event"
+       }
+      ],
+      "lag_months": 0,
+      "sign": 1,
+      "src": "event"
+     },
+     {
+      "dst": "ch_payments",
+      "elasticity": {
+       "family": "point",
+       "value": 1.0
+      },
+      "evidence": [
+       {
+        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
+        "kind": "document",
+        "locator": "p1",
+        "source_id": "golden-event"
+       }
+      ],
+      "lag_months": 0,
+      "sign": 1,
+      "src": "event"
+     },
+     {
+      "dst": "ch_capex",
+      "elasticity": {
+       "family": "point",
+       "value": 1.0
+      },
+      "evidence": [
+       {
+        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
+        "kind": "document",
+        "locator": "p1",
+        "source_id": "golden-event"
+       }
+      ],
+      "lag_months": 0,
+      "sign": 1,
+      "src": "event"
+     },
+     {
+      "dst": "s_20_15",
+      "elasticity": {
+       "family": "triangular",
+       "high": 1.2,
+       "low": 0.5,
+       "mode": 0.8
+      },
+      "evidence": [
+       {
+        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
+        "kind": "document",
+        "locator": "p1",
+        "source_id": "golden-event"
+       }
+      ],
+      "lag_months": 0,
+      "sign": 1,
+      "src": "ch_demand"
+     },
+     {
+      "dst": "f_20_15_revenue",
+      "elasticity": {
+       "family": "point",
+       "value": 1.0
+      },
+      "evidence": [
+       {
+        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
+        "kind": "document",
+        "locator": "p1",
+        "source_id": "golden-event"
+       }
+      ],
+      "lag_months": 0,
+      "sign": 1,
+      "src": "s_20_15"
+     },
+     {
+      "dst": "s_20_15",
+      "elasticity": {
+       "family": "point",
+       "value": 1.0
+      },
+      "evidence": [
+       {
+        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
+        "kind": "document",
+        "locator": "p1",
+        "source_id": "golden-event"
+       }
+      ],
+      "lag_months": 1,
+      "sign": 1,
+      "src": "ch_costs"
+     },
+     {
+      "dst": "f_20_15_cogs",
+      "elasticity": {
+       "family": "point",
+       "value": 1.0
+      },
+      "evidence": [
+       {
+        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
+        "kind": "document",
+        "locator": "p1",
+        "source_id": "golden-event"
+       }
+      ],
+      "lag_months": 0,
+      "sign": 1,
+      "src": "s_20_15"
+     },
+     {
+      "dst": "s_20_15",
+      "elasticity": {
+       "family": "point",
+       "value": 1.0
+      },
+      "evidence": [
+       {
+        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
+        "kind": "document",
+        "locator": "p1",
+        "source_id": "golden-event"
+       }
+      ],
+      "lag_months": 2,
+      "sign": 1,
+      "src": "ch_rate"
+     },
+     {
+      "dst": "f_20_15_interest",
+      "elasticity": {
+       "family": "point",
+       "value": 1.0
+      },
+      "evidence": [
+       {
+        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
+        "kind": "document",
+        "locator": "p1",
+        "source_id": "golden-event"
+       }
+      ],
+      "lag_months": 0,
+      "sign": 1,
+      "src": "s_20_15"
+     },
+     {
+      "dst": "s_20_15",
+      "elasticity": {
+       "family": "point",
+       "value": 1.0
+      },
+      "evidence": [
+       {
+        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
+        "kind": "document",
+        "locator": "p1",
+        "source_id": "golden-event"
+       }
+      ],
+      "lag_months": 0,
+      "sign": 1,
+      "src": "ch_payments"
+     },
+     {
+      "dst": "f_20_15_working_capital",
+      "elasticity": {
+       "family": "point",
+       "value": 1.0
+      },
+      "evidence": [
+       {
+        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
+        "kind": "document",
+        "locator": "p1",
+        "source_id": "golden-event"
+       }
+      ],
+      "lag_months": 0,
+      "sign": 1,
+      "src": "s_20_15"
+     },
+     {
+      "dst": "s_20_15",
+      "elasticity": {
+       "family": "point",
+       "value": 1.0
+      },
+      "evidence": [
+       {
+        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
+        "kind": "document",
+        "locator": "p1",
+        "source_id": "golden-event"
+       }
+      ],
+      "lag_months": 1,
+      "sign": 1,
+      "src": "ch_capex"
+     },
+     {
+      "dst": "f_20_15_capex",
+      "elasticity": {
+       "family": "point",
+       "value": 1.0
+      },
+      "evidence": [
+       {
+        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
+        "kind": "document",
+        "locator": "p1",
+        "source_id": "golden-event"
+       }
+      ],
+      "lag_months": 0,
+      "sign": 1,
+      "src": "s_20_15"
+     },
+     {
+      "dst": "s_46_63",
+      "elasticity": {
+       "family": "triangular",
+       "high": 1.2,
+       "low": 0.5,
+       "mode": 0.8
+      },
+      "evidence": [
+       {
+        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
+        "kind": "document",
+        "locator": "p1",
+        "source_id": "golden-event"
+       }
+      ],
+      "lag_months": 0,
+      "sign": 1,
+      "src": "ch_demand"
+     },
+     {
+      "dst": "f_46_63_revenue",
+      "elasticity": {
+       "family": "point",
+       "value": 1.0
+      },
+      "evidence": [
+       {
+        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
+        "kind": "document",
+        "locator": "p1",
+        "source_id": "golden-event"
+       }
+      ],
+      "lag_months": 0,
+      "sign": 1,
+      "src": "s_46_63"
+     },
+     {
+      "dst": "s_46_63",
+      "elasticity": {
+       "family": "point",
+       "value": 1.0
+      },
+      "evidence": [
+       {
+        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
+        "kind": "document",
+        "locator": "p1",
+        "source_id": "golden-event"
+       }
+      ],
+      "lag_months": 1,
+      "sign": 1,
+      "src": "ch_costs"
+     },
+     {
+      "dst": "f_46_63_cogs",
+      "elasticity": {
+       "family": "point",
+       "value": 1.0
+      },
+      "evidence": [
+       {
+        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
+        "kind": "document",
+        "locator": "p1",
+        "source_id": "golden-event"
+       }
+      ],
+      "lag_months": 0,
+      "sign": 1,
+      "src": "s_46_63"
+     },
+     {
+      "dst": "s_46_63",
+      "elasticity": {
+       "family": "point",
+       "value": 1.0
+      },
+      "evidence": [
+       {
+        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
+        "kind": "document",
+        "locator": "p1",
+        "source_id": "golden-event"
+       }
+      ],
+      "lag_months": 2,
+      "sign": 1,
+      "src": "ch_rate"
+     },
+     {
+      "dst": "f_46_63_interest",
+      "elasticity": {
+       "family": "point",
+       "value": 1.0
+      },
+      "evidence": [
+       {
+        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
+        "kind": "document",
+        "locator": "p1",
+        "source_id": "golden-event"
+       }
+      ],
+      "lag_months": 0,
+      "sign": 1,
+      "src": "s_46_63"
+     },
+     {
+      "dst": "s_46_63",
+      "elasticity": {
+       "family": "point",
+       "value": 1.0
+      },
+      "evidence": [
+       {
+        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
+        "kind": "document",
+        "locator": "p1",
+        "source_id": "golden-event"
+       }
+      ],
+      "lag_months": 0,
+      "sign": 1,
+      "src": "ch_payments"
+     },
+     {
+      "dst": "f_46_63_working_capital",
+      "elasticity": {
+       "family": "point",
+       "value": 1.0
+      },
+      "evidence": [
+       {
+        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
+        "kind": "document",
+        "locator": "p1",
+        "source_id": "golden-event"
+       }
+      ],
+      "lag_months": 0,
+      "sign": 1,
+      "src": "s_46_63"
+     },
+     {
+      "dst": "s_46_63",
+      "elasticity": {
+       "family": "point",
+       "value": 1.0
+      },
+      "evidence": [
+       {
+        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
+        "kind": "document",
+        "locator": "p1",
+        "source_id": "golden-event"
+       }
+      ],
+      "lag_months": 1,
+      "sign": 1,
+      "src": "ch_capex"
+     },
+     {
+      "dst": "f_46_63_capex",
+      "elasticity": {
+       "family": "point",
+       "value": 1.0
+      },
+      "evidence": [
+       {
+        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
+        "kind": "document",
+        "locator": "p1",
+        "source_id": "golden-event"
+       }
+      ],
+      "lag_months": 0,
+      "sign": 1,
+      "src": "s_46_63"
+     }
+    ],
+    "event_id": "event",
+    "factor_elasticity": {},
+    "nodes": [
+     {
+      "id": "event",
+      "kind": "event",
+      "label": "событие"
+     },
+     {
+      "id": "ch_demand",
+      "kind": "channel",
+      "label": "ch_demand"
+     },
+     {
+      "id": "ch_costs",
+      "kind": "channel",
+      "label": "ch_costs"
+     },
+     {
+      "id": "ch_rate",
+      "kind": "channel",
+      "label": "ch_rate"
+     },
+     {
+      "id": "ch_payments",
+      "kind": "channel",
+      "label": "ch_payments"
+     },
+     {
+      "id": "ch_capex",
+      "kind": "channel",
+      "label": "ch_capex"
+     },
+     {
+      "id": "s_20_15",
+      "kind": "sector",
+      "label": "20.15",
+      "okved": "20.15"
+     },
+     {
+      "factor": "credit.revenue",
+      "id": "f_20_15_revenue",
+      "kind": "factor",
+      "label": "revenue"
+     },
+     {
+      "factor": "credit.cogs",
+      "id": "f_20_15_cogs",
+      "kind": "factor",
+      "label": "cogs"
+     },
+     {
+      "factor": "credit.interest",
+      "id": "f_20_15_interest",
+      "kind": "factor",
+      "label": "interest"
+     },
+     {
+      "factor": "credit.working_capital",
+      "id": "f_20_15_working_capital",
+      "kind": "factor",
+      "label": "working_capital"
+     },
+     {
+      "factor": "credit.capex",
+      "id": "f_20_15_capex",
+      "kind": "factor",
+      "label": "capex"
+     },
+     {
+      "id": "s_46_63",
+      "kind": "sector",
+      "label": "46.63",
+      "okved": "46.63"
+     },
+     {
+      "factor": "credit.revenue",
+      "id": "f_46_63_revenue",
+      "kind": "factor",
+      "label": "revenue"
+     },
+     {
+      "factor": "credit.cogs",
+      "id": "f_46_63_cogs",
+      "kind": "factor",
+      "label": "cogs"
+     },
+     {
+      "factor": "credit.interest",
+      "id": "f_46_63_interest",
+      "kind": "factor",
+      "label": "interest"
+     },
+     {
+      "factor": "credit.working_capital",
+      "id": "f_46_63_working_capital",
+      "kind": "factor",
+      "label": "working_capital"
+     },
+     {
+      "factor": "credit.capex",
+      "id": "f_46_63_capex",
+      "kind": "factor",
+      "label": "capex"
+     }
+    ]
+   },
+   "positions": {
+    "CASE-COVENANT-BREACHED": {
+     "details": {
       "as_of": "2026-09-11",
       "asset_id": "CASE-COVENANT-BREACHED",
       "axes": [
@@ -95,8 +724,8 @@
         "band": "not_assessed",
         "flags": [],
         "measures": {
-         "data_quality": 0.75,
-         "numerical_halfwidth": 1.5260856974434718,
+         "data_quality": 0.6662557459895616,
+         "numerical_halfwidth": 0.8352487190910042,
          "pd_calibrated": 1.0,
          "stale_days": null
         },
@@ -491,7 +1120,7 @@
        }
       ],
       "coverage": {
-       "input_data": 0.75,
+       "input_data": 0.6662557459895616,
        "trajectory": 1.0
       },
       "credit": {
@@ -545,7 +1174,7 @@
         "demo:derived"
        ],
        "dq": [
-        "demo:borrowers"
+        "demo:derived"
        ],
        "dso": [
         "demo:derived"
@@ -583,11 +1212,11 @@
       },
       "intervals": {
        "delta_expected_loss": {
-        "halfwidth": 1.5260856974434718,
-        "mean": 88.88200174390656,
+        "halfwidth": 0.8352487190910042,
+        "mean": 91.86721536985358,
         "name": "p95_delta_expected_loss",
         "replicates": 8,
-        "standard_error": 0.6453819021840438,
+        "standard_error": 0.353226826007722,
         "unit": "RUB_million",
         "within_tolerance": true
        }
@@ -612,34 +1241,34 @@
        "max_funding_gap": 0.0,
        "min_cash_headroom": -9.094947017729282e-13
       },
-      "macro_draws_sha256": "2648f9891cf04140eead9235c4fb798abc330318219ae333fc584014ed3e8ea5",
+      "macro_draws_sha256": "a12913d3acbff686f507aa18af62715e76d980530a335ccf540705d627345a39",
       "market": null,
       "model_id": "credit.corporate.v3",
       "model_versions": {
-       "credit": "3.2.0",
-       "market": "3.2.0",
-       "operating": "3.2.0",
-       "portfolio": "3.2.0",
-       "position_risk": "3.2.0",
-       "reverse_stress": "3.2.0",
-       "shapley": "3.2.0",
-       "transmission": "3.2.0"
+       "credit": "3.3.0",
+       "market": "3.3.0",
+       "operating": "3.3.0",
+       "portfolio": "3.3.0",
+       "position_risk": "3.3.0",
+       "reverse_stress": "3.3.0",
+       "shapley": "3.3.0",
+       "transmission": "3.3.0"
       },
       "quantiles": {
        "delta_expected_loss": {
-        "es95": 98.08022255779446,
+        "es95": 103.55120670271197,
         "name": "delta_expected_loss",
-        "p05": 30.401411333432122,
-        "p50": 53.510585492058674,
-        "p95": 89.04149268356952,
+        "p05": 29.97274733041361,
+        "p50": 54.67257519836606,
+        "p95": 92.15876070217817,
         "unit": "RUB_million"
        },
        "delta_pd": {
         "es95": null,
         "name": "delta_pd",
-        "p05": 0.028404320430685734,
-        "p50": 0.05235371614444548,
-        "p95": 0.08991067600796823,
+        "p05": 0.028321731288428992,
+        "p50": 0.0530918842732091,
+        "p95": 0.09259889771684755,
         "unit": "fraction"
        },
        "funding_gap": {
@@ -653,9 +1282,9 @@
        "icr": {
         "es95": null,
         "name": "icr",
-        "p05": 0.9277340933525512,
-        "p50": 1.1776470076277508,
-        "p95": 1.4717419417647164,
+        "p05": 0.9149846845594931,
+        "p50": 1.1708463349061904,
+        "p95": 1.4716768571736984,
         "unit": "ratio"
        }
       },
@@ -1113,42 +1742,17 @@
        }
       },
       "versions": {
-       "code_sha256": "a5a21422e0eb12315d3b5bc7f7bde49f60235a8fc0e41ef0e0c319d1be3c7559",
-       "macro_draws_sha256": "2648f9891cf04140eead9235c4fb798abc330318219ae333fc584014ed3e8ea5",
-       "model_version": "3.2.0",
+       "code_sha256": "c186f680d38a2aaefae33e3c6e518bb3e86a21909dedd5193d159f8bd81764e7",
+       "macro_draws_sha256": "a12913d3acbff686f507aa18af62715e76d980530a335ccf540705d627345a39",
+       "model_version": "3.3.0",
        "prompt_version": "not_applicable"
       }
-     }
+     },
+     "execution": "completed",
+     "status": "needs_review"
     },
     "CASE-LAG-18M": {
-     "dq": 0.75,
-     "loss_draws": {
-      "count": 2048,
-      "head": [
-       82.78073358190616,
-       37.90848189806747,
-       69.41394766526912,
-       21.17042335133396,
-       56.06662992810595,
-       62.88649420522773,
-       58.57593585889281,
-       54.96602060744339,
-       59.50051864698663,
-       37.71703665457377,
-       64.93622470354723,
-       48.23634121471968,
-       76.0100170940232,
-       42.04600664862584,
-       66.32885020205833,
-       44.70115038802157
-      ],
-      "p05": 30.401411333432122,
-      "p50": 53.510585492058674,
-      "p95": 89.04149268356952,
-      "sum": 114265.02240428282,
-      "sum_sq": 7047063.210365543
-     },
-     "result": {
+     "details": {
       "as_of": "2026-09-11",
       "asset_id": "CASE-LAG-18M",
       "axes": [
@@ -1209,8 +1813,8 @@
         "band": "not_assessed",
         "flags": [],
         "measures": {
-         "data_quality": 0.75,
-         "numerical_halfwidth": 1.5260856974434718,
+         "data_quality": 0.6662557459895616,
+         "numerical_halfwidth": 0.8352487190910042,
          "pd_calibrated": 1.0,
          "stale_days": null
         },
@@ -1605,7 +2209,7 @@
        }
       ],
       "coverage": {
-       "input_data": 0.75,
+       "input_data": 0.6662557459895616,
        "trajectory": 1.0
       },
       "credit": {
@@ -1659,7 +2263,7 @@
         "demo:derived"
        ],
        "dq": [
-        "demo:borrowers"
+        "demo:derived"
        ],
        "dso": [
         "demo:derived"
@@ -1697,11 +2301,11 @@
       },
       "intervals": {
        "delta_expected_loss": {
-        "halfwidth": 1.5260856974434718,
-        "mean": 88.88200174390656,
+        "halfwidth": 0.8352487190910042,
+        "mean": 91.86721536985358,
         "name": "p95_delta_expected_loss",
         "replicates": 8,
-        "standard_error": 0.6453819021840438,
+        "standard_error": 0.353226826007722,
         "unit": "RUB_million",
         "within_tolerance": true
        }
@@ -1726,34 +2330,34 @@
        "max_funding_gap": 0.0,
        "min_cash_headroom": -9.094947017729282e-13
       },
-      "macro_draws_sha256": "2648f9891cf04140eead9235c4fb798abc330318219ae333fc584014ed3e8ea5",
+      "macro_draws_sha256": "a12913d3acbff686f507aa18af62715e76d980530a335ccf540705d627345a39",
       "market": null,
       "model_id": "credit.corporate.v3",
       "model_versions": {
-       "credit": "3.2.0",
-       "market": "3.2.0",
-       "operating": "3.2.0",
-       "portfolio": "3.2.0",
-       "position_risk": "3.2.0",
-       "reverse_stress": "3.2.0",
-       "shapley": "3.2.0",
-       "transmission": "3.2.0"
+       "credit": "3.3.0",
+       "market": "3.3.0",
+       "operating": "3.3.0",
+       "portfolio": "3.3.0",
+       "position_risk": "3.3.0",
+       "reverse_stress": "3.3.0",
+       "shapley": "3.3.0",
+       "transmission": "3.3.0"
       },
       "quantiles": {
        "delta_expected_loss": {
-        "es95": 98.08022255779446,
+        "es95": 103.55120670271197,
         "name": "delta_expected_loss",
-        "p05": 30.401411333432122,
-        "p50": 53.510585492058674,
-        "p95": 89.04149268356952,
+        "p05": 29.97274733041361,
+        "p50": 54.67257519836606,
+        "p95": 92.15876070217817,
         "unit": "RUB_million"
        },
        "delta_pd": {
         "es95": null,
         "name": "delta_pd",
-        "p05": 0.028404320430685734,
-        "p50": 0.05235371614444548,
-        "p95": 0.08991067600796823,
+        "p05": 0.028321731288428992,
+        "p50": 0.0530918842732091,
+        "p95": 0.09259889771684755,
         "unit": "fraction"
        },
        "funding_gap": {
@@ -1767,9 +2371,9 @@
        "icr": {
         "es95": null,
         "name": "icr",
-        "p05": 0.9277340933525512,
-        "p50": 1.1776470076277508,
-        "p95": 1.4717419417647164,
+        "p05": 0.9149846845594931,
+        "p50": 1.1708463349061904,
+        "p95": 1.4716768571736984,
         "unit": "ratio"
        }
       },
@@ -2227,42 +2831,17 @@
        }
       },
       "versions": {
-       "code_sha256": "a5a21422e0eb12315d3b5bc7f7bde49f60235a8fc0e41ef0e0c319d1be3c7559",
-       "macro_draws_sha256": "2648f9891cf04140eead9235c4fb798abc330318219ae333fc584014ed3e8ea5",
-       "model_version": "3.2.0",
+       "code_sha256": "c186f680d38a2aaefae33e3c6e518bb3e86a21909dedd5193d159f8bd81764e7",
+       "macro_draws_sha256": "a12913d3acbff686f507aa18af62715e76d980530a335ccf540705d627345a39",
+       "model_version": "3.3.0",
        "prompt_version": "not_applicable"
       }
-     }
+     },
+     "execution": "completed",
+     "status": "needs_review"
     },
     "CASE-LOSS-MAKING": {
-     "dq": 0.75,
-     "loss_draws": {
-      "count": 2048,
-      "head": [
-       0.0,
-       0.0,
-       0.0,
-       0.0,
-       0.0,
-       0.0,
-       0.0,
-       0.0,
-       0.0,
-       0.0,
-       0.0,
-       0.0,
-       0.0,
-       0.0,
-       0.0,
-       0.0
-      ],
-      "p05": 0.0,
-      "p50": 0.0,
-      "p95": 0.0,
-      "sum": 0.0,
-      "sum_sq": 0.0
-     },
-     "result": {
+     "details": {
       "as_of": "2026-09-11",
       "asset_id": "CASE-LOSS-MAKING",
       "axes": [
@@ -2323,7 +2902,7 @@
         "band": "not_assessed",
         "flags": [],
         "measures": {
-         "data_quality": 0.75,
+         "data_quality": 0.6662557459895616,
          "numerical_halfwidth": 0.0,
          "pd_calibrated": 1.0,
          "stale_days": null
@@ -2708,7 +3287,7 @@
        }
       ],
       "coverage": {
-       "input_data": 0.75,
+       "input_data": 0.6662557459895616,
        "trajectory": 1.0
       },
       "credit": {
@@ -2765,7 +3344,7 @@
         "demo:derived"
        ],
        "dq": [
-        "demo:borrowers"
+        "demo:derived"
        ],
        "dso": [
         "demo:derived"
@@ -2832,18 +3411,18 @@
        "max_funding_gap": 0.0,
        "min_cash_headroom": -1.7053025658242404e-12
       },
-      "macro_draws_sha256": "2648f9891cf04140eead9235c4fb798abc330318219ae333fc584014ed3e8ea5",
+      "macro_draws_sha256": "a12913d3acbff686f507aa18af62715e76d980530a335ccf540705d627345a39",
       "market": null,
       "model_id": "credit.corporate.v3",
       "model_versions": {
-       "credit": "3.2.0",
-       "market": "3.2.0",
-       "operating": "3.2.0",
-       "portfolio": "3.2.0",
-       "position_risk": "3.2.0",
-       "reverse_stress": "3.2.0",
-       "shapley": "3.2.0",
-       "transmission": "3.2.0"
+       "credit": "3.3.0",
+       "market": "3.3.0",
+       "operating": "3.3.0",
+       "portfolio": "3.3.0",
+       "position_risk": "3.3.0",
+       "reverse_stress": "3.3.0",
+       "shapley": "3.3.0",
+       "transmission": "3.3.0"
       },
       "quantiles": {
        "delta_expected_loss": {
@@ -2873,9 +3452,9 @@
        "icr": {
         "es95": null,
         "name": "icr",
-        "p05": -1.1601219430572596,
-        "p50": -0.9148339581374042,
-        "p95": -0.6813134606440676,
+        "p05": -1.1977577492141593,
+        "p50": -0.9241890933742479,
+        "p95": -0.6796651009421928,
         "unit": "ratio"
        }
       },
@@ -3303,42 +3882,17 @@
        }
       },
       "versions": {
-       "code_sha256": "a5a21422e0eb12315d3b5bc7f7bde49f60235a8fc0e41ef0e0c319d1be3c7559",
-       "macro_draws_sha256": "2648f9891cf04140eead9235c4fb798abc330318219ae333fc584014ed3e8ea5",
-       "model_version": "3.2.0",
+       "code_sha256": "c186f680d38a2aaefae33e3c6e518bb3e86a21909dedd5193d159f8bd81764e7",
+       "macro_draws_sha256": "a12913d3acbff686f507aa18af62715e76d980530a335ccf540705d627345a39",
+       "model_version": "3.3.0",
        "prompt_version": "not_applicable"
       }
-     }
+     },
+     "execution": "completed",
+     "status": "needs_review"
     },
     "CASE-LOW-DATA-QUALITY": {
-     "dq": 0.1,
-     "loss_draws": {
-      "count": 2048,
-      "head": [
-       7.430989187152765,
-       4.0819331123758005,
-       6.725652558872316,
-       2.3110014130335124,
-       5.486523165976955,
-       6.231960084322477,
-       6.050425706287026,
-       5.453705542720595,
-       5.925445135277496,
-       3.9982077158676503,
-       6.204658370703648,
-       4.9956472166308,
-       7.270764874474416,
-       4.359516244542576,
-       6.312080009576462,
-       4.6716141495359125
-      ],
-      "p05": 3.3281200290984785,
-      "p50": 5.396490025754785,
-      "p95": 8.025475558072294,
-      "sum": 11252.263433501725,
-      "sum_sq": 66086.3256631075
-     },
-     "result": {
+     "details": {
       "as_of": "2026-09-11",
       "asset_id": "CASE-LOW-DATA-QUALITY",
       "axes": [
@@ -3388,7 +3942,7 @@
         "flags": [],
         "measures": {
          "breach_month": null,
-         "breach_probability": 0.50830078125,
+         "breach_probability": 0.520263671875,
          "min_headroom": 0.03544955522755311
         },
         "reason": "",
@@ -3399,8 +3953,8 @@
         "band": "not_assessed",
         "flags": [],
         "measures": {
-         "data_quality": 0.1,
-         "numerical_halfwidth": 0.13209751287984056,
+         "data_quality": 0.599589079322895,
+         "numerical_halfwidth": 0.06985858630055065,
          "pd_calibrated": 1.0,
          "stale_days": null
         },
@@ -3774,7 +4328,7 @@
        {
         "breach_date": "2027-09-30",
         "breach_month": 12,
-        "breach_probability": 0.50830078125,
+        "breach_probability": 0.520263671875,
         "covenant_id": "CASE-LOW-DATA-QUALITY-icr",
         "cure_period_months": 0,
         "metric": "icr",
@@ -3784,7 +4338,7 @@
        }
       ],
       "coverage": {
-       "input_data": 0.1,
+       "input_data": 0.599589079322895,
        "trajectory": 1.0
       },
       "credit": {
@@ -3837,7 +4391,7 @@
         "demo:derived"
        ],
        "dq": [
-        "demo:edge"
+        "demo:derived"
        ],
        "dso": [
         "demo:derived"
@@ -3869,11 +4423,11 @@
       },
       "intervals": {
        "delta_expected_loss": {
-        "halfwidth": 0.13209751287984056,
-        "mean": 8.01163576351339,
+        "halfwidth": 0.06985858630055065,
+        "mean": 8.203612638588886,
         "name": "p95_delta_expected_loss",
         "replicates": 8,
-        "standard_error": 0.05586406076604398,
+        "standard_error": 0.029543208082000644,
         "unit": "RUB_million",
         "within_tolerance": true
        }
@@ -3898,34 +4452,34 @@
        "max_funding_gap": 0.0,
        "min_cash_headroom": -6.821210263296962e-13
       },
-      "macro_draws_sha256": "2648f9891cf04140eead9235c4fb798abc330318219ae333fc584014ed3e8ea5",
+      "macro_draws_sha256": "a12913d3acbff686f507aa18af62715e76d980530a335ccf540705d627345a39",
       "market": null,
       "model_id": "credit.corporate.v3",
       "model_versions": {
-       "credit": "3.2.0",
-       "market": "3.2.0",
-       "operating": "3.2.0",
-       "portfolio": "3.2.0",
-       "position_risk": "3.2.0",
-       "reverse_stress": "3.2.0",
-       "shapley": "3.2.0",
-       "transmission": "3.2.0"
+       "credit": "3.3.0",
+       "market": "3.3.0",
+       "operating": "3.3.0",
+       "portfolio": "3.3.0",
+       "position_risk": "3.3.0",
+       "reverse_stress": "3.3.0",
+       "shapley": "3.3.0",
+       "transmission": "3.3.0"
       },
       "quantiles": {
        "delta_expected_loss": {
-        "es95": 8.60745291927033,
+        "es95": 8.887196739527948,
         "name": "delta_expected_loss",
-        "p05": 3.3281200290984785,
-        "p50": 5.396490025754785,
-        "p95": 8.025475558072294,
+        "p05": 3.301400277492026,
+        "p50": 5.45873963887543,
+        "p95": 8.229710770165374,
         "unit": "RUB_million"
        },
        "delta_pd": {
         "es95": null,
         "name": "delta_pd",
-        "p05": 0.005949254991964908,
-        "p50": 0.009913530116692607,
-        "p95": 0.015065569004674642,
+        "p05": 0.005964459410201044,
+        "p50": 0.010050741835704494,
+        "p95": 0.015414611809368423,
         "unit": "fraction"
        },
        "funding_gap": {
@@ -3939,9 +4493,9 @@
        "icr": {
         "es95": null,
         "name": "icr",
-        "p05": 2.5476594290154795,
-        "p50": 2.9940433389060583,
-        "p95": 3.5006393981978183,
+        "p05": 2.529739320280997,
+        "p50": 2.9801843809656194,
+        "p95": 3.5014998020595107,
         "unit": "ratio"
        }
       },
@@ -4369,85 +4923,22 @@
        }
       },
       "versions": {
-       "code_sha256": "a5a21422e0eb12315d3b5bc7f7bde49f60235a8fc0e41ef0e0c319d1be3c7559",
-       "macro_draws_sha256": "2648f9891cf04140eead9235c4fb798abc330318219ae333fc584014ed3e8ea5",
-       "model_version": "3.2.0",
+       "code_sha256": "c186f680d38a2aaefae33e3c6e518bb3e86a21909dedd5193d159f8bd81764e7",
+       "macro_draws_sha256": "a12913d3acbff686f507aa18af62715e76d980530a335ccf540705d627345a39",
+       "model_version": "3.3.0",
        "prompt_version": "not_applicable"
       }
-     }
+     },
+     "execution": "completed",
+     "status": "needs_review"
     },
     "CASE-NO-FINANCIALS": {
-     "dq": 0.35,
-     "loss_draws": null,
-     "result": {
-      "as_of": "2026-09-11",
-      "asset_id": "CASE-NO-FINANCIALS",
-      "axes": [],
-      "base": null,
-      "covenants": [],
-      "coverage": {},
-      "credit": null,
-      "flags": [
-       "profile_needs_review:missing_financials,proxy_required"
-      ],
-      "horizon": 12,
-      "input_sources": {},
-      "intervals": {},
-      "limits": {
-       "approved_uses": [],
-       "note": "No calculation: profile_needs_review:missing_financials,proxy_required",
-       "prohibited_uses": []
-      },
-      "liquidity": null,
-      "macro_draws_sha256": "2648f9891cf04140eead9235c4fb798abc330318219ae333fc584014ed3e8ea5",
-      "market": null,
-      "model_id": "not_calculated",
-      "model_versions": {
-       "position_risk": "not_calculated"
-      },
-      "quantiles": {},
-      "reverse_stress": [],
-      "seed": 20260911,
-      "shapley": [],
-      "status": "needs_review",
-      "stress": null,
-      "versions": {
-       "code_sha256": "a5a21422e0eb12315d3b5bc7f7bde49f60235a8fc0e41ef0e0c319d1be3c7559",
-       "macro_draws_sha256": "2648f9891cf04140eead9235c4fb798abc330318219ae333fc584014ed3e8ea5",
-       "model_version": "not_calculated",
-       "prompt_version": "not_applicable"
-      }
-     }
+     "details": {},
+     "execution": "not_run",
+     "status": "needs_review"
     },
     "CASE-NO-FLOATING-DEBT": {
-     "dq": 0.75,
-     "loss_draws": {
-      "count": 2048,
-      "head": [
-       71.59284068169066,
-       29.39756852516971,
-       54.90870355831127,
-       18.52443751404015,
-       49.55987502527967,
-       48.397571222255756,
-       45.58419963234471,
-       45.916459185340734,
-       49.80063709834753,
-       30.915131052523172,
-       57.96942945213652,
-       36.167644281165614,
-       58.50075484376749,
-       36.385635124477226,
-       54.92946552090826,
-       35.79398217113364
-      ],
-      "p05": 24.02209887785238,
-      "p50": 44.03742819591289,
-      "p95": 74.12923535456649,
-      "sum": 94010.01797293578,
-      "sum_sq": 4809395.8616614435
-     },
-     "result": {
+     "details": {
       "as_of": "2026-09-11",
       "asset_id": "CASE-NO-FLOATING-DEBT",
       "axes": [
@@ -4508,8 +4999,8 @@
         "band": "not_assessed",
         "flags": [],
         "measures": {
-         "data_quality": 0.75,
-         "numerical_halfwidth": 1.466848362688762,
+         "data_quality": 0.6662557459895616,
+         "numerical_halfwidth": 1.1068279844475495,
          "pd_calibrated": 1.0,
          "stale_days": null
         },
@@ -4894,7 +5385,7 @@
        {
         "breach_date": "2027-09-30",
         "breach_month": 12,
-        "breach_probability": 0.99951171875,
+        "breach_probability": 1.0,
         "covenant_id": "CASE-NO-FLOATING-DEBT-nd_ebitda",
         "cure_period_months": 0,
         "metric": "nd_ebitda",
@@ -4904,7 +5395,7 @@
        }
       ],
       "coverage": {
-       "input_data": 0.75,
+       "input_data": 0.6662557459895616,
        "trajectory": 1.0
       },
       "credit": {
@@ -4958,7 +5449,7 @@
         "demo:derived"
        ],
        "dq": [
-        "demo:borrowers"
+        "demo:derived"
        ],
        "dso": [
         "demo:derived"
@@ -5002,11 +5493,11 @@
       },
       "intervals": {
        "delta_expected_loss": {
-        "halfwidth": 1.466848362688762,
-        "mean": 73.9099111006931,
+        "halfwidth": 1.1068279844475495,
+        "mean": 76.48892713640736,
         "name": "p95_delta_expected_loss",
         "replicates": 8,
-        "standard_error": 0.6203304231954442,
+        "standard_error": 0.46807774372693794,
         "unit": "RUB_million",
         "within_tolerance": true
        }
@@ -5031,34 +5522,34 @@
        "max_funding_gap": 0.0,
        "min_cash_headroom": -7.958078640513122e-13
       },
-      "macro_draws_sha256": "2648f9891cf04140eead9235c4fb798abc330318219ae333fc584014ed3e8ea5",
+      "macro_draws_sha256": "a12913d3acbff686f507aa18af62715e76d980530a335ccf540705d627345a39",
       "market": null,
       "model_id": "credit.corporate.v3",
       "model_versions": {
-       "credit": "3.2.0",
-       "market": "3.2.0",
-       "operating": "3.2.0",
-       "portfolio": "3.2.0",
-       "position_risk": "3.2.0",
-       "reverse_stress": "3.2.0",
-       "shapley": "3.2.0",
-       "transmission": "3.2.0"
+       "credit": "3.3.0",
+       "market": "3.3.0",
+       "operating": "3.3.0",
+       "portfolio": "3.3.0",
+       "position_risk": "3.3.0",
+       "reverse_stress": "3.3.0",
+       "shapley": "3.3.0",
+       "transmission": "3.3.0"
       },
       "quantiles": {
        "delta_expected_loss": {
-        "es95": 81.75555256577609,
+        "es95": 86.27754599631717,
         "name": "delta_expected_loss",
-        "p05": 24.02209887785238,
-        "p50": 44.03742819591289,
-        "p95": 74.12923535456649,
+        "p05": 23.768963957331618,
+        "p50": 44.994673985712026,
+        "p95": 76.1498654063733,
         "unit": "RUB_million"
        },
        "delta_pd": {
         "es95": null,
         "name": "delta_pd",
-        "p05": 0.021119395449874435,
-        "p50": 0.04095529440308178,
-        "p95": 0.07153464128962904,
+        "p05": 0.021025408313529732,
+        "p50": 0.04175612400111059,
+        "p95": 0.0733051922709098,
         "unit": "fraction"
        },
        "funding_gap": {
@@ -5072,9 +5563,9 @@
        "icr": {
         "es95": null,
         "name": "icr",
-        "p05": 1.095919845601945,
-        "p50": 1.3669720908100023,
-        "p95": 1.685987502730175,
+        "p05": 1.0807988321056978,
+        "p50": 1.3594706899811069,
+        "p95": 1.6871934770470274,
         "unit": "ratio"
        }
       },
@@ -5532,85 +6023,22 @@
        }
       },
       "versions": {
-       "code_sha256": "a5a21422e0eb12315d3b5bc7f7bde49f60235a8fc0e41ef0e0c319d1be3c7559",
-       "macro_draws_sha256": "2648f9891cf04140eead9235c4fb798abc330318219ae333fc584014ed3e8ea5",
-       "model_version": "3.2.0",
+       "code_sha256": "c186f680d38a2aaefae33e3c6e518bb3e86a21909dedd5193d159f8bd81764e7",
+       "macro_draws_sha256": "a12913d3acbff686f507aa18af62715e76d980530a335ccf540705d627345a39",
+       "model_version": "3.3.0",
        "prompt_version": "not_applicable"
       }
-     }
+     },
+     "execution": "completed",
+     "status": "needs_review"
     },
     "CASE-NO-PEERS": {
-     "dq": 0.35,
-     "loss_draws": null,
-     "result": {
-      "as_of": "2026-09-11",
-      "asset_id": "CASE-NO-PEERS",
-      "axes": [],
-      "base": null,
-      "covenants": [],
-      "coverage": {},
-      "credit": null,
-      "flags": [
-       "profile_needs_review:no_peers,missing_financials_and_peers"
-      ],
-      "horizon": 12,
-      "input_sources": {},
-      "intervals": {},
-      "limits": {
-       "approved_uses": [],
-       "note": "No calculation: profile_needs_review:no_peers,missing_financials_and_peers",
-       "prohibited_uses": []
-      },
-      "liquidity": null,
-      "macro_draws_sha256": "2648f9891cf04140eead9235c4fb798abc330318219ae333fc584014ed3e8ea5",
-      "market": null,
-      "model_id": "not_calculated",
-      "model_versions": {
-       "position_risk": "not_calculated"
-      },
-      "quantiles": {},
-      "reverse_stress": [],
-      "seed": 20260911,
-      "shapley": [],
-      "status": "needs_review",
-      "stress": null,
-      "versions": {
-       "code_sha256": "a5a21422e0eb12315d3b5bc7f7bde49f60235a8fc0e41ef0e0c319d1be3c7559",
-       "macro_draws_sha256": "2648f9891cf04140eead9235c4fb798abc330318219ae333fc584014ed3e8ea5",
-       "model_version": "not_calculated",
-       "prompt_version": "not_applicable"
-      }
-     }
+     "details": {},
+     "execution": "not_run",
+     "status": "needs_review"
     },
     "CASE-OVERCOLLATERALISED": {
-     "dq": 0.75,
-     "loss_draws": {
-      "count": 2048,
-      "head": [
-       15.434007883382057,
-       7.067825847217469,
-       12.941844909146846,
-       3.9471078203931516,
-       10.45331166881798,
-       11.724837475152453,
-       10.921157819024684,
-       10.248109175476669,
-       11.093541143293725,
-       7.032131945152754,
-       12.106998339172469,
-       8.993397839811065,
-       14.171645409307876,
-       7.839244350710464,
-       12.36664562656154,
-       8.334281150122242
-      ],
-      "p05": 5.66817424638879,
-      "p50": 9.976751383963828,
-      "p95": 16.601291635892185,
-      "sum": 21304.078621598506,
-      "sum_sq": 244966.7052890727
-     },
-     "result": {
+     "details": {
       "as_of": "2026-09-11",
       "asset_id": "CASE-OVERCOLLATERALISED",
       "axes": [
@@ -5671,8 +6099,8 @@
         "band": "not_assessed",
         "flags": [],
         "measures": {
-         "data_quality": 0.75,
-         "numerical_halfwidth": 0.2845302000344604,
+         "data_quality": 0.6662557459895616,
+         "numerical_halfwidth": 0.1557274834038555,
          "pd_calibrated": 1.0,
          "stale_days": null
         },
@@ -6067,7 +6495,7 @@
        }
       ],
       "coverage": {
-       "input_data": 0.75,
+       "input_data": 0.6662557459895616,
        "trajectory": 1.0
       },
       "credit": {
@@ -6121,7 +6549,7 @@
         "demo:derived"
        ],
        "dq": [
-        "demo:borrowers"
+        "demo:derived"
        ],
        "dso": [
         "demo:derived"
@@ -6159,11 +6587,11 @@
       },
       "intervals": {
        "delta_expected_loss": {
-        "halfwidth": 0.2845302000344604,
-        "mean": 16.571555436252794,
+        "halfwidth": 0.1557274834038555,
+        "mean": 17.128131932290476,
         "name": "p95_delta_expected_loss",
         "replicates": 8,
-        "standard_error": 0.12032787020720272,
+        "standard_error": 0.06585717933788392,
         "unit": "RUB_million",
         "within_tolerance": true
        }
@@ -6188,34 +6616,34 @@
        "max_funding_gap": 0.0,
        "min_cash_headroom": -9.094947017729282e-13
       },
-      "macro_draws_sha256": "2648f9891cf04140eead9235c4fb798abc330318219ae333fc584014ed3e8ea5",
+      "macro_draws_sha256": "a12913d3acbff686f507aa18af62715e76d980530a335ccf540705d627345a39",
       "market": null,
       "model_id": "credit.corporate.v3",
       "model_versions": {
-       "credit": "3.2.0",
-       "market": "3.2.0",
-       "operating": "3.2.0",
-       "portfolio": "3.2.0",
-       "position_risk": "3.2.0",
-       "reverse_stress": "3.2.0",
-       "shapley": "3.2.0",
-       "transmission": "3.2.0"
+       "credit": "3.3.0",
+       "market": "3.3.0",
+       "operating": "3.3.0",
+       "portfolio": "3.3.0",
+       "position_risk": "3.3.0",
+       "reverse_stress": "3.3.0",
+       "shapley": "3.3.0",
+       "transmission": "3.3.0"
       },
       "quantiles": {
        "delta_expected_loss": {
-        "es95": 18.286512605775457,
+        "es95": 19.306547205238957,
         "name": "delta_expected_loss",
-        "p05": 5.66817424638879,
-        "p50": 9.976751383963828,
-        "p95": 16.601291635892185,
+        "p05": 5.5882522244926705,
+        "p50": 10.193397909206473,
+        "p95": 17.182488939806106,
         "unit": "RUB_million"
        },
        "delta_pd": {
         "es95": null,
         "name": "delta_pd",
-        "p05": 0.028404320430685734,
-        "p50": 0.05235371614444548,
-        "p95": 0.08991067600796823,
+        "p05": 0.028321731288428992,
+        "p50": 0.0530918842732091,
+        "p95": 0.09259889771684755,
         "unit": "fraction"
        },
        "funding_gap": {
@@ -6229,9 +6657,9 @@
        "icr": {
         "es95": null,
         "name": "icr",
-        "p05": 0.9277340933525512,
-        "p50": 1.1776470076277508,
-        "p95": 1.4717419417647164,
+        "p05": 0.9149846845594931,
+        "p50": 1.1708463349061904,
+        "p95": 1.4716768571736984,
         "unit": "ratio"
        }
       },
@@ -6689,16 +7117,110 @@
        }
       },
       "versions": {
-       "code_sha256": "a5a21422e0eb12315d3b5bc7f7bde49f60235a8fc0e41ef0e0c319d1be3c7559",
-       "macro_draws_sha256": "2648f9891cf04140eead9235c4fb798abc330318219ae333fc584014ed3e8ea5",
-       "model_version": "3.2.0",
+       "code_sha256": "c186f680d38a2aaefae33e3c6e518bb3e86a21909dedd5193d159f8bd81764e7",
+       "macro_draws_sha256": "a12913d3acbff686f507aa18af62715e76d980530a335ccf540705d627345a39",
+       "model_version": "3.3.0",
        "prompt_version": "not_applicable"
       }
-     }
+     },
+     "execution": "completed",
+     "status": "needs_review"
     }
    },
+   "slice": {
+    "contributions": [
+     {
+      "expected_shortfall_contribution": 103.46871921197598,
+      "mean_loss": 57.05205262413993,
+      "p95_standalone": 92.15876070217817,
+      "position_id": "CASE-COVENANT-BREACHED"
+     },
+     {
+      "expected_shortfall_contribution": 103.46871921197598,
+      "mean_loss": 57.05205262413993,
+      "p95_standalone": 92.15876070217817,
+      "position_id": "CASE-LAG-18M"
+     },
+     {
+      "expected_shortfall_contribution": 85.82592504258147,
+      "mean_loss": 46.96379653348038,
+      "p95_standalone": 76.1498654063733,
+      "position_id": "CASE-NO-FLOATING-DEBT"
+     },
+     {
+      "expected_shortfall_contribution": 19.291167870855077,
+      "mean_loss": 10.637038255922977,
+      "p95_standalone": 17.182488939806106,
+      "position_id": "CASE-OVERCOLLATERALISED"
+     },
+     {
+      "expected_shortfall_contribution": 8.528960095119643,
+      "mean_loss": 5.570934764034444,
+      "p95_standalone": 8.229710770165374,
+      "position_id": "CASE-LOW-DATA-QUALITY"
+     }
+    ],
+    "coverage": {
+     "basis": "ead",
+     "covered_share": 0.6923076923076923,
+     "limit": 0.05,
+     "unknown_exposure": []
+    },
+    "excluded": [
+     {
+      "position_id": "CASE-LOSS-MAKING",
+      "reason": "needs_review",
+      "status": "needs_review"
+     },
+     {
+      "position_id": "CASE-NO-FINANCIALS",
+      "reason": "profile_needs_review:incomplete_model_inputs,missing_financials,proxy_required",
+      "status": "needs_review"
+     },
+     {
+      "position_id": "CASE-NO-PEERS",
+      "reason": "profile_needs_review:missing_financials_and_peers,no_peers,proxy_required",
+      "status": "needs_review"
+     }
+    ],
+    "expected_shortfall_95": 320.58349143250786,
+    "flags": [
+     "needs_review_included_by_rule",
+     "portfolio_incomplete",
+     "inclusion_rule:S19-SYNTHETIC-REVIEW",
+     "included_by_rule:CASE-COVENANT-BREACHED",
+     "included_by_rule:CASE-LAG-18M",
+     "included_by_rule:CASE-LOW-DATA-QUALITY",
+     "included_by_rule:CASE-NO-FLOATING-DEBT",
+     "included_by_rule:CASE-OVERCOLLATERALISED"
+    ],
+    "herfindahl": 0.13609467455621305,
+    "included": [
+     "CASE-COVENANT-BREACHED",
+     "CASE-LAG-18M",
+     "CASE-LOW-DATA-QUALITY",
+     "CASE-NO-FLOATING-DEBT",
+     "CASE-OVERCOLLATERALISED"
+    ],
+    "loss_quantiles": {
+     "es95": 320.58349143250786,
+     "name": "credit.loss",
+     "p05": 92.81393899497905,
+     "p50": 170.16860874191582,
+     "p95": 285.45167680036434,
+     "unit": "RUB_million"
+    },
+    "mean_loss": 177.27587480171763,
+    "measure": "credit.delta_expected_loss",
+    "slice_id": "credit.loss",
+    "status": "incomplete",
+    "sum_of_individual_p95": 285.87958652070114,
+    "unit": "RUB_million",
+    "value_at_risk_95": 285.45167680036434
+   }
+  },
+  "MULTI-ASSET": {
    "graph": {
-    "driver_elasticity": {},
     "edges": [
      {
       "dst": "ch_demand",
@@ -6811,7 +7333,7 @@
       "src": "ch_demand"
      },
      {
-      "dst": "d_20_15_revenue",
+      "dst": "f_20_15_revenue",
       "elasticity": {
        "family": "point",
        "value": 1.0
@@ -6847,7 +7369,7 @@
       "src": "ch_costs"
      },
      {
-      "dst": "d_20_15_cogs",
+      "dst": "f_20_15_cogs",
       "elasticity": {
        "family": "point",
        "value": 1.0
@@ -6883,7 +7405,7 @@
       "src": "ch_rate"
      },
      {
-      "dst": "d_20_15_interest",
+      "dst": "f_20_15_interest",
       "elasticity": {
        "family": "point",
        "value": 1.0
@@ -6919,7 +7441,7 @@
       "src": "ch_payments"
      },
      {
-      "dst": "d_20_15_working_capital",
+      "dst": "f_20_15_working_capital",
       "elasticity": {
        "family": "point",
        "value": 1.0
@@ -6955,7 +7477,7 @@
       "src": "ch_capex"
      },
      {
-      "dst": "d_20_15_capex",
+      "dst": "f_20_15_capex",
       "elasticity": {
        "family": "point",
        "value": 1.0
@@ -6971,6 +7493,370 @@
       "lag_months": 0,
       "sign": 1,
       "src": "s_20_15"
+     },
+     {
+      "dst": "s_23_61",
+      "elasticity": {
+       "family": "triangular",
+       "high": 1.2,
+       "low": 0.5,
+       "mode": 0.8
+      },
+      "evidence": [
+       {
+        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
+        "kind": "document",
+        "locator": "p1",
+        "source_id": "golden-event"
+       }
+      ],
+      "lag_months": 0,
+      "sign": 1,
+      "src": "ch_demand"
+     },
+     {
+      "dst": "f_23_61_revenue",
+      "elasticity": {
+       "family": "point",
+       "value": 1.0
+      },
+      "evidence": [
+       {
+        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
+        "kind": "document",
+        "locator": "p1",
+        "source_id": "golden-event"
+       }
+      ],
+      "lag_months": 0,
+      "sign": 1,
+      "src": "s_23_61"
+     },
+     {
+      "dst": "s_23_61",
+      "elasticity": {
+       "family": "point",
+       "value": 1.0
+      },
+      "evidence": [
+       {
+        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
+        "kind": "document",
+        "locator": "p1",
+        "source_id": "golden-event"
+       }
+      ],
+      "lag_months": 1,
+      "sign": 1,
+      "src": "ch_costs"
+     },
+     {
+      "dst": "f_23_61_cogs",
+      "elasticity": {
+       "family": "point",
+       "value": 1.0
+      },
+      "evidence": [
+       {
+        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
+        "kind": "document",
+        "locator": "p1",
+        "source_id": "golden-event"
+       }
+      ],
+      "lag_months": 0,
+      "sign": 1,
+      "src": "s_23_61"
+     },
+     {
+      "dst": "s_23_61",
+      "elasticity": {
+       "family": "point",
+       "value": 1.0
+      },
+      "evidence": [
+       {
+        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
+        "kind": "document",
+        "locator": "p1",
+        "source_id": "golden-event"
+       }
+      ],
+      "lag_months": 2,
+      "sign": 1,
+      "src": "ch_rate"
+     },
+     {
+      "dst": "f_23_61_interest",
+      "elasticity": {
+       "family": "point",
+       "value": 1.0
+      },
+      "evidence": [
+       {
+        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
+        "kind": "document",
+        "locator": "p1",
+        "source_id": "golden-event"
+       }
+      ],
+      "lag_months": 0,
+      "sign": 1,
+      "src": "s_23_61"
+     },
+     {
+      "dst": "s_23_61",
+      "elasticity": {
+       "family": "point",
+       "value": 1.0
+      },
+      "evidence": [
+       {
+        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
+        "kind": "document",
+        "locator": "p1",
+        "source_id": "golden-event"
+       }
+      ],
+      "lag_months": 0,
+      "sign": 1,
+      "src": "ch_payments"
+     },
+     {
+      "dst": "f_23_61_working_capital",
+      "elasticity": {
+       "family": "point",
+       "value": 1.0
+      },
+      "evidence": [
+       {
+        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
+        "kind": "document",
+        "locator": "p1",
+        "source_id": "golden-event"
+       }
+      ],
+      "lag_months": 0,
+      "sign": 1,
+      "src": "s_23_61"
+     },
+     {
+      "dst": "s_23_61",
+      "elasticity": {
+       "family": "point",
+       "value": 1.0
+      },
+      "evidence": [
+       {
+        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
+        "kind": "document",
+        "locator": "p1",
+        "source_id": "golden-event"
+       }
+      ],
+      "lag_months": 1,
+      "sign": 1,
+      "src": "ch_capex"
+     },
+     {
+      "dst": "f_23_61_capex",
+      "elasticity": {
+       "family": "point",
+       "value": 1.0
+      },
+      "evidence": [
+       {
+        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
+        "kind": "document",
+        "locator": "p1",
+        "source_id": "golden-event"
+       }
+      ],
+      "lag_months": 0,
+      "sign": 1,
+      "src": "s_23_61"
+     },
+     {
+      "dst": "s_41_20",
+      "elasticity": {
+       "family": "triangular",
+       "high": 1.2,
+       "low": 0.5,
+       "mode": 0.8
+      },
+      "evidence": [
+       {
+        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
+        "kind": "document",
+        "locator": "p1",
+        "source_id": "golden-event"
+       }
+      ],
+      "lag_months": 0,
+      "sign": 1,
+      "src": "ch_demand"
+     },
+     {
+      "dst": "f_41_20_revenue",
+      "elasticity": {
+       "family": "point",
+       "value": 1.0
+      },
+      "evidence": [
+       {
+        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
+        "kind": "document",
+        "locator": "p1",
+        "source_id": "golden-event"
+       }
+      ],
+      "lag_months": 0,
+      "sign": 1,
+      "src": "s_41_20"
+     },
+     {
+      "dst": "s_41_20",
+      "elasticity": {
+       "family": "point",
+       "value": 1.0
+      },
+      "evidence": [
+       {
+        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
+        "kind": "document",
+        "locator": "p1",
+        "source_id": "golden-event"
+       }
+      ],
+      "lag_months": 1,
+      "sign": 1,
+      "src": "ch_costs"
+     },
+     {
+      "dst": "f_41_20_cogs",
+      "elasticity": {
+       "family": "point",
+       "value": 1.0
+      },
+      "evidence": [
+       {
+        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
+        "kind": "document",
+        "locator": "p1",
+        "source_id": "golden-event"
+       }
+      ],
+      "lag_months": 0,
+      "sign": 1,
+      "src": "s_41_20"
+     },
+     {
+      "dst": "s_41_20",
+      "elasticity": {
+       "family": "point",
+       "value": 1.0
+      },
+      "evidence": [
+       {
+        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
+        "kind": "document",
+        "locator": "p1",
+        "source_id": "golden-event"
+       }
+      ],
+      "lag_months": 2,
+      "sign": 1,
+      "src": "ch_rate"
+     },
+     {
+      "dst": "f_41_20_interest",
+      "elasticity": {
+       "family": "point",
+       "value": 1.0
+      },
+      "evidence": [
+       {
+        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
+        "kind": "document",
+        "locator": "p1",
+        "source_id": "golden-event"
+       }
+      ],
+      "lag_months": 0,
+      "sign": 1,
+      "src": "s_41_20"
+     },
+     {
+      "dst": "s_41_20",
+      "elasticity": {
+       "family": "point",
+       "value": 1.0
+      },
+      "evidence": [
+       {
+        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
+        "kind": "document",
+        "locator": "p1",
+        "source_id": "golden-event"
+       }
+      ],
+      "lag_months": 0,
+      "sign": 1,
+      "src": "ch_payments"
+     },
+     {
+      "dst": "f_41_20_working_capital",
+      "elasticity": {
+       "family": "point",
+       "value": 1.0
+      },
+      "evidence": [
+       {
+        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
+        "kind": "document",
+        "locator": "p1",
+        "source_id": "golden-event"
+       }
+      ],
+      "lag_months": 0,
+      "sign": 1,
+      "src": "s_41_20"
+     },
+     {
+      "dst": "s_41_20",
+      "elasticity": {
+       "family": "point",
+       "value": 1.0
+      },
+      "evidence": [
+       {
+        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
+        "kind": "document",
+        "locator": "p1",
+        "source_id": "golden-event"
+       }
+      ],
+      "lag_months": 1,
+      "sign": 1,
+      "src": "ch_capex"
+     },
+     {
+      "dst": "f_41_20_capex",
+      "elasticity": {
+       "family": "point",
+       "value": 1.0
+      },
+      "evidence": [
+       {
+        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
+        "kind": "document",
+        "locator": "p1",
+        "source_id": "golden-event"
+       }
+      ],
+      "lag_months": 0,
+      "sign": 1,
+      "src": "s_41_20"
      },
      {
       "dst": "s_46_63",
@@ -6993,7 +7879,7 @@
       "src": "ch_demand"
      },
      {
-      "dst": "d_46_63_revenue",
+      "dst": "f_46_63_revenue",
       "elasticity": {
        "family": "point",
        "value": 1.0
@@ -7029,7 +7915,7 @@
       "src": "ch_costs"
      },
      {
-      "dst": "d_46_63_cogs",
+      "dst": "f_46_63_cogs",
       "elasticity": {
        "family": "point",
        "value": 1.0
@@ -7065,7 +7951,7 @@
       "src": "ch_rate"
      },
      {
-      "dst": "d_46_63_interest",
+      "dst": "f_46_63_interest",
       "elasticity": {
        "family": "point",
        "value": 1.0
@@ -7101,7 +7987,7 @@
       "src": "ch_payments"
      },
      {
-      "dst": "d_46_63_working_capital",
+      "dst": "f_46_63_working_capital",
       "elasticity": {
        "family": "point",
        "value": 1.0
@@ -7137,7 +8023,7 @@
       "src": "ch_capex"
      },
      {
-      "dst": "d_46_63_capex",
+      "dst": "f_46_63_capex",
       "elasticity": {
        "family": "point",
        "value": 1.0
@@ -7153,9 +8039,192 @@
       "lag_months": 0,
       "sign": 1,
       "src": "s_46_63"
+     },
+     {
+      "dst": "s_64_91",
+      "elasticity": {
+       "family": "triangular",
+       "high": 1.2,
+       "low": 0.5,
+       "mode": 0.8
+      },
+      "evidence": [
+       {
+        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
+        "kind": "document",
+        "locator": "p1",
+        "source_id": "golden-event"
+       }
+      ],
+      "lag_months": 0,
+      "sign": 1,
+      "src": "ch_demand"
+     },
+     {
+      "dst": "f_64_91_revenue",
+      "elasticity": {
+       "family": "point",
+       "value": 1.0
+      },
+      "evidence": [
+       {
+        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
+        "kind": "document",
+        "locator": "p1",
+        "source_id": "golden-event"
+       }
+      ],
+      "lag_months": 0,
+      "sign": 1,
+      "src": "s_64_91"
+     },
+     {
+      "dst": "s_64_91",
+      "elasticity": {
+       "family": "point",
+       "value": 1.0
+      },
+      "evidence": [
+       {
+        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
+        "kind": "document",
+        "locator": "p1",
+        "source_id": "golden-event"
+       }
+      ],
+      "lag_months": 1,
+      "sign": 1,
+      "src": "ch_costs"
+     },
+     {
+      "dst": "f_64_91_cogs",
+      "elasticity": {
+       "family": "point",
+       "value": 1.0
+      },
+      "evidence": [
+       {
+        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
+        "kind": "document",
+        "locator": "p1",
+        "source_id": "golden-event"
+       }
+      ],
+      "lag_months": 0,
+      "sign": 1,
+      "src": "s_64_91"
+     },
+     {
+      "dst": "s_64_91",
+      "elasticity": {
+       "family": "point",
+       "value": 1.0
+      },
+      "evidence": [
+       {
+        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
+        "kind": "document",
+        "locator": "p1",
+        "source_id": "golden-event"
+       }
+      ],
+      "lag_months": 2,
+      "sign": 1,
+      "src": "ch_rate"
+     },
+     {
+      "dst": "f_64_91_interest",
+      "elasticity": {
+       "family": "point",
+       "value": 1.0
+      },
+      "evidence": [
+       {
+        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
+        "kind": "document",
+        "locator": "p1",
+        "source_id": "golden-event"
+       }
+      ],
+      "lag_months": 0,
+      "sign": 1,
+      "src": "s_64_91"
+     },
+     {
+      "dst": "s_64_91",
+      "elasticity": {
+       "family": "point",
+       "value": 1.0
+      },
+      "evidence": [
+       {
+        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
+        "kind": "document",
+        "locator": "p1",
+        "source_id": "golden-event"
+       }
+      ],
+      "lag_months": 0,
+      "sign": 1,
+      "src": "ch_payments"
+     },
+     {
+      "dst": "f_64_91_working_capital",
+      "elasticity": {
+       "family": "point",
+       "value": 1.0
+      },
+      "evidence": [
+       {
+        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
+        "kind": "document",
+        "locator": "p1",
+        "source_id": "golden-event"
+       }
+      ],
+      "lag_months": 0,
+      "sign": 1,
+      "src": "s_64_91"
+     },
+     {
+      "dst": "s_64_91",
+      "elasticity": {
+       "family": "point",
+       "value": 1.0
+      },
+      "evidence": [
+       {
+        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
+        "kind": "document",
+        "locator": "p1",
+        "source_id": "golden-event"
+       }
+      ],
+      "lag_months": 1,
+      "sign": 1,
+      "src": "ch_capex"
+     },
+     {
+      "dst": "f_64_91_capex",
+      "elasticity": {
+       "family": "point",
+       "value": 1.0
+      },
+      "evidence": [
+       {
+        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
+        "kind": "document",
+        "locator": "p1",
+        "source_id": "golden-event"
+       }
+      ],
+      "lag_months": 0,
+      "sign": 1,
+      "src": "s_64_91"
      }
     ],
     "event_id": "event",
+    "factor_elasticity": {},
     "nodes": [
      {
       "id": "event",
@@ -7194,33 +8263,105 @@
       "okved": "20.15"
      },
      {
-      "driver": "revenue",
-      "id": "d_20_15_revenue",
-      "kind": "driver",
+      "factor": "credit.revenue",
+      "id": "f_20_15_revenue",
+      "kind": "factor",
       "label": "revenue"
      },
      {
-      "driver": "cogs",
-      "id": "d_20_15_cogs",
-      "kind": "driver",
+      "factor": "credit.cogs",
+      "id": "f_20_15_cogs",
+      "kind": "factor",
       "label": "cogs"
      },
      {
-      "driver": "interest",
-      "id": "d_20_15_interest",
-      "kind": "driver",
+      "factor": "credit.interest",
+      "id": "f_20_15_interest",
+      "kind": "factor",
       "label": "interest"
      },
      {
-      "driver": "working_capital",
-      "id": "d_20_15_working_capital",
-      "kind": "driver",
+      "factor": "credit.working_capital",
+      "id": "f_20_15_working_capital",
+      "kind": "factor",
       "label": "working_capital"
      },
      {
-      "driver": "capex",
-      "id": "d_20_15_capex",
-      "kind": "driver",
+      "factor": "credit.capex",
+      "id": "f_20_15_capex",
+      "kind": "factor",
+      "label": "capex"
+     },
+     {
+      "id": "s_23_61",
+      "kind": "sector",
+      "label": "23.61",
+      "okved": "23.61"
+     },
+     {
+      "factor": "credit.revenue",
+      "id": "f_23_61_revenue",
+      "kind": "factor",
+      "label": "revenue"
+     },
+     {
+      "factor": "credit.cogs",
+      "id": "f_23_61_cogs",
+      "kind": "factor",
+      "label": "cogs"
+     },
+     {
+      "factor": "credit.interest",
+      "id": "f_23_61_interest",
+      "kind": "factor",
+      "label": "interest"
+     },
+     {
+      "factor": "credit.working_capital",
+      "id": "f_23_61_working_capital",
+      "kind": "factor",
+      "label": "working_capital"
+     },
+     {
+      "factor": "credit.capex",
+      "id": "f_23_61_capex",
+      "kind": "factor",
+      "label": "capex"
+     },
+     {
+      "id": "s_41_20",
+      "kind": "sector",
+      "label": "41.20",
+      "okved": "41.20"
+     },
+     {
+      "factor": "credit.revenue",
+      "id": "f_41_20_revenue",
+      "kind": "factor",
+      "label": "revenue"
+     },
+     {
+      "factor": "credit.cogs",
+      "id": "f_41_20_cogs",
+      "kind": "factor",
+      "label": "cogs"
+     },
+     {
+      "factor": "credit.interest",
+      "id": "f_41_20_interest",
+      "kind": "factor",
+      "label": "interest"
+     },
+     {
+      "factor": "credit.working_capital",
+      "id": "f_41_20_working_capital",
+      "kind": "factor",
+      "label": "working_capital"
+     },
+     {
+      "factor": "credit.capex",
+      "id": "f_41_20_capex",
+      "kind": "factor",
       "label": "capex"
      },
      {
@@ -7230,210 +8371,76 @@
       "okved": "46.63"
      },
      {
-      "driver": "revenue",
-      "id": "d_46_63_revenue",
-      "kind": "driver",
+      "factor": "credit.revenue",
+      "id": "f_46_63_revenue",
+      "kind": "factor",
       "label": "revenue"
      },
      {
-      "driver": "cogs",
-      "id": "d_46_63_cogs",
-      "kind": "driver",
+      "factor": "credit.cogs",
+      "id": "f_46_63_cogs",
+      "kind": "factor",
       "label": "cogs"
      },
      {
-      "driver": "interest",
-      "id": "d_46_63_interest",
-      "kind": "driver",
+      "factor": "credit.interest",
+      "id": "f_46_63_interest",
+      "kind": "factor",
       "label": "interest"
      },
      {
-      "driver": "working_capital",
-      "id": "d_46_63_working_capital",
-      "kind": "driver",
+      "factor": "credit.working_capital",
+      "id": "f_46_63_working_capital",
+      "kind": "factor",
       "label": "working_capital"
      },
      {
-      "driver": "capex",
-      "id": "d_46_63_capex",
-      "kind": "driver",
+      "factor": "credit.capex",
+      "id": "f_46_63_capex",
+      "kind": "factor",
+      "label": "capex"
+     },
+     {
+      "id": "s_64_91",
+      "kind": "sector",
+      "label": "64.91",
+      "okved": "64.91"
+     },
+     {
+      "factor": "credit.revenue",
+      "id": "f_64_91_revenue",
+      "kind": "factor",
+      "label": "revenue"
+     },
+     {
+      "factor": "credit.cogs",
+      "id": "f_64_91_cogs",
+      "kind": "factor",
+      "label": "cogs"
+     },
+     {
+      "factor": "credit.interest",
+      "id": "f_64_91_interest",
+      "kind": "factor",
+      "label": "interest"
+     },
+     {
+      "factor": "credit.working_capital",
+      "id": "f_64_91_working_capital",
+      "kind": "factor",
+      "label": "working_capital"
+     },
+     {
+      "factor": "credit.capex",
+      "id": "f_64_91_capex",
+      "kind": "factor",
       "label": "capex"
      }
     ]
    },
-   "portfolio": {
-    "as_of": "2026-09-11",
-    "contributions": [
-     {
-      "asset_id": "CASE-COVENANT-BREACHED",
-      "expected_shortfall_contribution": 98.03381013448545,
-      "mean_loss": 55.79346797084122,
-      "p95_standalone": 89.04149268356952
-     },
-     {
-      "asset_id": "CASE-LAG-18M",
-      "expected_shortfall_contribution": 98.03381013448545,
-      "mean_loss": 55.79346797084122,
-      "p95_standalone": 89.04149268356952
-     },
-     {
-      "asset_id": "CASE-NO-FLOATING-DEBT",
-      "expected_shortfall_contribution": 81.45062339884885,
-      "mean_loss": 45.90332908834755,
-      "p95_standalone": 74.12923535456649
-     },
-     {
-      "asset_id": "CASE-OVERCOLLATERALISED",
-      "expected_shortfall_contribution": 18.27785926729629,
-      "mean_loss": 10.402382139452396,
-      "p95_standalone": 16.601291635892185
-     },
-     {
-      "asset_id": "CASE-LOW-DATA-QUALITY",
-      "expected_shortfall_contribution": 8.571330720105337,
-      "mean_loss": 5.494269254639514,
-      "p95_standalone": 8.025475558072294
-     }
-    ],
-    "coverage_limit": 0.05,
-    "covered_ead_share": 0.6923076923076923,
-    "excluded_assets": [
-     {
-      "asset_id": "CASE-LOSS-MAKING",
-      "reason": "missing_pre_horizon_history; missing_pre_horizon_history; missing_pre_horizon_history; missing_pre_horizon_history; missing_pre_horizon_history; missing_pre_horizon_history; missing_pre_horizon_history; missing_pre_horizon_history; missing_pre_horizon_history; missing_pre_horizon_history; annual_financials_spread_evenly; simplified_tax; ltm_annualised; ebitda_nonpositive; funding_gap; covenant_metric_undefined:CASE-LOSS-MAKING-nd_ebitda; calibration_synthetic",
-      "status": "needs_review"
-     },
-     {
-      "asset_id": "CASE-NO-FINANCIALS",
-      "reason": "profile_needs_review:missing_financials,proxy_required",
-      "status": "needs_review"
-     },
-     {
-      "asset_id": "CASE-NO-PEERS",
-      "reason": "profile_needs_review:no_peers,missing_financials_and_peers",
-      "status": "needs_review"
-     }
-    ],
-    "expected_shortfall_95": 304.36743365522113,
-    "flags": [
-     "needs_review_included_by_rule",
-     "portfolio_incomplete",
-     "inclusion_rule:S19-SYNTHETIC-REVIEW",
-     "included_by_rule:CASE-LOW-DATA-QUALITY",
-     "included_by_rule:CASE-COVENANT-BREACHED",
-     "included_by_rule:CASE-NO-FLOATING-DEBT",
-     "included_by_rule:CASE-LAG-18M",
-     "included_by_rule:CASE-OVERCOLLATERALISED"
-    ],
-    "herfindahl": 0.13609467455621305,
-    "horizon": 12,
-    "included_assets": [
-     "CASE-COVENANT-BREACHED",
-     "CASE-LAG-18M",
-     "CASE-LOW-DATA-QUALITY",
-     "CASE-NO-FLOATING-DEBT",
-     "CASE-OVERCOLLATERALISED"
-    ],
-    "loss_quantiles": {
-     "es95": 304.36743365522113,
-     "name": "delta_expected_loss",
-     "p05": 93.71119528829377,
-     "p50": 167.08236755310352,
-     "p95": 276.5456385910583,
-     "unit": "RUB_million"
-    },
-    "macro_draws_sha256": "2648f9891cf04140eead9235c4fb798abc330318219ae333fc584014ed3e8ea5",
-    "mean_loss": 173.3869164241219,
-    "model_versions": {
-     "CASE-COVENANT-BREACHED:credit": "3.2.0",
-     "CASE-COVENANT-BREACHED:market": "3.2.0",
-     "CASE-COVENANT-BREACHED:operating": "3.2.0",
-     "CASE-COVENANT-BREACHED:portfolio": "3.2.0",
-     "CASE-COVENANT-BREACHED:position_risk": "3.2.0",
-     "CASE-COVENANT-BREACHED:reverse_stress": "3.2.0",
-     "CASE-COVENANT-BREACHED:shapley": "3.2.0",
-     "CASE-COVENANT-BREACHED:transmission": "3.2.0",
-     "CASE-LAG-18M:credit": "3.2.0",
-     "CASE-LAG-18M:market": "3.2.0",
-     "CASE-LAG-18M:operating": "3.2.0",
-     "CASE-LAG-18M:portfolio": "3.2.0",
-     "CASE-LAG-18M:position_risk": "3.2.0",
-     "CASE-LAG-18M:reverse_stress": "3.2.0",
-     "CASE-LAG-18M:shapley": "3.2.0",
-     "CASE-LAG-18M:transmission": "3.2.0",
-     "CASE-LOSS-MAKING:credit": "3.2.0",
-     "CASE-LOSS-MAKING:market": "3.2.0",
-     "CASE-LOSS-MAKING:operating": "3.2.0",
-     "CASE-LOSS-MAKING:portfolio": "3.2.0",
-     "CASE-LOSS-MAKING:position_risk": "3.2.0",
-     "CASE-LOSS-MAKING:reverse_stress": "3.2.0",
-     "CASE-LOSS-MAKING:shapley": "3.2.0",
-     "CASE-LOSS-MAKING:transmission": "3.2.0",
-     "CASE-LOW-DATA-QUALITY:credit": "3.2.0",
-     "CASE-LOW-DATA-QUALITY:market": "3.2.0",
-     "CASE-LOW-DATA-QUALITY:operating": "3.2.0",
-     "CASE-LOW-DATA-QUALITY:portfolio": "3.2.0",
-     "CASE-LOW-DATA-QUALITY:position_risk": "3.2.0",
-     "CASE-LOW-DATA-QUALITY:reverse_stress": "3.2.0",
-     "CASE-LOW-DATA-QUALITY:shapley": "3.2.0",
-     "CASE-LOW-DATA-QUALITY:transmission": "3.2.0",
-     "CASE-NO-FINANCIALS:position_risk": "not_calculated",
-     "CASE-NO-FLOATING-DEBT:credit": "3.2.0",
-     "CASE-NO-FLOATING-DEBT:market": "3.2.0",
-     "CASE-NO-FLOATING-DEBT:operating": "3.2.0",
-     "CASE-NO-FLOATING-DEBT:portfolio": "3.2.0",
-     "CASE-NO-FLOATING-DEBT:position_risk": "3.2.0",
-     "CASE-NO-FLOATING-DEBT:reverse_stress": "3.2.0",
-     "CASE-NO-FLOATING-DEBT:shapley": "3.2.0",
-     "CASE-NO-FLOATING-DEBT:transmission": "3.2.0",
-     "CASE-NO-PEERS:position_risk": "not_calculated",
-     "CASE-OVERCOLLATERALISED:credit": "3.2.0",
-     "CASE-OVERCOLLATERALISED:market": "3.2.0",
-     "CASE-OVERCOLLATERALISED:operating": "3.2.0",
-     "CASE-OVERCOLLATERALISED:portfolio": "3.2.0",
-     "CASE-OVERCOLLATERALISED:position_risk": "3.2.0",
-     "CASE-OVERCOLLATERALISED:reverse_stress": "3.2.0",
-     "CASE-OVERCOLLATERALISED:shapley": "3.2.0",
-     "CASE-OVERCOLLATERALISED:transmission": "3.2.0"
-    },
-    "run_id": "golden-ATYPICAL-BORROWERS",
-    "seed": 20260911,
-    "status": "incomplete",
-    "sum_of_individual_p95": 276.83898791567003,
-    "value_at_risk_95": 276.5456385910583
-   }
-  },
-  "MULTI-ASSET": {
-   "assets": {
+   "positions": {
     "BOND-CONCRETE": {
-     "dq": 0.85,
-     "loss_draws": {
-      "count": 2048,
-      "head": [
-       36.063497299470654,
-       13.595683656834776,
-       23.107171315130074,
-       5.366113714099626,
-       22.475471606678056,
-       16.394205535831617,
-       34.084639745760434,
-       19.526810987659722,
-       19.096329193812508,
-       11.230199912091233,
-       27.743643639381958,
-       17.231032484973397,
-       38.784730122477264,
-       12.896774806164572,
-       28.61666015088346,
-       12.510200105586584
-      ],
-      "p05": 8.841855348878756,
-      "p50": 19.08575549033337,
-      "p95": 40.59439901256396,
-      "sum": 43647.592858498814,
-      "sum_sq": 1140706.4295512955
-     },
-     "result": {
+     "details": {
       "as_of": "2026-09-11",
       "asset_id": "BOND-CONCRETE",
       "axes": [
@@ -7494,8 +8501,8 @@
         "band": "not_assessed",
         "flags": [],
         "measures": {
-         "data_quality": 0.85,
-         "numerical_halfwidth": 0.5083952851055554,
+         "data_quality": 0.619589079322895,
+         "numerical_halfwidth": 0.6197511016094646,
          "pd_calibrated": 1.0,
          "stale_days": null
         },
@@ -7867,7 +8874,7 @@
       },
       "covenants": [],
       "coverage": {
-       "input_data": 0.85,
+       "input_data": 0.619589079322895,
        "trajectory": 1.0
       },
       "credit": {
@@ -7927,7 +8934,7 @@
         "demo:derived"
        ],
        "dq": [
-        "demo:borrowers"
+        "demo:derived"
        ],
        "dso": [
         "demo:derived"
@@ -7968,11 +8975,11 @@
       },
       "intervals": {
        "delta_expected_loss": {
-        "halfwidth": 0.5083952851055554,
-        "mean": 40.468271044746565,
+        "halfwidth": 0.6197511016094646,
+        "mean": 42.14073320470633,
         "name": "p95_delta_expected_loss",
         "replicates": 8,
-        "standard_error": 0.2150004529316259,
+        "standard_error": 0.2620928467565226,
         "unit": "RUB_million",
         "within_tolerance": true
        }
@@ -7997,7 +9004,7 @@
        "max_funding_gap": 442.2610688654558,
        "min_cash_headroom": -442.2610688654558
       },
-      "macro_draws_sha256": "2648f9891cf04140eead9235c4fb798abc330318219ae333fc584014ed3e8ea5",
+      "macro_draws_sha256": "a12913d3acbff686f507aa18af62715e76d980530a335ccf540705d627345a39",
       "market": {
        "approximation_gap": -0.0009474910945215242,
        "base_price": 99.45199248398835,
@@ -8008,54 +9015,54 @@
       },
       "model_id": "credit.bond.v3",
       "model_versions": {
-       "credit": "3.2.0",
-       "market": "3.2.0",
-       "operating": "3.2.0",
-       "portfolio": "3.2.0",
-       "position_risk": "3.2.0",
-       "reverse_stress": "3.2.0",
-       "shapley": "3.2.0",
-       "transmission": "3.2.0"
+       "credit": "3.3.0",
+       "market": "3.3.0",
+       "operating": "3.3.0",
+       "portfolio": "3.3.0",
+       "position_risk": "3.3.0",
+       "reverse_stress": "3.3.0",
+       "shapley": "3.3.0",
+       "transmission": "3.3.0"
       },
       "quantiles": {
        "delta_expected_loss": {
-        "es95": 45.61499012120382,
+        "es95": 49.0183111061602,
         "name": "delta_expected_loss",
-        "p05": 8.841855348878756,
-        "p50": 19.08575549033337,
-        "p95": 40.59439901256396,
+        "p05": 8.80409598393199,
+        "p50": 19.405010214363628,
+        "p95": 42.23534995549579,
         "unit": "RUB_million"
        },
        "delta_pd": {
         "es95": null,
         "name": "delta_pd",
-        "p05": 0.01810147065393198,
-        "p50": 0.0416709586013473,
-        "p95": 0.09536168695542145,
+        "p05": 0.018172975457553364,
+        "p50": 0.042340145716276936,
+        "p95": 0.09966588345643612,
         "unit": "fraction"
        },
        "funding_gap": {
         "es95": null,
         "name": "funding_gap",
         "p05": 0.0,
-        "p50": 345.52225061178365,
-        "p95": 721.0962476356427,
+        "p50": 342.930277896349,
+        "p95": 711.9731174020944,
         "unit": "RUB_million"
        },
        "icr": {
         "es95": null,
         "name": "icr",
-        "p05": 1.000860746509554,
-        "p50": 1.468393384474609,
-        "p95": 1.9952297804884918,
+        "p05": 0.9750461557649033,
+        "p50": 1.4621892681717168,
+        "p95": 1.9825247227702727,
         "unit": "ratio"
        },
        "position_price_change": {
         "es95": null,
         "name": "position_price_change",
-        "p05": -81.99129240128902,
-        "p50": -36.764405297799314,
-        "p95": -16.15325015597412,
+        "p05": -85.51597761306148,
+        "p50": -37.3427359409893,
+        "p95": -16.21649685529622,
         "unit": "RUB_million"
        }
       },
@@ -8452,42 +9459,17 @@
        }
       },
       "versions": {
-       "code_sha256": "a5a21422e0eb12315d3b5bc7f7bde49f60235a8fc0e41ef0e0c319d1be3c7559",
-       "macro_draws_sha256": "2648f9891cf04140eead9235c4fb798abc330318219ae333fc584014ed3e8ea5",
-       "model_version": "3.2.0",
+       "code_sha256": "c186f680d38a2aaefae33e3c6e518bb3e86a21909dedd5193d159f8bd81764e7",
+       "macro_draws_sha256": "a12913d3acbff686f507aa18af62715e76d980530a335ccf540705d627345a39",
+       "model_version": "3.3.0",
        "prompt_version": "not_applicable"
       }
-     }
+     },
+     "execution": "completed",
+     "status": "needs_review"
     },
     "LOAN-FERTILIZER": {
-     "dq": 0.35,
-     "loss_draws": {
-      "count": 2048,
-      "head": [
-       7.430989187152765,
-       4.0819331123758005,
-       6.725652558872316,
-       2.3110014130335124,
-       5.486523165976955,
-       6.231960084322477,
-       6.050425706287026,
-       5.453705542720595,
-       5.925445135277496,
-       3.9982077158676503,
-       6.204658370703648,
-       4.9956472166308,
-       7.270764874474416,
-       4.359516244542576,
-       6.312080009576462,
-       4.6716141495359125
-      ],
-      "p05": 3.3281200290984785,
-      "p50": 5.396490025754785,
-      "p95": 8.025475558072294,
-      "sum": 11252.263433501725,
-      "sum_sq": 66086.3256631075
-     },
-     "result": {
+     "details": {
       "as_of": "2026-09-11",
       "asset_id": "LOAN-FERTILIZER",
       "axes": [
@@ -8537,7 +9519,7 @@
         "flags": [],
         "measures": {
          "breach_month": null,
-         "breach_probability": 0.50830078125,
+         "breach_probability": 0.520263671875,
          "min_headroom": 0.03544955522755311
         },
         "reason": "",
@@ -8548,8 +9530,8 @@
         "band": "not_assessed",
         "flags": [],
         "measures": {
-         "data_quality": 0.35,
-         "numerical_halfwidth": 0.13209751287984056,
+         "data_quality": 0.5,
+         "numerical_halfwidth": 0.06985858630055065,
          "pd_calibrated": 1.0,
          "stale_days": null
         },
@@ -8923,7 +9905,7 @@
        {
         "breach_date": "2027-09-30",
         "breach_month": 12,
-        "breach_probability": 0.50830078125,
+        "breach_probability": 0.520263671875,
         "covenant_id": "LOAN-FERTILIZER-icr",
         "cure_period_months": 0,
         "metric": "icr",
@@ -8933,7 +9915,7 @@
        }
       ],
       "coverage": {
-       "input_data": 0.35,
+       "input_data": 0.5,
        "trajectory": 1.0
       },
       "credit": {
@@ -8986,7 +9968,7 @@
         "demo:derived"
        ],
        "dq": [
-        "demo:borrowers"
+        "demo:derived"
        ],
        "dso": [
         "demo:derived"
@@ -9018,11 +10000,11 @@
       },
       "intervals": {
        "delta_expected_loss": {
-        "halfwidth": 0.13209751287984056,
-        "mean": 8.01163576351339,
+        "halfwidth": 0.06985858630055065,
+        "mean": 8.203612638588886,
         "name": "p95_delta_expected_loss",
         "replicates": 8,
-        "standard_error": 0.05586406076604398,
+        "standard_error": 0.029543208082000644,
         "unit": "RUB_million",
         "within_tolerance": true
        }
@@ -9047,34 +10029,34 @@
        "max_funding_gap": 0.0,
        "min_cash_headroom": -6.821210263296962e-13
       },
-      "macro_draws_sha256": "2648f9891cf04140eead9235c4fb798abc330318219ae333fc584014ed3e8ea5",
+      "macro_draws_sha256": "a12913d3acbff686f507aa18af62715e76d980530a335ccf540705d627345a39",
       "market": null,
       "model_id": "credit.corporate.v3",
       "model_versions": {
-       "credit": "3.2.0",
-       "market": "3.2.0",
-       "operating": "3.2.0",
-       "portfolio": "3.2.0",
-       "position_risk": "3.2.0",
-       "reverse_stress": "3.2.0",
-       "shapley": "3.2.0",
-       "transmission": "3.2.0"
+       "credit": "3.3.0",
+       "market": "3.3.0",
+       "operating": "3.3.0",
+       "portfolio": "3.3.0",
+       "position_risk": "3.3.0",
+       "reverse_stress": "3.3.0",
+       "shapley": "3.3.0",
+       "transmission": "3.3.0"
       },
       "quantiles": {
        "delta_expected_loss": {
-        "es95": 8.60745291927033,
+        "es95": 8.887196739527948,
         "name": "delta_expected_loss",
-        "p05": 3.3281200290984785,
-        "p50": 5.396490025754785,
-        "p95": 8.025475558072294,
+        "p05": 3.301400277492026,
+        "p50": 5.45873963887543,
+        "p95": 8.229710770165374,
         "unit": "RUB_million"
        },
        "delta_pd": {
         "es95": null,
         "name": "delta_pd",
-        "p05": 0.005949254991964908,
-        "p50": 0.009913530116692607,
-        "p95": 0.015065569004674642,
+        "p05": 0.005964459410201044,
+        "p50": 0.010050741835704494,
+        "p95": 0.015414611809368423,
         "unit": "fraction"
        },
        "funding_gap": {
@@ -9088,9 +10070,9 @@
        "icr": {
         "es95": null,
         "name": "icr",
-        "p05": 2.5476594290154795,
-        "p50": 2.9940433389060583,
-        "p95": 3.5006393981978183,
+        "p05": 2.529739320280997,
+        "p50": 2.9801843809656194,
+        "p95": 3.5014998020595107,
         "unit": "ratio"
        }
       },
@@ -9518,42 +10500,17 @@
        }
       },
       "versions": {
-       "code_sha256": "a5a21422e0eb12315d3b5bc7f7bde49f60235a8fc0e41ef0e0c319d1be3c7559",
-       "macro_draws_sha256": "2648f9891cf04140eead9235c4fb798abc330318219ae333fc584014ed3e8ea5",
-       "model_version": "3.2.0",
+       "code_sha256": "c186f680d38a2aaefae33e3c6e518bb3e86a21909dedd5193d159f8bd81764e7",
+       "macro_draws_sha256": "a12913d3acbff686f507aa18af62715e76d980530a335ccf540705d627345a39",
+       "model_version": "3.3.0",
        "prompt_version": "not_applicable"
       }
-     }
+     },
+     "execution": "completed",
+     "status": "needs_review"
     },
     "LOAN-LEASING": {
-     "dq": 0.7,
-     "loss_draws": {
-      "count": 2048,
-      "head": [
-       0.9543477494088144,
-       1.0819224039904967,
-       1.3841568526020858,
-       0.458060576345666,
-       0.7292644436901909,
-       1.5112790461789771,
-       1.2360116641075187,
-       0.9803791744961146,
-       1.0417503706944515,
-       0.9033360468185734,
-       0.7271243421621776,
-       1.3284697836815766,
-       1.4565074153578657,
-       0.736516862754538,
-       1.065064682274187,
-       1.1053286984860335
-      ],
-      "p05": 0.5602922904722876,
-      "p50": 1.043153337358552,
-      "p95": 1.5376999610653335,
-      "sum": 2139.120531005503,
-      "sum_sq": 2415.4311217858117
-     },
-     "result": {
+     "details": {
       "as_of": "2026-09-11",
       "asset_id": "LOAN-LEASING",
       "axes": [
@@ -9603,7 +10560,7 @@
         "flags": [],
         "measures": {
          "breach_month": null,
-         "breach_probability": 0.314453125,
+         "breach_probability": 0.31982421875,
          "min_headroom": 0.025395973229672686
         },
         "reason": "",
@@ -9614,8 +10571,8 @@
         "band": "not_assessed",
         "flags": [],
         "measures": {
-         "data_quality": 0.7,
-         "numerical_halfwidth": 0.009468141297496097,
+         "data_quality": 0.6995890793228949,
+         "numerical_halfwidth": 0.007850370573553315,
          "pd_calibrated": 1.0,
          "stale_days": null
         },
@@ -9837,7 +10794,7 @@
        {
         "breach_date": "2027-09-30",
         "breach_month": 12,
-        "breach_probability": 0.314453125,
+        "breach_probability": 0.31982421875,
         "covenant_id": "LOAN-LEASING-icr",
         "cure_period_months": 0,
         "metric": "icr",
@@ -9858,7 +10815,7 @@
        }
       ],
       "coverage": {
-       "input_data": 0.7,
+       "input_data": 0.6995890793228949,
        "trajectory": 1.0
       },
       "credit": {
@@ -9937,11 +10894,11 @@
       },
       "intervals": {
        "delta_expected_loss": {
-        "halfwidth": 0.009468141297496097,
-        "mean": 1.5292403811755935,
+        "halfwidth": 0.007850370573553315,
+        "mean": 1.5418166614689914,
         "name": "p95_delta_expected_loss",
         "replicates": 8,
-        "standard_error": 0.004004078572364495,
+        "standard_error": 0.0033199230568092984,
         "unit": "RUB_million",
         "within_tolerance": true
        }
@@ -9962,50 +10919,50 @@
        ]
       },
       "liquidity": null,
-      "macro_draws_sha256": "2648f9891cf04140eead9235c4fb798abc330318219ae333fc584014ed3e8ea5",
+      "macro_draws_sha256": "a12913d3acbff686f507aa18af62715e76d980530a335ccf540705d627345a39",
       "market": null,
       "model_id": "credit.leasing.v3",
       "model_versions": {
-       "credit": "3.2.0",
-       "market": "3.2.0",
-       "operating": "3.2.0",
-       "portfolio": "3.2.0",
-       "position_risk": "3.2.0",
-       "reverse_stress": "3.2.0",
-       "shapley": "3.2.0",
-       "transmission": "3.2.0"
+       "credit": "3.3.0",
+       "market": "3.3.0",
+       "operating": "3.3.0",
+       "portfolio": "3.3.0",
+       "position_risk": "3.3.0",
+       "reverse_stress": "3.3.0",
+       "shapley": "3.3.0",
+       "transmission": "3.3.0"
       },
       "quantiles": {
        "debt_equity": {
         "es95": null,
         "name": "debt_equity",
-        "p05": 3.3886774269217796,
-        "p50": 3.5133824643146347,
-        "p95": 3.6446766210084798,
+        "p05": 3.3907045628209236,
+        "p50": 3.514517529050617,
+        "p95": 3.649284878685704,
         "unit": "ratio"
        },
        "delta_expected_loss": {
-        "es95": 1.662231539568393,
+        "es95": 1.6668163550330797,
         "name": "delta_expected_loss",
-        "p05": 0.5602922904722876,
-        "p50": 1.043153337358552,
-        "p95": 1.5376999610653335,
+        "p05": 0.5570906516579166,
+        "p50": 1.0481191366405547,
+        "p95": 1.5488045103575852,
         "unit": "RUB_million"
        },
        "delta_pd": {
         "es95": null,
         "name": "delta_pd",
-        "p05": 0.0011672946392413605,
-        "p50": 0.00216305947859647,
-        "p95": 0.003190424990948504,
+        "p05": 0.0011707488421105394,
+        "p50": 0.0021751272619596213,
+        "p95": 0.0032211451282708626,
         "unit": "fraction"
        },
        "icr": {
         "es95": null,
         "name": "icr",
-        "p05": 1.1954690962637122,
-        "p50": 1.2742702946093596,
-        "p95": 1.3655506788081142,
+        "p05": 1.1932409144627605,
+        "p50": 1.2734176625366296,
+        "p95": 1.3653790176476146,
         "unit": "ratio"
        }
       },
@@ -10311,42 +11268,17 @@
        }
       },
       "versions": {
-       "code_sha256": "a5a21422e0eb12315d3b5bc7f7bde49f60235a8fc0e41ef0e0c319d1be3c7559",
-       "macro_draws_sha256": "2648f9891cf04140eead9235c4fb798abc330318219ae333fc584014ed3e8ea5",
-       "model_version": "3.2.0",
+       "code_sha256": "c186f680d38a2aaefae33e3c6e518bb3e86a21909dedd5193d159f8bd81764e7",
+       "macro_draws_sha256": "a12913d3acbff686f507aa18af62715e76d980530a335ccf540705d627345a39",
+       "model_version": "3.3.0",
        "prompt_version": "not_applicable"
       }
-     }
+     },
+     "execution": "completed",
+     "status": "needs_review"
     },
     "LOAN-MACHINERY": {
-     "dq": 0.75,
-     "loss_draws": {
-      "count": 2048,
-      "head": [
-       82.78073358190616,
-       37.90848189806747,
-       69.41394766526912,
-       21.17042335133396,
-       56.06662992810595,
-       62.88649420522773,
-       58.57593585889281,
-       54.96602060744339,
-       59.50051864698663,
-       37.71703665457377,
-       64.93622470354723,
-       48.23634121471968,
-       76.0100170940232,
-       42.04600664862584,
-       66.32885020205833,
-       44.70115038802157
-      ],
-      "p05": 30.401411333432122,
-      "p50": 53.510585492058674,
-      "p95": 89.04149268356952,
-      "sum": 114265.02240428282,
-      "sum_sq": 7047063.210365543
-     },
-     "result": {
+     "details": {
       "as_of": "2026-09-11",
       "asset_id": "LOAN-MACHINERY",
       "axes": [
@@ -10407,8 +11339,8 @@
         "band": "not_assessed",
         "flags": [],
         "measures": {
-         "data_quality": 0.75,
-         "numerical_halfwidth": 1.5260856974434718,
+         "data_quality": 0.6662557459895616,
+         "numerical_halfwidth": 0.8352487190910042,
          "pd_calibrated": 1.0,
          "stale_days": null
         },
@@ -10803,7 +11735,7 @@
        }
       ],
       "coverage": {
-       "input_data": 0.75,
+       "input_data": 0.6662557459895616,
        "trajectory": 1.0
       },
       "credit": {
@@ -10857,7 +11789,7 @@
         "demo:derived"
        ],
        "dq": [
-        "demo:borrowers"
+        "demo:derived"
        ],
        "dso": [
         "demo:derived"
@@ -10895,11 +11827,11 @@
       },
       "intervals": {
        "delta_expected_loss": {
-        "halfwidth": 1.5260856974434718,
-        "mean": 88.88200174390656,
+        "halfwidth": 0.8352487190910042,
+        "mean": 91.86721536985358,
         "name": "p95_delta_expected_loss",
         "replicates": 8,
-        "standard_error": 0.6453819021840438,
+        "standard_error": 0.353226826007722,
         "unit": "RUB_million",
         "within_tolerance": true
        }
@@ -10924,34 +11856,34 @@
        "max_funding_gap": 0.0,
        "min_cash_headroom": -9.094947017729282e-13
       },
-      "macro_draws_sha256": "2648f9891cf04140eead9235c4fb798abc330318219ae333fc584014ed3e8ea5",
+      "macro_draws_sha256": "a12913d3acbff686f507aa18af62715e76d980530a335ccf540705d627345a39",
       "market": null,
       "model_id": "credit.corporate.v3",
       "model_versions": {
-       "credit": "3.2.0",
-       "market": "3.2.0",
-       "operating": "3.2.0",
-       "portfolio": "3.2.0",
-       "position_risk": "3.2.0",
-       "reverse_stress": "3.2.0",
-       "shapley": "3.2.0",
-       "transmission": "3.2.0"
+       "credit": "3.3.0",
+       "market": "3.3.0",
+       "operating": "3.3.0",
+       "portfolio": "3.3.0",
+       "position_risk": "3.3.0",
+       "reverse_stress": "3.3.0",
+       "shapley": "3.3.0",
+       "transmission": "3.3.0"
       },
       "quantiles": {
        "delta_expected_loss": {
-        "es95": 98.08022255779446,
+        "es95": 103.55120670271197,
         "name": "delta_expected_loss",
-        "p05": 30.401411333432122,
-        "p50": 53.510585492058674,
-        "p95": 89.04149268356952,
+        "p05": 29.97274733041361,
+        "p50": 54.67257519836606,
+        "p95": 92.15876070217817,
         "unit": "RUB_million"
        },
        "delta_pd": {
         "es95": null,
         "name": "delta_pd",
-        "p05": 0.028404320430685734,
-        "p50": 0.05235371614444548,
-        "p95": 0.08991067600796823,
+        "p05": 0.028321731288428992,
+        "p50": 0.0530918842732091,
+        "p95": 0.09259889771684755,
         "unit": "fraction"
        },
        "funding_gap": {
@@ -10965,9 +11897,9 @@
        "icr": {
         "es95": null,
         "name": "icr",
-        "p05": 0.9277340933525512,
-        "p50": 1.1776470076277508,
-        "p95": 1.4717419417647164,
+        "p05": 0.9149846845594931,
+        "p50": 1.1708463349061904,
+        "p95": 1.4716768571736984,
         "unit": "ratio"
        }
       },
@@ -11425,42 +12357,17 @@
        }
       },
       "versions": {
-       "code_sha256": "a5a21422e0eb12315d3b5bc7f7bde49f60235a8fc0e41ef0e0c319d1be3c7559",
-       "macro_draws_sha256": "2648f9891cf04140eead9235c4fb798abc330318219ae333fc584014ed3e8ea5",
-       "model_version": "3.2.0",
+       "code_sha256": "c186f680d38a2aaefae33e3c6e518bb3e86a21909dedd5193d159f8bd81764e7",
+       "macro_draws_sha256": "a12913d3acbff686f507aa18af62715e76d980530a335ccf540705d627345a39",
+       "model_version": "3.3.0",
        "prompt_version": "not_applicable"
       }
-     }
+     },
+     "execution": "completed",
+     "status": "needs_review"
     },
     "PROJECT-HOUSING": {
-     "dq": 0.8,
-     "loss_draws": {
-      "count": 2048,
-      "head": [
-       0.8444320699245793,
-       0.620716994725953,
-       0.791356658482222,
-       0.41010166720587904,
-       0.6617013274696646,
-       0.9894302351197695,
-       0.5972541176029296,
-       0.7590464127956693,
-       0.5602280122019465,
-       0.7993759393898756,
-       0.624800348655782,
-       0.9927858348598733,
-       0.7587680696629633,
-       0.4703421899025386,
-       0.8424194291753011,
-       0.6662055794850517
-      ],
-      "p05": 0.46519139450756736,
-      "p50": 0.7080519300438475,
-      "p95": 0.9793496932363489,
-      "sum": 1459.7062784594057,
-      "sum_sq": 1088.8642592681806
-     },
-     "result": {
+     "details": {
       "as_of": "2026-09-11",
       "asset_id": "PROJECT-HOUSING",
       "axes": [
@@ -11510,7 +12417,7 @@
         "flags": [],
         "measures": {
          "breach_month": null,
-         "breach_probability": 0.64306640625,
+         "breach_probability": 0.64501953125,
          "min_headroom": -0.005684197563315951
         },
         "reason": "",
@@ -11521,8 +12428,8 @@
         "band": "not_assessed",
         "flags": [],
         "measures": {
-         "data_quality": 0.8,
-         "numerical_halfwidth": 0.005831654742506418,
+         "data_quality": 0.6995890793228949,
+         "numerical_halfwidth": 0.009543454235031643,
          "pd_calibrated": 1.0,
          "stale_days": null
         },
@@ -11725,7 +12632,7 @@
        {
         "breach_date": "2027-09-30",
         "breach_month": 12,
-        "breach_probability": 0.64306640625,
+        "breach_probability": 0.64501953125,
         "covenant_id": "PROJECT-HOUSING-escrow_coverage",
         "cure_period_months": 0,
         "metric": "escrow_coverage",
@@ -11735,7 +12642,7 @@
        }
       ],
       "coverage": {
-       "input_data": 0.8,
+       "input_data": 0.6995890793228949,
        "trajectory": 1.0
       },
       "credit": {
@@ -11816,11 +12723,11 @@
       },
       "intervals": {
        "delta_expected_loss": {
-        "halfwidth": 0.005831654742506418,
-        "mean": 0.9746528919358963,
+        "halfwidth": 0.009543454235031643,
+        "mean": 1.0611114694201862,
         "name": "p95_delta_expected_loss",
         "replicates": 8,
-        "standard_error": 0.0024662077869573914,
+        "standard_error": 0.004035928426515663,
         "unit": "RUB_million",
         "within_tolerance": true
        }
@@ -11845,42 +12752,42 @@
        "max_funding_gap": 0.0,
        "min_cash_headroom": -0.0
       },
-      "macro_draws_sha256": "2648f9891cf04140eead9235c4fb798abc330318219ae333fc584014ed3e8ea5",
+      "macro_draws_sha256": "a12913d3acbff686f507aa18af62715e76d980530a335ccf540705d627345a39",
       "market": null,
       "model_id": "credit.project_finance.v3",
       "model_versions": {
-       "credit": "3.2.0",
-       "market": "3.2.0",
-       "operating": "3.2.0",
-       "portfolio": "3.2.0",
-       "position_risk": "3.2.0",
-       "reverse_stress": "3.2.0",
-       "shapley": "3.2.0",
-       "transmission": "3.2.0"
+       "credit": "3.3.0",
+       "market": "3.3.0",
+       "operating": "3.3.0",
+       "portfolio": "3.3.0",
+       "position_risk": "3.3.0",
+       "reverse_stress": "3.3.0",
+       "shapley": "3.3.0",
+       "transmission": "3.3.0"
       },
       "quantiles": {
        "delta_expected_loss": {
-        "es95": 1.0243126498752422,
+        "es95": 1.1447677632078654,
         "name": "delta_expected_loss",
-        "p05": 0.46519139450756736,
-        "p50": 0.7080519300438475,
-        "p95": 0.9793496932363489,
+        "p05": 0.4601773920855283,
+        "p50": 0.7161262152512471,
+        "p95": 1.0622243764437798,
         "unit": "RUB_million"
        },
        "delta_pd": {
         "es95": null,
         "name": "delta_pd",
-        "p05": 0.0003228440960420666,
-        "p50": 0.00047339973537493217,
-        "p95": 0.00063770463768963,
+        "p05": 0.00031926388061989143,
+        "p50": 0.0004772274521122801,
+        "p95": 0.0006836568006667529,
         "unit": "fraction"
        },
        "escrow_coverage": {
         "es95": null,
         "name": "escrow_coverage",
-        "p05": 0.9602505995777362,
-        "p50": 0.9924655114151554,
-        "p95": 1.0237241970604918,
+        "p05": 0.9515733298521619,
+        "p50": 0.9916931004231833,
+        "p95": 1.024488965964576,
         "unit": "ratio"
        },
        "funding_gap": {
@@ -12145,1282 +13052,68 @@
        }
       },
       "versions": {
-       "code_sha256": "a5a21422e0eb12315d3b5bc7f7bde49f60235a8fc0e41ef0e0c319d1be3c7559",
-       "macro_draws_sha256": "2648f9891cf04140eead9235c4fb798abc330318219ae333fc584014ed3e8ea5",
-       "model_version": "3.2.0",
+       "code_sha256": "c186f680d38a2aaefae33e3c6e518bb3e86a21909dedd5193d159f8bd81764e7",
+       "macro_draws_sha256": "a12913d3acbff686f507aa18af62715e76d980530a335ccf540705d627345a39",
+       "model_version": "3.3.0",
        "prompt_version": "not_applicable"
       }
-     }
+     },
+     "execution": "completed",
+     "status": "needs_review"
     }
    },
-   "graph": {
-    "driver_elasticity": {},
-    "edges": [
-     {
-      "dst": "ch_demand",
-      "elasticity": {
-       "family": "point",
-       "value": 1.0
-      },
-      "evidence": [
-       {
-        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
-        "kind": "document",
-        "locator": "p1",
-        "source_id": "golden-event"
-       }
-      ],
-      "lag_months": 0,
-      "sign": 1,
-      "src": "event"
-     },
-     {
-      "dst": "ch_costs",
-      "elasticity": {
-       "family": "point",
-       "value": 1.0
-      },
-      "evidence": [
-       {
-        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
-        "kind": "document",
-        "locator": "p1",
-        "source_id": "golden-event"
-       }
-      ],
-      "lag_months": 0,
-      "sign": 1,
-      "src": "event"
-     },
-     {
-      "dst": "ch_rate",
-      "elasticity": {
-       "family": "point",
-       "value": 1.0
-      },
-      "evidence": [
-       {
-        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
-        "kind": "document",
-        "locator": "p1",
-        "source_id": "golden-event"
-       }
-      ],
-      "lag_months": 0,
-      "sign": 1,
-      "src": "event"
-     },
-     {
-      "dst": "ch_payments",
-      "elasticity": {
-       "family": "point",
-       "value": 1.0
-      },
-      "evidence": [
-       {
-        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
-        "kind": "document",
-        "locator": "p1",
-        "source_id": "golden-event"
-       }
-      ],
-      "lag_months": 0,
-      "sign": 1,
-      "src": "event"
-     },
-     {
-      "dst": "ch_capex",
-      "elasticity": {
-       "family": "point",
-       "value": 1.0
-      },
-      "evidence": [
-       {
-        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
-        "kind": "document",
-        "locator": "p1",
-        "source_id": "golden-event"
-       }
-      ],
-      "lag_months": 0,
-      "sign": 1,
-      "src": "event"
-     },
-     {
-      "dst": "s_20_15",
-      "elasticity": {
-       "family": "triangular",
-       "high": 1.2,
-       "low": 0.5,
-       "mode": 0.8
-      },
-      "evidence": [
-       {
-        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
-        "kind": "document",
-        "locator": "p1",
-        "source_id": "golden-event"
-       }
-      ],
-      "lag_months": 0,
-      "sign": 1,
-      "src": "ch_demand"
-     },
-     {
-      "dst": "d_20_15_revenue",
-      "elasticity": {
-       "family": "point",
-       "value": 1.0
-      },
-      "evidence": [
-       {
-        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
-        "kind": "document",
-        "locator": "p1",
-        "source_id": "golden-event"
-       }
-      ],
-      "lag_months": 0,
-      "sign": 1,
-      "src": "s_20_15"
-     },
-     {
-      "dst": "s_20_15",
-      "elasticity": {
-       "family": "point",
-       "value": 1.0
-      },
-      "evidence": [
-       {
-        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
-        "kind": "document",
-        "locator": "p1",
-        "source_id": "golden-event"
-       }
-      ],
-      "lag_months": 1,
-      "sign": 1,
-      "src": "ch_costs"
-     },
-     {
-      "dst": "d_20_15_cogs",
-      "elasticity": {
-       "family": "point",
-       "value": 1.0
-      },
-      "evidence": [
-       {
-        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
-        "kind": "document",
-        "locator": "p1",
-        "source_id": "golden-event"
-       }
-      ],
-      "lag_months": 0,
-      "sign": 1,
-      "src": "s_20_15"
-     },
-     {
-      "dst": "s_20_15",
-      "elasticity": {
-       "family": "point",
-       "value": 1.0
-      },
-      "evidence": [
-       {
-        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
-        "kind": "document",
-        "locator": "p1",
-        "source_id": "golden-event"
-       }
-      ],
-      "lag_months": 2,
-      "sign": 1,
-      "src": "ch_rate"
-     },
-     {
-      "dst": "d_20_15_interest",
-      "elasticity": {
-       "family": "point",
-       "value": 1.0
-      },
-      "evidence": [
-       {
-        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
-        "kind": "document",
-        "locator": "p1",
-        "source_id": "golden-event"
-       }
-      ],
-      "lag_months": 0,
-      "sign": 1,
-      "src": "s_20_15"
-     },
-     {
-      "dst": "s_20_15",
-      "elasticity": {
-       "family": "point",
-       "value": 1.0
-      },
-      "evidence": [
-       {
-        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
-        "kind": "document",
-        "locator": "p1",
-        "source_id": "golden-event"
-       }
-      ],
-      "lag_months": 0,
-      "sign": 1,
-      "src": "ch_payments"
-     },
-     {
-      "dst": "d_20_15_working_capital",
-      "elasticity": {
-       "family": "point",
-       "value": 1.0
-      },
-      "evidence": [
-       {
-        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
-        "kind": "document",
-        "locator": "p1",
-        "source_id": "golden-event"
-       }
-      ],
-      "lag_months": 0,
-      "sign": 1,
-      "src": "s_20_15"
-     },
-     {
-      "dst": "s_20_15",
-      "elasticity": {
-       "family": "point",
-       "value": 1.0
-      },
-      "evidence": [
-       {
-        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
-        "kind": "document",
-        "locator": "p1",
-        "source_id": "golden-event"
-       }
-      ],
-      "lag_months": 1,
-      "sign": 1,
-      "src": "ch_capex"
-     },
-     {
-      "dst": "d_20_15_capex",
-      "elasticity": {
-       "family": "point",
-       "value": 1.0
-      },
-      "evidence": [
-       {
-        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
-        "kind": "document",
-        "locator": "p1",
-        "source_id": "golden-event"
-       }
-      ],
-      "lag_months": 0,
-      "sign": 1,
-      "src": "s_20_15"
-     },
-     {
-      "dst": "s_23_61",
-      "elasticity": {
-       "family": "triangular",
-       "high": 1.2,
-       "low": 0.5,
-       "mode": 0.8
-      },
-      "evidence": [
-       {
-        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
-        "kind": "document",
-        "locator": "p1",
-        "source_id": "golden-event"
-       }
-      ],
-      "lag_months": 0,
-      "sign": 1,
-      "src": "ch_demand"
-     },
-     {
-      "dst": "d_23_61_revenue",
-      "elasticity": {
-       "family": "point",
-       "value": 1.0
-      },
-      "evidence": [
-       {
-        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
-        "kind": "document",
-        "locator": "p1",
-        "source_id": "golden-event"
-       }
-      ],
-      "lag_months": 0,
-      "sign": 1,
-      "src": "s_23_61"
-     },
-     {
-      "dst": "s_23_61",
-      "elasticity": {
-       "family": "point",
-       "value": 1.0
-      },
-      "evidence": [
-       {
-        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
-        "kind": "document",
-        "locator": "p1",
-        "source_id": "golden-event"
-       }
-      ],
-      "lag_months": 1,
-      "sign": 1,
-      "src": "ch_costs"
-     },
-     {
-      "dst": "d_23_61_cogs",
-      "elasticity": {
-       "family": "point",
-       "value": 1.0
-      },
-      "evidence": [
-       {
-        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
-        "kind": "document",
-        "locator": "p1",
-        "source_id": "golden-event"
-       }
-      ],
-      "lag_months": 0,
-      "sign": 1,
-      "src": "s_23_61"
-     },
-     {
-      "dst": "s_23_61",
-      "elasticity": {
-       "family": "point",
-       "value": 1.0
-      },
-      "evidence": [
-       {
-        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
-        "kind": "document",
-        "locator": "p1",
-        "source_id": "golden-event"
-       }
-      ],
-      "lag_months": 2,
-      "sign": 1,
-      "src": "ch_rate"
-     },
-     {
-      "dst": "d_23_61_interest",
-      "elasticity": {
-       "family": "point",
-       "value": 1.0
-      },
-      "evidence": [
-       {
-        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
-        "kind": "document",
-        "locator": "p1",
-        "source_id": "golden-event"
-       }
-      ],
-      "lag_months": 0,
-      "sign": 1,
-      "src": "s_23_61"
-     },
-     {
-      "dst": "s_23_61",
-      "elasticity": {
-       "family": "point",
-       "value": 1.0
-      },
-      "evidence": [
-       {
-        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
-        "kind": "document",
-        "locator": "p1",
-        "source_id": "golden-event"
-       }
-      ],
-      "lag_months": 0,
-      "sign": 1,
-      "src": "ch_payments"
-     },
-     {
-      "dst": "d_23_61_working_capital",
-      "elasticity": {
-       "family": "point",
-       "value": 1.0
-      },
-      "evidence": [
-       {
-        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
-        "kind": "document",
-        "locator": "p1",
-        "source_id": "golden-event"
-       }
-      ],
-      "lag_months": 0,
-      "sign": 1,
-      "src": "s_23_61"
-     },
-     {
-      "dst": "s_23_61",
-      "elasticity": {
-       "family": "point",
-       "value": 1.0
-      },
-      "evidence": [
-       {
-        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
-        "kind": "document",
-        "locator": "p1",
-        "source_id": "golden-event"
-       }
-      ],
-      "lag_months": 1,
-      "sign": 1,
-      "src": "ch_capex"
-     },
-     {
-      "dst": "d_23_61_capex",
-      "elasticity": {
-       "family": "point",
-       "value": 1.0
-      },
-      "evidence": [
-       {
-        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
-        "kind": "document",
-        "locator": "p1",
-        "source_id": "golden-event"
-       }
-      ],
-      "lag_months": 0,
-      "sign": 1,
-      "src": "s_23_61"
-     },
-     {
-      "dst": "s_41_20",
-      "elasticity": {
-       "family": "triangular",
-       "high": 1.2,
-       "low": 0.5,
-       "mode": 0.8
-      },
-      "evidence": [
-       {
-        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
-        "kind": "document",
-        "locator": "p1",
-        "source_id": "golden-event"
-       }
-      ],
-      "lag_months": 0,
-      "sign": 1,
-      "src": "ch_demand"
-     },
-     {
-      "dst": "d_41_20_revenue",
-      "elasticity": {
-       "family": "point",
-       "value": 1.0
-      },
-      "evidence": [
-       {
-        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
-        "kind": "document",
-        "locator": "p1",
-        "source_id": "golden-event"
-       }
-      ],
-      "lag_months": 0,
-      "sign": 1,
-      "src": "s_41_20"
-     },
-     {
-      "dst": "s_41_20",
-      "elasticity": {
-       "family": "point",
-       "value": 1.0
-      },
-      "evidence": [
-       {
-        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
-        "kind": "document",
-        "locator": "p1",
-        "source_id": "golden-event"
-       }
-      ],
-      "lag_months": 1,
-      "sign": 1,
-      "src": "ch_costs"
-     },
-     {
-      "dst": "d_41_20_cogs",
-      "elasticity": {
-       "family": "point",
-       "value": 1.0
-      },
-      "evidence": [
-       {
-        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
-        "kind": "document",
-        "locator": "p1",
-        "source_id": "golden-event"
-       }
-      ],
-      "lag_months": 0,
-      "sign": 1,
-      "src": "s_41_20"
-     },
-     {
-      "dst": "s_41_20",
-      "elasticity": {
-       "family": "point",
-       "value": 1.0
-      },
-      "evidence": [
-       {
-        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
-        "kind": "document",
-        "locator": "p1",
-        "source_id": "golden-event"
-       }
-      ],
-      "lag_months": 2,
-      "sign": 1,
-      "src": "ch_rate"
-     },
-     {
-      "dst": "d_41_20_interest",
-      "elasticity": {
-       "family": "point",
-       "value": 1.0
-      },
-      "evidence": [
-       {
-        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
-        "kind": "document",
-        "locator": "p1",
-        "source_id": "golden-event"
-       }
-      ],
-      "lag_months": 0,
-      "sign": 1,
-      "src": "s_41_20"
-     },
-     {
-      "dst": "s_41_20",
-      "elasticity": {
-       "family": "point",
-       "value": 1.0
-      },
-      "evidence": [
-       {
-        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
-        "kind": "document",
-        "locator": "p1",
-        "source_id": "golden-event"
-       }
-      ],
-      "lag_months": 0,
-      "sign": 1,
-      "src": "ch_payments"
-     },
-     {
-      "dst": "d_41_20_working_capital",
-      "elasticity": {
-       "family": "point",
-       "value": 1.0
-      },
-      "evidence": [
-       {
-        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
-        "kind": "document",
-        "locator": "p1",
-        "source_id": "golden-event"
-       }
-      ],
-      "lag_months": 0,
-      "sign": 1,
-      "src": "s_41_20"
-     },
-     {
-      "dst": "s_41_20",
-      "elasticity": {
-       "family": "point",
-       "value": 1.0
-      },
-      "evidence": [
-       {
-        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
-        "kind": "document",
-        "locator": "p1",
-        "source_id": "golden-event"
-       }
-      ],
-      "lag_months": 1,
-      "sign": 1,
-      "src": "ch_capex"
-     },
-     {
-      "dst": "d_41_20_capex",
-      "elasticity": {
-       "family": "point",
-       "value": 1.0
-      },
-      "evidence": [
-       {
-        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
-        "kind": "document",
-        "locator": "p1",
-        "source_id": "golden-event"
-       }
-      ],
-      "lag_months": 0,
-      "sign": 1,
-      "src": "s_41_20"
-     },
-     {
-      "dst": "s_46_63",
-      "elasticity": {
-       "family": "triangular",
-       "high": 1.2,
-       "low": 0.5,
-       "mode": 0.8
-      },
-      "evidence": [
-       {
-        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
-        "kind": "document",
-        "locator": "p1",
-        "source_id": "golden-event"
-       }
-      ],
-      "lag_months": 0,
-      "sign": 1,
-      "src": "ch_demand"
-     },
-     {
-      "dst": "d_46_63_revenue",
-      "elasticity": {
-       "family": "point",
-       "value": 1.0
-      },
-      "evidence": [
-       {
-        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
-        "kind": "document",
-        "locator": "p1",
-        "source_id": "golden-event"
-       }
-      ],
-      "lag_months": 0,
-      "sign": 1,
-      "src": "s_46_63"
-     },
-     {
-      "dst": "s_46_63",
-      "elasticity": {
-       "family": "point",
-       "value": 1.0
-      },
-      "evidence": [
-       {
-        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
-        "kind": "document",
-        "locator": "p1",
-        "source_id": "golden-event"
-       }
-      ],
-      "lag_months": 1,
-      "sign": 1,
-      "src": "ch_costs"
-     },
-     {
-      "dst": "d_46_63_cogs",
-      "elasticity": {
-       "family": "point",
-       "value": 1.0
-      },
-      "evidence": [
-       {
-        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
-        "kind": "document",
-        "locator": "p1",
-        "source_id": "golden-event"
-       }
-      ],
-      "lag_months": 0,
-      "sign": 1,
-      "src": "s_46_63"
-     },
-     {
-      "dst": "s_46_63",
-      "elasticity": {
-       "family": "point",
-       "value": 1.0
-      },
-      "evidence": [
-       {
-        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
-        "kind": "document",
-        "locator": "p1",
-        "source_id": "golden-event"
-       }
-      ],
-      "lag_months": 2,
-      "sign": 1,
-      "src": "ch_rate"
-     },
-     {
-      "dst": "d_46_63_interest",
-      "elasticity": {
-       "family": "point",
-       "value": 1.0
-      },
-      "evidence": [
-       {
-        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
-        "kind": "document",
-        "locator": "p1",
-        "source_id": "golden-event"
-       }
-      ],
-      "lag_months": 0,
-      "sign": 1,
-      "src": "s_46_63"
-     },
-     {
-      "dst": "s_46_63",
-      "elasticity": {
-       "family": "point",
-       "value": 1.0
-      },
-      "evidence": [
-       {
-        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
-        "kind": "document",
-        "locator": "p1",
-        "source_id": "golden-event"
-       }
-      ],
-      "lag_months": 0,
-      "sign": 1,
-      "src": "ch_payments"
-     },
-     {
-      "dst": "d_46_63_working_capital",
-      "elasticity": {
-       "family": "point",
-       "value": 1.0
-      },
-      "evidence": [
-       {
-        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
-        "kind": "document",
-        "locator": "p1",
-        "source_id": "golden-event"
-       }
-      ],
-      "lag_months": 0,
-      "sign": 1,
-      "src": "s_46_63"
-     },
-     {
-      "dst": "s_46_63",
-      "elasticity": {
-       "family": "point",
-       "value": 1.0
-      },
-      "evidence": [
-       {
-        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
-        "kind": "document",
-        "locator": "p1",
-        "source_id": "golden-event"
-       }
-      ],
-      "lag_months": 1,
-      "sign": 1,
-      "src": "ch_capex"
-     },
-     {
-      "dst": "d_46_63_capex",
-      "elasticity": {
-       "family": "point",
-       "value": 1.0
-      },
-      "evidence": [
-       {
-        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
-        "kind": "document",
-        "locator": "p1",
-        "source_id": "golden-event"
-       }
-      ],
-      "lag_months": 0,
-      "sign": 1,
-      "src": "s_46_63"
-     },
-     {
-      "dst": "s_64_91",
-      "elasticity": {
-       "family": "triangular",
-       "high": 1.2,
-       "low": 0.5,
-       "mode": 0.8
-      },
-      "evidence": [
-       {
-        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
-        "kind": "document",
-        "locator": "p1",
-        "source_id": "golden-event"
-       }
-      ],
-      "lag_months": 0,
-      "sign": 1,
-      "src": "ch_demand"
-     },
-     {
-      "dst": "d_64_91_revenue",
-      "elasticity": {
-       "family": "point",
-       "value": 1.0
-      },
-      "evidence": [
-       {
-        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
-        "kind": "document",
-        "locator": "p1",
-        "source_id": "golden-event"
-       }
-      ],
-      "lag_months": 0,
-      "sign": 1,
-      "src": "s_64_91"
-     },
-     {
-      "dst": "s_64_91",
-      "elasticity": {
-       "family": "point",
-       "value": 1.0
-      },
-      "evidence": [
-       {
-        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
-        "kind": "document",
-        "locator": "p1",
-        "source_id": "golden-event"
-       }
-      ],
-      "lag_months": 1,
-      "sign": 1,
-      "src": "ch_costs"
-     },
-     {
-      "dst": "d_64_91_cogs",
-      "elasticity": {
-       "family": "point",
-       "value": 1.0
-      },
-      "evidence": [
-       {
-        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
-        "kind": "document",
-        "locator": "p1",
-        "source_id": "golden-event"
-       }
-      ],
-      "lag_months": 0,
-      "sign": 1,
-      "src": "s_64_91"
-     },
-     {
-      "dst": "s_64_91",
-      "elasticity": {
-       "family": "point",
-       "value": 1.0
-      },
-      "evidence": [
-       {
-        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
-        "kind": "document",
-        "locator": "p1",
-        "source_id": "golden-event"
-       }
-      ],
-      "lag_months": 2,
-      "sign": 1,
-      "src": "ch_rate"
-     },
-     {
-      "dst": "d_64_91_interest",
-      "elasticity": {
-       "family": "point",
-       "value": 1.0
-      },
-      "evidence": [
-       {
-        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
-        "kind": "document",
-        "locator": "p1",
-        "source_id": "golden-event"
-       }
-      ],
-      "lag_months": 0,
-      "sign": 1,
-      "src": "s_64_91"
-     },
-     {
-      "dst": "s_64_91",
-      "elasticity": {
-       "family": "point",
-       "value": 1.0
-      },
-      "evidence": [
-       {
-        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
-        "kind": "document",
-        "locator": "p1",
-        "source_id": "golden-event"
-       }
-      ],
-      "lag_months": 0,
-      "sign": 1,
-      "src": "ch_payments"
-     },
-     {
-      "dst": "d_64_91_working_capital",
-      "elasticity": {
-       "family": "point",
-       "value": 1.0
-      },
-      "evidence": [
-       {
-        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
-        "kind": "document",
-        "locator": "p1",
-        "source_id": "golden-event"
-       }
-      ],
-      "lag_months": 0,
-      "sign": 1,
-      "src": "s_64_91"
-     },
-     {
-      "dst": "s_64_91",
-      "elasticity": {
-       "family": "point",
-       "value": 1.0
-      },
-      "evidence": [
-       {
-        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
-        "kind": "document",
-        "locator": "p1",
-        "source_id": "golden-event"
-       }
-      ],
-      "lag_months": 1,
-      "sign": 1,
-      "src": "ch_capex"
-     },
-     {
-      "dst": "d_64_91_capex",
-      "elasticity": {
-       "family": "point",
-       "value": 1.0
-      },
-      "evidence": [
-       {
-        "fragment_sha256": "dd56de4137951d9c92681b03416ec15f886b4482a27e3a517d32f085244cbe5d",
-        "kind": "document",
-        "locator": "p1",
-        "source_id": "golden-event"
-       }
-      ],
-      "lag_months": 0,
-      "sign": 1,
-      "src": "s_64_91"
-     }
-    ],
-    "event_id": "event",
-    "nodes": [
-     {
-      "id": "event",
-      "kind": "event",
-      "label": "событие"
-     },
-     {
-      "id": "ch_demand",
-      "kind": "channel",
-      "label": "ch_demand"
-     },
-     {
-      "id": "ch_costs",
-      "kind": "channel",
-      "label": "ch_costs"
-     },
-     {
-      "id": "ch_rate",
-      "kind": "channel",
-      "label": "ch_rate"
-     },
-     {
-      "id": "ch_payments",
-      "kind": "channel",
-      "label": "ch_payments"
-     },
-     {
-      "id": "ch_capex",
-      "kind": "channel",
-      "label": "ch_capex"
-     },
-     {
-      "id": "s_20_15",
-      "kind": "sector",
-      "label": "20.15",
-      "okved": "20.15"
-     },
-     {
-      "driver": "revenue",
-      "id": "d_20_15_revenue",
-      "kind": "driver",
-      "label": "revenue"
-     },
-     {
-      "driver": "cogs",
-      "id": "d_20_15_cogs",
-      "kind": "driver",
-      "label": "cogs"
-     },
-     {
-      "driver": "interest",
-      "id": "d_20_15_interest",
-      "kind": "driver",
-      "label": "interest"
-     },
-     {
-      "driver": "working_capital",
-      "id": "d_20_15_working_capital",
-      "kind": "driver",
-      "label": "working_capital"
-     },
-     {
-      "driver": "capex",
-      "id": "d_20_15_capex",
-      "kind": "driver",
-      "label": "capex"
-     },
-     {
-      "id": "s_23_61",
-      "kind": "sector",
-      "label": "23.61",
-      "okved": "23.61"
-     },
-     {
-      "driver": "revenue",
-      "id": "d_23_61_revenue",
-      "kind": "driver",
-      "label": "revenue"
-     },
-     {
-      "driver": "cogs",
-      "id": "d_23_61_cogs",
-      "kind": "driver",
-      "label": "cogs"
-     },
-     {
-      "driver": "interest",
-      "id": "d_23_61_interest",
-      "kind": "driver",
-      "label": "interest"
-     },
-     {
-      "driver": "working_capital",
-      "id": "d_23_61_working_capital",
-      "kind": "driver",
-      "label": "working_capital"
-     },
-     {
-      "driver": "capex",
-      "id": "d_23_61_capex",
-      "kind": "driver",
-      "label": "capex"
-     },
-     {
-      "id": "s_41_20",
-      "kind": "sector",
-      "label": "41.20",
-      "okved": "41.20"
-     },
-     {
-      "driver": "revenue",
-      "id": "d_41_20_revenue",
-      "kind": "driver",
-      "label": "revenue"
-     },
-     {
-      "driver": "cogs",
-      "id": "d_41_20_cogs",
-      "kind": "driver",
-      "label": "cogs"
-     },
-     {
-      "driver": "interest",
-      "id": "d_41_20_interest",
-      "kind": "driver",
-      "label": "interest"
-     },
-     {
-      "driver": "working_capital",
-      "id": "d_41_20_working_capital",
-      "kind": "driver",
-      "label": "working_capital"
-     },
-     {
-      "driver": "capex",
-      "id": "d_41_20_capex",
-      "kind": "driver",
-      "label": "capex"
-     },
-     {
-      "id": "s_46_63",
-      "kind": "sector",
-      "label": "46.63",
-      "okved": "46.63"
-     },
-     {
-      "driver": "revenue",
-      "id": "d_46_63_revenue",
-      "kind": "driver",
-      "label": "revenue"
-     },
-     {
-      "driver": "cogs",
-      "id": "d_46_63_cogs",
-      "kind": "driver",
-      "label": "cogs"
-     },
-     {
-      "driver": "interest",
-      "id": "d_46_63_interest",
-      "kind": "driver",
-      "label": "interest"
-     },
-     {
-      "driver": "working_capital",
-      "id": "d_46_63_working_capital",
-      "kind": "driver",
-      "label": "working_capital"
-     },
-     {
-      "driver": "capex",
-      "id": "d_46_63_capex",
-      "kind": "driver",
-      "label": "capex"
-     },
-     {
-      "id": "s_64_91",
-      "kind": "sector",
-      "label": "64.91",
-      "okved": "64.91"
-     },
-     {
-      "driver": "revenue",
-      "id": "d_64_91_revenue",
-      "kind": "driver",
-      "label": "revenue"
-     },
-     {
-      "driver": "cogs",
-      "id": "d_64_91_cogs",
-      "kind": "driver",
-      "label": "cogs"
-     },
-     {
-      "driver": "interest",
-      "id": "d_64_91_interest",
-      "kind": "driver",
-      "label": "interest"
-     },
-     {
-      "driver": "working_capital",
-      "id": "d_64_91_working_capital",
-      "kind": "driver",
-      "label": "working_capital"
-     },
-     {
-      "driver": "capex",
-      "id": "d_64_91_capex",
-      "kind": "driver",
-      "label": "capex"
-     }
-    ]
-   },
-   "portfolio": {
-    "as_of": "2026-09-11",
+   "slice": {
     "contributions": [
      {
-      "asset_id": "LOAN-MACHINERY",
-      "expected_shortfall_contribution": 97.72431212217262,
-      "mean_loss": 55.79346797084122,
-      "p95_standalone": 89.04149268356952
+      "expected_shortfall_contribution": 102.25358281280278,
+      "mean_loss": 57.05205262413993,
+      "p95_standalone": 92.15876070217817,
+      "position_id": "LOAN-MACHINERY"
      },
      {
-      "asset_id": "BOND-CONCRETE",
-      "expected_shortfall_contribution": 44.95169138677729,
-      "mean_loss": 21.312301200438874,
-      "p95_standalone": 40.59439901256396
+      "expected_shortfall_contribution": 47.07855426230212,
+      "mean_loss": 21.867111021571386,
+      "p95_standalone": 42.23534995549579,
+      "position_id": "BOND-CONCRETE"
      },
      {
-      "asset_id": "LOAN-FERTILIZER",
-      "expected_shortfall_contribution": 8.555042978381307,
-      "mean_loss": 5.494269254639514,
-      "p95_standalone": 8.025475558072294
+      "expected_shortfall_contribution": 8.584651206810976,
+      "mean_loss": 5.570934764034444,
+      "p95_standalone": 8.229710770165374,
+      "position_id": "LOAN-FERTILIZER"
      },
      {
-      "asset_id": "LOAN-LEASING",
-      "expected_shortfall_contribution": 1.24955471512036,
-      "mean_loss": 1.0444924467800307,
-      "p95_standalone": 1.5376999610653335
+      "expected_shortfall_contribution": 1.2645949015925217,
+      "mean_loss": 1.0488930724477883,
+      "p95_standalone": 1.5488045103575852,
+      "position_id": "LOAN-LEASING"
      },
      {
-      "asset_id": "PROJECT-HOUSING",
-      "expected_shortfall_contribution": 0.8839099376016535,
-      "mean_loss": 0.7127472062790067,
-      "p95_standalone": 0.9793496932363489
+      "expected_shortfall_contribution": 0.934218711131532,
+      "mean_loss": 0.7322646089755209,
+      "p95_standalone": 1.0622243764437798,
+      "position_id": "PROJECT-HOUSING"
      }
     ],
-    "coverage_limit": 0.05,
-    "covered_ead_share": 1.0,
-    "excluded_assets": [],
-    "expected_shortfall_95": 153.3645111400531,
+    "coverage": {
+     "basis": "ead",
+     "covered_share": 1.0,
+     "limit": 0.05,
+     "unknown_exposure": []
+    },
+    "excluded": [],
+    "expected_shortfall_95": 160.11560189463978,
     "flags": [
      "needs_review_included_by_rule",
      "inclusion_rule:S19-SYNTHETIC-REVIEW",
      "included_by_rule:BOND-CONCRETE",
-     "included_by_rule:PROJECT-HOUSING",
-     "included_by_rule:LOAN-MACHINERY",
+     "included_by_rule:LOAN-FERTILIZER",
      "included_by_rule:LOAN-LEASING",
-     "included_by_rule:LOAN-FERTILIZER"
+     "included_by_rule:LOAN-MACHINERY",
+     "included_by_rule:PROJECT-HOUSING"
     ],
     "herfindahl": 0.28669410150891633,
-    "horizon": 12,
-    "included_assets": [
+    "included": [
      "BOND-CONCRETE",
      "LOAN-FERTILIZER",
      "LOAN-LEASING",
@@ -13428,78 +13121,35 @@
      "PROJECT-HOUSING"
     ],
     "loss_quantiles": {
-     "es95": 153.3645111400531,
-     "name": "delta_expected_loss",
-     "p05": 44.410757805793935,
-     "p50": 80.13379969015153,
-     "p95": 139.25023996584636,
+     "es95": 160.11560189463978,
+     "name": "credit.loss",
+     "p05": 44.12181108625188,
+     "p50": 81.72694924481932,
+     "p95": 142.46035464719785,
      "unit": "RUB_million"
     },
-    "macro_draws_sha256": "2648f9891cf04140eead9235c4fb798abc330318219ae333fc584014ed3e8ea5",
-    "mean_loss": 84.35727807897865,
-    "model_versions": {
-     "BOND-CONCRETE:credit": "3.2.0",
-     "BOND-CONCRETE:market": "3.2.0",
-     "BOND-CONCRETE:operating": "3.2.0",
-     "BOND-CONCRETE:portfolio": "3.2.0",
-     "BOND-CONCRETE:position_risk": "3.2.0",
-     "BOND-CONCRETE:reverse_stress": "3.2.0",
-     "BOND-CONCRETE:shapley": "3.2.0",
-     "BOND-CONCRETE:transmission": "3.2.0",
-     "LOAN-FERTILIZER:credit": "3.2.0",
-     "LOAN-FERTILIZER:market": "3.2.0",
-     "LOAN-FERTILIZER:operating": "3.2.0",
-     "LOAN-FERTILIZER:portfolio": "3.2.0",
-     "LOAN-FERTILIZER:position_risk": "3.2.0",
-     "LOAN-FERTILIZER:reverse_stress": "3.2.0",
-     "LOAN-FERTILIZER:shapley": "3.2.0",
-     "LOAN-FERTILIZER:transmission": "3.2.0",
-     "LOAN-LEASING:credit": "3.2.0",
-     "LOAN-LEASING:market": "3.2.0",
-     "LOAN-LEASING:operating": "3.2.0",
-     "LOAN-LEASING:portfolio": "3.2.0",
-     "LOAN-LEASING:position_risk": "3.2.0",
-     "LOAN-LEASING:reverse_stress": "3.2.0",
-     "LOAN-LEASING:shapley": "3.2.0",
-     "LOAN-LEASING:transmission": "3.2.0",
-     "LOAN-MACHINERY:credit": "3.2.0",
-     "LOAN-MACHINERY:market": "3.2.0",
-     "LOAN-MACHINERY:operating": "3.2.0",
-     "LOAN-MACHINERY:portfolio": "3.2.0",
-     "LOAN-MACHINERY:position_risk": "3.2.0",
-     "LOAN-MACHINERY:reverse_stress": "3.2.0",
-     "LOAN-MACHINERY:shapley": "3.2.0",
-     "LOAN-MACHINERY:transmission": "3.2.0",
-     "PROJECT-HOUSING:credit": "3.2.0",
-     "PROJECT-HOUSING:market": "3.2.0",
-     "PROJECT-HOUSING:operating": "3.2.0",
-     "PROJECT-HOUSING:portfolio": "3.2.0",
-     "PROJECT-HOUSING:position_risk": "3.2.0",
-     "PROJECT-HOUSING:reverse_stress": "3.2.0",
-     "PROJECT-HOUSING:shapley": "3.2.0",
-     "PROJECT-HOUSING:transmission": "3.2.0"
-    },
-    "run_id": "golden-MULTI-ASSET",
-    "seed": 20260911,
+    "mean_loss": 86.27125609116906,
+    "measure": "credit.delta_expected_loss",
+    "slice_id": "credit.loss",
     "status": "needs_review",
-    "sum_of_individual_p95": 140.17841690850744,
-    "value_at_risk_95": 139.25023996584636
+    "sum_of_individual_p95": 145.2348503146407,
+    "unit": "RUB_million",
+    "value_at_risk_95": 142.46035464719785
    }
   }
  },
- "registry_id": "demo-synthetic-2026-09",
  "replicates": 8,
  "scenario": {
   "capex": {
    "channel": "ch_capex",
-   "driver": "capex",
+   "factor": "credit.capex",
    "kind": "point",
    "unit": "fraction",
    "value": 0.1
   },
   "costs": {
    "channel": "ch_costs",
-   "driver": "cogs",
+   "factor": "credit.cogs",
    "high": 0.12,
    "kind": "uniform",
    "low": 0.02,
@@ -13507,7 +13157,7 @@
   },
   "demand": {
    "channel": "ch_demand",
-   "driver": "revenue",
+   "factor": "credit.revenue",
    "high": -0.03,
    "kind": "triangular",
    "low": -0.18,
@@ -13516,7 +13166,7 @@
   },
   "payments": {
    "channel": "ch_payments",
-   "driver": "working_capital",
+   "factor": "credit.working_capital",
    "high": 30.0,
    "kind": "triangular",
    "low": 5.0,
@@ -13525,7 +13175,7 @@
   },
   "rate": {
    "channel": "ch_rate",
-   "driver": "interest",
+   "factor": "credit.interest",
    "high": 0.06,
    "kind": "truncated_normal",
    "low": 0.0,

@@ -28,7 +28,8 @@ NOT_POSITIVE_DEFINITE = (
 class Marginal:
     """A marginal distribution with domain-respecting bounds (spec 13.1)."""
 
-    kind: Literal["point", "triangular", "uniform", "truncated_normal", "empirical"]
+    #: ``lognormal`` reads ``mean`` and ``sigma`` as the mean and deviation of the log.
+    kind: Literal["point", "triangular", "uniform", "truncated_normal", "lognormal", "empirical"]
     value: float | None = None
     low: float | None = None
     mode: float | None = None
@@ -55,6 +56,9 @@ class Marginal:
                 raise ValueError("truncated_normal requires mean, sigma, low and high")
             if self.sigma <= 0 or self.low >= self.high:
                 raise ValueError("require sigma > 0 and low < high")
+        if self.kind == "lognormal":
+            if None in (self.mean, self.sigma) or self.sigma <= 0:
+                raise ValueError("lognormal requires mean and sigma > 0")
         if self.kind == "empirical" and not self.samples:
             raise ValueError("empirical requires samples")
 
@@ -75,6 +79,8 @@ class Marginal:
                 loc=self.mean,
                 scale=self.sigma,
             )
+        if self.kind == "lognormal":
+            return np.exp(self.mean + self.sigma * stats.norm.ppf(np.clip(u, _EPS, 1 - _EPS)))
         samples = np.sort(np.asarray(self.samples, dtype=float))
         return samples[np.clip((u * samples.size).astype(int), 0, samples.size - 1)]
 
@@ -90,18 +96,26 @@ class Marginal:
             return float((self.low + self.high) / 2.0)
         if self.kind == "truncated_normal":
             return float(self.mean)
+        if self.kind == "lognormal":
+            return float(np.exp(self.mean + self.sigma**2 / 2.0))
         return float(np.median(np.asarray(self.samples, dtype=float)))
 
 
 def sobol_replicates(dimensions: int, seed: int, points: int, replicates: int = MIN_REPLICATES):
-    """``R`` independently scrambled Sobol nets of ``2^m`` points each (spec 13.3)."""
+    """``R`` independently scrambled Sobol nets of ``2^m`` points each (spec 13.3).
+
+    Replicate ``r`` is scrambled by its own generator seeded with ``(seed, r)``, so the
+    replicates of neighbouring seeds share nothing.
+    """
     if replicates < MIN_REPLICATES:
         raise ValueError(f"at least {MIN_REPLICATES} independent replicates are required")
     if points <= 0 or points & (points - 1):
         raise ValueError("points must be a power of two")
     m = points.bit_length() - 1
     return [
-        qmc.Sobol(d=dimensions, scramble=True, seed=seed + replicate).random_base2(m)
+        qmc.Sobol(
+            d=dimensions, scramble=True, rng=np.random.default_rng([seed, replicate])
+        ).random_base2(m)
         for replicate in range(replicates)
     ]
 

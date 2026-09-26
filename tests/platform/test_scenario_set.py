@@ -4,15 +4,28 @@ from datetime import date
 
 import numpy as np
 import pytest
+from scipy import stats
 
+from msa.contracts.evidence import Evidence
+from msa.contracts.graph import (
+    Edge,
+    LogNormalDistribution,
+    Node,
+    PointDistribution,
+    TransmissionGraph,
+    TriangularDistribution,
+    UniformDistribution,
+)
 from msa.contracts.scenario import MacroParameter
 from msa.engine.scenario_set import (
     Realisations,
     ScenarioSet,
+    edge_elasticities,
     idiosyncratic_draws,
     scenario_id,
     scenario_set_from_parameters,
 )
+from msa.engine.scenarios import Marginal
 from msa.plugin_sdk.model import IdiosyncraticFactor
 
 POINTS = 64
@@ -177,6 +190,117 @@ def test_idiosyncratic_draws_differ_with_different_name():
     a = idiosyncratic_draws(shock(name="a"), seed=1, points=POINTS, replicates=REPLICATES)
     b = idiosyncratic_draws(shock(name="b"), seed=1, points=POINTS, replicates=REPLICATES)
     assert not np.array_equal(a, b)
+
+
+def test_idiosyncratic_draws_are_stratified_in_every_replicate():
+    shk = shock(sigma=1.0)
+    draws = idiosyncratic_draws(shk, seed=1, points=POINTS, replicates=REPLICATES)
+    for r in range(REPLICATES):
+        ranks = np.sort(stats.norm.cdf(draws[r] / shk.sigma))
+        lower = np.arange(POINTS) / POINTS
+        upper = (np.arange(POINTS) + 1) / POINTS
+        assert np.all((ranks >= lower) & (ranks < upper))
+
+
+def test_idiosyncratic_draws_of_two_subjects_are_nearly_uncorrelated_in_every_replicate():
+    n, r = 1024, 8
+    a = idiosyncratic_draws(shock(subject="I1"), seed=1, points=n, replicates=r)
+    b = idiosyncratic_draws(shock(subject="I2"), seed=1, points=n, replicates=r)
+    for replicate in range(r):
+        rho = np.corrcoef(a[replicate], b[replicate])[0, 1]
+        assert abs(rho) <= 0.15
+
+
+def test_idiosyncratic_draws_are_independent_of_a_macro_factor_in_every_replicate():
+    n, r = 1024, 8
+    moex = parameter(kind="triangular", value=None, low=-0.1, mode=0.0, high=0.1)
+    s = scenario_set(parameters={"moex": moex}, points=n, replicates=r)
+    macro = s.sample(seed=1).stacked("moex")
+    residual = idiosyncratic_draws(shock(subject="I1"), seed=1, points=n, replicates=r)
+    for replicate in range(r):
+        rho = np.corrcoef(macro[replicate], residual[replicate])[0, 1]
+        assert abs(rho) <= 0.15
+
+
+# -- edge_elasticities --------------------------------------------------------------------
+
+
+def elasticity_edge(src, dst, distribution):
+    return Edge(
+        src=src,
+        dst=dst,
+        sign=1,
+        elasticity=distribution,
+        lag_months=0,
+        evidence=[Evidence(kind="document", source_id="S", locator="l", fragment_sha256="a" * 64)],
+    )
+
+
+def elasticity_graph():
+    """One event driving four edges, one of each elasticity family."""
+    return TransmissionGraph(
+        event_id="event",
+        nodes=[
+            Node(id="event", kind="event", label="e"),
+            Node(id="a", kind="channel", label="a"),
+            Node(id="b", kind="channel", label="b"),
+            Node(id="c", kind="channel", label="c"),
+            Node(id="d", kind="channel", label="d"),
+        ],
+        edges=[
+            elasticity_edge("event", "a", PointDistribution(value=1.0)),
+            elasticity_edge("event", "b", TriangularDistribution(low=0.5, mode=0.8, high=1.2)),
+            elasticity_edge("event", "c", UniformDistribution(low=0.2, high=0.9)),
+            elasticity_edge("event", "d", LogNormalDistribution(mu=0.0, sigma=0.3)),
+        ],
+    )
+
+
+def test_edge_elasticities_skips_point_edges():
+    result = edge_elasticities(elasticity_graph(), seed=1, points=POINTS, replicates=REPLICATES)
+    assert set(result) == {("event", "b"), ("event", "c"), ("event", "d")}
+
+
+def test_edge_elasticities_shape():
+    result = edge_elasticities(elasticity_graph(), seed=1, points=POINTS, replicates=REPLICATES)
+    for draws in result.values():
+        assert draws.shape == (REPLICATES, POINTS)
+
+
+def test_edge_elasticities_triangular_and_uniform_stay_within_bounds():
+    result = edge_elasticities(elasticity_graph(), seed=1, points=POINTS, replicates=REPLICATES)
+    assert np.all((result[("event", "b")] >= 0.5) & (result[("event", "b")] <= 1.2))
+    assert np.all((result[("event", "c")] >= 0.2) & (result[("event", "c")] <= 0.9))
+
+
+def test_edge_elasticities_lognormal_is_positive():
+    result = edge_elasticities(elasticity_graph(), seed=1, points=POINTS, replicates=REPLICATES)
+    assert np.all(result[("event", "d")] > 0)
+
+
+def test_edge_elasticities_deterministic_for_same_seed():
+    g = elasticity_graph()
+    a = edge_elasticities(g, seed=1, points=POINTS, replicates=REPLICATES)
+    b = edge_elasticities(g, seed=1, points=POINTS, replicates=REPLICATES)
+    assert all(np.array_equal(a[key], b[key]) for key in a)
+
+
+# -- Marginal(kind="lognormal") ------------------------------------------------------------
+
+
+def test_marginal_lognormal_ppf_median_is_exp_mean():
+    m = Marginal(kind="lognormal", mean=0.2, sigma=0.5)
+    assert float(m.ppf(0.5)) == pytest.approx(np.exp(0.2))
+
+
+def test_marginal_lognormal_central_value():
+    m = Marginal(kind="lognormal", mean=0.2, sigma=0.5)
+    assert m.central_value() == pytest.approx(np.exp(0.2 + 0.5**2 / 2.0))
+
+
+def test_marginal_lognormal_requires_sigma_greater_than_zero():
+    with pytest.raises(ValueError, match="lognormal requires mean and sigma"):
+        Marginal(kind="lognormal", mean=0.2, sigma=0.0)
 
 
 # -- Realisations ---------------------------------------------------------------------------

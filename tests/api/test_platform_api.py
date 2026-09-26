@@ -196,7 +196,7 @@ def test_a_run_goes_from_the_event_to_the_approved_report(client):
     status = wait(client, status["run_id"])
     run_id = status["run_id"]
     assert status["status"] == "human_fix_graph", status
-    assert status["workflow_id"] == "stress_test" and status["plugins"]["credit"] == "3.2.0"
+    assert status["workflow_id"] == "stress_test" and status["plugins"]["credit"] == "3.3.0"
     stop = status["pending_interrupt"][0]["payload"]
     post(client, f"/v1/demo/runs/{run_id}/resume", {"graph": stop["graph"]})
     status = wait(client, run_id)

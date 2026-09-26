@@ -1,58 +1,32 @@
 """The credit models reproduce their reference results on the demo portfolios.
 
-``credit_reference.json`` holds the inputs and the results: every credit position of
-MULTI-ASSET and ATYPICAL-BORROWERS on a scenario that moves five drivers through a graph
-with lags and a triangular elasticity, and each portfolio's credit-loss slice. The
-positions go through the platform: the dispatcher, the credit plugin and the slice
-aggregator.
+``credit_reference.json`` holds the inputs and the results written by
+``capture_reference.py``: every credit position of MULTI-ASSET and ATYPICAL-BORROWERS on a
+scenario that moves five drivers through a graph with lags and a triangular elasticity, and
+each portfolio's credit-loss slice. The test runs the same inputs through the platform (the
+dispatcher, the credit plugin and the slice aggregator) and compares.
 
-Not compared: the data-quality score (``coverage.input_data``, the data axis and the
-score's source), which the reference stored from the catalog rather than recomputed from
-the statement; flags are compared without repetitions.
+The realisations are compared through a summary of each parameter's draws, not through
+their hash: the last digits of floating-point arithmetic may differ between platforms, and
+the tolerance covers that.
 """
 
 import json
-from datetime import date
-from pathlib import Path
 
 import pytest
 
-from demo import catalog
-from msa.contracts import PortfolioBundle, TransmissionGraph
-from msa.contracts.domain import contexts
-from msa.engine.aggregation import aggregate_slices
-from msa.engine.runner import run_batch
-from msa.platform.registry import registry
+from .capture_reference import REFERENCE, draw_summaries, run
 
-GOLDEN = json.loads((Path(__file__).with_name("credit_reference.json")).read_text("utf-8"))
-SNAPSHOT_ID = "SYNTHETIC-2026-09-11"
-NOT_COMPARED = ("/coverage/input_data", "/axes/4/measures/data_quality", "/input_sources/dq")
-TOLERANCE = 1e-9
-
-
-def graph(old: dict) -> TransmissionGraph:
-    """The captured graph in today's contract: driver nodes are factor nodes."""
-    value = json.loads(json.dumps(old))
-    for node in value["nodes"]:
-        if node["kind"] == "driver":
-            node["kind"] = "factor"
-            node["factor"] = "credit." + node.pop("driver")
-    value["factor_elasticity"] = value.pop("driver_elasticity")
-    return TransmissionGraph.model_validate(value)
-
-
-def scenario(old: dict) -> dict:
-    return {
-        name: {
-            **{k: v for k, v in item.items() if k != "driver"},
-            "factor": "credit." + item["driver"],
-        }
-        for name, item in old.items()
-    }
+GOLDEN = json.loads(REFERENCE.read_text("utf-8"))
+SETTINGS = {key: GOLDEN[key] for key in ("as_of", "seed", "points", "replicates", "horizon")}
+#: Relative, above a scale of one. The drift between Windows and Linux seen so far is 2e-9.
+TOLERANCE = 1e-8
+#: Hashes of the code and of the realisations; the numbers they stand for are compared.
+NOT_COMPARED = ("code_sha256", "macro_draws_sha256")
 
 
 def differences(expected, actual, path=""):
-    if path.startswith(NOT_COMPARED) or path.endswith("/model_id") or path.endswith("code_sha256"):
+    if path.endswith(NOT_COMPARED):
         return []
     if isinstance(expected, dict) and isinstance(actual, dict):
         found = []
@@ -70,7 +44,9 @@ def differences(expected, actual, path=""):
             for i, (a, b) in enumerate(zip(expected, actual, strict=False))
             for d in differences(a, b, f"{path}/{i}")
         ]
-    if isinstance(expected, float) and isinstance(actual, float):
+    if isinstance(expected, float | int) and isinstance(actual, float | int):
+        if isinstance(expected, bool) or isinstance(actual, bool):
+            return [] if expected == actual else [f"{path}: {expected!r} != {actual!r}"]
         scale = max(1.0, abs(expected), abs(actual))
         return (
             []
@@ -82,96 +58,29 @@ def differences(expected, actual, path=""):
 
 @pytest.fixture(scope="module")
 def runs():
-    snapshot = catalog.snapshot(SNAPSHOT_ID)
-    reg = registry()
-    out = {}
-    for portfolio_id, captured in GOLDEN["portfolios"].items():
-        raw = catalog.bundle_data(portfolio_id)
-        # The demo portfolio has since gained shares; the reference covers its credit positions.
-        raw["positions"] = [p for p in raw["positions"] if p["position_id"] in captured["assets"]]
-        bundle = PortfolioBundle.model_validate(raw)
-        sectors = {party.party_id: party.okved for party in bundle.parties}
-        batch = run_batch(
-            contexts(bundle),
-            snapshot,
-            scenario(GOLDEN["scenario"]),
-            graph(captured["graph"]),
-            as_of=date.fromisoformat(GOLDEN["as_of"]),
-            horizon=GOLDEN["horizon"],
-            seed=GOLDEN["seed"],
-            registry=reg,
-            sector_of=sectors.get,
-            points=GOLDEN["points"],
-            replicates=GOLDEN["replicates"],
-            options=reg.run_options("demo"),
-            run_id=f"golden-{portfolio_id}",
-        )
-        portfolio = aggregate_slices(
-            f"golden-{portfolio_id}",
-            batch.results,
-            draws=batch.draws,
-            exposures=batch.exposures,
-            registry=reg,
-            base_currency="RUB",
-            as_of=date.fromisoformat(GOLDEN["as_of"]),
-            horizon=GOLDEN["horizon"],
-            seed=GOLDEN["seed"],
-            scenario_id=batch.realisations.scenario_id,
-            macro_draws_sha256=batch.realisations.macro_draws_sha256,
-        )
-        out[portfolio_id] = (captured, batch, portfolio)
-    return out
-
-
-@pytest.mark.parametrize("portfolio_id", sorted(GOLDEN["portfolios"]))
-def test_every_calculated_position_matches_its_reference(runs, portfolio_id):
-    captured, batch, _ = runs[portfolio_id]
-    calculated = 0
-    for result in batch.results:
-        expected = dict(captured["assets"][result.position_id]["result"])
-        if expected["model_id"] == "not_calculated":
-            # The reference kept it out of the run; so does the platform, with its reason.
-            assert result.execution == "not_run" and result.status == expected["status"]
-            continue
-        calculated += 1
-        actual = dict(result.details)
-        expected["flags"] = list(dict.fromkeys(expected["flags"]))
-        actual["flags"] = list(dict.fromkeys(actual["flags"]))
-        assert differences(expected, actual) == [], result.position_id
-        assert result.macro_draws_sha256 == expected["macro_draws_sha256"]
-    assert calculated == sum(
-        1 for item in captured["assets"].values() if item["result"]["model_id"] != "not_calculated"
-    )
-
-
-@pytest.mark.parametrize("portfolio_id", sorted(GOLDEN["portfolios"]))
-def test_the_credit_slice_matches_the_reference_portfolio(runs, portfolio_id):
-    captured, _, portfolio = runs[portfolio_id]
-    old = captured["portfolio"]
-    credit = portfolio.slices["credit.loss"]
-    pairs = {
-        "p05": (credit.loss_quantiles.p05, old["loss_quantiles"]["p05"]),
-        "p50": (credit.loss_quantiles.p50, old["loss_quantiles"]["p50"]),
-        "p95": (credit.loss_quantiles.p95, old["loss_quantiles"]["p95"]),
-        "es95": (credit.expected_shortfall_95, old["expected_shortfall_95"]),
-        "mean": (credit.mean_loss, old["mean_loss"]),
-        "var95": (credit.value_at_risk_95, old["value_at_risk_95"]),
-        "coverage": (credit.coverage.covered_share, old["covered_ead_share"]),
-        "hhi": (credit.herfindahl, old["herfindahl"]),
-        "sum_p95": (credit.sum_of_individual_p95, old["sum_of_individual_p95"]),
+    return {
+        portfolio_id: run(portfolio_id, captured["graph"], GOLDEN["scenario"], SETTINGS)
+        for portfolio_id, captured in GOLDEN["portfolios"].items()
     }
-    for name, (actual, expected) in pairs.items():
-        assert actual == pytest.approx(expected, rel=TOLERANCE, abs=TOLERANCE), name
-    assert credit.status == old["status"]
-    assert credit.included == old["included_assets"]
-    assert [e.position_id for e in credit.excluded] == [
-        e["asset_id"] for e in old["excluded_assets"]
-    ]
-    assert sorted(credit.flags) == sorted(old["flags"])
-    reference = {c["asset_id"]: c for c in old["contributions"]}
-    for item in credit.contributions:
-        expected = reference[item.position_id]
-        assert item.expected_shortfall_contribution == pytest.approx(
-            expected["expected_shortfall_contribution"], rel=TOLERANCE, abs=TOLERANCE
-        )
-        assert item.mean_loss == pytest.approx(expected["mean_loss"], rel=TOLERANCE, abs=TOLERANCE)
+
+
+def test_the_scenario_draws_match_their_reference():
+    assert differences(GOLDEN["draws"], draw_summaries(GOLDEN["scenario"], SETTINGS)) == []
+
+
+@pytest.mark.parametrize("portfolio_id", sorted(GOLDEN["portfolios"]))
+def test_every_position_matches_its_reference(runs, portfolio_id):
+    batch, _ = runs[portfolio_id]
+    expected = GOLDEN["portfolios"][portfolio_id]["positions"]
+    assert sorted(r.position_id for r in batch.results) == sorted(expected)
+    for result in batch.results:
+        reference = expected[result.position_id]
+        assert (result.execution, result.status) == (reference["execution"], reference["status"])
+        assert differences(reference["details"], result.details) == [], result.position_id
+
+
+@pytest.mark.parametrize("portfolio_id", sorted(GOLDEN["portfolios"]))
+def test_the_credit_slice_matches_its_reference(runs, portfolio_id):
+    _, credit = runs[portfolio_id]
+    expected = GOLDEN["portfolios"][portfolio_id]["slice"]
+    assert differences(expected, credit.model_dump(mode="json")) == []

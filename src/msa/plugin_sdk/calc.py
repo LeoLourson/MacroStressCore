@@ -5,8 +5,10 @@ with; the SDK only hands them out. A plugin imports them from here, never from
 ``msa.engine``: this module is the stable surface, the engine's layout is not. A capability
 a plugin needs and does not find here is a request to extend the SDK.
 
-- Scenario: ``ScenarioSet`` (the joint realisations of a run), ``estimate`` and
-  ``DEFAULT_TOLERANCES`` (a quantity's mean and error interval across replicates).
+- Scenario: ``ScenarioSet`` (the joint realisations of a run), ``edge_elasticities`` (the
+  realisations of the graph's uncertain edge elasticities, drawn with the run seed),
+  ``estimate`` and ``DEFAULT_TOLERANCES`` (a quantity's mean and error interval across
+  replicates).
 - The economic graph: ``factor_signal`` (a scenario parameter through the event's graph to
   a factor node of the position's sector, month by month), ``factor_change`` (the signal as
   the factor's relative change) and ``NO_PATH_FLAG`` (the parameter does not reach it).
@@ -22,7 +24,7 @@ from msa.engine.dispatch import data_quality_level
 from msa.engine.graph_adapter import NO_PATH_FLAG
 from msa.engine.graph_signal import factor_change, factor_signal
 from msa.engine.portfolio import expected_shortfall
-from msa.engine.scenario_set import ScenarioSet
+from msa.engine.scenario_set import ScenarioSet, edge_elasticities
 from msa.engine.scenarios import DEFAULT_TOLERANCES, estimate
 from msa.engine.shapley import contributions as shapley_contributions
 from msa.engine.shapley import exact as shapley_exact
@@ -38,6 +40,7 @@ __all__ = [
     "check_domain",
     "code_sha256",
     "data_quality_level",
+    "edge_elasticities",
     "estimate",
     "expected_shortfall",
     "factor_change",

@@ -26,6 +26,7 @@ from msa.plugin_sdk.calc import (
     NO_PATH_FLAG,
     ScenarioSet,
     code_sha256,
+    edge_elasticities,
     estimate,
     expected_shortfall,
     factor_change,
@@ -62,7 +63,7 @@ from .math.credit import (
     score,
 )
 
-MODEL_VERSION = "3.2.0"
+MODEL_VERSION = "3.3.0"
 SYNTHETIC_CALIBRATION_FLAG = "calibration_synthetic"
 LGD_NOT_APPLICABLE_FLAG = "lgd_not_applicable"
 COVENANT_OUTSIDE_PREFIX = "covenant_outside_horizon:"
@@ -222,10 +223,17 @@ def run_asset(
         name: marginal.central_value() for name, marginal in scenario_set.marginals().items()
     }
     random_values = {name: sampled.stacked(name) for name in sampled.names}  # (replicate, point)
+    # The realisations also draw the uncertain elasticities of the graph's edges; the
+    # central evaluation, Shapley and reverse stress stay on the central graph.
+    elasticities = edge_elasticities(
+        input.graph, seed, scenario_set.points, scenario_set.replicates
+    )
 
     base = asset.evaluate(_zero_drivers((), input.horizon))
     stress = asset.evaluate(_driver_shocks(input, scenario_set, central, flags=flags))
-    random = asset.evaluate(_driver_shocks(input, scenario_set, random_values, flags=flags))
+    random = asset.evaluate(
+        _driver_shocks(input, scenario_set, random_values, flags=flags, elasticities=elasticities)
+    )
     for item in (*base.flags, *stress.flags, *random.flags):
         _add(flags, item)
 
@@ -360,10 +368,19 @@ def credit_parameters(scenario_set) -> dict:
     }
 
 
-def driver_signal(graph, parameter, okved, value, horizon, *, flags) -> np.ndarray | None:
+def driver_signal(
+    graph, parameter, okved, value, horizon, *, flags, elasticities=None
+) -> np.ndarray | None:
     """The monthly signal one credit parameter sends to its driver for an asset of ``okved``."""
     return factor_signal(
-        graph, parameter, FACTORS[parameter.factor], okved, value, horizon, flags=flags
+        graph,
+        parameter,
+        FACTORS[parameter.factor],
+        okved,
+        value,
+        horizon,
+        flags=flags,
+        elasticities=elasticities,
     )
 
 
@@ -372,7 +389,7 @@ def driver_change(driver: str, signal) -> np.ndarray:
     return factor_change(FACTORS["credit." + driver], signal)
 
 
-def _driver_shocks(input, scenario_set, values, *, flags) -> dict[str, np.ndarray]:
+def _driver_shocks(input, scenario_set, values, *, flags, elasticities=None) -> dict:
     """Monthly shock of every driver of this asset under the given parameter values."""
     horizon = input.horizon
     signals: dict[str, list[np.ndarray]] = {name: [] for name in DRIVERS}
@@ -381,7 +398,13 @@ def _driver_shocks(input, scenario_set, values, *, flags) -> dict[str, np.ndarra
             _add(flags, f"scenario_parameter_unmapped:{name}")
             continue
         signal = driver_signal(
-            input.graph, parameter, input.profile.okved, values[name], horizon, flags=flags
+            input.graph,
+            parameter,
+            input.profile.okved,
+            values[name],
+            horizon,
+            flags=flags,
+            elasticities=elasticities,
         )
         if signal is None:
             _add(flags, f"{NO_PATH_FLAG}:{name}")

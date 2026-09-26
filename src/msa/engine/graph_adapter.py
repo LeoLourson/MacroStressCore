@@ -38,13 +38,16 @@ def central_elasticity(distribution) -> float:
     raise ValueError(f"unknown elasticity family: {family!r}")
 
 
-def temporal_graph(contract_graph, factor, horizon: int) -> TemporalGraph:
+def temporal_graph(contract_graph, factor, horizon: int, elasticities=None) -> TemporalGraph:
     """Build the typed temporal graph that carries shocks to one ``factor`` (a ``FactorSpec``).
 
     A scenario parameter names exactly one factor, so every node on the way to it is
     evaluated in that factor's coordinate. Where the factor is additive but the path is
     proportional, the final edge carries an explicit declared conversion (spec 3.1).
+    ``elasticities`` maps ``(src, dst)`` to realisations of an uncertain edge elasticity
+    (``scenario_set.edge_elasticities``); other edges carry their central elasticity.
     """
+    elasticities = elasticities or {}
     coordinate_, kind = coordinate(factor)
     driver_ids = {
         node.id
@@ -72,7 +75,9 @@ def temporal_graph(contract_graph, factor, horizon: int) -> TemporalGraph:
                 src=edge.src,
                 dst=edge.dst,
                 sign=int(edge.sign),
-                sensitivity=abs(central_elasticity(edge.elasticity)),
+                sensitivity=np.abs(elasticities[(edge.src, edge.dst)])
+                if (edge.src, edge.dst) in elasticities
+                else abs(central_elasticity(edge.elasticity)),
                 # A lag outside the calculation horizon produces no in-horizon
                 # response. Clamping it to H-1 would invent an effect in the final
                 # month and violate temporal propagation semantics.

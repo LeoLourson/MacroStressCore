@@ -16,6 +16,8 @@ from msa.contracts.graph import (
 from msa.contracts.scenario import MacroParameter
 from msa.engine.graph_adapter import central_elasticity, coordinate, temporal_graph
 from msa.engine.graph_signal import factor_change, factor_signal, reachable, target_node
+from msa.engine.scenario_set import edge_elasticities
+from msa.engine.transmission import DelayKernel, TemporalEdge
 from msa.plugin_sdk.specs import FactorSpec
 
 HORIZON = 3
@@ -68,7 +70,16 @@ def parameter(channel="channel", factor="credit.revenue"):
     )
 
 
-def signal_of(g, spec, *, okved=None, value=0.1, channel="channel", param_factor="credit.revenue"):
+def signal_of(
+    g,
+    spec,
+    *,
+    okved=None,
+    value=0.1,
+    channel="channel",
+    param_factor="credit.revenue",
+    elasticities=None,
+):
     return factor_signal(
         g,
         parameter(channel=channel, factor=param_factor),
@@ -77,6 +88,7 @@ def signal_of(g, spec, *, okved=None, value=0.1, channel="channel", param_factor
         value=value,
         horizon=HORIZON,
         flags=[],
+        elasticities=elasticities,
     )
 
 
@@ -184,6 +196,32 @@ def test_temporal_graph_sensitivity_is_the_absolute_central_elasticity():
     assert into_driver.gain() == 2.0  # sign +1 keeps the gain positive
 
 
+def test_temporal_graph_elasticities_override_an_edges_sensitivity_with_its_draws():
+    g = two_node_graph()
+    draws = np.array([[0.5, 1.0], [1.5, 2.0]])  # (replicates=2, points=2)
+    temporal = temporal_graph(g, log_factor(), HORIZON, {("channel", "factor"): draws})
+    into_driver = next(e for e in temporal.edges if e.dst == "factor")
+    assert np.array_equal(into_driver.sensitivity, draws)
+
+
+# -- TemporalEdge / TemporalGraph.propagate: array sensitivity (B10) ------------------------
+
+
+def test_temporal_edge_accepts_an_array_sensitivity():
+    draws = np.array([0.5, 1.0, 1.5])
+    e = TemporalEdge(src="a", dst="b", sign=1, sensitivity=draws, kernel=DelayKernel.fixed(0))
+    assert np.array_equal(e.gain(), draws)
+
+
+def test_temporal_graph_propagate_broadcasts_edge_draws_over_a_scalar_direct_input():
+    g = two_node_graph()
+    draws = np.array([[0.5, 1.0], [1.5, 2.0]])  # (replicates=2, points=2)
+    temporal = temporal_graph(g, log_factor(), HORIZON, {("channel", "factor"): draws})
+    direct = {"event": np.full(HORIZON, 0.1)}  # shape (H,), no draw axes
+    signals = temporal.propagate(direct, horizon=HORIZON)
+    assert signals["factor"].shape == (2, 2, HORIZON)
+
+
 # -- factor_signal() / factor_change() -----------------------------------------------------
 
 
@@ -243,6 +281,43 @@ def test_factor_signal_scales_with_edge_sensitivity():
     g = two_node_graph(elasticity_value=2.0)
     signal = signal_of(g, log_factor())
     assert np.allclose(signal, 2.0 * np.log1p(0.1))
+
+
+def triangular_elasticity_graph():
+    """event -> channel -> factor, the last edge with a triangular elasticity (B10)."""
+    return TransmissionGraph(
+        event_id="event",
+        nodes=[
+            Node(id="event", kind="event", label="e"),
+            Node(id="channel", kind="channel", label="c"),
+            Node(id="factor", kind="factor", label="f", factor="credit.revenue"),
+        ],
+        edges=[
+            edge("event", "channel"),
+            Edge(
+                src="channel",
+                dst="factor",
+                sign=1,
+                elasticity=TriangularDistribution(low=0.5, mode=1.0, high=1.5),
+                lag_months=0,
+                evidence=evidence(),
+            ),
+        ],
+    )
+
+
+def test_factor_signal_without_elasticities_has_no_draw_axis():
+    g = triangular_elasticity_graph()
+    signal = signal_of(g, log_factor(), value=-0.1)
+    assert signal.shape == (HORIZON,)
+
+
+def test_factor_signal_with_elasticities_spreads_the_last_month_p5_below_p95():
+    g = triangular_elasticity_graph()
+    elasticities = edge_elasticities(g, seed=1, points=64, replicates=8)
+    signal = signal_of(g, log_factor(), value=-0.1, elasticities=elasticities)
+    p05, p95 = np.percentile(signal[..., -1], [5, 95])
+    assert p05 < p95
 
 
 def shared_factor_graph(*sectors, factor_id="credit.revenue"):

@@ -21,7 +21,7 @@ from .families import family_for
 from .position_risk import MODEL_VERSION, AssetRiskInput, review_flags, run_asset
 
 PLUGIN_ID = "credit"
-PLUGIN_VERSION = "3.2.0"
+PLUGIN_VERSION = "3.3.0"
 SLICE = "credit.loss"
 REGISTRY_OPTION = "credit.registry_id"
 RUB = "RUB_million"
