@@ -22,8 +22,6 @@ import numpy as np
 from msa.contracts.result import AggregationContribution, Diagnostic
 from msa.contracts.risk import ApplicabilityLimits
 from msa.contracts.units import money, unit_price
-from msa.engine.dispatch import data_quality_level
-from msa.engine.shapley import exact as shapley
 from msa.plugin_sdk import (
     CalculationModel,
     DataRequirement,
@@ -32,6 +30,8 @@ from msa.plugin_sdk import (
     FactorRequirement,
     IdiosyncraticFactor,
 )
+from msa.plugin_sdk.calc import data_quality_level
+from msa.plugin_sdk.calc import shapley_exact as shapley
 from msa.plugin_sdk.results import distribution, envelope, scalar
 from msa.plugins.market import fx
 from msa.plugins.market.kinds import PRICE

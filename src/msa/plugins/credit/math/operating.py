@@ -13,7 +13,7 @@ from dataclasses import dataclass, field
 
 import numpy as np
 
-from msa.engine.transmission import NON_NEGATIVE_DAYS, check_domain
+from msa.plugin_sdk.calc import NON_NEGATIVE_DAYS, check_domain
 
 from .calendar import Calendar
 
