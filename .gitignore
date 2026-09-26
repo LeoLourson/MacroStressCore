@@ -8,6 +8,8 @@ dist/
 .data/
 node_modules/
 ui/web/dist/
+# Generated from the server's registry before every UI build (npm run build).
+ui/web/src/plugins/manifest.json
 graphify-out/
 CLAUDE.md
 AGENTS.md

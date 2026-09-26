@@ -33,9 +33,9 @@ from msa.plugin_sdk import (
     RunOptions,
 )
 from msa.plugin_sdk.results import envelope, scalar
-from msa.plugins.core import plugin as core_plugin
 from msa.prompts.registry import current_version
 from msa.validators import validate
+from msa.workflows import plugin as core_plugin
 from tests.support import agents, confirm, positions, run_input, snapshot, stop
 
 

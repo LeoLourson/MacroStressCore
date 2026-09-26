@@ -93,12 +93,6 @@ export const DATA_QUALITY: Record<string, string> = {
   unknown: 'не оценено',
 };
 
-/** Coverage bases of the slices; a plugin's slice names its own in the catalog. */
-export const EXPOSURE_BASES: Record<string, string> = {
-  ead: 'суммы под риском',
-  market_value: 'стоимости позиций',
-};
-
 export const PROVIDERS: Record<string, string> = {
   local: 'Локальная LLM',
   deepseek: 'DeepSeek API',
@@ -117,14 +111,9 @@ export const REASONS: Record<string, string> = {
   'Run failed; consult the server log': 'Внутренняя ошибка сервиса: обратитесь к администратору.',
 };
 
-// Terms a risk manager meets on screen, explained in one sentence each.
+// Terms a risk manager meets on the platform's screens, explained in one sentence each.
+// A plugin explains its own terms (UiPlugin.glossary); <Term> reads both.
 export const GLOSSARY: Record<string, string> = {
-  'ΔEL': 'Рост ожидаемых потерь: насколько вырастут потери по позиции из-за события.',
-  'ΔPD': 'Рост вероятности дефолта заёмщика из-за события.',
-  PD: 'Вероятность дефолта заёмщика на горизонте расчёта.',
-  LGD: 'Доля суммы, которая будет потеряна при дефолте.',
-  EAD: 'Сумма под риском: сколько банк может потерять по позиции.',
-  ICR: 'Покрытие процентов: во сколько раз EBITDA больше процентных платежей.',
   'P5–P95':
     'Диапазон, в который результат попадает в 90 % сценариев. P50 — медиана: половина сценариев лучше, половина хуже.',
   ES95: 'Средние потери в худших 5 % сценариев.',
@@ -134,9 +123,7 @@ export const GLOSSARY: Record<string, string> = {
     'Какая часть результата приходится на каждый канал или фактор (значения Шепли); сумма вкладов равна полному изменению.',
   'Эластичность':
     'Сила связи: на сколько процентов меняется следствие при изменении причины на 1 %.',
-  'Обратный стресс-тест': 'Какая сила события доводит ковенант до нарушения.',
   'Стресс': 'Значение при центральных (наиболее вероятных) значениях шоков события.',
-  'Ковенант': 'Условие кредитного договора, например «Долг / EBITDA не выше 3».',
   'Срез портфеля':
     'Итог по одной мере с одним смыслом: кредитные потери и рыночный результат считаются отдельно и не складываются.',
 };

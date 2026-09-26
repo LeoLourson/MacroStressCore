@@ -2,10 +2,10 @@ import { Code } from '@mantine/core';
 import { Fragment, useMemo, type ReactNode } from 'react';
 import type { Artifacts, NumberRef } from '../../api/types';
 import { TracedNumber } from '../../components/Provenance';
-import { viewFor } from '../../api/catalog';
-import { lowerFirst, metricValue } from '../../lib/format';
+import { lowerFirst } from '../../lib/format';
 import { ACTIONS, flagOne } from '../../lib/labels';
 import { NumberMarker, type Entries } from '../../lib/provenance';
+import { pluginGlosses } from '../../plugins';
 
 // Section titles an advisory model may write as bare lines; the builder writes «### ».
 const SECTIONS = new Set(['Резюме', 'Итог', 'Рекомендации', 'Допущения и авторы', 'Источники']);
@@ -14,8 +14,8 @@ const HEADING_GLOSS: Record<string, string> = {};
 
 /**
  * Plain-language names for the machine identifiers a report may carry: actions, channels,
- * covenants, flags and the event document. They are shown beside the identifier, never
- * instead of it: the text itself is what gets signed.
+ * the plugins' own identifiers (UiPlugin.glosses), flags and the event document. They are
+ * shown beside the identifier, never instead of it: the text itself is what gets signed.
  */
 export function glossary(artifacts: Artifacts): Map<string, string> {
   const map = new Map<string, string>();
@@ -23,22 +23,7 @@ export function glossary(artifacts: Artifacts): Map<string, string> {
   for (const node of artifacts.graph?.nodes ?? []) {
     if (node.kind === 'channel') map.set(node.id, node.label);
   }
-  // Covenants are terms of a credit instrument; their metric names come from its view.
-  for (const context of artifacts.positions ?? []) {
-    const labels = viewFor(context.instrument.instrument_type)?.labels ?? {};
-    const covenants = (context.instrument.terms.covenants ?? []) as {
-      covenant_id?: string;
-      metric: string;
-      operator: string;
-      threshold: number;
-      unit: string;
-    }[];
-    for (const c of covenants) {
-      if (!c.covenant_id) continue;
-      const sign = c.operator === 'ge' ? '≥' : '≤';
-      map.set(c.covenant_id, `${labels[`covenant:${c.metric}`] ?? labels[c.metric] ?? c.metric} ${sign} ${metricValue(c.threshold, c.unit)}`);
-    }
-  }
+  for (const [code, name] of pluginGlosses(artifacts)) map.set(code, name);
   const doc = artifacts.document?.doc_id;
   if (doc) {
     map.set(doc, 'текст события');

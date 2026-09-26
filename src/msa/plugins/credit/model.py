@@ -10,8 +10,8 @@ contribution to the credit-loss slice.
 from pydantic import ValidationError
 
 from msa.contracts.result import AggregationContribution, Diagnostic, MetricValue
-from msa.engine.dispatch import data_quality_level
 from msa.plugin_sdk import CalculationModel, Diagnostics
+from msa.plugin_sdk.calc import data_quality_level
 from msa.plugin_sdk.results import envelope, scalar
 
 from . import calibration, profile

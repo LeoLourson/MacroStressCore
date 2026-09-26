@@ -108,11 +108,12 @@ def build(
     keyed = {(e.kind, e.source_id, e.locator, e.fragment_sha256): e for e in evidence}
     sources = [keyed[key] for key in sorted(keyed)]
     assumptions = [e for e in sources if e.kind == "expert_assumption"]
+    authors = registry.author_wording()
     lines.append("### Допущения и авторы")
     # One line per source and author, not per assumed field.
     lines.extend(
         dict.fromkeys(
-            f"- {wording.AUTHORS.get(e.author, e.author)}, источник: {source(e.source_id)}"
+            f"- {authors.get(e.author, e.author)}, источник: {source(e.source_id, registry)}"
             for e in assumptions
         )
     )
@@ -121,7 +122,9 @@ def build(
     lines.append("### Источники")
     lines.extend(
         dict.fromkeys(
-            "- Текст события" if e.source_id in event_documents else f"- {source(e.source_id)}"
+            "- Текст события"
+            if e.source_id in event_documents
+            else f"- {source(e.source_id, registry)}"
             for e in sources
         )
     )
@@ -140,10 +143,10 @@ def build(
     )
 
 
-def source(source_id: str) -> str:
+def source(source_id: str, registry) -> str:
     from .context import display_id
 
-    return wording.SOURCES.get(source_id) or display_id(source_id)
+    return registry.source_wording().get(source_id) or display_id(source_id)
 
 
 def summary(ctx: ReportContext) -> list[str]:

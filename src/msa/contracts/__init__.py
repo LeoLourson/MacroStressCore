@@ -25,18 +25,7 @@ from .result import (
     PortfolioResult,
     SliceResult,
 )
-from .risk import (
-    ApplicabilityLimits,
-    AxisSummary,
-    CovenantResult,
-    Interval,
-    MonthlySeries,
-    Quantiles,
-    ReverseStressDirection,
-    ReverseStressResult,
-    ShapleyContribution,
-    Trajectory,
-)
+from .risk import ApplicabilityLimits, Interval, Quantiles
 from .scenario import MacroParameter
 from .snapshot import DataSnapshot, SnapshotItem
 
@@ -58,10 +47,8 @@ __all__ = [
     "CONTRACT_MODELS",
     "AggregationContribution",
     "ApplicabilityLimits",
-    "AxisSummary",
     "CalculationResult",
     "Contract",
-    "CovenantResult",
     "DataQuality",
     "DataSnapshot",
     "Diagnostic",
@@ -75,7 +62,6 @@ __all__ = [
     "LogNormalDistribution",
     "MacroParameter",
     "MetricValue",
-    "MonthlySeries",
     "Node",
     "NumberRef",
     "Parameter",
@@ -89,16 +75,12 @@ __all__ = [
     "Quantiles",
     "Recommendation",
     "Report",
-    "ReverseStressDirection",
-    "ReverseStressResult",
     "RunRequest",
-    "ShapleyContribution",
     "SliceResult",
     "SnapshotItem",
     "SourceDocument",
     "Table",
     "TextEvent",
-    "Trajectory",
     "TransmissionGraph",
     "TriangularDistribution",
     "UniformDistribution",

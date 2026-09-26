@@ -1,0 +1,116 @@
+{
+  "parties": [
+    {
+      "party_id": "DEMO-1:EQ-OIL",
+      "name": "Нефтегазовая компания",
+      "kind": "company",
+      "okved": "06.10",
+      "country": "RU",
+      "description": "Добыча нефти и газа; акции обращаются на Московской бирже",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "demo:market",
+          "locator": "EQ-OIL/issuer",
+          "fragment_sha256": "bce0b68d6aa536c2eb86ab60e2b87172951e7447df65c98641405ea14cfc8fd8",
+          "author": "demo:spec-v3",
+          "as_of": "2026-09-11"
+        }
+      ]
+    },
+    {
+      "party_id": "DEMO-1:EQ-TECH",
+      "name": "Технологическая компания (США)",
+      "kind": "company",
+      "okved": "62.01",
+      "country": "US",
+      "description": "Разработка программного обеспечения; акции обращаются на NASDAQ",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "demo:market",
+          "locator": "EQ-TECH/issuer",
+          "fragment_sha256": "367ac77f53db57b81cbd00f39cbcb2066838da728469663b59f6aac1459206be",
+          "author": "demo:spec-v3",
+          "as_of": "2026-09-11"
+        }
+      ]
+    }
+  ],
+  "instruments": [
+    {
+      "instrument_id": "EQ-OIL",
+      "instrument_type": "common_stock",
+      "name": "Акции нефтегазовой компании",
+      "currency": "RUB",
+      "issuer_id": "DEMO-1:EQ-OIL",
+      "terms": {
+        "ticker": "DOIL",
+        "exchange": "MOEX",
+        "market_index": "MOEX",
+        "sector": "oil_gas"
+      },
+      "schema_version": "1"
+    },
+    {
+      "instrument_id": "EQ-TECH",
+      "instrument_type": "common_stock",
+      "name": "Акции технологической компании",
+      "currency": "USD",
+      "issuer_id": "DEMO-1:EQ-TECH",
+      "terms": {
+        "ticker": "DTEC",
+        "exchange": "NASDAQ",
+        "market_index": "NDX",
+        "sector": "technology"
+      },
+      "schema_version": "1"
+    }
+  ],
+  "positions": [
+    {
+      "position_id": "EQ-OIL",
+      "instrument_id": "EQ-OIL",
+      "params": {
+        "quantity": {
+          "value": 2000000.0,
+          "unit": "shares",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:market",
+              "locator": "EQ-OIL/quantity",
+              "fragment_sha256": "2b64e87d8bfa33fd3cf517c5cbc842369646647808e2d79c6398894aff7c453d",
+              "author": "demo:spec-v3",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "direction": "long"
+      },
+      "schema_version": "1"
+    },
+    {
+      "position_id": "EQ-TECH",
+      "instrument_id": "EQ-TECH",
+      "params": {
+        "quantity": {
+          "value": 150000.0,
+          "unit": "shares",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:market",
+              "locator": "EQ-TECH/quantity",
+              "fragment_sha256": "dae75ba79a0b3a05fb87e15ecf1e7f63e50d0b08123c4a26f5066f94d2674f72",
+              "author": "demo:spec-v3",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "direction": "long"
+      },
+      "schema_version": "1"
+    }
+  ]
+}

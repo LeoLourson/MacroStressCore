@@ -1,0 +1,31 @@
+# {{label}}
+
+Агентный плагин, созданный `msa-plugin new agent {{plugin_id}}`. Агент `{{agent_id}}`
+подключается к точке `{{point}}` процесса `{{workflow}}`, читает только объявленные
+ключи состояния и пишет только в своё пространство `extensions["{{agent_id}}"]`. По
+умолчанию выключен: включается в запросе прогона (`"agents": ["{{agent_id}}"]`) или
+переменной `MSA_AGENT_PLUGINS`.
+
+## Папка плагина
+
+| Путь | Что там |
+|---|---|
+| `__init__.py` | объявление `plugin = Plugin(...)`: агент, MCP-сервер, промпты |
+| `tools.py` | MCP-сервер `{{plugin_id}}.notes` с инструментом только для чтения |
+| `prompts/note-v1.txt` | промпт агента; версия в силе объявлена в `Plugin.prompts` |
+| `tests/` | тесты плагина; `pytest` собирает их вместе с тестами платформы |
+| `ui/web/src/plugins/{{plugin_id}}/` | вид вывода агента на вкладке «Портфель» |
+
+Агент вызывает инструмент через `AgentContext.tools` (только объявленные в
+`AgentPlugin.tools`; каждый вызов попадает в аудит под узлом агента). Если в развёртывании
+есть LLM (`AgentContext.llm`), агент формулирует заметку по промпту; без LLM (`mock`)
+заметки нет.
+
+## Проверка
+
+```powershell
+uv run msa-plugin check {{plugin_id}}
+uv run --frozen pytest src/msa/plugins/{{plugin_id}}
+uv run --frozen lint-imports
+cd ui/web; npm run build
+```

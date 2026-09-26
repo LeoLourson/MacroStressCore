@@ -9,12 +9,11 @@ A3: the unit is no longer always ``ratio``).
 
 from dataclasses import replace
 
-from msa.contracts.snapshot import FINANCIAL_STATEMENT
 from msa.plugin_sdk import EditorField, EditorGroup
 
 from .editor_help import FIELD_HINTS
 from .families import family_for
-from .schemas import SCHEMA_VERSION
+from .schemas import FINANCIAL_STATEMENT, SCHEMA_VERSION
 
 
 def _with_help(field):

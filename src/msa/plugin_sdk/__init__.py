@@ -27,6 +27,7 @@ from msa.contracts.risk import ApplicabilityLimits, Quantiles
 from msa.contracts.snapshot import DataSnapshot, SnapshotItem
 from msa.contracts.units import money, unit_price
 
+from .mcp import CallContext, McpServerSpec, McpServices
 from .model import (
     CalculationContext,
     CalculationModel,
@@ -67,6 +68,7 @@ __all__ = [
     "CalculationContext",
     "CalculationModel",
     "CalculationResult",
+    "CallContext",
     "DataQuality",
     "DataRequirement",
     "DataRequirements",
@@ -82,6 +84,8 @@ __all__ = [
     "IdiosyncraticFactor",
     "Instrument",
     "InstrumentTypeSpec",
+    "McpServerSpec",
+    "McpServices",
     "MetricSpec",
     "MetricValue",
     "Parameter",

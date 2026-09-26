@@ -1,0 +1,31 @@
+# {{label}}
+
+Плагин типа инструмента `{{type_id}}`, созданный `msa-plugin new asset {{plugin_id}}`.
+Модель `{{plugin_id}}.model.v1` переоценивает позицию по одному фактору сценария
+`{{plugin_id}}.driver`; потери входят в срез `market.pnl` плагина `market`.
+
+## Папка плагина
+
+| Путь | Что там |
+|---|---|
+| `__init__.py` | объявление `plugin = Plugin(...)`: тип, модель, метрики, фактор, вид, флаги |
+| `schemas.py` | `terms`, `params` и `details` — схемы с единицами и источниками чисел |
+| `model.py` | модель: `requirements` → `validate` → `calculate` |
+| `editor.py` | форма редактора портфеля и `from_draft` |
+| `demo.py` | демо-кейс, который считает `msa-plugin check` |
+| `demo_data/` | части демо-портфелей и демо-снимка для стенда (см. `demo_data/README.md`) |
+| `tests/` | тесты плагина; `pytest` собирает их вместе с тестами платформы |
+| `ui/web/src/plugins/{{plugin_id}}/` | по желанию: собственный экран результата; без него работает стандартный вид |
+
+Плагин импортирует только `msa.plugin_sdk`, `msa.contracts`, свой пакет и базовый плагин
+`market`. Правка вне папок плагина не нужна; если она понадобилась, это запрос на
+расширение SDK.
+
+## Проверка
+
+```powershell
+uv run msa-plugin check {{plugin_id}}
+uv run msa-plugin demo-run {{plugin_id}}
+uv run --frozen pytest src/msa/plugins/{{plugin_id}}
+uv run --frozen lint-imports
+```

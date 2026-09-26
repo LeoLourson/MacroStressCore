@@ -1,11 +1,12 @@
 // Build-time compatibility of the UI plugins with the server plugins.
 //
 // src/plugins/manifest.json is generated from the server's registry
-// (`uv run msa-plugin ui-manifest`): the installed plugins, their versions and the view
-// components their result views name. Every UI plugin (src/plugins/<name>/plugin.json)
-// must render an installed plugin, understand its version, and implement only components
-// that plugin declares. A declared component without a UI plugin is fine: the standard view
-// renders it from the blocks of its ResultView. Any mismatch fails the build.
+// (`uv run msa-plugin ui-manifest`): the installed plugins, their versions, the view
+// components their result views name and their agents. Every UI plugin
+// (src/plugins/<name>/plugin.json) must render an installed plugin, understand its version,
+// and implement only components and draw only agents that plugin declares. A declared
+// component or agent without a UI plugin is fine: the standard view renders it (the blocks
+// of its ResultView; an agent's output as a list or JSON). Any mismatch fails the build.
 import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -40,6 +41,7 @@ function satisfies(version, range) {
 
 const problems = [];
 const implemented = new Set();
+const drawn = new Set();
 for (const entry of readdirSync(root, { withFileTypes: true })) {
   if (!entry.isDirectory()) continue;
   const file = join(root, entry.name, 'plugin.json');
@@ -60,10 +62,16 @@ for (const entry of readdirSync(root, { withFileTypes: true })) {
   } catch (error) {
     problems.push(`${entry.name}: ${error.message}`);
   }
-  for (const component of meta.components) {
+  for (const component of meta.components ?? []) {
     implemented.add(component);
     if (manifest.components[component] !== meta.plugin_id) {
       problems.push(`${entry.name}: ${meta.plugin_id} declares no view component ${component}`);
+    }
+  }
+  for (const agent of meta.agents ?? []) {
+    drawn.add(agent);
+    if ((manifest.agents ?? {})[agent] !== meta.plugin_id) {
+      problems.push(`${entry.name}: ${meta.plugin_id} declares no agent ${agent}`);
     }
   }
 }
@@ -79,4 +87,6 @@ if (problems.length) {
   console.error('Regenerate the manifest with `uv run msa-plugin ui-manifest` or update src/plugins/*/plugin.json.');
   process.exit(1);
 }
-console.log(`check-plugins: ok (sdk ${manifest.sdk_version}, ${implemented.size} UI components)`);
+console.log(
+  `check-plugins: ok (sdk ${manifest.sdk_version}, ${implemented.size} UI components, ${drawn.size} agent views)`,
+);

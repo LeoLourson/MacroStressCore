@@ -10,6 +10,7 @@ from collections.abc import Callable
 from dataclasses import dataclass, field
 from typing import Any
 
+from .mcp import McpServerSpec
 from .model import CalculationModel
 from .specs import (
     ActionSpec,
@@ -65,6 +66,12 @@ class Plugin:
     flags: dict[str, str] = field(default_factory=dict)
     #: Flags that describe the data rather than a limitation of the calculation.
     informational_flags: frozenset[str] = frozenset()
+    #: Russian words for the ``source_id`` of the evidence the plugin's data cites (its demo
+    #: data, its reference documents), without digits (V9): the report and the screens say
+    #: them instead of the identifier. Two plugins may word the same source only identically.
+    sources: dict[str, str] = field(default_factory=dict)
+    #: The same for the ``author`` of the evidence.
+    authors: dict[str, str] = field(default_factory=dict)
     #: ``fn(result, context) -> dict``: the keyed view of a result's ``details`` the report
     #: cites (covenants by id, contributions by channel, derived values).
     tree: Callable | None = None
@@ -73,6 +80,12 @@ class Plugin:
     notes: Callable | None = None
     agents: tuple[Any, ...] = ()
     workflows: tuple[Any, ...] = ()
+    #: Read-only MCP servers whose tools the plugin's agents call (``msa.plugin_sdk.mcp``).
+    mcp_servers: tuple[McpServerSpec, ...] = ()
+    #: Prompt name -> its version in force, e.g. ``{"brief": "v1"}``: the text is
+    #: ``prompts/<name>-<version>.txt`` in the plugin's package, read with
+    #: ``msa.prompts.registry.get("<plugin_id>.<name>")``.
+    prompts: dict[str, str] = field(default_factory=dict)
     #: Options a run of each namespace passes to the plugin's models.
     run_options: Callable[[str], dict] | None = None
     demo: Callable[[], list[DemoCase]] | None = None

@@ -18,10 +18,7 @@ from fastmcp import Client
 from msa import activity
 
 from .registry import build_servers
-
-
-class ToolError(RuntimeError):
-    pass
+from .tools import ToolError
 
 
 class ToolGateway:

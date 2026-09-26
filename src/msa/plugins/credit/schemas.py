@@ -15,6 +15,10 @@ from .family import CreditFamily
 
 SCHEMA_VERSION = "1"
 
+#: Snapshot kinds the credit plugin declares: the borrower's statement and a rate curve.
+FINANCIAL_STATEMENT = "financial_statement"
+RATE = "rate"
+
 
 class CreditPosition(Contract):
     """The bank's exposure to the borrower: what is at risk and what is recovered."""

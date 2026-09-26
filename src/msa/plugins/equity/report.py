@@ -1,8 +1,7 @@
 """The equity plugin's part of the report, its metric-tree view and its rules."""
 
 from msa.plugin_sdk import ActionSpec, RecommendationRule, ReportSection
-from msa.reporting.context import sentence
-from msa.reporting.numbers import extract_numbers, pointer_token
+from msa.plugin_sdk.report import extract_numbers, pointer_token, sentence
 
 from .schemas import ShareDetails
 

@@ -6,11 +6,10 @@ repaid from its release. Coverage is the escrow balance over the debt it is to r
 
 import numpy as np
 
-from msa.engine.credit import coverage_feature
-
 from ..family import CovenantMetric, CreditFamily, Evaluation, Inputs, Series
 from ..family import InputField as F
 from ..math import project_finance
+from ..math.credit import coverage_feature
 
 SUBSIDY_SIMPLIFIED_FLAG = "project_rate_subsidy_simplified"
 

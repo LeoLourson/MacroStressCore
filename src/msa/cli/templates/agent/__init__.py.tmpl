@@ -4,52 +4,82 @@ The agent joins ``{{point}}`` of the ``{{workflow}}`` workflow, reads only what 
 ``consumes`` and writes only to its own namespace, ``extensions["{{agent_id}}"]``. It is off
 by default: name it in a run's ``agents`` or in ``MSA_AGENT_PLUGINS`` to enable it.
 
+It calls the plugin's own read-only MCP tool (``tools.py``) through ``AgentContext.tools``;
+when the deployment has an LLM (``AgentContext.llm``) it also words a note with its prompt
+(``prompts/note-v1.txt``). Its output is drawn by ``ui/web/src/plugins/{{plugin_id}}``.
+
 Next steps: write the node in ``build`` (a function of the view, or a compiled LangGraph
 subgraph with ``subgraph_input``/``subgraph_output`` adapters), declare its tools and
 limits, then ``msa-plugin check {{plugin_id}}``.
 """
 
+import json
+
 from pydantic import BaseModel
 
 from msa.plugin_sdk import Plugin
 from msa.plugin_sdk.agent import AgentPlugin
+from msa.plugin_sdk.prompts import prompt
 
+from .tools import SERVER
 
+PLUGIN_ID = "{{plugin_id}}"
+AGENT_ID = "{{agent_id}}"
+TOOL = f"{SERVER.name}.summarize"
 #: What the workflow guarantees at ``{{point}}``; keep only what the agent reads.
 CONSUMES = {{consumes}}
 
 
 class Output(BaseModel):
     seen: list[str]
+    count: int
+    note: str | None = None
+
+
+class Note(BaseModel):
+    text: str
 
 
 def build(context):
     """The node: the agent's view of the run state in, its own outputs out."""
 
     def run(view: dict) -> dict:
-        return {"seen": sorted(key for key in CONSUMES if view.get(key))}
+        present = [key for key in CONSUMES if view.get(key)]
+        # An audited call of a tool the agent declared; any other tool is refused.
+        summary = context.tools.call(TOOL, keys=present)
+        out = {"seen": summary["keys"], "count": summary["count"]}
+        if context.llm is not None:
+            messages = [
+                {"role": "system", "content": prompt(f"{PLUGIN_ID}.note")},
+                {"role": "user", "content": json.dumps(summary, ensure_ascii=False)},
+            ]
+            out["note"] = context.llm.complete(messages, Note, seed=0).text
+        return out
 
     return run
 
 
 plugin = Plugin(
-    plugin_id="{{plugin_id}}",
+    plugin_id=PLUGIN_ID,
     version="0.1.0",
-    sdk=">=1.0,<2.0",
+    sdk=">=1.1,<2.0",
     label="{{label}}",
     description="Агентный плагин.",
     agents=(
         AgentPlugin(
-            agent_id="{{agent_id}}",
+            agent_id=AGENT_ID,
             version="0.1.0",
             label="{{label}}",
             build=build,
             extends={"{{workflow}}": "{{point}}"},
             consumes=CONSUMES,
-            produces=("seen",),
+            produces=("seen", "count", "note"),
+            tools=(TOOL,),
             output_schema=Output,
             timeout_s=30.0,
             enabled_by_default=False,
         ),
     ),
+    mcp_servers=(SERVER,),
+    prompts={"note": "v1"},
 )

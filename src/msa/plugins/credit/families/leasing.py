@@ -4,12 +4,10 @@ The lessor's credit is read from interest coverage and debt to equity. The lesse
 credit losses are not modelled yet, which is flagged on every result.
 """
 
-from msa.engine import metrics
-from msa.engine.credit import corporate_features
-
 from ..family import CovenantMetric, CreditFamily, Evaluation, Inputs, Series, compound
 from ..family import InputField as F
-from ..math import leasing
+from ..math import leasing, metrics
+from ..math.credit import corporate_features
 
 ECL_MISSING_FLAG = "leasing_ecl_missing"
 

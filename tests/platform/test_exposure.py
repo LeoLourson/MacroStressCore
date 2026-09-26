@@ -8,6 +8,7 @@ from msa.engine.exposure import reached_sectors, reasons
 from msa.platform.registry import Registry
 from msa.plugin_sdk.model import DataRequirements, FactorRequirement
 from msa.plugin_sdk.specs import FactorSpec
+from msa.plugin_sdk.testing import graph_reaching
 
 
 def evidence():
@@ -22,19 +23,6 @@ def edge(src, dst, lag=0):
         elasticity=PointDistribution(value=1.0),
         lag_months=lag,
         evidence=evidence(),
-    )
-
-
-def graph_reaching(sector_okved="23.61", factor_id="credit.revenue"):
-    return TransmissionGraph(
-        event_id="event",
-        nodes=[
-            Node(id="event", kind="event", label="e"),
-            Node(id="channel", kind="channel", label="c"),
-            Node(id="sector", kind="sector", label="s", okved=sector_okved),
-            Node(id="factor", kind="factor", label="f", factor=factor_id),
-        ],
-        edges=[edge("event", "channel"), edge("channel", "sector"), edge("sector", "factor")],
     )
 
 
@@ -71,7 +59,7 @@ def context(okved="23.61", issuer_id="ISSUER"):
 
 
 def test_reached_sectors_finds_sectors_on_the_path_to_a_factor():
-    g = graph_reaching("23.61")
+    g = graph_reaching("23.61", "credit.revenue")
     assert reached_sectors(g) == ["23.61"]
 
 
@@ -101,7 +89,7 @@ def test_reasons_empty_when_no_graph_factors_in_requirements():
 def test_reasons_graph_sector_when_okved_matches_reached_sector():
     reg = registry_with_factor("credit.revenue", scope="graph")
     ctx = context(okved="23.61")
-    g = graph_reaching("23.61")
+    g = graph_reaching("23.61", "credit.revenue")
     requirements = DataRequirements(factors=[FactorRequirement(factor_id="credit.revenue")])
     result = reasons(ctx, requirements, g, {}, reg)
     assert result == ["graph_sector:23.61"]
@@ -110,7 +98,7 @@ def test_reasons_graph_sector_when_okved_matches_reached_sector():
 def test_reasons_no_graph_sector_when_okved_does_not_match():
     reg = registry_with_factor("credit.revenue", scope="graph")
     ctx = context(okved="99.99")
-    g = graph_reaching("23.61")
+    g = graph_reaching("23.61", "credit.revenue")
     requirements = DataRequirements(factors=[FactorRequirement(factor_id="credit.revenue")])
     result = reasons(ctx, requirements, g, {}, reg)
     assert result == []
@@ -127,7 +115,7 @@ def test_reasons_no_graph_sector_without_a_graph():
 def test_reasons_no_graph_sector_without_an_okved():
     reg = registry_with_factor("credit.revenue", scope="graph")
     ctx = context(okved=None, issuer_id=None)
-    g = graph_reaching("23.61")
+    g = graph_reaching("23.61", "credit.revenue")
     requirements = DataRequirements(factors=[FactorRequirement(factor_id="credit.revenue")])
     result = reasons(ctx, requirements, g, {}, reg)
     assert result == []
@@ -136,7 +124,7 @@ def test_reasons_no_graph_sector_without_an_okved():
 def test_reasons_ignores_requirement_for_undeclared_factor():
     reg = Registry()  # the factor is not registered
     ctx = context()
-    g = graph_reaching("23.61")
+    g = graph_reaching("23.61", "credit.revenue")
     requirements = DataRequirements(factors=[FactorRequirement(factor_id="credit.revenue")])
     result = reasons(ctx, requirements, g, {}, reg)
     assert result == []
@@ -204,7 +192,7 @@ def test_reasons_combines_graph_and_direct_factors():
         }
     )
     ctx = context(okved="23.61")
-    g = graph_reaching("23.61")
+    g = graph_reaching("23.61", "credit.revenue")
     requirements = DataRequirements(
         factors=[
             FactorRequirement(factor_id="credit.revenue"),

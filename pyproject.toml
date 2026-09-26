@@ -5,7 +5,7 @@ build-backend = "hatchling.build"
 [project]
 name = "macrostress-core"
 version = "0.2.0"
-description = "MacroStress-Agent: event text -> transmission graph -> Track A v3.2 stress test -> approved report"
+description = "MacroStress Core: a portfolio stress test from the text of an event, on a platform whose asset types, models and agents are plugins"
 requires-python = ">=3.12,<3.13"
 dependencies = [
   "numpy==2.4.4",
@@ -26,6 +26,7 @@ dependencies = [
 [dependency-groups]
 dev = [
     "graphifyy==0.9.67",
+    "import-linter==2.15",
     "pytest==8.4.2",
     "ruff==0.12.12",
 ]
@@ -40,9 +41,11 @@ msa-plugin = "msa.cli.plugin:main"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/msa"]
+# A plugin's tests live in its folder (src/msa/plugins/<id>/tests) and stay out of the wheel.
+exclude = ["src/msa/plugins/*/tests"]
 
 [tool.pytest.ini_options]
-testpaths = ["tests"]
+testpaths = ["tests", "src/msa/plugins"]
 pythonpath = ["src", "."]
 addopts = "-ra"
 
@@ -53,3 +56,41 @@ extend-exclude = ["ui"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B"]
+
+# The boundary between the core and the plugins (docs/plugins.md, "Границы и совместная
+# работа"). The core is everything under msa outside msa.plugins; a plugin is one package
+# msa.plugins.<id>. Wildcards keep a new plugin out of this file. A plugin's own tests
+# (msa.plugins.<id>.tests) drive the platform as a harness and may import the core.
+[tool.importlinter]
+root_package = "msa"
+
+[[tool.importlinter.contracts]]
+name = "The core does not import plugins"
+type = "forbidden"
+source_modules = ["msa.*"]
+forbidden_modules = ["msa.plugins"]
+
+[[tool.importlinter.contracts]]
+name = "Plugins import only msa.plugin_sdk, msa.contracts and their own package"
+type = "forbidden"
+source_modules = ["msa.plugins.*"]
+forbidden_modules = ["msa.*"]
+allow_indirect_imports = true
+ignore_imports = [
+  "msa.plugins.** -> msa.plugin_sdk",
+  "msa.plugins.** -> msa.plugin_sdk.**",
+  "msa.plugins.** -> msa.contracts",
+  "msa.plugins.** -> msa.contracts.**",
+  "msa.plugins.*.tests.** -> msa.**",
+]
+unmatched_ignore_imports_alerting = "none"
+
+[[tool.importlinter.contracts]]
+name = "Plugins are independent of each other, except for the base plugin market"
+type = "independence"
+modules = ["msa.plugins.*"]
+ignore_imports = [
+  "msa.plugins.** -> msa.plugins.market",
+  "msa.plugins.** -> msa.plugins.market.**",
+]
+unmatched_ignore_imports_alerting = "none"

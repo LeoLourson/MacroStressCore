@@ -9,12 +9,16 @@ It shows the agent SDK end to end and is off by default (enable it per run with
   its output adapter returns only the notes;
 - ``research.brief`` runs after it at the same extension point and reads its notes through
   ``ext:research.concentration/notes``;
-- both join ``after_calculation`` of the stress test, write only to their own namespaces
-  (``extensions["research.concentration"]``, ...), and the run still stops for the risk
-  manager: no extension point lies on a path around a human decision.
+- ``research.digest`` calls the plugin's own read-only MCP tool
+  ``research.notes.slice_digest`` through ``AgentContext.tools``: the gateway lets it call
+  only the tools it declared, and every call is audited under its node of the run (the
+  screen «Вызовы LLM и MCP»);
+- all three join ``after_calculation`` of the stress test, write only to their own
+  namespaces (``extensions["research.concentration"]``, ...), and the run still stops for
+  the risk manager: no extension point lies on a path around a human decision.
 
-Nothing here calls an LLM or the network; a real research agent would call its tools
-through ``AgentContext.tools`` and declare them in ``tools``.
+Nothing here calls an LLM or the network. The UI plugin ``ui/web/src/plugins/research``
+draws the outputs of ``research.concentration`` and ``research.digest``.
 """
 
 from typing import TypedDict
@@ -22,7 +26,7 @@ from typing import TypedDict
 from langgraph.graph import END, START, StateGraph
 from pydantic import BaseModel
 
-from msa.plugin_sdk import Plugin
+from msa.plugin_sdk import CallContext, McpServerSpec, Plugin
 from msa.plugin_sdk.agent import AgentPlugin
 
 PLUGIN_ID = "research"
@@ -44,6 +48,17 @@ class ConcentrationOutput(BaseModel):
 
 class BriefOutput(BaseModel):
     brief: list[str]
+
+
+class SliceDigest(BaseModel):
+    slice_id: str
+    positions: int
+    top_share: float
+    herfindahl: float
+
+
+class DigestOutput(BaseModel):
+    digest: list[SliceDigest]
 
 
 class ResearchState(TypedDict, total=False):
@@ -112,13 +127,48 @@ def build_brief(context):
     return run
 
 
+def register_notes(tool, services):
+    """``mcp-research.notes``: arithmetic over the slices an agent passes in; no data access."""
+
+    @tool
+    def slice_digest(slices: list[dict], audit: CallContext) -> list[dict]:
+        """How concentrated each slice's tail loss is: its contributors, the largest share
+        of ES95 and the Herfindahl index of the shares (positive contributions only)."""
+        rows = []
+        for item in slices:
+            positive = [
+                max(c["expected_shortfall_contribution"], 0.0) for c in item["contributions"]
+            ]
+            total = sum(positive)
+            shares = [value / total for value in positive] if total > 0 else []
+            rows.append(
+                {
+                    "slice_id": item["slice_id"],
+                    "positions": len(item["contributions"]),
+                    "top_share": round(max(shares, default=0.0), 4),
+                    "herfindahl": round(sum(share * share for share in shares), 4),
+                }
+            )
+        return rows
+
+
+def build_digest(context):
+    def run(view: dict) -> dict:
+        slices = concentration_input(view)["slices"]
+        return {"digest": context.tools.call(DIGEST_TOOL, slices=slices)}
+
+    return run
+
+
+DIGEST_TOOL = "research.notes.slice_digest"
+
 plugin = Plugin(
     plugin_id=PLUGIN_ID,
-    version="1.0.0",
-    sdk=">=1.0,<2.0",
+    version="1.1.0",
+    sdk=">=1.1,<2.0",
     label="Исследование концентрации (пример)",
-    description="Пример агентного плагина: подграф с собственным состоянием и агент, "
-    "читающий его результат. Выключен по умолчанию.",
+    description="Пример агентного плагина: подграф с собственным состоянием, агент, "
+    "читающий его результат, и агент со своим MCP-инструментом. Выключен по умолчанию.",
     agents=(
         AgentPlugin(
             agent_id="research.concentration",
@@ -148,6 +198,30 @@ plugin = Plugin(
             after=("research.concentration",),
             timeout_s=10.0,
             enabled_by_default=False,
+        ),
+        AgentPlugin(
+            agent_id="research.digest",
+            version="1.0.0",
+            label="Сводка концентрации по срезам",
+            build=build_digest,
+            extends={"stress_test": POINT},
+            consumes=("portfolio_result",),
+            produces=("digest",),
+            tools=(DIGEST_TOOL,),
+            output_schema=DigestOutput,
+            timeout_s=30.0,
+            enabled_by_default=False,
+            description="Для каждого среза: число позиций, наибольшая доля в ES95 и индекс "
+            "Херфиндаля — через собственный MCP-инструмент плагина.",
+        ),
+    ),
+    mcp_servers=(
+        McpServerSpec(
+            "research.notes",
+            register_notes,
+            label="Заметки исследования",
+            description="Арифметика концентрации по срезам, переданным агентом; без доступа к "
+            "данным.",
         ),
     ),
 )

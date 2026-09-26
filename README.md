@@ -33,42 +33,47 @@
 
 ```powershell
 uv sync --frozen                       # Python 3.12, зависимости из uv.lock
-uv run --frozen pytest                 # тесты
+uv run --frozen pytest                 # тесты платформы и плагинов (src/msa/plugins/*/tests)
 uv run --frozen ruff check . ; uv run --frozen ruff format --check .
+uv run --frozen lint-imports           # граница ядра и плагинов: правила импорта
 cd ui/web; npm ci; npm run dev         # интерфейс с прокси на API :8091
-npm run build                          # совместимость UI-плагинов, проверка типов, сборка
+npm run build                          # манифест плагинов, совместимость UI-плагинов, типы, сборка
 ```
 
 Плагины:
 
 ```powershell
-uv run msa-plugin new asset <id>       # шаблон типа инструмента с моделью
-uv run msa-plugin new agent <id>       # шаблон агента в точке расширения процесса
+uv run msa-plugin new asset <id>       # шаблон типа инструмента с моделью, тестами, демо-данными
+uv run msa-plugin new agent <id>       # шаблон агента с MCP-инструментом, промптом и UI-видом
 uv run msa-plugin check [<id>]         # проверка соответствия плагина
 uv run msa-plugin demo-run <id>        # демо-расчёт: P5/P50/P95 по позициям и срезам
-uv run msa-plugin ui-manifest          # манифест для проверки UI-плагинов при сборке
+uv run msa-plugin ui-manifest          # манифест UI-плагинов (npm run build делает это сам)
 ```
+
+Плагин — папка `src/msa/plugins/<id>/` (код, тесты, демо-данные, промпты, README) и, по
+желанию, `ui/web/src/plugins/<id>/`. Новый плагин создаётся без правки вне этих папок;
+правила границы — в [docs/plugins.md, раздел 8](docs/plugins.md#8-границы-и-совместная-работа).
 
 ## Карта
 
 | Путь | Что там |
 |---|---|
-| `src/msa/plugins/` | Плагины: `core` (процессы и их агенты), `credit`, `equity`, `market`, `research` (пример агента). Здесь расширяется система |
-| `src/msa/plugin_sdk/` | SDK плагинов: объявления, `CalculationModel`, `AgentPlugin`, `WorkflowSpec`, проверка соответствия |
+| `src/msa/plugins/` | Плагины: [`credit`](src/msa/plugins/credit/README.md), [`equity`](src/msa/plugins/equity/README.md), [`market`](src/msa/plugins/market/README.md), [`research`](src/msa/plugins/research/README.md) (пример агента). У каждого — код, тесты, демо-данные и README. Здесь расширяется система |
+| `src/msa/plugin_sdk/` | SDK плагинов: объявления, `CalculationModel`, `AgentPlugin`, `WorkflowSpec`, MCP-серверы, вычисления ядра (`calc`), отчёт, промпты, помощники тестов и проверка соответствия |
 | `src/msa/platform/` | Реестр плагинов и каталоги (`/v1/asset-types`, `/v1/models`, `/v1/workflows`) |
-| `src/msa/engine/` | Расчёт без знания типа: снимок данных, сценарии и общие реализации, передача шока, FX, диспетчер моделей, срезы портфеля |
+| `src/msa/engine/` | Расчёт без знания типа: снимок данных, сценарии и общие реализации, передача шока, диспетчер моделей, срезы портфеля |
 | `src/msa/contracts/` | Контракты: Party/Instrument/Position, DataSnapshot, граф, сценарий, CalculationResult, отчёт, объяснение |
-| `src/msa/agents/`, `src/msa/graph/`, `src/msa/workflows/` | Агенты ядра и объяснения; компилятор процессов LangGraph, журнал, остановки |
-| `src/msa/mcp/` | MCP-серверы `mcp-portfolio`, `mcp-models`, `mcp-runs`, шлюз и аудит вызовов |
+| `src/msa/agents/`, `src/msa/graph/`, `src/msa/workflows/` | Агенты ядра и объяснения; компилятор процессов LangGraph, журнал, остановки; встроенное объявление `core` (процессы, их агенты и MCP-серверы) |
+| `src/msa/mcp/` | MCP-серверы из реестра (ядра: `mcp-portfolio`, `mcp-models`, `mcp-runs`), шлюз, аудит вызовов |
 | `src/msa/reporting/` | Дерево метрик, отчёт без собственных чисел, правила, трасса происхождения |
 | `src/msa/api/` | FastAPI: портфели, снимки, прогоны, объяснения, каталоги, раздача `ui/web` |
 | `src/msa/cli/` | `msa-plugin` и шаблоны плагинов |
 | `src/msa/db/`, `migrations/` | Таблицы рабочего и демо-контура, миграция `p0001` |
 | `ui/web/` | Браузерный интерфейс (React, Mantine); UI-плагины в `src/plugins/` |
-| `demo/` | Демо-портфели (бандлы), снимок данных, события, пилотное событие |
+| `demo/` | Заголовки демо-портфелей и снимка, сборка каталога из частей плагинов (`catalog.py`), события, пилотное событие |
 | `ops/` | Нативный стенд, генерация `.env`, загрузка рабочего портфеля, репетиция |
-| `tests/golden/` | Эталон Track A v3.2 до переноса и проверка численной эквивалентности |
+| `tests/` | Тесты ядра, включая границу ядра и плагинов (`tests/platform/test_core_boundary.py`); тесты плагинов — в их папках |
+| `.github/CODEOWNERS` | Владельцы ядра, каждого плагина, `demo/` и `docs/` |
 
 Подробнее: [платформа](docs/platform.md), [расширение плагинами](docs/plugins.md),
-[архитектура](docs/architecture.md), [план перестройки](docs/plan.md),
-[аудит переноса](docs/audit.md).
+[архитектура](docs/architecture.md).

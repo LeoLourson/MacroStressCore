@@ -1,7 +1,7 @@
 """The credit plugin's part of the report, its metric-tree view and its rules R1-R5."""
 
 from msa.plugin_sdk import ActionSpec, RecommendationRule, ReportSection
-from msa.reporting.numbers import pointer_token
+from msa.plugin_sdk.report import extract_numbers, pointer_token
 
 from .contracts import RiskResult
 from .impact import grade, impact_score
@@ -184,8 +184,6 @@ def calibration_note(ctx) -> list[str]:
         return []
     if registry["registry_id"] == "none":
         return ["Калибровка PD не загружена: вероятностный выход — риск-скор, не PD."]
-    from msa.reporting.numbers import extract_numbers
-
     note = registry["note"] if not extract_numbers(registry["note"]) else ""
     name = (
         "синтетическая демо-калибровка"

@@ -11,13 +11,12 @@ prepared inputs.
 from math import exp
 
 from msa.contracts.evidence import Parameter
-from msa.contracts.snapshot import FINANCIAL_STATEMENT
 from msa.plugin_sdk import DataRequirement, DataRequirements, FactorRequirement
 
 from .contracts import CreditProfile
 from .factors import FACTORS
 from .families import family_for
-from .schemas import CreditPosition, terms_for
+from .schemas import FINANCIAL_STATEMENT, CreditPosition, terms_for
 
 STATEMENT = "statement"
 PEERS = "peers"

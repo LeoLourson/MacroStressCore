@@ -5,12 +5,12 @@ shares to the position; the price, the exchange rate, the sensitivities and the 
 the analyst types become items of the analyst's snapshot with the analyst as author.
 """
 
-from msa.contracts.snapshot import DIVIDEND, FX_RATE, PRICE, SENSITIVITY
 from msa.contracts.units import unit_price
-from msa.engine.fx import pair
 from msa.plugin_sdk import EditorField, EditorGroup
+from msa.plugins.market.fx import pair
+from msa.plugins.market.kinds import FX_RATE, PRICE
 
-from .schemas import SCHEMA_VERSION
+from .schemas import DIVIDEND, SCHEMA_VERSION, SENSITIVITY
 from .sectors import OKVED_SECTORS, SECTORS, sector_for_okved
 
 EDITOR = (

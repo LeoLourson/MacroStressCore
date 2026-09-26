@@ -1,7 +1,9 @@
-"""Load the sole demo data source (this directory) into the isolated demo schema.
+"""Load the demo catalog into the isolated demo schema.
 
-The data snapshots go first (demo/snapshots), then the portfolios that read them
-(demo/portfolios, the bundle format), then the event library (demo/events).
+The data snapshots go first, then the portfolios that read them (the bundle format), then
+the event library (demo/events). Portfolios and snapshots are assembled by
+``demo.catalog``: the headers in demo/portfolios and demo/snapshots, the positions and data
+from each plugin's ``demo_data``.
 """
 
 import argparse
@@ -9,7 +11,7 @@ import json
 import os
 from pathlib import Path
 
-from msa.contracts import DataSnapshot, PortfolioBundle
+from demo import catalog as demo_catalog
 from msa.db.repositories.demo import DemoRepository
 from msa.db.session import engine, session_scope
 from msa.platform.registry import registry
@@ -21,12 +23,12 @@ def seed_demo(bind, catalog=CATALOG):
     with session_scope(bind, scope="demo", scopes={"demo:*"}) as session:
         repository = DemoRepository(session)
         counts = {}
-        for path in sorted((catalog / "snapshots").glob("*.json")):
-            snapshot = DataSnapshot.model_validate(json.loads(path.read_text(encoding="utf-8")))
+        for snapshot_id in demo_catalog.snapshot_ids(root=catalog):
+            snapshot = demo_catalog.snapshot(snapshot_id, root=catalog)
             repository.seed_snapshot(snapshot)
             counts[snapshot.snapshot_id] = len(snapshot.items)
-        for path in sorted((catalog / "portfolios").glob("DEMO-*.json")):
-            bundle = PortfolioBundle.model_validate(json.loads(path.read_text(encoding="utf-8")))
+        for portfolio_id in demo_catalog.portfolio_ids(root=catalog):
+            bundle = demo_catalog.bundle(portfolio_id, root=catalog)
             repository.seed_portfolio(bundle, registry=registry())
             counts[bundle.portfolio.portfolio_id] = len(bundle.positions)
         for path in sorted((catalog / "events").glob("EVENT-*.json")):

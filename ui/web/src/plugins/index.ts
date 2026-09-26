@@ -1,6 +1,7 @@
 // UI plugins found at build time: every src/plugins/<name>/index.tsx (see sdk.ts).
 import type { ComponentType } from 'react';
-import type { PositionViewProps, UiPlugin } from './sdk';
+import type { Artifacts } from '../api/types';
+import type { AgentViewProps, PositionViewProps, UiPlugin } from './sdk';
 
 const modules = import.meta.glob<{ default: UiPlugin }>('./*/index.tsx', { eager: true });
 
@@ -13,11 +14,31 @@ const COMPONENTS: Record<string, ComponentType<PositionViewProps>> = Object.assi
   ...UI_PLUGINS.map((plugin) => plugin.views),
 );
 
+const AGENTS: Record<string, ComponentType<AgentViewProps>> = Object.assign(
+  {},
+  ...UI_PLUGINS.map((plugin) => plugin.agents ?? {}),
+);
+
+/** The UI plugin's view of an agent's output, or null: the output is drawn as is then. */
+export function agentComponent(agentId: string): ComponentType<AgentViewProps> | null {
+  return AGENTS[agentId] ?? null;
+}
+
 /** The UI plugin's component of a result view, or null: the standard view renders it then. */
 export function viewComponent(component: string | null | undefined): ComponentType<PositionViewProps> | null {
   return component ? (COMPONENTS[component] ?? null) : null;
 }
 
-export function pluginNotes(): ComponentType<{ artifacts: import('../api/types').Artifacts }>[] {
+export function pluginNotes(): ComponentType<{ artifacts: Artifacts }>[] {
   return UI_PLUGINS.flatMap((plugin) => (plugin.notes ? [plugin.notes] : []));
+}
+
+/** The plugins' plain-language names of the run's identifiers, for the report text. */
+export function pluginGlosses(artifacts: Artifacts): [string, string][] {
+  return UI_PLUGINS.flatMap((plugin) => [...(plugin.glosses?.({ artifacts }) ?? [])]);
+}
+
+/** The terms the plugins explain; the platform's own terms are in lib/labels.ts. */
+export function pluginGlossary(): Record<string, string> {
+  return Object.assign({}, ...UI_PLUGINS.map((plugin) => plugin.glossary ?? {}));
 }

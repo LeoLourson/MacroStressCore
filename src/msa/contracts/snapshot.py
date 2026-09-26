@@ -15,14 +15,6 @@ from pydantic import Field, JsonValue, model_validator
 from .common import Contract, Identifier, Sha256
 from .evidence import Evidence, Parameter
 
-#: Kinds of items the platform itself understands; plugins declare the ones they add.
-FINANCIAL_STATEMENT = "financial_statement"
-PRICE = "price"
-FX_RATE = "fx_rate"
-RATE = "rate"
-SENSITIVITY = "sensitivity"
-DIVIDEND = "dividend"
-
 
 class SnapshotItem(Contract):
     item_id: Identifier

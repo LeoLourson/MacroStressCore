@@ -46,10 +46,20 @@ plugin = Plugin(
     ),
     models=(Model(),),
     metrics=(
-        MetricSpec(f"{PLUGIN_ID}.value_current", "Стоимость позиции на дату оценки", BASE_MONEY,
-                   kind="value", period="as_of"),
-        MetricSpec(f"{PLUGIN_ID}.loss", "Потери стоимости позиции", BASE_MONEY,
-                   direction="higher_is_worse", aggregation="sum_by_realisation"),
+        MetricSpec(
+            f"{PLUGIN_ID}.value_current",
+            "Стоимость позиции на дату оценки",
+            BASE_MONEY,
+            kind="value",
+            period="as_of",
+        ),
+        MetricSpec(
+            f"{PLUGIN_ID}.loss",
+            "Потери стоимости позиции",
+            BASE_MONEY,
+            direction="higher_is_worse",
+            aggregation="sum_by_realisation",
+        ),
     ),
     factors=(
         FactorSpec(
@@ -69,12 +79,18 @@ plugin = Plugin(
             instrument_types=(TYPE_ID,),
             summary_metrics=(f"{PLUGIN_ID}.loss",),
             blocks=(
-                ViewBlock(kind="metrics", title="Итог на конец горизонта",
-                          metric_ids=(f"{PLUGIN_ID}.value_current", f"{PLUGIN_ID}.loss")),
+                ViewBlock(
+                    kind="metrics",
+                    title="Итог на конец горизонта",
+                    metric_ids=(f"{PLUGIN_ID}.value_current", f"{PLUGIN_ID}.loss"),
+                ),
                 ViewBlock(kind="sources", title="Источники данных"),
             ),
-            labels={"price": "Цена", "value_current": "Стоимость", "central_loss": "Потери в "
-                    "центральном сценарии"},
+            labels={
+                "price": "Цена",
+                "value_current": "Стоимость",
+                "central_loss": "Потери в центральном сценарии",
+            },
         ),
     ),
     flags={

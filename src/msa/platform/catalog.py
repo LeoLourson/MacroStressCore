@@ -86,8 +86,8 @@ def asset_types(registry=None) -> dict:
         # The platform's own flags first; a plugin's wording of the same code wins, as in reports.
         "flags": {**wording.PLATFORM_FLAGS, **registry.flag_wording()},
         "units": {"plain": sorted(PLAIN_UNITS), "currencies": sorted(CURRENCIES)},
-        "sources": dict(wording.SOURCES),
-        "authors": dict(wording.AUTHORS),
+        "sources": registry.source_wording(),
+        "authors": registry.author_wording(),
     }
 
 

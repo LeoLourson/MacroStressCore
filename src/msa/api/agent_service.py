@@ -90,11 +90,15 @@ class AgentService:
             estimate_scenario=scope == "demo" and settings().demo_estimate_scenario and not mock,
         )
 
-    def explain_llm(self, scope):
-        """The model that explains results; with fixtures (``mock``) there is none."""
+    def llm_client(self, scope):
+        """The model agents call, recorded per node; with fixtures (``mock``) there is none."""
         if self.mock_llm:
             return None
         return LLMClient(observer=self.llm_recorder(scope))
+
+    def explain_llm(self, scope):
+        """The model that explains results; with fixtures (``mock``) there is none."""
+        return self.llm_client(scope)
 
     def explainer(self, scope):
         from msa.agents.explain import ExplainAgent

@@ -10,6 +10,7 @@ import numpy as np
 from ..contracts import MarketResult
 from ..family import InputField as F
 from ..math import bonds, market_inputs
+from ..schemas import RATE
 from .corporate import OPERATING_FIELDS, OperatingCompany
 
 MARKET_CALIBRATION_MISSING = "market_calibration_missing"
@@ -24,7 +25,7 @@ BOND_FIELDS: tuple[F, ...] = (
         "Безрисковая ставка",
         required=True,
         source="market",
-        market=("rate", "risk_free:{currency}", "rate"),
+        market=(RATE, "risk_free:{currency}", "rate"),
         hint="из рыночных данных снимка на дату оценки",
     ),
     F("coupon_frequency", "count", "Купонов в год", default=1.0, source="terms"),
