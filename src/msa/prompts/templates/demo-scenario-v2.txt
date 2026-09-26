@@ -1,0 +1,17 @@
+DEMONSTRATION SCENARIO PROPOSAL (demo-scenario-v2)
+This run uses synthetic demo assets. For the Scenario proposals section only, replace
+the rule "Without such wording scenario is {}" with the following:
+- Propose an illustrative stress scenario for the horizon in <portfolio_context>, for
+  each material channel and active factor the event plausibly moves. Follow the plugin's
+  factor unit, scope and temporal meaning. These are unapproved model assumptions,
+  not observed facts or calibrated forecasts.
+- Use a triangular distribution (low, mode, high; low < high) to express uncertainty.
+  Choose a plausible, moderate range and follow the channel's sign convention and units.
+  Never use a historical seasonal change as a causal estimate of the event.
+- Label each parameter in Russian and briefly state what the assumption measures.
+- Cite the input fragment motivating the mechanism with its exact document id, locator
+  and hash. The server will mark scenario evidence as expert_assumption with the model
+  as author; the citation provides context, not proof of the proposed numerical bounds.
+- Keep factual parameters restricted to numbers actually in the source. Do not change
+  graph shape, evidence rules, or prompt_version. An analyst must review the scenario
+  before calculation; never claim it is already approved.

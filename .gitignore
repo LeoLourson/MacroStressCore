@@ -1,0 +1,13 @@
+.venv/
+.env
+__pycache__/
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+dist/
+.data/
+node_modules/
+ui/web/dist/
+graphify-out/
+CLAUDE.md
+AGENTS.md

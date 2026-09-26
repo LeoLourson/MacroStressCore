@@ -1,0 +1,55 @@
+"""{{label}}: an agent plugin scaffolded by ``msa-plugin new agent``.
+
+The agent joins ``{{point}}`` of the ``{{workflow}}`` workflow, reads only what it
+``consumes`` and writes only to its own namespace, ``extensions["{{agent_id}}"]``. It is off
+by default: name it in a run's ``agents`` or in ``MSA_AGENT_PLUGINS`` to enable it.
+
+Next steps: write the node in ``build`` (a function of the view, or a compiled LangGraph
+subgraph with ``subgraph_input``/``subgraph_output`` adapters), declare its tools and
+limits, then ``msa-plugin check {{plugin_id}}``.
+"""
+
+from pydantic import BaseModel
+
+from msa.plugin_sdk import Plugin
+from msa.plugin_sdk.agent import AgentPlugin
+
+
+#: What the workflow guarantees at ``{{point}}``; keep only what the agent reads.
+CONSUMES = {{consumes}}
+
+
+class Output(BaseModel):
+    seen: list[str]
+
+
+def build(context):
+    """The node: the agent's view of the run state in, its own outputs out."""
+
+    def run(view: dict) -> dict:
+        return {"seen": sorted(key for key in CONSUMES if view.get(key))}
+
+    return run
+
+
+plugin = Plugin(
+    plugin_id="{{plugin_id}}",
+    version="0.1.0",
+    sdk=">=1.0,<2.0",
+    label="{{label}}",
+    description="Агентный плагин.",
+    agents=(
+        AgentPlugin(
+            agent_id="{{agent_id}}",
+            version="0.1.0",
+            label="{{label}}",
+            build=build,
+            extends={"{{workflow}}": "{{point}}"},
+            consumes=CONSUMES,
+            produces=("seen",),
+            output_schema=Output,
+            timeout_s=30.0,
+            enabled_by_default=False,
+        ),
+    ),
+)

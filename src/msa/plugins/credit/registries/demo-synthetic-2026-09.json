@@ -1,0 +1,58 @@
+{
+  "registry_id": "demo-synthetic-2026-09",
+  "kind": "synthetic_demo",
+  "scope": "demo",
+  "approved_by": "demo:methodology",
+  "approved_on": "2026-09-23",
+  "note": "Синтетические коэффициенты для демонстрационного стенда. Это не эмпирическая калибровка: обучающей выборки, бэктеста и независимой валидации нет. Только для синтетических портфелей demo-контура; не для кредитных решений, резервов МСФО и регуляторных параметров.",
+  "segment_by_asset_type": {
+    "corp_loan": "corporate",
+    "bond_fixed": "corporate",
+    "bond_floater": "corporate",
+    "pf_escrow": "project_finance",
+    "leasing": "leasing"
+  },
+  "market_from_profile": true,
+  "pd": [
+    {
+      "segment_id": "corporate",
+      "default_definition": "90+ days past due (synthetic demo definition)",
+      "horizon_months": 12,
+      "coefficients": {"intercept": -5.0, "r_icr": 2.0, "r_lev": 0.8, "ebitda_nonpositive": 1.5},
+      "monotone": {"r_icr": 1, "r_lev": 1, "ebitda_nonpositive": 1}
+    },
+    {
+      "segment_id": "project_finance",
+      "default_definition": "90+ days past due (synthetic demo definition)",
+      "horizon_months": 12,
+      "coefficients": {"intercept": -4.5, "r_icr": 0.6},
+      "monotone": {"r_icr": 1}
+    },
+    {
+      "segment_id": "leasing",
+      "default_definition": "90+ days past due (synthetic demo definition)",
+      "horizon_months": 12,
+      "coefficients": {"intercept": -5.0, "r_icr": 0.8, "r_lev": 0.6, "ebitda_nonpositive": 1.0},
+      "monotone": {"r_icr": 1, "r_lev": 1, "ebitda_nonpositive": 1}
+    }
+  ],
+  "review_inclusion": {
+    "rule_id": "S19-DEMO-1",
+    "approved_by": "demo:methodology",
+    "approved_on": "2026-09-23",
+    "text": "Результат с пометкой «нужна ручная проверка» входит в портфель с раскрытием, если на проверку его отправили только перечисленные методические упрощения. Численная погрешность вне допуска и неполные данные профиля исключают актив.",
+    "allowed_flags": [
+      "annual_financials_spread_evenly",
+      "assumed_working_capital_days",
+      "simplified_tax",
+      "project_rate_subsidy_simplified",
+      "leasing_ecl_missing",
+      "market_calibration_missing",
+      "market_inputs_from_profile",
+      "spread_scaled_by_pd_ratio",
+      "calibration_synthetic",
+      "covenant_outside_horizon:",
+      "covenant_metric_unavailable:"
+    ]
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "generated_by": "msa-plugin ui-manifest",
+  "sdk_version": "1.0.0",
+  "plugins": {
+    "core": "2.0.0",
+    "credit": "3.2.0",
+    "equity": "1.0.0",
+    "market": "1.0.0",
+    "research": "1.0.0"
+  },
+  "components": {
+    "credit.position": "credit",
+    "equity.position": "equity"
+  }
+}

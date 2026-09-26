@@ -1,0 +1,37 @@
+{
+  "event_id": "EVENT-A",
+  "title": "Утилизационный сбор и задержки расчётов",
+  "text": "Введён утилизационный сбор на спецтехнику; расчёты через внешнеторговых платёжных посредников в Азии удлинились до 45 дней",
+  "metadata": {
+    "source": "TZ 9.2, 9.4-9.6; drivers of Track A v3.2",
+    "distributions": {
+      "cost_growth": {
+        "kind": "triangular",
+        "low": 0.06,
+        "mode": 0.1,
+        "high": 0.14,
+        "unit": "fraction",
+        "channel": "utilization_fee",
+        "driver": "cogs"
+      },
+      "leasing_demand": {
+        "kind": "triangular",
+        "low": -0.12,
+        "mode": -0.08,
+        "high": -0.04,
+        "unit": "fraction",
+        "channel": "equipment_leasing_demand",
+        "driver": "revenue"
+      },
+      "delay": {
+        "kind": "uniform",
+        "low": 30,
+        "high": 60,
+        "unit": "days",
+        "channel": "payment_delay",
+        "driver": "working_capital"
+      }
+    },
+    "scenario_text": "Утилизационный сбор поднимет стоимость закупки спецтехники на 6–14 %, в центральном сценарии на 10 %. Новые лизинговые сделки со спецтехникой сократятся на 4–12 %, в центральном сценарии на 8 %. Расчёты через платёжных посредников задержатся на 30–60 дней."
+  }
+}

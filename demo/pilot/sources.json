@@ -1,0 +1,98 @@
+{
+  "case_id": "HIST-MORTGAGE-2023-12",
+  "accessed_at": "2026-09-21",
+  "source_policy": "Первичные материалы регулятора и текст нормативного акта; входной текст является проверяемым исследовательским конспектом, а не дословной копией публикаций.",
+  "sources": [
+    {
+      "source_id": "S1",
+      "publisher": "Правительство Российской Федерации",
+      "title": "Постановление Правительства РФ от 15.12.2023 № 2166",
+      "url": "https://base.garant.ru/408213837/",
+      "source_type": "regulation_text_mirror",
+      "supports": [
+        "дата и реквизиты акта",
+        "первоначальный взнос 30 процентов",
+        "предельный размер кредита 6 млн рублей"
+      ],
+      "input_locators": [
+        "p1/para1"
+      ]
+    },
+    {
+      "source_id": "S2",
+      "publisher": "Банк России",
+      "title": "Мы не за остановку стройки, а за разумное движение",
+      "url": "https://www.cbr.ru/press/event/?id=17303",
+      "source_type": "regulator_interview",
+      "supports": [
+        "повышение взноса с 20 до 30 процентов",
+        "единый предел 6 млн рублей",
+        "направление ужесточения условий"
+      ],
+      "input_locators": [
+        "p1/para1"
+      ]
+    },
+    {
+      "source_id": "S3",
+      "publisher": "Банк России",
+      "title": "Обзор финансовой стабильности, IV квартал 2023 года — I квартал 2024 года",
+      "url": "https://www.cbr.ru/analytics/finstab/ofs/4_2023_1_q_2024/",
+      "source_type": "regulator_analytical_review",
+      "supports": [
+        "сокращение выдач после ужесточения",
+        "доля программ господдержки около 70 процентов",
+        "рост ипотечного портфеля 2,6 процента",
+        "связь спроса, эскроу и проектного финансирования"
+      ],
+      "input_locators": [
+        "p1/para2",
+        "p1/para5"
+      ]
+    },
+    {
+      "source_id": "S4",
+      "publisher": "Банк России",
+      "title": "Обзор рынка ипотечного жилищного кредитования за январь 2024 года",
+      "url": "https://www.cbr.ru/statistics/bank_sector/mortgage/Indicator_mortgage/0124/",
+      "source_type": "regulator_statistics",
+      "supports": [
+        "снижение выдач с господдержкой в 3,4 раза",
+        "объем 191,5 млрд рублей",
+        "оговорка о сезонности"
+      ],
+      "input_locators": [
+        "p1/para3"
+      ]
+    },
+    {
+      "source_id": "S5",
+      "publisher": "Банк России",
+      "title": "Региональная экономика: комментарии ГУ, май 2024 года",
+      "url": "https://www.cbr.ru/Collection/Collection/File/49194/report_01052024.pdf",
+      "source_type": "regulator_regional_report",
+      "supports": [
+        "высокая зависимость продаж строящегося жилья от ипотеки",
+        "опережающий спрос перед ужесточением",
+        "неоднородная краткосрочная реакция регионов"
+      ],
+      "input_locators": [
+        "p1/para4"
+      ]
+    },
+    {
+      "source_id": "S6",
+      "publisher": "Банк России",
+      "title": "Объем проектного финансирования застройщиков достиг 6,5 трлн рублей",
+      "url": "https://www.cbr.ru/press/event/?id=18726",
+      "source_type": "regulator_project_finance_release",
+      "supports": [
+        "зависимость проектного финансирования от спроса и поступлений на эскроу",
+        "рост средней ставки до 6,9 процента"
+      ],
+      "input_locators": [
+        "p1/para5"
+      ]
+    }
+  ]
+}

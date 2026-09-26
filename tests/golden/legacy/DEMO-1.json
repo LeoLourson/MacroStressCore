@@ -1,0 +1,1580 @@
+{
+  "portfolio_id": "DEMO-1",
+  "name": "DEMO-1",
+  "metadata": {
+    "source": "TZ v3, sections 9.1 and 9.4-9.8, restated for Track A v3.2",
+    "synthetic": true,
+    "money_unit": "RUB_million",
+    "conventions": [
+      "Valuation date 2026-09-11, horizon 12 months; covenants are tested inside it",
+      "Financials carry the inputs Track A v3.2 reads; annual flows are spread evenly",
+      "Term debt costs interest / net debt; working capital draws a revolving line at the TZ marginal rate of 18 %",
+      "A2 is valued at construction month 12 of 24: own funds and 4800 of CAPEX are spent, debt 3980.3715 and escrow 1980.0 follow the TZ 9.8 schedule; commissioning and the escrow coverage test fall on 2027-09-30",
+      "A5 discloses revenue, debt and interest only; its costs follow the peer-shrunk EBITDA margin of TZ 9.6",
+      "Event shocks belong to event metadata; ccf=1 and absent import_share=0 are explicit demo assumptions, not bank observations"
+    ],
+    "as_of": "2026-09-11"
+  },
+  "assets": [
+    {
+      "asset_id": "A1",
+      "okved": "23.61",
+      "asset_type": "bond_fixed",
+      "ead": 1000.0,
+      "lgd": 0.6,
+      "dq": 0.85,
+      "ccf": 1.0,
+      "import_share": 0.0,
+      "financials": {
+        "borrowing_rate": {
+          "value": 0.133333,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:track-a-v3.2",
+              "locator": "A1/borrowing_rate",
+              "fragment_sha256": "59bc4f20808afebf7214c70ea9643f3804326f9f098fd8154782c6e94ba505e7",
+              "author": "demo:methodology",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "cogs": {
+          "value": 8400.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "TZ-v3",
+              "locator": "9.7/cogs",
+              "fragment_sha256": "27310538826e65b13fa49ea7293609f906cad1a4f734b3b2a9c801cbd0256797",
+              "author": "demo:spec-v3",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "coupon_frequency": {
+          "value": 1.0,
+          "unit": "count",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "TZ-v3",
+              "locator": "9.7/coupon_frequency",
+              "fragment_sha256": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+              "author": "demo:spec-v3",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "coupon_rate": {
+          "value": 0.15,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "TZ-v3",
+              "locator": "9.7/coupon_rate",
+              "fragment_sha256": "7932a07a8cbc0885919d30c43799f0247ef96badbc79ba5427e6306232508c78",
+              "author": "demo:spec-v3",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "dio": {
+          "value": 35.0,
+          "unit": "days",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:track-a-v3.2",
+              "locator": "A1/dio",
+              "fragment_sha256": "24c6facdeb4ab95a30ff519d1ec54730d5191be8ebf3cf93b242cb2adc60da19",
+              "author": "demo:methodology",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "dpo": {
+          "value": 40.0,
+          "unit": "days",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:track-a-v3.2",
+              "locator": "A1/dpo",
+              "fragment_sha256": "421d4e5515f6354272c9dffa12090b225c361c0f0c5f52b01d35838e3642775b",
+              "author": "demo:methodology",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "dso": {
+          "value": 50.0,
+          "unit": "days",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:track-a-v3.2",
+              "locator": "A1/dso",
+              "fragment_sha256": "4f4c476f03c24aec059be912c8605e06baec9942e5947798402d6638c17d6723",
+              "author": "demo:methodology",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "face_value": {
+          "value": 1000.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "TZ-v3",
+              "locator": "9.7/face_value",
+              "fragment_sha256": "40510175845988f13f6162ed8526f0b09f73384467fa855e1e79b44a56562a58",
+              "author": "demo:spec-v3",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "maturity_months": {
+          "value": 36.0,
+          "unit": "months",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "TZ-v3",
+              "locator": "9.7/maturity_months",
+              "fragment_sha256": "76a50887d8f1c2e9301755428990ad81479ee21c25b43215cf524541e0503269",
+              "author": "demo:spec-v3",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "net_debt": {
+          "value": 4500.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "TZ-v3",
+              "locator": "9.7/net_debt",
+              "fragment_sha256": "c746ee2edf45fa00fca8d08045b2575aac17cf3eeb3f2b0da5e5301fae8d1e47",
+              "author": "demo:spec-v3",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "opex": {
+          "value": 1800.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "TZ-v3",
+              "locator": "9.7/opex",
+              "fragment_sha256": "e49ec846db7527df7ff483009fe61700e6435072c8c5b551ab08f0a13fc45a07",
+              "author": "demo:spec-v3",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "opex_variable_share": {
+          "value": 0.3,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "TZ-v3",
+              "locator": "9.7/opex_variable_share",
+              "fragment_sha256": "221764976efe04132774d96b0253cc31434c5261737469324f222621baf34b20",
+              "author": "demo:spec-v3",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "revenue": {
+          "value": 12000.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "TZ-v3",
+              "locator": "9.7/revenue",
+              "fragment_sha256": "c5d1866aabc15dda07995e73b08c4ccb514947dcd3a621cea851af5fe366f11b",
+              "author": "demo:spec-v3",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "risk_free_rate": {
+          "value": 0.14,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "TZ-v3",
+              "locator": "9.7/risk_free_rate",
+              "fragment_sha256": "358e553bf44a364c4b9cf2ae457d0554b1e0605d6eba0239f6c682f456980791",
+              "author": "demo:spec-v3",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "tax_rate": {
+          "value": 0.25,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:track-a-v3.2",
+              "locator": "A1/tax_rate",
+              "fragment_sha256": "79fc46ee322f5d5e8d7fabe6979dd9e1a973b9940d352a43f6b8d016a9c8292d",
+              "author": "demo:methodology",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "covenants": [],
+      "proxy_peer_ids": [],
+      "collateral": [],
+      "field_evidence": {
+        "ead": [
+          {
+            "kind": "expert_assumption",
+            "source_id": "TZ-v3",
+            "locator": "9.1/A1/ead",
+            "fragment_sha256": "4250638e192f9a123203e510b554639f0912688ad6ccdb3de696ba913112612a",
+            "author": "demo:spec-v3",
+            "as_of": "2026-09-11"
+          }
+        ],
+        "lgd": [
+          {
+            "kind": "expert_assumption",
+            "source_id": "TZ-v3",
+            "locator": "9.1/A1/lgd",
+            "fragment_sha256": "b4af4e0d40391d3a00179d935c63b7e15ba8cd3dfa29f218dedc270bd3eb3e79",
+            "author": "demo:spec-v3",
+            "as_of": "2026-09-11"
+          }
+        ],
+        "dq": [
+          {
+            "kind": "expert_assumption",
+            "source_id": "TZ-v3",
+            "locator": "9.1/A1/dq",
+            "fragment_sha256": "1e181f0934d441445f03ff51c972ef44275b830c10a80401e53b27bf5baf327a",
+            "author": "demo:spec-v3",
+            "as_of": "2026-09-11"
+          }
+        ],
+        "ccf": [
+          {
+            "kind": "expert_assumption",
+            "source_id": "TZ-v3",
+            "locator": "9.1/A1/ccf",
+            "fragment_sha256": "d0ff5974b6aa52cf562bea5921840c032a860a91a3512f7fe8f768f6bbe005f6",
+            "author": "demo:spec-v3",
+            "as_of": "2026-09-11"
+          }
+        ],
+        "import_share": [
+          {
+            "kind": "expert_assumption",
+            "source_id": "TZ-v3",
+            "locator": "9.1/A1/import_share",
+            "fragment_sha256": "8aed642bf5118b9d3c859bd4be35ecac75b6e873cce34e7b6f554b06f75550d7",
+            "author": "demo:spec-v3",
+            "as_of": "2026-09-11"
+          }
+        ]
+      },
+      "driver_elasticity": {},
+      "status": "ok",
+      "flags": [],
+      "currency": "RUB",
+      "money_unit": "RUB_million"
+    },
+    {
+      "asset_id": "A2",
+      "okved": "41.20",
+      "asset_type": "pf_escrow",
+      "ead": 6000.0,
+      "lgd": 0.35,
+      "dq": 0.8,
+      "ccf": 1.0,
+      "import_share": 0.0,
+      "financials": {
+        "base_rate": {
+          "value": 0.2,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "TZ-v3",
+              "locator": "9.8/base_rate",
+              "fragment_sha256": "44896b09365746b5f7167ee4d64988a38f7f4628803cbf86224e74eeb7c69e9d",
+              "author": "demo:spec-v3",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "capex_month_13_24": {
+          "value": 0.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:track-a-v3.2",
+              "locator": "A2/capex_month_13_24",
+              "fragment_sha256": "359d4b995783454d7f6542eef2f3fe611ad421a33c5a938b0f91c83dd68ab5a9",
+              "author": "demo:methodology",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "capex_month_1_12": {
+          "value": 100.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:track-a-v3.2",
+              "locator": "A2/capex_month_1_12",
+              "fragment_sha256": "44e5d633321415cc7f5c6bef4db49c161fa3f4db043b12e819f4f4111c6a0e78",
+              "author": "demo:methodology",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "commissioning_month": {
+          "value": 12.0,
+          "unit": "months",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:track-a-v3.2",
+              "locator": "A2/commissioning_month",
+              "fragment_sha256": "2d8bbfb91df0741f184d9cc6b5191f941edb28bbf84aac7c28418f787b978761",
+              "author": "demo:methodology",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "credit_limit": {
+          "value": 6000.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "TZ-v3",
+              "locator": "9.8/credit_limit",
+              "fragment_sha256": "8d284220975da66c6cba4a32aaedfa0b897187d86ed9f7a2419c9bd10a103505",
+              "author": "demo:spec-v3",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "debt": {
+          "value": 3980.3715,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:track-a-v3.2",
+              "locator": "A2/debt",
+              "fragment_sha256": "9a16f882e34c49f2f09e0cb8c2764bce4d3ad38128336d7725fa4a0e0afe0c7d",
+              "author": "demo:methodology",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "equity": {
+          "value": 0.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:track-a-v3.2",
+              "locator": "A2/equity",
+              "fragment_sha256": "b62699b885ce0ce3c01ab6efee4c041c62672810a56138341c06702e8fa77d6f",
+              "author": "demo:methodology",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "escrow": {
+          "value": 1980.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:track-a-v3.2",
+              "locator": "A2/escrow",
+              "fragment_sha256": "9d254a44a08f0e5a2aab1b41bb866a0391952fa4eb5a18f0afa10de20b49d0b3",
+              "author": "demo:methodology",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "monthly_sales": {
+          "value": 330.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "TZ-v3",
+              "locator": "9.8/monthly_sales",
+              "fragment_sha256": "5426d2ca50f244fb43fe9eafc82da08f33f3b4f8d9140802bd0102e780b629d6",
+              "author": "demo:spec-v3",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "sales_start_month": {
+          "value": 1.0,
+          "unit": "months",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:track-a-v3.2",
+              "locator": "A2/sales_start_month",
+              "fragment_sha256": "260a3a6d559e4c7ef86728825f16e0ea266c6dc58da1cabf37afcdcea2910d45",
+              "author": "demo:methodology",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "subsidized_rate": {
+          "value": 0.05,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "TZ-v3",
+              "locator": "9.8/subsidized_rate",
+              "fragment_sha256": "0602d7c813c1f6e7351a5832730f29daf739674976caba8d9dd955be838d46ea",
+              "author": "demo:spec-v3",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "covenants": [
+        {
+          "covenant_id": "A2-escrow_coverage",
+          "metric": "escrow_coverage",
+          "operator": "ge",
+          "threshold": 1.0,
+          "unit": "ratio",
+          "test_dates": [
+            "2027-09-30"
+          ],
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "TZ-v3",
+              "locator": "9.1/A2/covenant/escrow_coverage",
+              "fragment_sha256": "5df9f7cbaab53508cc1324ab856a8a4d8a56e74c1a1153749d638b5dd8e23e6a",
+              "author": "demo:spec-v3",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      ],
+      "proxy_peer_ids": [],
+      "collateral": [],
+      "field_evidence": {
+        "ead": [
+          {
+            "kind": "expert_assumption",
+            "source_id": "TZ-v3",
+            "locator": "9.1/A2/ead",
+            "fragment_sha256": "05b3400ee58882652cfe107d6d5fb1ffc80399df8aeed5d2de50b99bc089fa15",
+            "author": "demo:spec-v3",
+            "as_of": "2026-09-11"
+          }
+        ],
+        "lgd": [
+          {
+            "kind": "expert_assumption",
+            "source_id": "demo:track-a-v3.2",
+            "locator": "A2/lgd",
+            "fragment_sha256": "4e2240970df9d03a7ddb9dcaa341f358c9acd717a21f8e8803e64149480542e0",
+            "author": "demo:methodology",
+            "as_of": "2026-09-11"
+          }
+        ],
+        "dq": [
+          {
+            "kind": "expert_assumption",
+            "source_id": "TZ-v3",
+            "locator": "9.1/A2/dq",
+            "fragment_sha256": "1e9d7c27c8bbc8ddf0055c93e064a62fa995d177fee28cc8fa949bc8a4db06f4",
+            "author": "demo:spec-v3",
+            "as_of": "2026-09-11"
+          }
+        ],
+        "ccf": [
+          {
+            "kind": "expert_assumption",
+            "source_id": "TZ-v3",
+            "locator": "9.1/A2/ccf",
+            "fragment_sha256": "d0ff5974b6aa52cf562bea5921840c032a860a91a3512f7fe8f768f6bbe005f6",
+            "author": "demo:spec-v3",
+            "as_of": "2026-09-11"
+          }
+        ],
+        "import_share": [
+          {
+            "kind": "expert_assumption",
+            "source_id": "TZ-v3",
+            "locator": "9.1/A2/import_share",
+            "fragment_sha256": "8aed642bf5118b9d3c859bd4be35ecac75b6e873cce34e7b6f554b06f75550d7",
+            "author": "demo:spec-v3",
+            "as_of": "2026-09-11"
+          }
+        ]
+      },
+      "driver_elasticity": {},
+      "status": "ok",
+      "flags": [
+        "ead_is_credit_limit"
+      ],
+      "currency": "RUB",
+      "money_unit": "RUB_million"
+    },
+    {
+      "asset_id": "A3",
+      "okved": "46.63",
+      "asset_type": "corp_loan",
+      "ead": 3000.0,
+      "lgd": 0.45,
+      "dq": 0.75,
+      "ccf": 1.0,
+      "import_share": 0.8,
+      "financials": {
+        "borrowing_rate": {
+          "value": 0.133333,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:track-a-v3.2",
+              "locator": "A3/borrowing_rate",
+              "fragment_sha256": "ff52fc25397c20e2c45b4f1a82dd121e3e76a45c1b9e56249690c766607e0148",
+              "author": "demo:methodology",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "cogs": {
+          "value": 16000.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "TZ-v3",
+              "locator": "9.4/cogs",
+              "fragment_sha256": "2570901c76653e578fecf066b5fc3fa1619f1a051e928e39797bab1b1342bf40",
+              "author": "demo:spec-v3",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "credit_limit": {
+          "value": 4000.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:track-a-v3.2",
+              "locator": "A3/credit_limit",
+              "fragment_sha256": "bffc4692c0931299c00e51a7e5ff208d655aae5b7ce73a290ccefddd98e1cbf0",
+              "author": "demo:methodology",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "demand_elasticity": {
+          "value": -1.25,
+          "unit": "ratio",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "TZ-v3",
+              "locator": "9.4/demand_elasticity",
+              "fragment_sha256": "728af8c01a6910765623cf596926b7bf61d6ab11e0c2e7de329ab949d9054c61",
+              "author": "demo:spec-v3",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "dio": {
+          "value": 90.0,
+          "unit": "days",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:track-a-v3.2",
+              "locator": "A3/dio",
+              "fragment_sha256": "dbaea1c93b15febe78d61a7d706e8fde7a9c8fc299a5b3e4a6761aa74dd9eea6",
+              "author": "demo:methodology",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "dpo": {
+          "value": 30.0,
+          "unit": "days",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:track-a-v3.2",
+              "locator": "A3/dpo",
+              "fragment_sha256": "49c21480c811c6a674ccea07359291fa3d5909031f5135e034f4e5719c71c7f4",
+              "author": "demo:methodology",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "dso": {
+          "value": 45.0,
+          "unit": "days",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:track-a-v3.2",
+              "locator": "A3/dso",
+              "fragment_sha256": "dadcf19157bbbafcc1dc1f59a9e22872dd92e5d56c21e1f5f64b15a9fd997a22",
+              "author": "demo:methodology",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "net_debt": {
+          "value": 6000.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "TZ-v3",
+              "locator": "9.4/net_debt",
+              "fragment_sha256": "8d284220975da66c6cba4a32aaedfa0b897187d86ed9f7a2419c9bd10a103505",
+              "author": "demo:spec-v3",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "opex": {
+          "value": 2000.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "TZ-v3",
+              "locator": "9.4/opex",
+              "fragment_sha256": "81a83544cf93c245178cbc1620030f1123f435af867c79d87135983c52ab39d9",
+              "author": "demo:spec-v3",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "opex_variable_share": {
+          "value": 0.0,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "TZ-v3",
+              "locator": "9.4/opex_variable_share",
+              "fragment_sha256": "8aed642bf5118b9d3c859bd4be35ecac75b6e873cce34e7b6f554b06f75550d7",
+              "author": "demo:spec-v3",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "pass_through": {
+          "value": 0.8,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:track-a-v3.2",
+              "locator": "A3/pass_through",
+              "fragment_sha256": "1c1052cac7e4f81a4c0e3275c31ef96c31e5a76f5b73b90d6b607ea508baae26",
+              "author": "demo:methodology",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "revenue": {
+          "value": 20000.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "TZ-v3",
+              "locator": "9.4/revenue",
+              "fragment_sha256": "876c9b16254e157d1eb645390dcfae6f29b9d3cd394e73a91de8ee5d0e67ee43",
+              "author": "demo:spec-v3",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "revolver_margin": {
+          "value": 0.046667,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:track-a-v3.2",
+              "locator": "A3/revolver_margin",
+              "fragment_sha256": "a9c26efcd198c025c74bf5888f06391eea153f087cff70ed6c4c25dab11fa91a",
+              "author": "demo:methodology",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "tax_rate": {
+          "value": 0.25,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:track-a-v3.2",
+              "locator": "A3/tax_rate",
+              "fragment_sha256": "a75b8d4cf98e5f8eaf2acfe1f3690a78f4e634478ee116bd9e12788cb42f3e68",
+              "author": "demo:methodology",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "covenants": [
+        {
+          "covenant_id": "A3-icr",
+          "metric": "icr",
+          "operator": "ge",
+          "threshold": 2.0,
+          "unit": "ratio",
+          "test_dates": [
+            "2027-09-11"
+          ],
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "TZ-v3",
+              "locator": "9.1/A3/covenant/icr",
+              "fragment_sha256": "9bf4d284d17e16c8013d0a0f416560cdc68e75c49fa1cd08a7c986072576d967",
+              "author": "demo:spec-v3",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        {
+          "covenant_id": "A3-nd_ebitda",
+          "metric": "nd_ebitda",
+          "operator": "le",
+          "threshold": 3.5,
+          "unit": "ratio",
+          "test_dates": [
+            "2027-09-11"
+          ],
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "TZ-v3",
+              "locator": "9.1/A3/covenant/nd_ebitda",
+              "fragment_sha256": "82cf984bf6a652d2cbf3ea9f71c99e672c6bda943e43d34bce469afa67dc2b7b",
+              "author": "demo:spec-v3",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      ],
+      "proxy_peer_ids": [],
+      "collateral": [],
+      "field_evidence": {
+        "ead": [
+          {
+            "kind": "expert_assumption",
+            "source_id": "TZ-v3",
+            "locator": "9.1/A3/ead",
+            "fragment_sha256": "fcc9071baa27ca675464cc4583f5ef60f3560db7dce83d385786d554908e06b6",
+            "author": "demo:spec-v3",
+            "as_of": "2026-09-11"
+          }
+        ],
+        "lgd": [
+          {
+            "kind": "expert_assumption",
+            "source_id": "TZ-v3",
+            "locator": "9.1/A3/lgd",
+            "fragment_sha256": "bffb16d6fe1445f051b3cff3025340011b817b391ffc04dcd77d1452efa10c25",
+            "author": "demo:spec-v3",
+            "as_of": "2026-09-11"
+          }
+        ],
+        "dq": [
+          {
+            "kind": "expert_assumption",
+            "source_id": "TZ-v3",
+            "locator": "9.1/A3/dq",
+            "fragment_sha256": "ce5d3aa79ae56155078af52e8fac68eb2d0a78489f82bc26c1e1bbc667ba9fde",
+            "author": "demo:spec-v3",
+            "as_of": "2026-09-11"
+          }
+        ],
+        "ccf": [
+          {
+            "kind": "expert_assumption",
+            "source_id": "TZ-v3",
+            "locator": "9.1/A3/ccf",
+            "fragment_sha256": "d0ff5974b6aa52cf562bea5921840c032a860a91a3512f7fe8f768f6bbe005f6",
+            "author": "demo:spec-v3",
+            "as_of": "2026-09-11"
+          }
+        ],
+        "import_share": [
+          {
+            "kind": "expert_assumption",
+            "source_id": "demo:conventions",
+            "locator": "A3/import_share",
+            "fragment_sha256": "1e9d7c27c8bbc8ddf0055c93e064a62fa995d177fee28cc8fa949bc8a4db06f4",
+            "author": "demo:spec-v3",
+            "as_of": "2026-09-11"
+          }
+        ]
+      },
+      "driver_elasticity": {},
+      "status": "ok",
+      "flags": [],
+      "currency": "RUB",
+      "money_unit": "RUB_million"
+    },
+    {
+      "asset_id": "A4",
+      "okved": "64.91",
+      "asset_type": "leasing",
+      "ead": 2000.0,
+      "lgd": 0.4,
+      "dq": 0.7,
+      "ccf": 1.0,
+      "import_share": 0.0,
+      "financials": {
+        "advance_rate": {
+          "value": 0.2,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "TZ-v3",
+              "locator": "9.5/advance_rate",
+              "fragment_sha256": "44896b09365746b5f7167ee4d64988a38f7f4628803cbf86224e74eeb7c69e9d",
+              "author": "demo:spec-v3",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "amortization_rate": {
+          "value": 0.35,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "TZ-v3",
+              "locator": "9.5/amortization_rate",
+              "fragment_sha256": "a976726b1d1bda3e1f271287f3aa7229ca3204ff8bf9cb2b581c610b9c811bef",
+              "author": "demo:spec-v3",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "borrowing_rate": {
+          "value": 0.18,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "TZ-v3",
+              "locator": "9.5/borrowing_rate",
+              "fragment_sha256": "e6743df815da2b68bf6347dc8821a62d7609faefe384eb3cb7b74782864870e3",
+              "author": "demo:spec-v3",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "debt": {
+          "value": 33000.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "TZ-v3",
+              "locator": "9.5/debt",
+              "fragment_sha256": "7d22d2deba1f3a4372cd07f63404f85130497f5a1c362d8c77ea55bc4faa8ede",
+              "author": "demo:spec-v3",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "equity": {
+          "value": 8000.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "TZ-v3",
+              "locator": "9.5/equity",
+              "fragment_sha256": "ad5f9478d603fe97eae2bbff07f76fe7f18610343b5f3bc8e00945ee51b30d2c",
+              "author": "demo:spec-v3",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "net_investment_leases": {
+          "value": 40000.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "TZ-v3",
+              "locator": "9.5/net_investment_leases",
+              "fragment_sha256": "4948963369b682612d22b081bdc92c13d23fb921cdd44e50f45d7e86b4b52022",
+              "author": "demo:spec-v3",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "new_business": {
+          "value": 18000.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "TZ-v3",
+              "locator": "9.5/new_business",
+              "fragment_sha256": "434a7e656c53f103a7a2ed1ccc8bb6fd53e9c10e4df29edd2a11b9036342a08d",
+              "author": "demo:spec-v3",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "opex": {
+          "value": 1200.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "TZ-v3",
+              "locator": "9.5/opex",
+              "fragment_sha256": "15197cf7214b58e67cae565e573ffd9aa44bcb81f8ee5d7185dfe8da0a16ef43",
+              "author": "demo:spec-v3",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "portfolio_yield": {
+          "value": 0.25,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "TZ-v3",
+              "locator": "9.5/portfolio_yield",
+              "fragment_sha256": "a30a043314fa89294fa2c1c989a01fbb5329e5c085a5c5a8d27317656de24ae0",
+              "author": "demo:spec-v3",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "tax_rate": {
+          "value": 0.25,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "TZ-v3",
+              "locator": "9.5/tax_rate",
+              "fragment_sha256": "a30a043314fa89294fa2c1c989a01fbb5329e5c085a5c5a8d27317656de24ae0",
+              "author": "demo:spec-v3",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "covenants": [
+        {
+          "covenant_id": "A4-icr",
+          "metric": "icr",
+          "operator": "ge",
+          "threshold": 1.25,
+          "unit": "ratio",
+          "test_dates": [
+            "2027-09-11"
+          ],
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "TZ-v3",
+              "locator": "9.1/A4/covenant/icr",
+              "fragment_sha256": "fa1085e2ff94218b4f73bc3a19a3f6ddc00be782f967477eae0a697b0f05f08f",
+              "author": "demo:spec-v3",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        {
+          "covenant_id": "A4-debt_equity",
+          "metric": "debt_equity",
+          "operator": "le",
+          "threshold": 4.0,
+          "unit": "ratio",
+          "test_dates": [
+            "2027-09-11"
+          ],
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "TZ-v3",
+              "locator": "9.1/A4/covenant/debt_equity",
+              "fragment_sha256": "73a4b1c42eeaf169794a5637a5674b098287d2d4b210754d180a2ea2c118598a",
+              "author": "demo:spec-v3",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      ],
+      "proxy_peer_ids": [],
+      "collateral": [],
+      "field_evidence": {
+        "ead": [
+          {
+            "kind": "expert_assumption",
+            "source_id": "TZ-v3",
+            "locator": "9.1/A4/ead",
+            "fragment_sha256": "9ed67f8751d2258615326f1f9ddab9f0c7c7c9b002716e41438eb219fc453a88",
+            "author": "demo:spec-v3",
+            "as_of": "2026-09-11"
+          }
+        ],
+        "lgd": [
+          {
+            "kind": "expert_assumption",
+            "source_id": "TZ-v3",
+            "locator": "9.1/A4/lgd",
+            "fragment_sha256": "f3e360d89952f40d3b79d0b07dd0b94f1cbf9017cba5d2a5f8128e4146d6e3c1",
+            "author": "demo:spec-v3",
+            "as_of": "2026-09-11"
+          }
+        ],
+        "dq": [
+          {
+            "kind": "expert_assumption",
+            "source_id": "TZ-v3",
+            "locator": "9.1/A4/dq",
+            "fragment_sha256": "973b372a514f91db8219fef585cdf81b09196afd7948f5fb1e29c2016dd995a0",
+            "author": "demo:spec-v3",
+            "as_of": "2026-09-11"
+          }
+        ],
+        "ccf": [
+          {
+            "kind": "expert_assumption",
+            "source_id": "TZ-v3",
+            "locator": "9.1/A4/ccf",
+            "fragment_sha256": "d0ff5974b6aa52cf562bea5921840c032a860a91a3512f7fe8f768f6bbe005f6",
+            "author": "demo:spec-v3",
+            "as_of": "2026-09-11"
+          }
+        ],
+        "import_share": [
+          {
+            "kind": "expert_assumption",
+            "source_id": "TZ-v3",
+            "locator": "9.1/A4/import_share",
+            "fragment_sha256": "8aed642bf5118b9d3c859bd4be35ecac75b6e873cce34e7b6f554b06f75550d7",
+            "author": "demo:spec-v3",
+            "as_of": "2026-09-11"
+          }
+        ]
+      },
+      "driver_elasticity": {},
+      "status": "ok",
+      "flags": [],
+      "currency": "RUB",
+      "money_unit": "RUB_million"
+    },
+    {
+      "asset_id": "A5",
+      "okved": "20.15",
+      "asset_type": "corp_loan",
+      "ead": 1500.0,
+      "lgd": 0.45,
+      "dq": 0.35,
+      "ccf": 1.0,
+      "import_share": 0.0,
+      "financials": {
+        "borrowing_rate": {
+          "value": 0.12,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:track-a-v3.2",
+              "locator": "A5/borrowing_rate",
+              "fragment_sha256": "cfb4be679a2d728dc311b26e980e7cb64e2b2ef6235437fc28547cc2a1a85f41",
+              "author": "demo:methodology",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "cogs": {
+          "value": 19500.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:track-a-v3.2",
+              "locator": "A5/cogs",
+              "fragment_sha256": "087b81776aa48838e1e40a6f3d2520bdbcde5e3365990e7668cae3ab58e3ee0c",
+              "author": "demo:methodology",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "credit_limit": {
+          "value": 4000.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:track-a-v3.2",
+              "locator": "A5/credit_limit",
+              "fragment_sha256": "0c6d10d8ef618873f23f6ccfa0664284ecff9cf525f2e58c04376ba96c6bd8b4",
+              "author": "demo:methodology",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "dio": {
+          "value": 45.0,
+          "unit": "days",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:track-a-v3.2",
+              "locator": "A5/dio",
+              "fragment_sha256": "9a77b1a588ab32d9383912901151609e1802a8987fd8b26ff4240354338fba8e",
+              "author": "demo:methodology",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "dpo": {
+          "value": 35.0,
+          "unit": "days",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:track-a-v3.2",
+              "locator": "A5/dpo",
+              "fragment_sha256": "71a61032c2068dfde0279e4ac2c61996fe64d526e9c091d4417e1447500511b2",
+              "author": "demo:methodology",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "dso": {
+          "value": 40.0,
+          "unit": "days",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:track-a-v3.2",
+              "locator": "A5/dso",
+              "fragment_sha256": "aa82597ce464edf2afc74a2d7dfef62f788a3da64013aee557265fc117087b5e",
+              "author": "demo:methodology",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "net_debt": {
+          "value": 15000.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "TZ-v3",
+              "locator": "9.6/net_debt",
+              "fragment_sha256": "d4c999ae43633bd2036188d2bca68e1be8202b2cc1f3a1c42a728eaff7d2483d",
+              "author": "demo:spec-v3",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "opex": {
+          "value": 1622.0928,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:track-a-v3.2",
+              "locator": "A5/opex",
+              "fragment_sha256": "10dce8089b6bb05cf80fb5818f408f13660d0b025026e3a3e0c60d706e24b124",
+              "author": "demo:methodology",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "revenue": {
+          "value": 30000.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "TZ-v3",
+              "locator": "9.6/revenue",
+              "fragment_sha256": "891937cb335016e9c7074c3781dcb1364e0c660733a8889bbeae83e6aa759be6",
+              "author": "demo:spec-v3",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "revolver_margin": {
+          "value": 0.06,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:track-a-v3.2",
+              "locator": "A5/revolver_margin",
+              "fragment_sha256": "ac94f996664aaeca1a291dafa0bc4b0f23da28a3ddb13a2b256d6e8911dde09e",
+              "author": "demo:methodology",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "tax_rate": {
+          "value": 0.25,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:track-a-v3.2",
+              "locator": "A5/tax_rate",
+              "fragment_sha256": "fc027df098d6246eb3d7965c34d240033711b5a6c1d65beb2ad8857c21b27986",
+              "author": "demo:methodology",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "covenants": [
+        {
+          "covenant_id": "A5-icr",
+          "metric": "icr",
+          "operator": "ge",
+          "threshold": 3.0,
+          "unit": "ratio",
+          "test_dates": [
+            "2027-09-11"
+          ],
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "TZ-v3",
+              "locator": "9.1/A5/covenant/icr",
+              "fragment_sha256": "9bf4d284d17e16c8013d0a0f416560cdc68e75c49fa1cd08a7c986072576d967",
+              "author": "demo:spec-v3",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      ],
+      "proxy_peer_ids": [
+        "PEER-20.15-1",
+        "PEER-20.15-2"
+      ],
+      "collateral": [],
+      "field_evidence": {
+        "ead": [
+          {
+            "kind": "expert_assumption",
+            "source_id": "TZ-v3",
+            "locator": "9.1/A5/ead",
+            "fragment_sha256": "cbc03d01c9e075396d0b205a83023b9c3cb246054b7eb54caa9929e5d0f1c6f5",
+            "author": "demo:spec-v3",
+            "as_of": "2026-09-11"
+          }
+        ],
+        "lgd": [
+          {
+            "kind": "expert_assumption",
+            "source_id": "TZ-v3",
+            "locator": "9.1/A5/lgd",
+            "fragment_sha256": "bffb16d6fe1445f051b3cff3025340011b817b391ffc04dcd77d1452efa10c25",
+            "author": "demo:spec-v3",
+            "as_of": "2026-09-11"
+          }
+        ],
+        "dq": [
+          {
+            "kind": "expert_assumption",
+            "source_id": "TZ-v3",
+            "locator": "9.1/A5/dq",
+            "fragment_sha256": "a976726b1d1bda3e1f271287f3aa7229ca3204ff8bf9cb2b581c610b9c811bef",
+            "author": "demo:spec-v3",
+            "as_of": "2026-09-11"
+          }
+        ],
+        "ccf": [
+          {
+            "kind": "expert_assumption",
+            "source_id": "TZ-v3",
+            "locator": "9.1/A5/ccf",
+            "fragment_sha256": "d0ff5974b6aa52cf562bea5921840c032a860a91a3512f7fe8f768f6bbe005f6",
+            "author": "demo:spec-v3",
+            "as_of": "2026-09-11"
+          }
+        ],
+        "import_share": [
+          {
+            "kind": "expert_assumption",
+            "source_id": "TZ-v3",
+            "locator": "9.1/A5/import_share",
+            "fragment_sha256": "8aed642bf5118b9d3c859bd4be35ecac75b6e873cce34e7b6f554b06f75550d7",
+            "author": "demo:spec-v3",
+            "as_of": "2026-09-11"
+          }
+        ]
+      },
+      "driver_elasticity": {},
+      "status": "ok",
+      "flags": [
+        "limited_disclosure",
+        "proxy_required"
+      ],
+      "currency": "RUB",
+      "money_unit": "RUB_million"
+    }
+  ],
+  "issuers": [
+    {
+      "issuer_id": "DEMO-1:A1",
+      "name": "Производитель изделий из бетона",
+      "okved": "23.61",
+      "business_description": "Производство бетонных изделий для жилищного строительства",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "TZ-v3",
+          "locator": "9.1/A1",
+          "fragment_sha256": "247e26df78d8da65c7f6260820822a47266def9cc9545372e9b1fa5fa1d615b0",
+          "author": "demo:spec-v3",
+          "as_of": "2026-09-11"
+        }
+      ]
+    },
+    {
+      "issuer_id": "DEMO-1:A2",
+      "name": "Застройщик жилых микрорайонов",
+      "okved": "41.20",
+      "business_description": "Строительство жилья с проектным финансированием и счетами эскроу",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "TZ-v3",
+          "locator": "9.1/A2",
+          "fragment_sha256": "617314fc988e1c9c66598849e985465f462305d992689b751ed397ce2be226d0",
+          "author": "demo:spec-v3",
+          "as_of": "2026-09-11"
+        }
+      ]
+    },
+    {
+      "issuer_id": "DEMO-1:A3",
+      "name": "Дистрибьютор спецтехники",
+      "okved": "46.63",
+      "business_description": "Импорт и продажа строительной спецтехники; расчёты через посредников в Азии",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "TZ-v3",
+          "locator": "9.1/A3",
+          "fragment_sha256": "37837bc9815814ce79ab23208832314f822fb8e7bcf7c397caf5a63eda4bba3f",
+          "author": "demo:spec-v3",
+          "as_of": "2026-09-11"
+        }
+      ]
+    },
+    {
+      "issuer_id": "DEMO-1:A4",
+      "name": "Финансовая лизинговая компания",
+      "okved": "64.91",
+      "business_description": "Финансовый лизинг спецтехники; авансы поставщикам оборудования",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "TZ-v3",
+          "locator": "9.1/A4",
+          "fragment_sha256": "ffc934136c7ebe8e4d17f4ddf7dae235a0936e9d14a972dcd70618d561840cfc",
+          "author": "demo:spec-v3",
+          "as_of": "2026-09-11"
+        }
+      ]
+    },
+    {
+      "issuer_id": "DEMO-1:A5",
+      "name": "Экспортёр удобрений",
+      "okved": "20.15",
+      "business_description": "Производство и экспорт удобрений; покупатели из Азии",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "TZ-v3",
+          "locator": "9.1/A5",
+          "fragment_sha256": "725116734351f0d82044e4a7b2fcfc3ef80a8e7277b9b06f55f210eaf898f410",
+          "author": "demo:spec-v3",
+          "as_of": "2026-09-11"
+        }
+      ]
+    },
+    {
+      "issuer_id": "PEER-20.15-1",
+      "name": "Производитель удобрений, аналог 1",
+      "okved": "20.15",
+      "business_description": "Экспорт удобрений; данные для оценки маржи EBITDA",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "demo:peers",
+          "locator": "PEER-20.15-1",
+          "fragment_sha256": "a30a043314fa89294fa2c1c989a01fbb5329e5c085a5c5a8d27317656de24ae0",
+          "author": "demo:spec-v3",
+          "as_of": "2026-09-11"
+        }
+      ]
+    },
+    {
+      "issuer_id": "PEER-20.15-2",
+      "name": "Производитель удобрений, аналог 2",
+      "okved": "20.15",
+      "business_description": "Экспорт удобрений; данные для оценки маржи EBITDA",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "demo:peers",
+          "locator": "PEER-20.15-2",
+          "fragment_sha256": "a976726b1d1bda3e1f271287f3aa7229ca3204ff8bf9cb2b581c610b9c811bef",
+          "author": "demo:spec-v3",
+          "as_of": "2026-09-11"
+        }
+      ]
+    }
+  ],
+  "asset_sources": {
+    "A1": {
+      "issuer_id": "DEMO-1:A1",
+      "period": "2025-12-31",
+      "standard": "demo",
+      "document_id": "TZ-v3",
+      "locator": "9/A1",
+      "covenant_definitions": {}
+    },
+    "A2": {
+      "issuer_id": "DEMO-1:A2",
+      "period": "2025-12-31",
+      "standard": "demo",
+      "document_id": "TZ-v3",
+      "locator": "9/A2",
+      "covenant_definitions": {
+        "A2-escrow_coverage": "escrow balance / debt at commissioning"
+      }
+    },
+    "A3": {
+      "issuer_id": "DEMO-1:A3",
+      "period": "2025-12-31",
+      "standard": "demo",
+      "document_id": "TZ-v3",
+      "locator": "9/A3",
+      "covenant_definitions": {
+        "A3-icr": "EBITDA / interest expense",
+        "A3-nd_ebitda": "net debt / EBITDA"
+      }
+    },
+    "A4": {
+      "issuer_id": "DEMO-1:A4",
+      "period": "2025-12-31",
+      "standard": "demo",
+      "document_id": "TZ-v3",
+      "locator": "9/A4",
+      "covenant_definitions": {
+        "A4-icr": "(finance income - operating expenses) / funding cost",
+        "A4-debt_equity": "funding debt / equity"
+      }
+    },
+    "A5": {
+      "issuer_id": "DEMO-1:A5",
+      "period": "2025-12-31",
+      "standard": "demo",
+      "document_id": "TZ-v3",
+      "locator": "9/A5",
+      "covenant_definitions": {
+        "A5-icr": "EBITDA / interest expense"
+      }
+    }
+  },
+  "peer_financials": [
+    {
+      "issuer_id": "PEER-20.15-1",
+      "period": "2025-12-31",
+      "standard": "demo",
+      "parameters": {
+        "ebitda_margin": {
+          "value": 0.25,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "TZ-v3",
+              "locator": "9.6/ebitda_margin",
+              "fragment_sha256": "a30a043314fa89294fa2c1c989a01fbb5329e5c085a5c5a8d27317656de24ae0",
+              "author": "demo:spec-v3",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "document_id": "demo:peers",
+      "locator": "PEER-20.15-1"
+    },
+    {
+      "issuer_id": "PEER-20.15-2",
+      "period": "2025-12-31",
+      "standard": "demo",
+      "parameters": {
+        "ebitda_margin": {
+          "value": 0.35,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "TZ-v3",
+              "locator": "9.6/ebitda_margin",
+              "fragment_sha256": "a976726b1d1bda3e1f271287f3aa7229ca3204ff8bf9cb2b581c610b9c811bef",
+              "author": "demo:spec-v3",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "document_id": "demo:peers",
+      "locator": "PEER-20.15-2"
+    }
+  ]
+}

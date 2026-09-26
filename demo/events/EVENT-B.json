@@ -1,0 +1,29 @@
+{
+  "event_id": "EVENT-B",
+  "title": "Первоначальный взнос по ипотеке",
+  "text": "Ужесточение требований к первоначальному взносу по льготной ипотеке",
+  "metadata": {
+    "source": "TZ 9.2, 9.7-9.8; drivers of Track A v3.2",
+    "distributions": {
+      "construction_volume": {
+        "kind": "triangular",
+        "low": -0.15,
+        "mode": -0.1,
+        "high": -0.05,
+        "unit": "fraction",
+        "channel": "construction_demand",
+        "driver": "revenue"
+      },
+      "housing_sales": {
+        "kind": "triangular",
+        "low": -0.45,
+        "mode": -0.35,
+        "high": -0.2,
+        "unit": "fraction",
+        "channel": "housing_demand",
+        "driver": "revenue"
+      }
+    },
+    "scenario_text": "Продажи квартир в новостройках упадут на 20–45 %, в центральном сценарии на 35 %. Объём строительства сократится на 5–15 %, в центральном сценарии на 10 %."
+  }
+}

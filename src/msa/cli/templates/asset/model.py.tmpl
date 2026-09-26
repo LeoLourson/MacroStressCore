@@ -1,0 +1,122 @@
+"""``{{plugin_id}}.model.v1``: {{type_label}} under a one-factor stress on the horizon.
+
+``V_T = V_0 · exp(beta · f)``: ``V_0`` is the quantity times the snapshot price, ``f`` the log
+change of the ``{{plugin_id}}.driver`` factor with the instrument's key. The model is pure: it
+reads only the prepared inputs and the scenario; no database, network or LLM.
+"""
+
+import numpy as np
+
+from msa.contracts.result import AggregationContribution, Diagnostic
+from msa.contracts.snapshot import PRICE
+from msa.contracts.units import money, unit_price
+from msa.plugin_sdk import (
+    CalculationModel,
+    DataRequirement,
+    DataRequirements,
+    Diagnostics,
+    FactorRequirement,
+)
+from msa.plugin_sdk.results import distribution, envelope, scalar
+
+from .schemas import Details, Position, Terms
+
+PLUGIN_ID = "{{plugin_id}}"
+PLUGIN_VERSION = "0.1.0"
+TYPE_ID = "{{type_id}}"
+MODEL_ID = f"{PLUGIN_ID}.model.v1"
+DRIVER = f"{PLUGIN_ID}.driver"
+SLICE = "market.pnl"
+
+
+class Model(CalculationModel):
+    model_id = MODEL_ID
+    version = "0.1.0"
+    label = "Однофакторный стресс стоимости"
+    instrument_types = (TYPE_ID,)
+    metrics = (f"{PLUGIN_ID}.value_current", f"{PLUGIN_ID}.loss")
+    required_metrics = metrics
+    slices = (SLICE,)
+    factors = (DRIVER,)
+    details_schema = Details
+    description = "V_T = V_0·exp(beta·f); потери — V_0 − V_T."
+
+    def requirements(self, position, options):
+        instrument = position.instrument
+        terms = Terms.model_validate(instrument.terms)
+        return DataRequirements(
+            data=[DataRequirement(key="price", kind=PRICE, subject=instrument.instrument_id,
+                                  purpose="цена на дату оценки")],
+            factors=[FactorRequirement(factor_id=DRIVER, key=terms.driver_key)],
+        )
+
+    def validate(self, prepared):
+        context = prepared.context
+        instrument = context.instrument
+        items, value = [], None
+        price = prepared.item("price")
+        if instrument.currency != context.base_currency:
+            items.append(Diagnostic(code="currency_not_supported", severity="error",
+                                    message="модель считает только инструменты в базовой валюте"))
+        if price is not None:
+            quote = price.values.get("price")
+            if quote is None or quote.value <= 0 or quote.unit != unit_price(instrument.currency):
+                items.append(Diagnostic(code="price_invalid", severity="error",
+                                        message="цена — положительное число в валюте инструмента",
+                                        path="/data/price"))
+            elif not items:
+                quantity = Position.model_validate(context.position.params).quantity.value
+                value = quantity * quote.value / 1e6
+        return Diagnostics(items=items, exposures={SLICE: value})
+
+    def calculate(self, prepared, context):
+        terms = Terms.model_validate(prepared.context.instrument.terms)
+        quantity = Position.model_validate(prepared.context.position.params).quantity
+        price = prepared.item("price").values["price"]
+        scenario = context.scenario
+        names = scenario.parameters_for(DRIVER, terms.driver_key)
+        flags = []
+        if names:
+            shock = np.sum([scenario.draws(name) for name in names], axis=0)
+            central = sum(scenario.central(name) for name in names)
+        else:
+            # Not moved by the scenario: the result says so rather than treating it silently.
+            flags.append(f"factor_not_in_scenario:{DRIVER}:{terms.driver_key}")
+            shock, central = np.zeros((scenario.replicates, scenario.points)), 0.0
+        value0 = quantity.value * price.value / 1e6
+        losses = (value0 - value0 * np.exp(terms.beta * shock)).reshape(-1)
+        central_loss = value0 - value0 * float(np.exp(terms.beta * central))
+        unit = money(context.base_currency)
+        sources = [*price.evidence, *(e for e in quantity.evidence if e not in price.evidence)]
+        return envelope(
+            prepared,
+            context,
+            self,
+            plugin_id=PLUGIN_ID,
+            plugin_version=PLUGIN_VERSION,
+            status="ok",
+            metrics={
+                f"{PLUGIN_ID}.value_current": scalar(f"{PLUGIN_ID}.value_current", unit, value0),
+                f"{PLUGIN_ID}.loss": distribution(f"{PLUGIN_ID}.loss", unit, losses,
+                                                  value=central_loss, tail=True),
+            },
+            details=Details(price=price.value, value_current=value0,
+                            central_loss=central_loss).model_dump(mode="json"),
+            details_schema=f"{PLUGIN_ID}.details/1",
+            input_sources={"price": sorted({e.source_id for e in price.evidence})},
+            sources=sources,
+            flags=flags,
+            contributions=[
+                AggregationContribution(
+                    slice_id=SLICE,
+                    measure=f"{PLUGIN_ID}.loss",
+                    unit=unit,
+                    horizon=context.horizon,
+                    scenario_id=scenario.scenario_id,
+                    exposure=value0,
+                    exposure_basis="market_value",
+                    draws=losses.tolist(),
+                )
+            ],
+            model_versions={MODEL_ID: self.version},
+        )

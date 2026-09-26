@@ -1,0 +1,20 @@
+{
+  "984f1db551611fd4714ea2dee1a8754a8200315103a9d28c98b805e418cee0e7": {
+    "event_type": "EVENT-A",
+    "okved": "46.63",
+    "channel": "equipment_cost",
+    "driver": "cogs"
+  },
+  "8258dc2924f661a8cba5d604a01da49c3a60febca2011f364a5a3512567516b0": {
+    "event_type": "EVENT-B",
+    "okved": "41.20",
+    "channel": "mortgage_downpayment",
+    "driver": "revenue"
+  },
+  "e40b7ccaa1a0d77ff01c8dba14c49a104e17f6d3a24846c6482a5fef28d837c7": {
+    "event_type": "HIST-MORTGAGE-2023-12",
+    "okved": "41.20",
+    "channel": "mortgage_demand",
+    "driver": "revenue"
+  }
+}

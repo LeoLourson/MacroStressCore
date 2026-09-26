@@ -1,0 +1,1 @@
+"""MacroStress-Agent foundation."""

@@ -1,0 +1,71 @@
+"""The portfolio editor's form of {{type_label}}, and how a typed row becomes data.
+
+The terms go to the instrument, the quantity to the position, the price the analyst types
+to an item of the analyst's snapshot with the analyst as author.
+"""
+
+from msa.contracts.snapshot import PRICE
+from msa.contracts.units import unit_price
+from msa.plugin_sdk import EditorField, EditorGroup
+
+from .schemas import SCHEMA_VERSION
+
+EDITOR = (
+    EditorGroup(
+        "position",
+        "Позиция",
+        (EditorField("quantity", "Количество", "position", unit="count", required=True,
+                     minimum=0.0),),
+    ),
+    EditorGroup(
+        "terms",
+        "Чувствительность",
+        (
+            EditorField("driver_key", "Ключ фактора", "terms", kind="text", required=True),
+            EditorField("beta", "Эластичность к фактору", "terms", unit="dimensionless",
+                        required=True),
+        ),
+    ),
+    EditorGroup(
+        "market",
+        "Цена на дату оценки",
+        (EditorField("price", "Цена за единицу", f"snapshot:{PRICE}", required=True,
+                     minimum=0.0, hint="в валюте инструмента"),),
+    ),
+)
+
+
+def from_draft(row: dict, ctx) -> dict:
+    position_id = row["position_id"]
+    instrument_id = f"{ctx.portfolio_id}:{position_id}"
+    currency = row.get("currency", "RUB")
+    values = row.get("values") or {}
+    declared = {field.name for group in EDITOR for field in group.fields}
+    unknown = sorted(set(values) - declared)
+    if unknown:
+        raise ValueError(f"{position_id}: unknown fields {unknown}")
+    missing = [f.name for g in EDITOR for f in g.fields if f.required and values.get(f.name)
+               in (None, "")]
+    if missing:
+        raise ValueError(f"{position_id}: required fields {missing}")
+
+    def parameter(name, unit):
+        return {"value": values[name], "unit": unit,
+                "evidence": ctx.evidence(position_id, name, values[name])}
+
+    return {
+        "terms": {"driver_key": values["driver_key"], "beta": values["beta"]},
+        "params": {"quantity": parameter("quantity", "count")},
+        "items": [
+            {
+                "item_id": f"{PRICE}:{instrument_id}",
+                "kind": PRICE,
+                "subject": instrument_id,
+                "observed_on": ctx.today.isoformat(),
+                "values": {"price": parameter("price", unit_price(currency))},
+                "attributes": {"entered_by": ctx.author},
+                "evidence": [],
+            }
+        ],
+        "schema_version": SCHEMA_VERSION,
+    }

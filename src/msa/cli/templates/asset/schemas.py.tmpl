@@ -1,0 +1,35 @@
+"""Schemas of {{type_label}}: the instrument's terms, the position and the result's details."""
+
+from pydantic import model_validator
+
+from msa.contracts.common import Contract, Identifier, Number
+from msa.contracts.evidence import Parameter
+
+SCHEMA_VERSION = "1"
+
+
+class Terms(Contract):
+    """What the instrument is sensitive to."""
+
+    #: The key of the plugin's factor that moves the instrument.
+    driver_key: Identifier
+    #: Elasticity of the value to the factor: ``V_T = V_0 · exp(beta · f)``.
+    beta: Number
+
+
+class Position(Contract):
+    """How much of the instrument the portfolio holds."""
+
+    quantity: Parameter
+
+    @model_validator(mode="after")
+    def counted(self):
+        if self.quantity.unit != "count" or self.quantity.value <= 0:
+            raise ValueError("quantity is a positive count of units")
+        return self
+
+
+class Details(Contract):
+    price: Number
+    value_current: Number
+    central_loss: Number

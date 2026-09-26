@@ -1,0 +1,85 @@
+import { Box, Group, Loader, SimpleGrid, Stack, Text, ThemeIcon } from '@mantine/core';
+import { IconCheck, IconClock, IconExclamationMark, IconX } from '@tabler/icons-react';
+import type { StepState, StepView } from '../../lib/stages';
+
+function Mark({ state, index }: { state: StepState; index: number }) {
+  switch (state) {
+    case 'done':
+      return (
+        <ThemeIcon size={28} radius="xl" color="teal" variant="light">
+          <IconCheck size={16} />
+        </ThemeIcon>
+      );
+    case 'running':
+      return (
+        <ThemeIcon size={28} radius="xl" color="steel" variant="light">
+          <Loader size={14} color="steel" />
+        </ThemeIcon>
+      );
+    case 'yours':
+      return (
+        <ThemeIcon size={28} radius="xl" color="yellow" variant="filled" c="dark.8">
+          <IconExclamationMark size={16} />
+        </ThemeIcon>
+      );
+    case 'others':
+      return (
+        <ThemeIcon size={28} radius="xl" color="gray" variant="light">
+          <IconClock size={16} />
+        </ThemeIcon>
+      );
+    case 'failed':
+    case 'rejected':
+      return (
+        <ThemeIcon size={28} radius="xl" color="dark" variant="light">
+          <IconX size={16} />
+        </ThemeIcon>
+      );
+    default:
+      return (
+        <ThemeIcon size={28} radius="xl" color="gray" variant="outline" c="gray.6">
+          <Text size="xs" fw={600}>
+            {index + 1}
+          </Text>
+        </ThemeIcon>
+      );
+  }
+}
+
+/** The whole path of the stress test: what is done, where it is now, what is still ahead. */
+export function RunSteps({ steps }: { steps: StepView[] }) {
+  return (
+    <SimpleGrid cols={{ base: 1, sm: 5 }} spacing="xs" component="ol" style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+      {steps.map((step, index) => {
+        const current = step.state !== 'done' && step.state !== 'todo';
+        return (
+          <Box
+            component="li"
+            key={step.title}
+            p="sm"
+            aria-current={current ? 'step' : undefined}
+            style={{
+              borderTop: `3px solid var(--mantine-color-${
+                step.state === 'done' ? 'teal-4' : current ? 'steel-6' : 'gray-3'
+              })`,
+            }}
+          >
+            <Group gap="sm" wrap="nowrap" align="flex-start">
+              <Mark state={step.state} index={index} />
+              <Stack gap={2} miw={0}>
+                <Text size="sm" fw={current ? 700 : 500} c={step.state === 'todo' ? 'dimmed' : undefined}>
+                  {step.title}
+                </Text>
+                {step.note && (
+                  <Text size="xs" c={step.state === 'yours' ? 'dark.8' : 'dimmed'} fw={step.state === 'yours' ? 600 : 400}>
+                    {step.note}
+                  </Text>
+                )}
+              </Stack>
+            </Group>
+          </Box>
+        );
+      })}
+    </SimpleGrid>
+  );
+}

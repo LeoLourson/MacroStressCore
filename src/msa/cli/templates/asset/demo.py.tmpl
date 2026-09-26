@@ -1,0 +1,83 @@
+"""The plugin's own conformance case: two positions, their prices and a scenario.
+
+``msa-plugin check`` calculates it through the platform's dispatcher; replace it with a
+case that exercises what your model does.
+"""
+
+from hashlib import sha256
+
+from msa.plugin_sdk import DataSnapshot, DemoCase, PortfolioBundle
+
+from .model import DRIVER, TYPE_ID
+
+AS_OF = "2026-09-11"
+CASE = "{{plugin_id}}-case"
+
+
+def _evidence(locator: str) -> list[dict]:
+    return [
+        {
+            "kind": "expert_assumption",
+            "source_id": f"demo:{CASE}",
+            "locator": locator,
+            "fragment_sha256": sha256(locator.encode("utf-8")).hexdigest(),
+            "author": "demo:plugin-author",
+            "as_of": AS_OF,
+        }
+    ]
+
+
+def _position(position_id: str, key: str, beta: float, quantity: float, price: float):
+    instrument = {
+        "instrument_id": position_id,
+        "instrument_type": TYPE_ID,
+        "name": f"Инструмент {position_id}",
+        "currency": "RUB",
+        "terms": {"driver_key": key, "beta": beta},
+        "schema_version": "1",
+    }
+    position = {
+        "position_id": position_id,
+        "instrument_id": position_id,
+        "params": {"quantity": {"value": quantity, "unit": "count",
+                                "evidence": _evidence(f"{position_id}/quantity")}},
+        "schema_version": "1",
+    }
+    item = {
+        "item_id": f"price:{position_id}:{AS_OF}",
+        "kind": "price",
+        "subject": position_id,
+        "observed_on": AS_OF,
+        "values": {"price": {"value": price, "unit": "RUB_per_unit",
+                             "evidence": _evidence(f"{position_id}/price")}},
+        "attributes": {},
+        "evidence": [],
+    }
+    return instrument, position, item
+
+
+def cases() -> list[DemoCase]:
+    rows = [_position("X-1", "main", 1.2, 10_000.0, 1_500.0),
+            _position("X-2", "main", 0.6, 4_000.0, 2_000.0)]
+    bundle = {
+        "portfolio": {"portfolio_id": CASE, "name": "Пример", "base_currency": "RUB",
+                      "as_of": AS_OF, "snapshot_id": CASE},
+        "parties": [],
+        "instruments": [row[0] for row in rows],
+        "positions": [row[1] for row in rows],
+    }
+    snapshot = {"snapshot_id": CASE, "as_of": AS_OF, "label": "Пример",
+                "items": [row[2] for row in rows]}
+    scenario = {
+        "driver": {"label": "Фактор примера", "kind": "triangular", "low": -0.3, "mode": -0.1,
+                   "high": 0.05, "unit": "log_return", "factor": DRIVER, "key": "main"},
+    }
+    return [
+        DemoCase(
+            name=f"{CASE}.basic",
+            bundle=PortfolioBundle.model_validate(bundle),
+            snapshot=DataSnapshot.model_validate(snapshot),
+            scenario=scenario,
+            completes=("X-1", "X-2"),
+        )
+    ]

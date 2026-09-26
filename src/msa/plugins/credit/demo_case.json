@@ -1,0 +1,850 @@
+{
+ "bundle": {
+  "portfolio": {
+   "portfolio_id": "CREDIT-CASE",
+   "name": "Кредит",
+   "base_currency": "RUB",
+   "as_of": "2026-09-11",
+   "snapshot_id": "CREDIT-CASE"
+  },
+  "parties": [
+   {
+    "party_id": "DEMO-1:A1",
+    "name": "Производитель изделий из бетона",
+    "kind": "company",
+    "okved": "23.61",
+    "description": "Производство бетонных изделий для жилищного строительства",
+    "evidence": [
+     {
+      "kind": "expert_assumption",
+      "source_id": "TZ-v3",
+      "locator": "9.1/A1",
+      "fragment_sha256": "247e26df78d8da65c7f6260820822a47266def9cc9545372e9b1fa5fa1d615b0",
+      "author": "demo:spec-v3",
+      "as_of": "2026-09-11"
+     }
+    ]
+   },
+   {
+    "party_id": "DEMO-1:A3",
+    "name": "Дистрибьютор спецтехники",
+    "kind": "company",
+    "okved": "46.63",
+    "description": "Импорт и продажа строительной спецтехники; расчёты через посредников в Азии",
+    "evidence": [
+     {
+      "kind": "expert_assumption",
+      "source_id": "TZ-v3",
+      "locator": "9.1/A3",
+      "fragment_sha256": "37837bc9815814ce79ab23208832314f822fb8e7bcf7c397caf5a63eda4bba3f",
+      "author": "demo:spec-v3",
+      "as_of": "2026-09-11"
+     }
+    ]
+   }
+  ],
+  "instruments": [
+   {
+    "instrument_id": "A1",
+    "instrument_type": "bond_fixed",
+    "name": "Облигация с фиксированным купоном: Производитель изделий из бетона",
+    "currency": "RUB",
+    "issuer_id": "DEMO-1:A1",
+    "terms": {
+     "covenants": [],
+     "collateral": [],
+     "coupon_frequency": {
+      "value": 1.0,
+      "unit": "count",
+      "evidence": [
+       {
+        "kind": "expert_assumption",
+        "source_id": "TZ-v3",
+        "locator": "9.7/coupon_frequency",
+        "fragment_sha256": "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b",
+        "author": "demo:spec-v3",
+        "as_of": "2026-09-11"
+       }
+      ]
+     },
+     "coupon_rate": {
+      "value": 0.15,
+      "unit": "fraction",
+      "evidence": [
+       {
+        "kind": "expert_assumption",
+        "source_id": "TZ-v3",
+        "locator": "9.7/coupon_rate",
+        "fragment_sha256": "7932a07a8cbc0885919d30c43799f0247ef96badbc79ba5427e6306232508c78",
+        "author": "demo:spec-v3",
+        "as_of": "2026-09-11"
+       }
+      ]
+     },
+     "face_value": {
+      "value": 1000.0,
+      "unit": "RUB_million",
+      "evidence": [
+       {
+        "kind": "expert_assumption",
+        "source_id": "TZ-v3",
+        "locator": "9.7/face_value",
+        "fragment_sha256": "40510175845988f13f6162ed8526f0b09f73384467fa855e1e79b44a56562a58",
+        "author": "demo:spec-v3",
+        "as_of": "2026-09-11"
+       }
+      ]
+     },
+     "maturity_months": {
+      "value": 36.0,
+      "unit": "months",
+      "evidence": [
+       {
+        "kind": "expert_assumption",
+        "source_id": "TZ-v3",
+        "locator": "9.7/maturity_months",
+        "fragment_sha256": "76a50887d8f1c2e9301755428990ad81479ee21c25b43215cf524541e0503269",
+        "author": "demo:spec-v3",
+        "as_of": "2026-09-11"
+       }
+      ]
+     }
+    },
+    "schema_version": "1"
+   },
+   {
+    "instrument_id": "A3",
+    "instrument_type": "corp_loan",
+    "name": "Корпоративный кредит: Дистрибьютор спецтехники",
+    "currency": "RUB",
+    "issuer_id": "DEMO-1:A3",
+    "terms": {
+     "covenants": [
+      {
+       "covenant_id": "A3-icr",
+       "metric": "icr",
+       "operator": "ge",
+       "threshold": 2.0,
+       "unit": "ratio",
+       "test_dates": [
+        "2027-09-11"
+       ],
+       "evidence": [
+        {
+         "kind": "expert_assumption",
+         "source_id": "TZ-v3",
+         "locator": "9.1/A3/covenant/icr",
+         "fragment_sha256": "9bf4d284d17e16c8013d0a0f416560cdc68e75c49fa1cd08a7c986072576d967",
+         "author": "demo:spec-v3",
+         "as_of": "2026-09-11"
+        }
+       ]
+      },
+      {
+       "covenant_id": "A3-nd_ebitda",
+       "metric": "nd_ebitda",
+       "operator": "le",
+       "threshold": 3.5,
+       "unit": "ratio",
+       "test_dates": [
+        "2027-09-11"
+       ],
+       "evidence": [
+        {
+         "kind": "expert_assumption",
+         "source_id": "TZ-v3",
+         "locator": "9.1/A3/covenant/nd_ebitda",
+         "fragment_sha256": "82cf984bf6a652d2cbf3ea9f71c99e672c6bda943e43d34bce469afa67dc2b7b",
+         "author": "demo:spec-v3",
+         "as_of": "2026-09-11"
+        }
+       ]
+      }
+     ],
+     "collateral": []
+    },
+    "schema_version": "1"
+   }
+  ],
+  "positions": [
+   {
+    "position_id": "A1",
+    "instrument_id": "A1",
+    "params": {
+     "ead": {
+      "value": 1000.0,
+      "unit": "RUB_million",
+      "evidence": [
+       {
+        "kind": "expert_assumption",
+        "source_id": "TZ-v3",
+        "locator": "9.1/A1/ead",
+        "fragment_sha256": "4250638e192f9a123203e510b554639f0912688ad6ccdb3de696ba913112612a",
+        "author": "demo:spec-v3",
+        "as_of": "2026-09-11"
+       }
+      ]
+     },
+     "lgd": {
+      "value": 0.6,
+      "unit": "fraction",
+      "evidence": [
+       {
+        "kind": "expert_assumption",
+        "source_id": "TZ-v3",
+        "locator": "9.1/A1/lgd",
+        "fragment_sha256": "b4af4e0d40391d3a00179d935c63b7e15ba8cd3dfa29f218dedc270bd3eb3e79",
+        "author": "demo:spec-v3",
+        "as_of": "2026-09-11"
+       }
+      ]
+     },
+     "ccf": {
+      "value": 1.0,
+      "unit": "fraction",
+      "evidence": [
+       {
+        "kind": "expert_assumption",
+        "source_id": "TZ-v3",
+        "locator": "9.1/A1/ccf",
+        "fragment_sha256": "d0ff5974b6aa52cf562bea5921840c032a860a91a3512f7fe8f768f6bbe005f6",
+        "author": "demo:spec-v3",
+        "as_of": "2026-09-11"
+       }
+      ]
+     },
+     "import_share": {
+      "value": 0.0,
+      "unit": "fraction",
+      "evidence": [
+       {
+        "kind": "expert_assumption",
+        "source_id": "TZ-v3",
+        "locator": "9.1/A1/import_share",
+        "fragment_sha256": "8aed642bf5118b9d3c859bd4be35ecac75b6e873cce34e7b6f554b06f75550d7",
+        "author": "demo:spec-v3",
+        "as_of": "2026-09-11"
+       }
+      ]
+     },
+     "driver_elasticity": {},
+     "proxy_peer_ids": [],
+     "status": "ok",
+     "flags": []
+    },
+    "schema_version": "1"
+   },
+   {
+    "position_id": "A3",
+    "instrument_id": "A3",
+    "params": {
+     "ead": {
+      "value": 3000.0,
+      "unit": "RUB_million",
+      "evidence": [
+       {
+        "kind": "expert_assumption",
+        "source_id": "TZ-v3",
+        "locator": "9.1/A3/ead",
+        "fragment_sha256": "fcc9071baa27ca675464cc4583f5ef60f3560db7dce83d385786d554908e06b6",
+        "author": "demo:spec-v3",
+        "as_of": "2026-09-11"
+       }
+      ]
+     },
+     "lgd": {
+      "value": 0.45,
+      "unit": "fraction",
+      "evidence": [
+       {
+        "kind": "expert_assumption",
+        "source_id": "TZ-v3",
+        "locator": "9.1/A3/lgd",
+        "fragment_sha256": "bffb16d6fe1445f051b3cff3025340011b817b391ffc04dcd77d1452efa10c25",
+        "author": "demo:spec-v3",
+        "as_of": "2026-09-11"
+       }
+      ]
+     },
+     "ccf": {
+      "value": 1.0,
+      "unit": "fraction",
+      "evidence": [
+       {
+        "kind": "expert_assumption",
+        "source_id": "TZ-v3",
+        "locator": "9.1/A3/ccf",
+        "fragment_sha256": "d0ff5974b6aa52cf562bea5921840c032a860a91a3512f7fe8f768f6bbe005f6",
+        "author": "demo:spec-v3",
+        "as_of": "2026-09-11"
+       }
+      ]
+     },
+     "import_share": {
+      "value": 0.8,
+      "unit": "fraction",
+      "evidence": [
+       {
+        "kind": "expert_assumption",
+        "source_id": "demo:conventions",
+        "locator": "A3/import_share",
+        "fragment_sha256": "1e9d7c27c8bbc8ddf0055c93e064a62fa995d177fee28cc8fa949bc8a4db06f4",
+        "author": "demo:spec-v3",
+        "as_of": "2026-09-11"
+       }
+      ]
+     },
+     "driver_elasticity": {},
+     "proxy_peer_ids": [],
+     "status": "ok",
+     "flags": []
+    },
+    "schema_version": "1"
+   }
+  ]
+ },
+ "snapshot": {
+  "snapshot_id": "CREDIT-CASE",
+  "as_of": "2026-09-11",
+  "label": "Кредит",
+  "kind": "demo",
+  "items": [
+   {
+    "item_id": "financial_statement:DEMO-1:A1:2025-12-31:demo",
+    "kind": "financial_statement",
+    "subject": "DEMO-1:A1",
+    "observed_on": "2025-12-31",
+    "values": {
+     "borrowing_rate": {
+      "value": 0.133333,
+      "unit": "fraction",
+      "evidence": [
+       {
+        "kind": "expert_assumption",
+        "source_id": "demo:track-a-v3.2",
+        "locator": "A1/borrowing_rate",
+        "fragment_sha256": "59bc4f20808afebf7214c70ea9643f3804326f9f098fd8154782c6e94ba505e7",
+        "author": "demo:methodology",
+        "as_of": "2026-09-11"
+       }
+      ]
+     },
+     "cogs": {
+      "value": 8400.0,
+      "unit": "RUB_million",
+      "evidence": [
+       {
+        "kind": "expert_assumption",
+        "source_id": "TZ-v3",
+        "locator": "9.7/cogs",
+        "fragment_sha256": "27310538826e65b13fa49ea7293609f906cad1a4f734b3b2a9c801cbd0256797",
+        "author": "demo:spec-v3",
+        "as_of": "2026-09-11"
+       }
+      ]
+     },
+     "dio": {
+      "value": 35.0,
+      "unit": "days",
+      "evidence": [
+       {
+        "kind": "expert_assumption",
+        "source_id": "demo:track-a-v3.2",
+        "locator": "A1/dio",
+        "fragment_sha256": "24c6facdeb4ab95a30ff519d1ec54730d5191be8ebf3cf93b242cb2adc60da19",
+        "author": "demo:methodology",
+        "as_of": "2026-09-11"
+       }
+      ]
+     },
+     "dpo": {
+      "value": 40.0,
+      "unit": "days",
+      "evidence": [
+       {
+        "kind": "expert_assumption",
+        "source_id": "demo:track-a-v3.2",
+        "locator": "A1/dpo",
+        "fragment_sha256": "421d4e5515f6354272c9dffa12090b225c361c0f0c5f52b01d35838e3642775b",
+        "author": "demo:methodology",
+        "as_of": "2026-09-11"
+       }
+      ]
+     },
+     "dso": {
+      "value": 50.0,
+      "unit": "days",
+      "evidence": [
+       {
+        "kind": "expert_assumption",
+        "source_id": "demo:track-a-v3.2",
+        "locator": "A1/dso",
+        "fragment_sha256": "4f4c476f03c24aec059be912c8605e06baec9942e5947798402d6638c17d6723",
+        "author": "demo:methodology",
+        "as_of": "2026-09-11"
+       }
+      ]
+     },
+     "net_debt": {
+      "value": 4500.0,
+      "unit": "RUB_million",
+      "evidence": [
+       {
+        "kind": "expert_assumption",
+        "source_id": "TZ-v3",
+        "locator": "9.7/net_debt",
+        "fragment_sha256": "c746ee2edf45fa00fca8d08045b2575aac17cf3eeb3f2b0da5e5301fae8d1e47",
+        "author": "demo:spec-v3",
+        "as_of": "2026-09-11"
+       }
+      ]
+     },
+     "opex": {
+      "value": 1800.0,
+      "unit": "RUB_million",
+      "evidence": [
+       {
+        "kind": "expert_assumption",
+        "source_id": "TZ-v3",
+        "locator": "9.7/opex",
+        "fragment_sha256": "e49ec846db7527df7ff483009fe61700e6435072c8c5b551ab08f0a13fc45a07",
+        "author": "demo:spec-v3",
+        "as_of": "2026-09-11"
+       }
+      ]
+     },
+     "opex_variable_share": {
+      "value": 0.3,
+      "unit": "fraction",
+      "evidence": [
+       {
+        "kind": "expert_assumption",
+        "source_id": "TZ-v3",
+        "locator": "9.7/opex_variable_share",
+        "fragment_sha256": "221764976efe04132774d96b0253cc31434c5261737469324f222621baf34b20",
+        "author": "demo:spec-v3",
+        "as_of": "2026-09-11"
+       }
+      ]
+     },
+     "revenue": {
+      "value": 12000.0,
+      "unit": "RUB_million",
+      "evidence": [
+       {
+        "kind": "expert_assumption",
+        "source_id": "TZ-v3",
+        "locator": "9.7/revenue",
+        "fragment_sha256": "c5d1866aabc15dda07995e73b08c4ccb514947dcd3a621cea851af5fe366f11b",
+        "author": "demo:spec-v3",
+        "as_of": "2026-09-11"
+       }
+      ]
+     },
+     "tax_rate": {
+      "value": 0.25,
+      "unit": "fraction",
+      "evidence": [
+       {
+        "kind": "expert_assumption",
+        "source_id": "demo:track-a-v3.2",
+        "locator": "A1/tax_rate",
+        "fragment_sha256": "79fc46ee322f5d5e8d7fabe6979dd9e1a973b9940d352a43f6b8d016a9c8292d",
+        "author": "demo:methodology",
+        "as_of": "2026-09-11"
+       }
+      ]
+     }
+    },
+    "attributes": {
+     "standard": "demo",
+     "document_id": "TZ-v3",
+     "locator": "9/A1"
+    },
+    "evidence": []
+   },
+   {
+    "item_id": "financial_statement:DEMO-1:A3:2025-12-31:demo",
+    "kind": "financial_statement",
+    "subject": "DEMO-1:A3",
+    "observed_on": "2025-12-31",
+    "values": {
+     "borrowing_rate": {
+      "value": 0.133333,
+      "unit": "fraction",
+      "evidence": [
+       {
+        "kind": "expert_assumption",
+        "source_id": "demo:track-a-v3.2",
+        "locator": "A3/borrowing_rate",
+        "fragment_sha256": "ff52fc25397c20e2c45b4f1a82dd121e3e76a45c1b9e56249690c766607e0148",
+        "author": "demo:methodology",
+        "as_of": "2026-09-11"
+       }
+      ]
+     },
+     "cogs": {
+      "value": 16000.0,
+      "unit": "RUB_million",
+      "evidence": [
+       {
+        "kind": "expert_assumption",
+        "source_id": "TZ-v3",
+        "locator": "9.4/cogs",
+        "fragment_sha256": "2570901c76653e578fecf066b5fc3fa1619f1a051e928e39797bab1b1342bf40",
+        "author": "demo:spec-v3",
+        "as_of": "2026-09-11"
+       }
+      ]
+     },
+     "credit_limit": {
+      "value": 4000.0,
+      "unit": "RUB_million",
+      "evidence": [
+       {
+        "kind": "expert_assumption",
+        "source_id": "demo:track-a-v3.2",
+        "locator": "A3/credit_limit",
+        "fragment_sha256": "bffc4692c0931299c00e51a7e5ff208d655aae5b7ce73a290ccefddd98e1cbf0",
+        "author": "demo:methodology",
+        "as_of": "2026-09-11"
+       }
+      ]
+     },
+     "demand_elasticity": {
+      "value": -1.25,
+      "unit": "ratio",
+      "evidence": [
+       {
+        "kind": "expert_assumption",
+        "source_id": "TZ-v3",
+        "locator": "9.4/demand_elasticity",
+        "fragment_sha256": "728af8c01a6910765623cf596926b7bf61d6ab11e0c2e7de329ab949d9054c61",
+        "author": "demo:spec-v3",
+        "as_of": "2026-09-11"
+       }
+      ]
+     },
+     "dio": {
+      "value": 90.0,
+      "unit": "days",
+      "evidence": [
+       {
+        "kind": "expert_assumption",
+        "source_id": "demo:track-a-v3.2",
+        "locator": "A3/dio",
+        "fragment_sha256": "dbaea1c93b15febe78d61a7d706e8fde7a9c8fc299a5b3e4a6761aa74dd9eea6",
+        "author": "demo:methodology",
+        "as_of": "2026-09-11"
+       }
+      ]
+     },
+     "dpo": {
+      "value": 30.0,
+      "unit": "days",
+      "evidence": [
+       {
+        "kind": "expert_assumption",
+        "source_id": "demo:track-a-v3.2",
+        "locator": "A3/dpo",
+        "fragment_sha256": "49c21480c811c6a674ccea07359291fa3d5909031f5135e034f4e5719c71c7f4",
+        "author": "demo:methodology",
+        "as_of": "2026-09-11"
+       }
+      ]
+     },
+     "dso": {
+      "value": 45.0,
+      "unit": "days",
+      "evidence": [
+       {
+        "kind": "expert_assumption",
+        "source_id": "demo:track-a-v3.2",
+        "locator": "A3/dso",
+        "fragment_sha256": "dadcf19157bbbafcc1dc1f59a9e22872dd92e5d56c21e1f5f64b15a9fd997a22",
+        "author": "demo:methodology",
+        "as_of": "2026-09-11"
+       }
+      ]
+     },
+     "net_debt": {
+      "value": 6000.0,
+      "unit": "RUB_million",
+      "evidence": [
+       {
+        "kind": "expert_assumption",
+        "source_id": "TZ-v3",
+        "locator": "9.4/net_debt",
+        "fragment_sha256": "8d284220975da66c6cba4a32aaedfa0b897187d86ed9f7a2419c9bd10a103505",
+        "author": "demo:spec-v3",
+        "as_of": "2026-09-11"
+       }
+      ]
+     },
+     "opex": {
+      "value": 2000.0,
+      "unit": "RUB_million",
+      "evidence": [
+       {
+        "kind": "expert_assumption",
+        "source_id": "TZ-v3",
+        "locator": "9.4/opex",
+        "fragment_sha256": "81a83544cf93c245178cbc1620030f1123f435af867c79d87135983c52ab39d9",
+        "author": "demo:spec-v3",
+        "as_of": "2026-09-11"
+       }
+      ]
+     },
+     "opex_variable_share": {
+      "value": 0.0,
+      "unit": "fraction",
+      "evidence": [
+       {
+        "kind": "expert_assumption",
+        "source_id": "TZ-v3",
+        "locator": "9.4/opex_variable_share",
+        "fragment_sha256": "8aed642bf5118b9d3c859bd4be35ecac75b6e873cce34e7b6f554b06f75550d7",
+        "author": "demo:spec-v3",
+        "as_of": "2026-09-11"
+       }
+      ]
+     },
+     "pass_through": {
+      "value": 0.8,
+      "unit": "fraction",
+      "evidence": [
+       {
+        "kind": "expert_assumption",
+        "source_id": "demo:track-a-v3.2",
+        "locator": "A3/pass_through",
+        "fragment_sha256": "1c1052cac7e4f81a4c0e3275c31ef96c31e5a76f5b73b90d6b607ea508baae26",
+        "author": "demo:methodology",
+        "as_of": "2026-09-11"
+       }
+      ]
+     },
+     "revenue": {
+      "value": 20000.0,
+      "unit": "RUB_million",
+      "evidence": [
+       {
+        "kind": "expert_assumption",
+        "source_id": "TZ-v3",
+        "locator": "9.4/revenue",
+        "fragment_sha256": "876c9b16254e157d1eb645390dcfae6f29b9d3cd394e73a91de8ee5d0e67ee43",
+        "author": "demo:spec-v3",
+        "as_of": "2026-09-11"
+       }
+      ]
+     },
+     "revolver_margin": {
+      "value": 0.046667,
+      "unit": "fraction",
+      "evidence": [
+       {
+        "kind": "expert_assumption",
+        "source_id": "demo:track-a-v3.2",
+        "locator": "A3/revolver_margin",
+        "fragment_sha256": "a9c26efcd198c025c74bf5888f06391eea153f087cff70ed6c4c25dab11fa91a",
+        "author": "demo:methodology",
+        "as_of": "2026-09-11"
+       }
+      ]
+     },
+     "tax_rate": {
+      "value": 0.25,
+      "unit": "fraction",
+      "evidence": [
+       {
+        "kind": "expert_assumption",
+        "source_id": "demo:track-a-v3.2",
+        "locator": "A3/tax_rate",
+        "fragment_sha256": "a75b8d4cf98e5f8eaf2acfe1f3690a78f4e634478ee116bd9e12788cb42f3e68",
+        "author": "demo:methodology",
+        "as_of": "2026-09-11"
+       }
+      ]
+     }
+    },
+    "attributes": {
+     "standard": "demo",
+     "document_id": "TZ-v3",
+     "locator": "9/A3"
+    },
+    "evidence": []
+   },
+   {
+    "item_id": "rate:risk_free:RUB:2026-09-11",
+    "kind": "rate",
+    "subject": "risk_free:RUB",
+    "observed_on": "2026-09-11",
+    "values": {
+     "rate": {
+      "value": 0.14,
+      "unit": "fraction",
+      "evidence": [
+       {
+        "kind": "expert_assumption",
+        "source_id": "TZ-v3",
+        "locator": "9.7/risk_free_rate",
+        "fragment_sha256": "358e553bf44a364c4b9cf2ae457d0554b1e0605d6eba0239f6c682f456980791",
+        "author": "demo:spec-v3",
+        "as_of": "2026-09-11"
+       }
+      ]
+     }
+    },
+    "attributes": {},
+    "evidence": []
+   }
+  ]
+ },
+ "scenario": {
+  "demand": {
+   "label": "Падение спроса",
+   "kind": "triangular",
+   "low": -0.2,
+   "mode": -0.1,
+   "high": -0.03,
+   "unit": "fraction",
+   "channel": "demand",
+   "factor": "credit.revenue"
+  }
+ },
+ "graph": {
+  "event_id": "event",
+  "nodes": [
+   {
+    "id": "event",
+    "kind": "event",
+    "label": "событие"
+   },
+   {
+    "id": "demand",
+    "kind": "channel",
+    "label": "спрос"
+   },
+   {
+    "id": "s_23.61",
+    "kind": "sector",
+    "label": "23.61",
+    "okved": "23.61"
+   },
+   {
+    "id": "revenue_23.61",
+    "kind": "factor",
+    "label": "выручка",
+    "factor": "credit.revenue"
+   },
+   {
+    "id": "s_46.63",
+    "kind": "sector",
+    "label": "46.63",
+    "okved": "46.63"
+   },
+   {
+    "id": "revenue_46.63",
+    "kind": "factor",
+    "label": "выручка",
+    "factor": "credit.revenue"
+   }
+  ],
+  "edges": [
+   {
+    "src": "event",
+    "dst": "demand",
+    "sign": 1,
+    "elasticity": {
+     "family": "point",
+     "value": 1.0
+    },
+    "lag_months": 0,
+    "evidence": [
+     {
+      "kind": "document",
+      "source_id": "credit-case",
+      "locator": "p1",
+      "fragment_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+     }
+    ]
+   },
+   {
+    "src": "demand",
+    "dst": "s_23.61",
+    "sign": 1,
+    "elasticity": {
+     "family": "point",
+     "value": 1.0
+    },
+    "lag_months": 0,
+    "evidence": [
+     {
+      "kind": "document",
+      "source_id": "credit-case",
+      "locator": "p1",
+      "fragment_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+     }
+    ]
+   },
+   {
+    "src": "s_23.61",
+    "dst": "revenue_23.61",
+    "sign": 1,
+    "elasticity": {
+     "family": "point",
+     "value": 1.0
+    },
+    "lag_months": 0,
+    "evidence": [
+     {
+      "kind": "document",
+      "source_id": "credit-case",
+      "locator": "p1",
+      "fragment_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+     }
+    ]
+   },
+   {
+    "src": "demand",
+    "dst": "s_46.63",
+    "sign": 1,
+    "elasticity": {
+     "family": "point",
+     "value": 1.0
+    },
+    "lag_months": 0,
+    "evidence": [
+     {
+      "kind": "document",
+      "source_id": "credit-case",
+      "locator": "p1",
+      "fragment_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+     }
+    ]
+   },
+   {
+    "src": "s_46.63",
+    "dst": "revenue_46.63",
+    "sign": 1,
+    "elasticity": {
+     "family": "point",
+     "value": 1.0
+    },
+    "lag_months": 0,
+    "evidence": [
+     {
+      "kind": "document",
+      "source_id": "credit-case",
+      "locator": "p1",
+      "fragment_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+     }
+    ]
+   }
+  ],
+  "factor_elasticity": {}
+ },
+ "completes": [
+  "A1",
+  "A3"
+ ]
+}

@@ -1,0 +1,189 @@
+:root {
+  --msa-page: #f6f6f7;
+  --msa-mts: #e30611;
+}
+
+body {
+  background: var(--msa-page);
+}
+
+.portfolio-field-grid {
+  align-items: end;
+}
+
+.portfolio-field-grid > * {
+  min-width: 0;
+}
+
+.field-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 28px;
+  line-height: 1.4;
+}
+
+.field-help-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--mantine-color-steel-7);
+  cursor: help;
+}
+
+.field-help-trigger:hover {
+  background: var(--mantine-color-steel-0);
+}
+
+.field-help-trigger:focus-visible,
+.answer-details summary:focus-visible {
+  outline: 2px solid var(--mantine-color-steel-7);
+  outline-offset: 2px;
+}
+
+.mantine-Popover-dropdown {
+  max-width: calc(100vw - 24px);
+}
+
+.question-example {
+  height: auto;
+  min-height: 44px;
+  padding-block: 8px;
+  max-width: 100%;
+}
+
+.question-example .mantine-Button-label {
+  white-space: normal;
+  text-align: left;
+  line-height: 1.45;
+}
+
+.explanation-item,
+.question-text {
+  overflow-wrap: anywhere;
+}
+
+.answer-prose {
+  font-size: var(--mantine-font-size-sm);
+}
+
+.answer-reference {
+  font-size: var(--mantine-font-size-xs);
+  margin-inline: 4px;
+  color: var(--mantine-color-steel-8);
+}
+
+.answer-details {
+  font-size: var(--mantine-font-size-sm);
+  color: var(--mantine-color-dimmed);
+}
+
+.answer-details summary {
+  cursor: pointer;
+  width: fit-content;
+  padding-block: 6px;
+  color: var(--mantine-color-steel-8);
+}
+
+::selection {
+  background: var(--mantine-color-steel-1);
+  color: var(--mantine-color-dark-8);
+}
+
+input,
+textarea {
+  caret-color: var(--mantine-color-steel-7);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--mantine-color-dimmed);
+  opacity: 1;
+}
+
+/* Numbers line up by digit everywhere they are compared. */
+table,
+.num {
+  font-variant-numeric: tabular-nums;
+}
+
+.num-right {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.term {
+  text-decoration: underline dotted;
+  text-underline-offset: 3px;
+  cursor: help;
+}
+
+.clickable-row {
+  cursor: pointer;
+}
+
+.clickable-row:hover {
+  background: var(--mantine-color-gray-0);
+}
+
+.prose {
+  max-width: 76ch;
+  line-height: 1.6;
+}
+
+.prose h3 {
+  margin: 1.75em 0 0.5em;
+  padding-top: 1em;
+  border-top: 1px solid var(--mantine-color-gray-3);
+  font-size: var(--mantine-font-size-md);
+  font-weight: 600;
+}
+
+.prose h3:first-child {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+
+.prose p,
+.prose ul {
+  margin: 0 0 0.6em;
+}
+
+.prose ul {
+  padding-left: 1.25em;
+}
+
+.prose li + li {
+  margin-top: 0.35em;
+}
+
+.gloss {
+  color: var(--mantine-color-dimmed);
+}
+
+.ref-number {
+  cursor: pointer;
+  border-bottom: 1px dashed var(--mantine-color-steel-5);
+  font-variant-numeric: tabular-nums;
+}
+
+.ref-number:hover {
+  background: var(--mantine-color-steel-0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}

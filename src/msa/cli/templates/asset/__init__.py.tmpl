@@ -1,0 +1,85 @@
+"""{{label}}: an asset plugin scaffolded by ``msa-plugin new asset``.
+
+One instrument type (``{{type_id}}``), one model (``{{plugin_id}}.model.v1``), one factor of
+its own (``{{plugin_id}}.driver``, keyed); the losses enter the shared ``market.pnl`` slice.
+
+Next steps: replace the model in ``model.py`` with yours, describe the terms and the
+position in ``schemas.py``, the form in ``editor.py`` and a realistic case in ``demo.py``;
+then ``msa-plugin check {{plugin_id}}`` and ``msa-plugin demo-run {{plugin_id}}``.
+"""
+
+from msa.plugin_sdk import (
+    BASE_MONEY,
+    FactorSpec,
+    InstrumentTypeSpec,
+    MetricSpec,
+    Plugin,
+    ResultView,
+    ViewBlock,
+)
+
+from .demo import cases
+from .editor import EDITOR, from_draft
+from .model import DRIVER, MODEL_ID, PLUGIN_ID, PLUGIN_VERSION, TYPE_ID, Model
+from .schemas import SCHEMA_VERSION, Position, Terms
+
+plugin = Plugin(
+    plugin_id=PLUGIN_ID,
+    version=PLUGIN_VERSION,
+    sdk=">=1.0,<2.0",
+    label="{{label}}",
+    description="Позиция, стоимость которой зависит от одного фактора сценария.",
+    instrument_types=(
+        InstrumentTypeSpec(
+            type_id=TYPE_ID,
+            label="{{type_label}}",
+            terms_schema=Terms,
+            position_schema=Position,
+            default_model=MODEL_ID,
+            schema_version=SCHEMA_VERSION,
+            description="Количество единиц по цене из снимка данных.",
+            # The example has no issuer; a credit-like type would require one (with its OKVED).
+            issuer_required=False,
+            editor=EDITOR,
+            from_draft=from_draft,
+        ),
+    ),
+    models=(Model(),),
+    metrics=(
+        MetricSpec(f"{PLUGIN_ID}.value_current", "Стоимость позиции на дату оценки", BASE_MONEY,
+                   kind="value", period="as_of"),
+        MetricSpec(f"{PLUGIN_ID}.loss", "Потери стоимости позиции", BASE_MONEY,
+                   direction="higher_is_worse", aggregation="sum_by_realisation"),
+    ),
+    factors=(
+        FactorSpec(
+            factor_id=DRIVER,
+            label="Фактор «{{label}}»",
+            unit="log_return",
+            scope="global",
+            application="log",
+            quantity="log_return",
+            key_label="ключ фактора",
+            description="Логарифмическое изменение фактора к концу горизонта.",
+        ),
+    ),
+    views=(
+        ResultView(
+            view_id=f"{PLUGIN_ID}.position",
+            instrument_types=(TYPE_ID,),
+            summary_metrics=(f"{PLUGIN_ID}.loss",),
+            blocks=(
+                ViewBlock(kind="metrics", title="Итог на конец горизонта",
+                          metric_ids=(f"{PLUGIN_ID}.value_current", f"{PLUGIN_ID}.loss")),
+                ViewBlock(kind="sources", title="Источники данных"),
+            ),
+            labels={"price": "Цена", "value_current": "Стоимость", "central_loss": "Потери в "
+                    "центральном сценарии"},
+        ),
+    ),
+    flags={
+        "price_invalid": "цена задана некорректно",
+        "currency_not_supported": "инструмент не в базовой валюте портфеля",
+    },
+    demo=cases,
+)
