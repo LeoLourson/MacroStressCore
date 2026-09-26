@@ -36,6 +36,7 @@ uv sync --frozen                       # Python 3.12, зависимости и�
 uv run --frozen pytest                 # тесты платформы и плагинов (src/msa/plugins/*/tests)
 uv run --frozen ruff check . ; uv run --frozen ruff format --check .
 uv run --frozen lint-imports           # граница ядра и плагинов: правила импорта
+uv run --frozen python -m sanity       # проверки здравого смысла на синтетике (docs/sanity-report.md)
 cd ui/web; npm ci; npm run dev         # интерфейс с прокси на API :8091
 npm run build                          # манифест плагинов, совместимость UI-плагинов, типы, сборка
 ```
@@ -72,8 +73,9 @@ uv run msa-plugin ui-manifest          # манифест UI-плагинов (n
 | `ui/web/` | Браузерный интерфейс (React, Mantine); UI-плагины в `src/plugins/` |
 | `demo/` | Заголовки демо-портфелей и снимка, сборка каталога из частей плагинов (`catalog.py`), события, пилотное событие |
 | `ops/` | Нативный стенд, генерация `.env`, загрузка рабочего портфеля, репетиция |
+| `sanity/` | Проверки здравого смысла: синтетические портфели и события, прогон всей линии, [разбор результатов](docs/sanity-report.md) |
 | `tests/` | Тесты ядра, включая границу ядра и плагинов (`tests/platform/test_core_boundary.py`); тесты плагинов — в их папках |
 | `.github/CODEOWNERS` | Владельцы ядра, каждого плагина, `demo/` и `docs/` |
 
 Подробнее: [платформа](docs/platform.md), [расширение плагинами](docs/plugins.md),
-[архитектура](docs/architecture.md).
+[архитектура](docs/architecture.md), [проверка на здравый смысл](docs/sanity-report.md).
