@@ -9,7 +9,7 @@ from dataclasses import dataclass, field
 
 import numpy as np
 
-from msa.engine.metrics import CAPITAL_NONPOSITIVE_FLAG
+from .metrics import CAPITAL_NONPOSITIVE_FLAG
 
 
 @dataclass

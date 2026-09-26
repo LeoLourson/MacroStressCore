@@ -10,8 +10,9 @@ import { Fact, MetricsBlock, Section, SourcesBlock } from '../../components/Resu
 import { Term } from '../../components/Term';
 import { compact, day, metricValue, nodeLabels, number, percent, positionPath, positionTitle } from '../../lib/format';
 import { AUTHORS, label } from '../../lib/labels';
+import { viewFor } from '../../api/catalog';
 import type { Artifacts } from '../../api/types';
-import type { PositionViewProps, UiPlugin } from '../sdk';
+import type { GlossContext, PositionViewProps, UiPlugin } from '../sdk';
 import meta from './plugin.json';
 
 interface Quantiles {
@@ -467,10 +468,42 @@ function CalibrationNote({ artifacts }: { artifacts: Artifacts }) {
   );
 }
 
+/** Covenants are terms of a credit instrument; their metric names come from its view. */
+function* covenantGlosses({ artifacts }: GlossContext): Iterable<[string, string]> {
+  for (const context of artifacts.positions ?? []) {
+    const labels = viewFor(context.instrument.instrument_type)?.labels ?? {};
+    const covenants = (context.instrument.terms.covenants ?? []) as {
+      covenant_id?: string;
+      metric: string;
+      operator: string;
+      threshold: number;
+      unit: string;
+    }[];
+    for (const c of covenants) {
+      if (!c.covenant_id) continue;
+      const sign = c.operator === 'ge' ? '≥' : '≤';
+      yield [c.covenant_id, `${labels[`covenant:${c.metric}`] ?? labels[c.metric] ?? c.metric} ${sign} ${metricValue(c.threshold, c.unit)}`];
+    }
+  }
+}
+
+const GLOSSARY: Record<string, string> = {
+  'ΔEL': 'Рост ожидаемых потерь: насколько вырастут потери по позиции из-за события.',
+  'ΔPD': 'Рост вероятности дефолта заёмщика из-за события.',
+  PD: 'Вероятность дефолта заёмщика на горизонте расчёта.',
+  LGD: 'Доля суммы, которая будет потеряна при дефолте.',
+  EAD: 'Сумма под риском: сколько банк может потерять по позиции.',
+  ICR: 'Покрытие процентов: во сколько раз EBITDA больше процентных платежей.',
+  'Ковенант': 'Условие кредитного договора, например «Долг / EBITDA не выше 3».',
+  'Обратный стресс-тест': 'Какая сила события доводит ковенант до нарушения.',
+};
+
 const plugin: UiPlugin = {
   ...meta,
   views: { 'credit.position': CreditPosition },
   notes: CalibrationNote,
+  glosses: covenantGlosses,
+  glossary: GLOSSARY,
 };
 
 export default plugin;

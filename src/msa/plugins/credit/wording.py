@@ -88,3 +88,17 @@ INFORMATIONAL = frozenset(
         "project_funding_gap",
     }
 )
+
+# Where the credit demo data comes from and who stands behind it, without digits (V9).
+SOURCES = {
+    "TZ-v3": "демо-данные техзадания",
+    "demo:track-a-v3.2": "пересчёт демо-данных под текущую модель",
+    "demo:conventions": "соглашения демо-каталога",
+    "demo:peers": "компании-аналоги",
+    "demo/portfolios/DEMO-3.json": "нагрузочный демо-портфель",
+}
+AUTHORS = {
+    "demo:spec-v3": "составитель демо-данных",
+    "demo:methodology": "методолог демо-стенда",
+    "demo:generate_load_portfolio": "генератор нагрузочного портфеля",
+}

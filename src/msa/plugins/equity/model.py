@@ -21,9 +21,7 @@ import numpy as np
 
 from msa.contracts.result import AggregationContribution, Diagnostic
 from msa.contracts.risk import ApplicabilityLimits
-from msa.contracts.snapshot import DIVIDEND, PRICE, SENSITIVITY
 from msa.contracts.units import money, unit_price
-from msa.engine import fx
 from msa.engine.dispatch import data_quality_level
 from msa.engine.shapley import exact as shapley
 from msa.plugin_sdk import (
@@ -35,8 +33,10 @@ from msa.plugin_sdk import (
     IdiosyncraticFactor,
 )
 from msa.plugin_sdk.results import distribution, envelope, scalar
+from msa.plugins.market import fx
+from msa.plugins.market.kinds import PRICE
 
-from .schemas import ShareDetails, SharePosition, ShareTerms
+from .schemas import DIVIDEND, SENSITIVITY, ShareDetails, SharePosition, ShareTerms
 
 PLUGIN_ID = "equity"
 PLUGIN_VERSION = "1.0.0"

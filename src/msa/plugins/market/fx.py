@@ -8,8 +8,9 @@ an error of the position, never a silent 1.
 
 import numpy as np
 
-from msa.contracts.snapshot import FX_RATE
-from msa.plugin_sdk.model import DataRequirement, FactorRequirement
+from msa.plugin_sdk import DataRequirement, FactorRequirement
+
+from .kinds import FX_RATE
 
 FX_FACTOR = "market.fx"
 FX_KEY = "fx"

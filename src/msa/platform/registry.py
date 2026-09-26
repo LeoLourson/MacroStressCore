@@ -114,6 +114,14 @@ class Registry:
             wording.update(plugin.flags)
         return wording
 
+    def source_wording(self) -> dict[str, str]:
+        """Evidence ``source_id`` -> its words, as the plugins declare them."""
+        return {key: text for p in self.plugins.values() for key, text in p.sources.items()}
+
+    def author_wording(self) -> dict[str, str]:
+        """Evidence ``author`` -> its words, as the plugins declare them."""
+        return {key: text for p in self.plugins.values() for key, text in p.authors.items()}
+
     def review_flags(self) -> frozenset[str]:
         return frozenset().union(*(m.review_flags for m in self.models.values()))
 
@@ -208,6 +216,17 @@ def build(plugins: Iterable[Plugin]) -> Registry:
             claim(
                 "workflow", workflow.workflow_id, plugin, registry.workflows, workflow, spaced=False
             )
+
+    # Words of evidence sources and authors are shared: a disagreement is a problem.
+    for kind, attribute in (("source", "sources"), ("author", "authors")):
+        worded: dict[str, tuple[str, str]] = {}
+        for plugin in plugins:
+            for key, text in getattr(plugin, attribute).items():
+                first = worded.setdefault(key, (plugin.plugin_id, text))
+                if first[1] != text:
+                    problems.append(
+                        f"{plugin.plugin_id}: {kind} {key!r} is worded differently by {first[0]}"
+                    )
 
     # Cross-references are checked once every plugin is indexed.
     for type_id, spec in registry.instrument_types.items():

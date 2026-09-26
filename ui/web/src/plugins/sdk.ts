@@ -32,9 +32,22 @@ export interface UiPluginMeta {
   components: string[];
 }
 
+/** What a plugin reads to name the machine identifiers of a run in plain words. */
+export interface GlossContext {
+  artifacts: Artifacts;
+}
+
 export interface UiPlugin extends UiPluginMeta {
   /** View components by ResultView.component id. */
   views: Record<string, ComponentType<PositionViewProps>>;
   /** Notes the portfolio tab and the report show beside the numbers (a calibration in force). */
   notes?: ComponentType<{ artifacts: Artifacts }>;
+  /**
+   * Plain-language names of the plugin's identifiers a report may carry (a credit
+   * instrument's covenants): [identifier, words] pairs. The report shows them beside the
+   * identifier, never instead of it.
+   */
+  glosses?: (context: GlossContext) => Iterable<[string, string]>;
+  /** Terms of the plugin's screens, explained in one sentence each (<Term name="…">). */
+  glossary?: Record<string, string>;
 }

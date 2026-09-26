@@ -2,7 +2,8 @@
 
 Every number of the report text must trace to a calculated metric (V9), so no phrase here
 may contain a digit: counts, periods and thresholds are said in words or not at all. The
-wording of a plugin's own flags, actions and rules is declared by that plugin.
+wording of a plugin's own flags, actions, rules and evidence sources is declared by that
+plugin.
 """
 
 from .numbers import extract_numbers
@@ -43,23 +44,6 @@ PLATFORM_FLAGS = {
     "data_missing:": "нет данных «{}» на дату оценки",
     "data_dated_after_as_of:": "данные «{}» датированы позже даты оценки и не используются",
     "incompatible:": "вклад несовместим со срезом",
-}
-
-# Sources and authors of the demo catalog, in words and without digits (V9).
-SOURCES = {
-    "TZ-v3": "демо-данные техзадания",
-    "demo:track-a-v3.2": "пересчёт демо-данных под текущую модель",
-    "demo:conventions": "соглашения демо-каталога",
-    "demo:peers": "компании-аналоги",
-    "demo:market": "рыночные данные демо-снимка",
-    "demo:equity-sensitivities": "экспертные чувствительности акций демо-стенда",
-    "demo/portfolios/DEMO-3.json": "нагрузочный демо-портфель",
-}
-AUTHORS = {
-    "demo:spec-v3": "составитель демо-данных",
-    "demo:methodology": "методолог демо-стенда",
-    "demo:generate_load_portfolio": "генератор нагрузочного портфеля",
-    "demo:market-desk": "аналитик рынка демо-стенда",
 }
 
 

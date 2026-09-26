@@ -13,8 +13,9 @@ from dataclasses import dataclass, field
 
 import numpy as np
 
-from msa.engine.calendar import Calendar
 from msa.engine.transmission import NON_NEGATIVE_DAYS, check_domain
+
+from .calendar import Calendar
 
 CASH_CONVERGENCE_FLAG = "cash_iteration_not_converged"
 FUNDING_GAP_FLAG = "funding_gap"

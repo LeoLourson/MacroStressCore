@@ -8,7 +8,6 @@ reads only the prepared inputs and the scenario; no database, network or LLM.
 import numpy as np
 
 from msa.contracts.result import AggregationContribution, Diagnostic
-from msa.contracts.snapshot import PRICE
 from msa.contracts.units import money, unit_price
 from msa.plugin_sdk import (
     CalculationModel,
@@ -18,6 +17,7 @@ from msa.plugin_sdk import (
     FactorRequirement,
 )
 from msa.plugin_sdk.results import distribution, envelope, scalar
+from msa.plugins.market.kinds import PRICE
 
 from .schemas import Details, Position, Terms
 

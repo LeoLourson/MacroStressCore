@@ -1,5 +1,6 @@
 // UI plugins found at build time: every src/plugins/<name>/index.tsx (see sdk.ts).
 import type { ComponentType } from 'react';
+import type { Artifacts } from '../api/types';
 import type { PositionViewProps, UiPlugin } from './sdk';
 
 const modules = import.meta.glob<{ default: UiPlugin }>('./*/index.tsx', { eager: true });
@@ -18,6 +19,16 @@ export function viewComponent(component: string | null | undefined): ComponentTy
   return component ? (COMPONENTS[component] ?? null) : null;
 }
 
-export function pluginNotes(): ComponentType<{ artifacts: import('../api/types').Artifacts }>[] {
+export function pluginNotes(): ComponentType<{ artifacts: Artifacts }>[] {
   return UI_PLUGINS.flatMap((plugin) => (plugin.notes ? [plugin.notes] : []));
+}
+
+/** The plugins' plain-language names of the run's identifiers, for the report text. */
+export function pluginGlosses(artifacts: Artifacts): [string, string][] {
+  return UI_PLUGINS.flatMap((plugin) => [...(plugin.glosses?.({ artifacts }) ?? [])]);
+}
+
+/** The terms the plugins explain; the platform's own terms are in lib/labels.ts. */
+export function pluginGlossary(): Record<string, string> {
+  return Object.assign({}, ...UI_PLUGINS.map((plugin) => plugin.glossary ?? {}));
 }

@@ -9,6 +9,10 @@ from msa.contracts.evidence import Parameter
 
 SCHEMA_VERSION = "1"
 
+#: Snapshot kinds the equity plugin declares.
+SENSITIVITY = "sensitivity"
+DIVIDEND = "dividend"
+
 
 class ShareTerms(Contract):
     """What identifies the share and which market and sector factors move it."""

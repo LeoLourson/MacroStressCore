@@ -16,7 +16,6 @@ from msa.contracts.common import Contract
 from msa.contracts.evidence import Parameter
 from msa.contracts.result import AggregationContribution, MetricValue
 from msa.contracts.units import money
-from msa.engine import fx
 from msa.plugin_sdk import (
     BASE_MONEY,
     CalculationModel,
@@ -28,6 +27,7 @@ from msa.plugin_sdk import (
     Plugin,
 )
 from msa.plugin_sdk.results import distribution, envelope, scalar
+from msa.plugins.market import fx
 from msa.plugins.market import plugin as market_plugin
 
 #: The real market plugin, needed alongside ``plugin`` because this model reads its

@@ -2,11 +2,15 @@
 
 Every family priced at market — equities now, funds, commodities and derivatives later —
 contributes to the same ``market.pnl`` slice and reads the same ``market.fx`` factor, so
-their realisations add up in one currency and one scenario set.
+their realisations add up in one currency and one scenario set. Such a plugin depends on
+``market`` explicitly: it imports ``msa.plugins.market.fx`` (the pair, its rate requirement
+and the factor's draws) and ``msa.plugins.market.kinds``.
 """
 
-from msa.contracts.snapshot import FX_RATE, PRICE
 from msa.plugin_sdk import BASE_MONEY, FactorSpec, Plugin, SliceSpec, SnapshotKindSpec
+
+from .fx import FX_FACTOR
+from .kinds import FX_RATE, PRICE
 
 plugin = Plugin(
     plugin_id="market",
@@ -16,7 +20,7 @@ plugin = Plugin(
     description="Валютный фактор и портфельный срез рыночного результата.",
     factors=(
         FactorSpec(
-            factor_id="market.fx",
+            factor_id=FX_FACTOR,
             label="Изменение валютного курса",
             unit="log_return",
             scope="currency_pair",

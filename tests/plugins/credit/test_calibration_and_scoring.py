@@ -1,4 +1,4 @@
-"""Credit plugin: calibration.load()/for_scope(), and engine.credit.score() error paths.
+"""Credit plugin: calibration.load()/for_scope(), and math.credit.score() error paths.
 
 score() is the PD/PD-proxy logistic function shared by the credit models: without a
 calibration it falls back to a labelled score; with one, every coefficient it was fitted
@@ -11,8 +11,8 @@ from datetime import date
 import numpy as np
 import pytest
 
-from msa.engine.credit import PDCalibration, score
 from msa.plugins.credit import calibration
+from msa.plugins.credit.math.credit import PDCalibration, score
 from msa.plugins.credit.wording import FLAGS as CREDIT_FLAGS
 from msa.reporting.wording import flag
 
@@ -53,7 +53,7 @@ def test_registry_describe_lists_segments_and_inclusion_rule():
     assert described["inclusion_rule"]["rule_id"]
 
 
-# -- engine.credit.score(): calibrated feature requirements ----------------------------------
+# -- math.credit.score(): calibrated feature requirements ----------------------------------
 
 
 def pd_calibration(coefficients, *, optional_features=None):

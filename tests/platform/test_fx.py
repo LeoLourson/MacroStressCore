@@ -1,4 +1,4 @@
-"""msa.engine.fx: pairs, requirements, spot rates and log changes of a currency pair."""
+"""msa.plugins.market.fx: pairs, requirements, spot rates and log changes of a currency pair."""
 
 from datetime import date
 
@@ -8,8 +8,8 @@ import pytest
 from msa.contracts.domain import Instrument, Position, PositionContext
 from msa.contracts.evidence import Evidence, Parameter
 from msa.contracts.snapshot import SnapshotItem
-from msa.engine.fx import FX_FACTOR, FX_KEY, factor, log_change, pair, requirement, spot
 from msa.plugin_sdk.model import PreparedInputs
+from msa.plugins.market.fx import FX_FACTOR, FX_KEY, factor, log_change, pair, requirement, spot
 
 
 def test_pair_formats_currency_over_base():

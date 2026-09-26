@@ -16,9 +16,8 @@ from datetime import date
 from functools import cache
 from pathlib import Path
 
-from msa.engine.credit import CalibrationRegistry, PDCalibration
-from msa.engine.impact import ThresholdRule
-
+from .math.credit import CalibrationRegistry, PDCalibration
+from .math.impact import ThresholdRule
 from .track_a import V3ModelRegistry, review_triggers
 
 PACKAGED = Path(__file__).with_name("registries")

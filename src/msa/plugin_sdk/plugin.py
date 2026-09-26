@@ -65,6 +65,12 @@ class Plugin:
     flags: dict[str, str] = field(default_factory=dict)
     #: Flags that describe the data rather than a limitation of the calculation.
     informational_flags: frozenset[str] = frozenset()
+    #: Russian words for the ``source_id`` of the evidence the plugin's data cites (its demo
+    #: data, its reference documents), without digits (V9): the report and the screens say
+    #: them instead of the identifier. Two plugins may word the same source only identically.
+    sources: dict[str, str] = field(default_factory=dict)
+    #: The same for the ``author`` of the evidence.
+    authors: dict[str, str] = field(default_factory=dict)
     #: ``fn(result, context) -> dict``: the keyed view of a result's ``details`` the report
     #: cites (covenants by id, contributions by channel, derived values).
     tree: Callable | None = None

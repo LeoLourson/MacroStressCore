@@ -7,7 +7,6 @@ Sensitivities are loaded with the data snapshot, each with its author and source
 no automatic calibration yet.
 """
 
-from msa.contracts.snapshot import DIVIDEND, SENSITIVITY
 from msa.plugin_sdk import (
     BASE_MONEY,
     FactorSpec,
@@ -23,7 +22,7 @@ from .demo import cases
 from .editor import EDITOR, from_draft
 from .model import MODEL_ID, PLUGIN_ID, PLUGIN_VERSION, ShareFactorStress
 from .report import ACTIONS, OBSERVATIONS, RULES, SECTIONS, TYPES, tree
-from .schemas import SCHEMA_VERSION, SharePosition, ShareTerms
+from .schemas import DIVIDEND, SCHEMA_VERSION, SENSITIVITY, SharePosition, ShareTerms
 
 M = BASE_MONEY
 
@@ -194,6 +193,14 @@ plugin = Plugin(
         "sensitivity_missing:": "не задана чувствительность «{}»",
     },
     informational_flags=frozenset({"dividends_at_horizon_fx"}),
+    sources={
+        "demo:market": "рыночные данные демо-снимка",
+        "demo:equity-sensitivities": "экспертные чувствительности акций демо-стенда",
+    },
+    authors={
+        "demo:market-desk": "аналитик рынка демо-стенда",
+        "demo:spec-v3": "составитель демо-данных",
+    },
     tree=tree,
     demo=cases,
 )

@@ -6,12 +6,10 @@ reacts to unit costs through the pass-through share and the demand elasticity (s
 
 import numpy as np
 
-from msa.engine import metrics
-from msa.engine.credit import corporate_features
-
 from ..family import CovenantMetric, CreditFamily, Evaluation, Inputs, Series, compound
 from ..family import InputField as F
-from ..math import pricing
+from ..math import metrics, pricing
+from ..math.credit import corporate_features
 from ..math.operating import SIMPLIFIED_TAX_FLAG, DebtTranche, OperatingBase, OperatingShocks
 from ..math.operating import run as run_operating
 

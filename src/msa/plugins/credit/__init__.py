@@ -5,7 +5,7 @@ One ``CreditModel`` per family (``credit.corporate.v3``, ``credit.bond.v3``,
 the ``graph`` scope; the expected-loss change is its portfolio slice ``credit.loss``.
 """
 
-from msa.plugin_sdk import Plugin, ResultView, ViewBlock
+from msa.plugin_sdk import Plugin, ResultView, SnapshotKindSpec, ViewBlock
 
 from . import calibration
 from .demo import cases
@@ -15,7 +15,8 @@ from .families import FAMILIES
 from .metrics import METRICS, SLICES, instrument_types
 from .model import PLUGIN_ID, PLUGIN_VERSION, REGISTRY_OPTION, CreditModel
 from .report import ACTIONS, OBSERVATIONS, RULES, SECTIONS, TYPES, tree
-from .wording import FLAGS, INFORMATIONAL
+from .schemas import FINANCIAL_STATEMENT, RATE
+from .wording import AUTHORS, FLAGS, INFORMATIONAL, SOURCES
 
 
 def run_options(scope: str) -> dict:
@@ -39,6 +40,24 @@ plugin = Plugin(
     metrics=METRICS,
     factors=FACTORS,
     slices=SLICES,
+    snapshot_kinds=(
+        SnapshotKindSpec(
+            kind=FINANCIAL_STATEMENT,
+            label="Финансовая отчётность",
+            subject="эмитент (заёмщик) или компания-аналог",
+            values={
+                item.name: f"{item.label}, {item.unit}"
+                for f in FAMILIES
+                for item in f.fields_from("statement")
+            },
+        ),
+        SnapshotKindSpec(
+            kind=RATE,
+            label="Процентная ставка",
+            subject="кривая, например risk_free:RUB",
+            values={"rate": "ставка, доля"},
+        ),
+    ),
     views=(
         ResultView(
             view_id="credit.position",
@@ -90,6 +109,8 @@ plugin = Plugin(
     actions=ACTIONS,
     flags=FLAGS,
     informational_flags=INFORMATIONAL,
+    sources=SOURCES,
+    authors=AUTHORS,
     tree=tree,
     run_options=run_options,
     notes=notes,
