@@ -10,7 +10,7 @@ from msa.plugin_sdk.plugin import Plugin
 
 def test_source_wording_has_the_credit_and_equity_demo_words():
     wording = registry().source_wording()
-    assert wording["TZ-v3"] == "демо-данные техзадания"
+    assert wording["demo:borrowers"] == "данные синтетических заёмщиков"
     assert wording["demo:market"] == "рыночные данные демо-снимка"
 
 

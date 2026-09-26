@@ -1,4 +1,4 @@
-"""Contracts of the credit plugin: the Track A profile of a position and its result.
+"""Contracts of the credit plugin: the credit profile of a position and its result.
 
 Monthly trajectories, covenant results, channel attribution, reverse stress and the risk
 axes are the credit model's building blocks. ``RiskResult`` is the credit model's own result
@@ -181,13 +181,13 @@ class Covenant(Contract):
 class Collateral(Contract):
     kind: Identifier
     value: NonNegative
-    coverage_ratio: NonNegative  # May exceed 1 (DEMO-2).
+    coverage_ratio: NonNegative  # May exceed 1 (CASE-OVERCOLLATERALISED).
     haircut: Probability
     evidence: list[Evidence] = Field(min_length=1)
 
 
 class CreditProfile(Contract):
-    """One credit position as Track A reads it: the borrower, the exposure and the inputs.
+    """One credit position as the model reads it: the borrower, the exposure and the inputs.
 
     The credit plugin assembles it from the party, the instrument, the position and the
     snapshot's statement; it is internal to the plugin and never crosses the platform.

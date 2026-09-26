@@ -80,7 +80,7 @@ def no_residual(snapshot: DataSnapshot) -> DataSnapshot:
 
 def test_a_share_needs_no_ead_lgd_or_statement(case):
     batch = run(case.bundle, case.snapshot, case.scenario)
-    for position_id in ("EQ-OIL", "EQ-TECH"):
+    for position_id in ("SHARE-OIL", "SHARE-US-TECH"):
         share = result(batch, position_id)
         assert share.execution == "completed" and share.status == "ok"
         assert not any(m.startswith("credit.") for m in share.metrics)
@@ -173,7 +173,7 @@ def expose(case, scenario, graph):
 
 def test_zero_shocks_keep_the_price_and_value(case):
     batch = run(case.bundle, no_residual(case.snapshot), zero(case.scenario))
-    for position_id in ("EQ-OIL", "EQ-TECH"):
+    for position_id in ("SHARE-OIL", "SHARE-US-TECH"):
         share = result(batch, position_id)
         value = share.metrics["equity.value_current"].value
         horizon = share.metrics["equity.value_horizon"].quantiles
@@ -192,7 +192,7 @@ def test_quantity_scales_value_and_pnl(case):
         position.params["quantity"]["value"] *= 2
     base = run(case.bundle, case.snapshot, case.scenario)
     twice = run(doubled, case.snapshot, case.scenario)
-    for position_id in ("EQ-OIL", "EQ-TECH"):
+    for position_id in ("SHARE-OIL", "SHARE-US-TECH"):
         a, b = result(base, position_id), result(twice, position_id)
         for metric in ("equity.value_current", "equity.dividends"):
             assert b.metrics[metric].value == pytest.approx(2 * a.metrics[metric].value)
@@ -206,12 +206,12 @@ def test_an_fx_shock_moves_the_base_currency_value_by_the_rate(case):
     scenario = zero(case.scenario)
     scenario["rub"] = {**scenario["rub"], "value": 0.1}
     batch = run(case.bundle, no_residual(case.snapshot), scenario)
-    dollar = result(batch, "EQ-TECH")
+    dollar = result(batch, "SHARE-US-TECH")
     value = dollar.metrics["equity.value_current"].value
     assert dollar.metrics["equity.value_horizon"].quantiles.p50 == pytest.approx(
         value * math.exp(0.1)
     )
-    rouble = result(batch, "EQ-OIL")
+    rouble = result(batch, "SHARE-OIL")
     assert rouble.metrics["equity.value_horizon"].quantiles.p50 == pytest.approx(
         rouble.metrics["equity.value_current"].value
     )
@@ -226,11 +226,11 @@ def test_an_fx_shock_moves_the_base_currency_value_by_the_rate(case):
 def test_two_positions_of_one_security_share_their_realisations(case):
     bundle = case.bundle.model_copy(deep=True)
     extra = deepcopy(bundle.positions[0])
-    extra.position_id = "EQ-OIL-2"
+    extra.position_id = "SHARE-OIL-2"
     bundle.positions.append(extra)
     batch = run(PortfolioBundle.model_validate(bundle.model_dump()), case.snapshot, case.scenario)
-    one = np.asarray(batch.draws["EQ-OIL", "market.pnl"])
-    two = np.asarray(batch.draws["EQ-OIL-2", "market.pnl"])
+    one = np.asarray(batch.draws["SHARE-OIL", "market.pnl"])
+    two = np.asarray(batch.draws["SHARE-OIL-2", "market.pnl"])
     assert np.array_equal(one, two)
 
 
@@ -239,7 +239,7 @@ def test_the_order_of_positions_changes_nothing(case):
     backward_bundle = case.bundle.model_copy(deep=True)
     backward_bundle.positions.reverse()
     backward = run(backward_bundle, case.snapshot, case.scenario)
-    for position_id in ("EQ-OIL", "EQ-TECH"):
+    for position_id in ("SHARE-OIL", "SHARE-US-TECH"):
         assert (
             result(forward, position_id).model_dump() == result(backward, position_id).model_dump()
         )
@@ -253,20 +253,20 @@ def _without(snapshot, kind):
 
 def test_a_missing_exchange_rate_stops_the_foreign_share_only(case):
     batch = run(case.bundle, _without(case.snapshot, "fx_rate"), case.scenario)
-    dollar = result(batch, "EQ-TECH")
+    dollar = result(batch, "SHARE-US-TECH")
     assert dollar.execution == "not_run"
     assert any(f.startswith("fx_missing:USD/RUB") for f in dollar.flags)
-    assert result(batch, "EQ-OIL").execution == "completed"
+    assert result(batch, "SHARE-OIL").execution == "completed"
 
 
 def test_a_price_dated_after_the_valuation_date_is_not_used(case):
     raw = case.snapshot.model_dump(mode="json")
     raw["as_of"] = "2026-09-30"
     for item in raw["items"]:
-        if item["kind"] == "price" and item["subject"] == "EQ-OIL":
+        if item["kind"] == "price" and item["subject"] == "SHARE-OIL":
             item["observed_on"] = "2026-09-20"
     batch = run(case.bundle, DataSnapshot.model_validate(raw), case.scenario)
-    oil = result(batch, "EQ-OIL")
+    oil = result(batch, "SHARE-OIL")
     assert oil.execution == "not_run"
     assert "data_dated_after_as_of:price" in oil.flags
 
@@ -274,10 +274,10 @@ def test_a_price_dated_after_the_valuation_date_is_not_used(case):
 def test_sensitivities_of_another_index_are_rejected(case):
     raw = case.snapshot.model_dump(mode="json")
     for item in raw["items"]:
-        if item["kind"] == "sensitivity" and item["subject"] == "EQ-OIL":
+        if item["kind"] == "sensitivity" and item["subject"] == "SHARE-OIL":
             item["attributes"]["market_index"] = "RTS"
     batch = run(case.bundle, DataSnapshot.model_validate(raw), case.scenario)
-    oil = result(batch, "EQ-OIL")
+    oil = result(batch, "SHARE-OIL")
     assert oil.execution == "not_run" and "calibration_mismatch" in oil.flags
 
 
@@ -303,8 +303,8 @@ def test_the_market_slice_adds_realisations_before_quantiles(case):
         macro_draws_sha256=batch.realisations.macro_draws_sha256,
     )
     market = portfolio.slices["market.pnl"]
-    total = np.asarray(batch.draws["EQ-OIL", "market.pnl"]) + np.asarray(
-        batch.draws["EQ-TECH", "market.pnl"]
+    total = np.asarray(batch.draws["SHARE-OIL", "market.pnl"]) + np.asarray(
+        batch.draws["SHARE-US-TECH", "market.pnl"]
     )
     assert market.loss_quantiles.p95 == pytest.approx(np.percentile(total, 95))
     assert market.sum_of_individual_p95 > market.loss_quantiles.p95
@@ -314,7 +314,7 @@ def test_the_market_slice_adds_realisations_before_quantiles(case):
 
 
 def test_credit_and_market_slices_never_mix_in_the_mixed_portfolio():
-    bundle = catalog.bundle("DEMO-1")
+    bundle = catalog.bundle("MULTI-ASSET")
     graph = {
         "event_id": "event",
         "nodes": [
@@ -378,13 +378,13 @@ def test_credit_and_market_slices_never_mix_in_the_mixed_portfolio():
             "positions": [
                 p.model_dump(mode="json")
                 for p in bundle.positions
-                if p.position_id in {"A3", "EQ-OIL", "EQ-TECH"}
+                if p.position_id in {"LOAN-MACHINERY", "SHARE-OIL", "SHARE-US-TECH"}
             ],
         }
     )
     batch = run(
         chosen,
-        catalog.snapshot("DEMO-2026-09-11"),
+        catalog.snapshot("SYNTHETIC-2026-09-11"),
         scenario,
         TransmissionGraph.model_validate(graph),
     )
@@ -402,8 +402,8 @@ def test_credit_and_market_slices_never_mix_in_the_mixed_portfolio():
         macro_draws_sha256=batch.realisations.macro_draws_sha256,
     )
     assert set(portfolio.slices) == {"credit.loss", "market.pnl"}
-    assert portfolio.slices["credit.loss"].included == ["A3"]
-    assert set(portfolio.slices["market.pnl"].included) == {"EQ-OIL", "EQ-TECH"}
+    assert portfolio.slices["credit.loss"].included == ["LOAN-MACHINERY"]
+    assert set(portfolio.slices["market.pnl"].included) == {"SHARE-OIL", "SHARE-US-TECH"}
     assert portfolio.slices["credit.loss"].coverage.basis == "ead"
     # One scenario set for everyone: the credit position reads the same joint matrix.
     assert {r.scenario_id for r in batch.results} == {batch.realisations.scenario_id}

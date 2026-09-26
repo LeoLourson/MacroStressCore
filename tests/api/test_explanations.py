@@ -99,7 +99,7 @@ def run_id(client):
     status = post(
         client,
         "/v1/demo/runs",
-        {"portfolio_id": "DEMO-1", "event": {"kind": "library", "id": "EVENT-A"}},
+        {"portfolio_id": "MULTI-ASSET", "event": {"kind": "library", "id": "RECYCLING-FEE"}},
     )
     status = wait_run(client, status["run_id"])
     assert status["status"] == "human_fix_graph"

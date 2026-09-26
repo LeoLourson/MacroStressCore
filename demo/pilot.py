@@ -1,4 +1,7 @@
-"""The historical pilot event of the demo library: the 2023 mortgage-programme change (DEMO-1)."""
+"""The historical pilot event of the demo library: the 2023 mortgage-programme change.
+
+It is prepared for the MULTI-ASSET portfolio.
+"""
 
 import json
 from pathlib import Path
@@ -9,7 +12,7 @@ from msa.db.session import session_scope
 
 ROOT = Path(__file__).resolve().parent / "pilot"
 EVENT_ID = "HIST-MORTGAGE-2023-12"
-PORTFOLIO_ID = "DEMO-1"
+PORTFOLIO_ID = "MULTI-ASSET"
 
 
 def pilot_event(root=ROOT):
@@ -26,7 +29,7 @@ def pilot_event(root=ROOT):
             "portfolio_id": PORTFOLIO_ID,
             "sources": sources["sources"],
             "description": (
-                "Историческое событие; синтетический портфель DEMO-1. "
+                "Историческое событие; синтетический портфель MULTI-ASSET. "
                 "Граф, сценарий и результаты строятся при запуске. Допущения проверяет аналитик."
             ),
         },

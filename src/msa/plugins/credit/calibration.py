@@ -18,7 +18,7 @@ from pathlib import Path
 
 from .math.credit import CalibrationRegistry, PDCalibration
 from .math.impact import ThresholdRule
-from .track_a import V3ModelRegistry, review_triggers
+from .position_risk import ModelRegistry, review_triggers
 
 PACKAGED = Path(__file__).with_name("registries")
 DEMO_REGISTRY = "demo-synthetic-2026-09"
@@ -55,7 +55,7 @@ class Registry:
     registry_id: str
     kind: str
     note: str
-    model: V3ModelRegistry
+    model: ModelRegistry
     inclusion: InclusionRule | None
 
     def describe(self) -> dict:
@@ -104,7 +104,7 @@ def parse(raw: dict) -> Registry:
         registry_id=raw["registry_id"],
         kind=raw["kind"],
         note=raw["note"],
-        model=V3ModelRegistry(
+        model=ModelRegistry(
             calibrations=CalibrationRegistry(calibrations),
             # Banding rules of the risk axes; without them every axis is "not assessed".
             axis_rules=[
@@ -142,7 +142,7 @@ def parse(raw: dict) -> Registry:
 def load(registry_id: str) -> Registry:
     """A registry by id: ``none``, a packaged file, or the production file."""
     if registry_id == NONE:
-        return Registry(NONE, "none", "Калибровка PD не загружена.", V3ModelRegistry(), None)
+        return Registry(NONE, "none", "Калибровка PD не загружена.", ModelRegistry(), None)
     production = os.getenv("MSA_CALIBRATION_REGISTRY")
     candidates = [PACKAGED / f"{registry_id}.json"]
     if production:

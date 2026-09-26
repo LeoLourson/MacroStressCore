@@ -1,14 +1,14 @@
 {
   "portfolio": {
-    "portfolio_id": "DEMO-3",
-    "name": "DEMO-3",
+    "portfolio_id": "LOAD-TEST",
+    "name": "Нагрузочный: 10 копий кредитов",
     "base_currency": "RUB",
     "as_of": "2026-09-11",
-    "snapshot_id": "DEMO-2026-09-11",
+    "snapshot_id": "SYNTHETIC-2026-09-11",
     "builtin": true,
     "metadata": {
       "synthetic": true,
-      "derived_from": "DEMO-1",
+      "derived_from": "MULTI-ASSET",
       "generation": "10 copies; monetary scale = 0.8 + 0.04 * copy_index"
     }
   }

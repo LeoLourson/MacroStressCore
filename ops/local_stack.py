@@ -1,7 +1,7 @@
 """Native stack without Docker: PostgreSQL and the API that serves the browser app.
 
 One interface: the browser app at http://127.0.0.1:8091 — event text, graph review,
-Track A v3.2 calculation, portfolio, report, approval, and the analyst's own portfolios.
+credit and equity calculation, portfolio, report, approval, and the analyst's own portfolios.
 
 The language model is one profile, chosen at start:
 
@@ -193,7 +193,7 @@ def database(url):
         migrate(bind)
         say(f"База: миграции применены, демо-каталог {seed_demo(bind)}")
         seed_pilot(bind)
-        say("Стартовый кейс: историческое ипотечное событие, портфель DEMO-1")
+        say("Стартовый кейс: историческое ипотечное событие, портфель MULTI-ASSET")
     finally:
         bind.dispose()
 

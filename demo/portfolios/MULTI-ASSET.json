@@ -1,0 +1,24 @@
+{
+  "portfolio": {
+    "portfolio_id": "MULTI-ASSET",
+    "name": "Все типы активов",
+    "base_currency": "RUB",
+    "as_of": "2026-09-11",
+    "snapshot_id": "SYNTHETIC-2026-09-11",
+    "builtin": true,
+    "metadata": {
+      "source": "demo:borrowers",
+      "synthetic": true,
+      "money_unit": "RUB_million",
+      "conventions": [
+        "Valuation date 2026-09-11, horizon 12 months; covenants are tested inside it",
+        "Financials carry the inputs the credit model reads; annual flows are spread evenly",
+        "Term debt costs interest / net debt; working capital draws a revolving line at the marginal rate of 18 %",
+        "PROJECT-HOUSING is valued at construction month 12 of 24: own funds and 4800 of CAPEX are spent, debt 3980.3715 and escrow 1980.0 follow the construction schedule; commissioning and the escrow coverage test fall on 2027-09-30",
+        "LOAN-FERTILIZER discloses revenue, debt and interest only; its costs follow the peer-shrunk EBITDA margin",
+        "Event shocks belong to event metadata; ccf=1 and absent import_share=0 are explicit demo assumptions, not bank observations",
+        "SHARE-OIL and SHARE-US-TECH are synthetic shares: prices, expert sensitivities and dividends over the horizon are demo assumptions of demo:market-desk"
+      ]
+    }
+  }
+}

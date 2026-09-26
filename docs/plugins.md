@@ -263,7 +263,7 @@ return envelope(prepared, context, self, plugin_id="gold", plugin_version="0.1.0
 
 Подробные примеры: `plugins/equity/model.py` (факторный стресс, FX, собственный шок,
 вклады Шепли, гистограмма потерь) и `plugins/credit/model.py` (адаптер к помесячной модели
-Track A v3.2).
+заёмщика).
 
 ### 3.4. Факторы: через граф или напрямую
 
@@ -345,7 +345,7 @@ SliceSpec("market.pnl", "Рыночный результат", measure_label="Р
 `demo/` не правятся:
 
 - `demo_data/portfolios/<portfolio_id>.json` — `{"parties", "instruments", "positions"}`
-  плагина в демо-портфеле (так `equity` добавляет `EQ-OIL` и `EQ-TECH` в DEMO-1);
+  плагина в демо-портфеле (так `equity` добавляет `SHARE-OIL` и `SHARE-US-TECH` в MULTI-ASSET);
 - `demo_data/snapshots/<snapshot_id>.json` — `{"items"}`: их данные в демо-снимке.
 
 `demo/catalog.py` собирает портфель из заголовка `demo/portfolios/<id>.json` и частей всех

@@ -67,28 +67,36 @@ def root(tmp_path):
 
 
 def test_portfolio_ids_include_the_demo_portfolios():
-    assert {"DEMO-1", "DEMO-2", "DEMO-3"} <= set(portfolio_ids())
+    assert {"MULTI-ASSET", "ATYPICAL-BORROWERS", "LOAD-TEST"} <= set(portfolio_ids())
 
 
 def test_demo1_bundle_position_order_is_credit_then_equity():
-    positions = bundle("DEMO-1").positions
-    assert [p.position_id for p in positions] == ["A1", "A2", "A3", "A4", "A5", "EQ-OIL", "EQ-TECH"]
+    positions = bundle("MULTI-ASSET").positions
+    assert [p.position_id for p in positions] == [
+        "BOND-CONCRETE",
+        "PROJECT-HOUSING",
+        "LOAN-MACHINERY",
+        "LOAN-LEASING",
+        "LOAN-FERTILIZER",
+        "SHARE-OIL",
+        "SHARE-US-TECH",
+    ]
 
 
 def test_demo2_and_demo3_bundles_validate():
-    assert bundle("DEMO-2").portfolio.portfolio_id == "DEMO-2"
-    assert bundle("DEMO-3").portfolio.portfolio_id == "DEMO-3"
+    assert bundle("ATYPICAL-BORROWERS").portfolio.portfolio_id == "ATYPICAL-BORROWERS"
+    assert bundle("LOAD-TEST").portfolio.portfolio_id == "LOAD-TEST"
 
 
 def test_demo1_instrument_issuers_are_among_its_parties():
-    b = bundle("DEMO-1")
+    b = bundle("MULTI-ASSET")
     party_ids = {p.party_id for p in b.parties}
     for instrument in b.instruments:
         assert instrument.issuer_id in party_ids
 
 
 def test_snapshot_items_are_sorted_and_cover_credit_and_equity_kinds():
-    items = snapshot("DEMO-2026-09-11").items
+    items = snapshot("SYNTHETIC-2026-09-11").items
     ids = [item.item_id for item in items]
     assert ids == sorted(ids)
     kinds = {item.kind for item in items}
@@ -267,5 +275,5 @@ def test_seed_demo_counts_positions_and_snapshot_items(tmp_path):
         counts = seed_demo(bind)
     finally:
         bind.dispose()
-    assert counts["DEMO-1"] == 7
-    assert counts["DEMO-2026-09-11"] == 71
+    assert counts["MULTI-ASSET"] == 7
+    assert counts["SYNTHETIC-2026-09-11"] == 71

@@ -1,6 +1,7 @@
 """A credit family: one monthly model of a borrower, shared by its instrument types.
 
-A family declares everything Track A and the platform need to know about its types:
+A family declares everything the credit model and the platform need to know about its
+types:
 
 - the inputs it reads, each with its unit, Russian label, whether it is required, the
   default used when it is absent, and where it comes from: the borrower's statement in
@@ -12,7 +13,7 @@ A family declares everything Track A and the platform need to know about its typ
 - the PD segment it belongs to by default;
 - ``evaluate``: the monthly model under a set of driver shocks.
 
-Track A (``track_a``) is family-agnostic: scenario draws, transmission, the PD score,
+The credit model (``position_risk``) is family-agnostic: scenario draws, transmission, the PD score,
 expected loss, covenants, Shapley and reverse stress work the same for every family.
 """
 

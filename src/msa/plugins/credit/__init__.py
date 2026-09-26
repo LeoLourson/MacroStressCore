@@ -1,4 +1,4 @@
-"""Credit plugin: Track A v3.2 for corporate loans, bonds, project finance and leasing.
+"""Credit plugin: the credit model for corporate loans, bonds, project finance and leasing.
 
 One ``CreditModel`` per family (``credit.corporate.v3``, ``credit.bond.v3``,
 ``credit.project_finance.v3``, ``credit.leasing.v3``); the seven drivers are its factors of
@@ -33,7 +33,7 @@ plugin = Plugin(
     plugin_id=PLUGIN_ID,
     version=PLUGIN_VERSION,
     sdk=">=1.0,<2.0",
-    label="Кредитный риск (Track A v3.2)",
+    label="Кредитный риск",
     description="Помесячная модель заёмщика, PD и ожидаемые потери на совместных сценариях.",
     instrument_types=instrument_types(editor, from_draft),
     models=tuple(CreditModel(family) for family in FAMILIES),

@@ -1,11 +1,11 @@
-"""Track A v3.2 for one credit position: scenario draws -> driver shocks -> the family -> risk.
+"""The risk of one credit position: scenario draws -> driver shocks -> the family -> risk.
 
 Nothing here depends on the instrument type. The position's ``CreditFamily`` turns driver
 shocks into monthly trajectories, metrics and PD features; this module turns those into the
 credit, market, liquidity and covenant results, their P5/P50/P95 over the run's joint
 realisations, Shapley contributions by channel and the reverse stress test.
 
-Track A reads the run's joint scenario matrix and uses the parameters that move a credit
+The model reads the run's joint scenario matrix and uses the parameters that move a credit
 factor; parameters of other families' factors (an equity index, a currency pair) belong to
 the same realisations but do not shock a borrower.
 """
@@ -116,7 +116,7 @@ class BondMarketCalibration:
 
 
 @dataclass
-class V3ModelRegistry:
+class ModelRegistry:
     """Approved calibrations and process rules injected into the pure calculation."""
 
     calibrations: CalibrationRegistry = field(default_factory=CalibrationRegistry)
@@ -134,7 +134,7 @@ class V3ModelRegistry:
         default_factory=lambda: {
             name: MODEL_VERSION
             for name in (
-                "track_a",
+                "position_risk",
                 "transmission",
                 "operating",
                 "credit",
@@ -170,7 +170,7 @@ class _Asset:
     model: CreditFamily
     inputs: Inputs
     calendar: Calendar
-    registry: V3ModelRegistry
+    registry: ModelRegistry
     segment: str
 
     def evaluate(self, drivers) -> _Evaluation:
@@ -200,11 +200,11 @@ class _Asset:
 def run_asset(
     input: AssetRiskInput,
     scenario_set: ScenarioSet,
-    model_registry: V3ModelRegistry | None,
+    model_registry: ModelRegistry | None,
     seed: int,
 ) -> RiskResult:
-    """Track A v3.2 for one credit position: ``RiskResult`` of spec 20."""
-    registry = model_registry or V3ModelRegistry()
+    """The risk of one credit position: ``RiskResult`` of spec 20."""
+    registry = model_registry or ModelRegistry()
     profile = input.profile
     model = family_for(profile.asset_type)
     flags: list[str] = []

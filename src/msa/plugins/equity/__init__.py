@@ -199,7 +199,7 @@ plugin = Plugin(
     },
     authors={
         "demo:market-desk": "аналитик рынка демо-стенда",
-        "demo:spec-v3": "составитель демо-данных",
+        "demo:data-desk": "составитель демо-данных",
     },
     tree=tree,
     demo=cases,

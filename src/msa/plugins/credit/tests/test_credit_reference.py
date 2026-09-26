@@ -1,17 +1,14 @@
-"""The credit models reproduce Track A v3.2 as it stood before the platform migration.
+"""The credit models reproduce their reference results on the demo portfolios.
 
-``credit_v3_2.json`` holds the inputs and results captured from the pre-migration code
-(``capture_v3_2.py.txt``): every asset of DEMO-1 and DEMO-2 on a scenario that moves five
-drivers through a graph with lags and a triangular elasticity, and each portfolio's loss.
-The same assets, now parties, instruments, positions and a data snapshot, go through the
-platform: the dispatcher, the credit plugin and the slice aggregator.
+``credit_reference.json`` holds the inputs and the results: every credit position of
+MULTI-ASSET and ATYPICAL-BORROWERS on a scenario that moves five drivers through a graph
+with lags and a triangular elasticity, and each portfolio's credit-loss slice. The
+positions go through the platform: the dispatcher, the credit plugin and the slice
+aggregator.
 
-Documented differences, not regressions:
-- the data-quality score is recomputed from the statement on every run (as the exposure
-  agent always did in a live run); the captured profiles carried the catalog's score, so
-  ``coverage.input_data``, the data axis and the score's source are not compared;
-- flags are compared without repetitions (the transmission used to append duplicates);
-- the model id is the platform's (``credit.corporate.v3``), no longer ``track_a_v3/...``.
+Not compared: the data-quality score (``coverage.input_data``, the data axis and the
+score's source), which the reference stored from the catalog rather than recomputed from
+the statement; flags are compared without repetitions.
 """
 
 import json
@@ -27,8 +24,8 @@ from msa.engine.aggregation import aggregate_slices
 from msa.engine.runner import run_batch
 from msa.platform.registry import registry
 
-GOLDEN = json.loads((Path(__file__).with_name("credit_v3_2.json")).read_text("utf-8"))
-SNAPSHOT_ID = "DEMO-2026-09-11"
+GOLDEN = json.loads((Path(__file__).with_name("credit_reference.json")).read_text("utf-8"))
+SNAPSHOT_ID = "SYNTHETIC-2026-09-11"
 NOT_COMPARED = ("/coverage/input_data", "/axes/4/measures/data_quality", "/input_sources/dq")
 TOLERANCE = 1e-9
 

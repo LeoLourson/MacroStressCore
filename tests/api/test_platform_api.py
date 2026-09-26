@@ -109,11 +109,17 @@ def test_the_catalogs_come_from_the_plugins(client):
 
 def test_portfolios_and_snapshots_are_served_and_imported(client):
     listed = {row["portfolio_id"] for row in get(client, "/v1/demo/portfolios")}
-    assert {"DEMO-1", "DEMO-2", "DEMO-3"} <= listed
-    bundle = get(client, "/v1/demo/portfolios/DEMO-1")
-    assert bundle["portfolio"]["snapshot_id"] == "DEMO-2026-09-11"
-    assert {p["position_id"] for p in bundle["positions"]} >= {"A1", "A2", "A3", "A4", "A5"}
-    rates = get(client, "/v1/demo/snapshots/DEMO-2026-09-11", kind="rate")
+    assert {"MULTI-ASSET", "ATYPICAL-BORROWERS", "LOAD-TEST"} <= listed
+    bundle = get(client, "/v1/demo/portfolios/MULTI-ASSET")
+    assert bundle["portfolio"]["snapshot_id"] == "SYNTHETIC-2026-09-11"
+    assert {p["position_id"] for p in bundle["positions"]} >= {
+        "BOND-CONCRETE",
+        "PROJECT-HOUSING",
+        "LOAN-MACHINERY",
+        "LOAN-LEASING",
+        "LOAN-FERTILIZER",
+    }
+    rates = get(client, "/v1/demo/snapshots/SYNTHETIC-2026-09-11", kind="rate")
     assert [item["subject"] for item in rates["items"]] == ["risk_free:RUB"]
 
     snapshot = {
@@ -185,7 +191,7 @@ def test_a_run_goes_from_the_event_to_the_approved_report(client):
     status = post(
         client,
         "/v1/demo/runs",
-        {"portfolio_id": "DEMO-1", "event": {"kind": "library", "id": "EVENT-A"}},
+        {"portfolio_id": "MULTI-ASSET", "event": {"kind": "library", "id": "RECYCLING-FEE"}},
     )
     status = wait(client, status["run_id"])
     run_id = status["run_id"]
@@ -199,7 +205,7 @@ def test_a_run_goes_from_the_event_to_the_approved_report(client):
     completed = [r for r in artifacts["results"] if r["execution"] == "completed"]
     assert completed and all(r["scenario_id"] == status["scenario_id"] for r in completed)
     assert "credit.loss" in artifacts["portfolio"]["slices"]
-    assert artifacts["snapshot"]["snapshot_id"] == "DEMO-2026-09-11"
+    assert artifacts["snapshot"]["snapshot_id"] == "SYNTHETIC-2026-09-11"
     assert artifacts["workflow"]["stages"][2]["title"] == "Расчёт по позициям"
     report = get(client, f"/v1/demo/runs/{run_id}/report")
     assert "### Итог" in report["summary"] and report["numbers"]
@@ -255,7 +261,7 @@ def test_equity_scenario_check_and_resume_reject_unmapped_operating_shock(client
         "/v1/demo/runs",
         {
             "portfolio_id": saved["portfolio_id"],
-            "event": {"kind": "library", "id": "EVENT-A"},
+            "event": {"kind": "library", "id": "RECYCLING-FEE"},
         },
     )
     status = wait(client, status["run_id"])

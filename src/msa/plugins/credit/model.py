@@ -1,9 +1,9 @@
-"""Track A v3.2 as the platform's credit models: one per family.
+"""The credit model as the platform's calculation models: one per family.
 
 ``requirements`` asks for the borrower's statement, peers and the family's market quotes;
-``validate`` assembles the Track A profile and judges it as the exposure and quant agents
-did before the platform; ``calculate`` runs Track A on the run's joint realisations and
-wraps its ``RiskResult`` in the common envelope, with typed metrics and the position's
+``validate`` assembles the credit profile and judges whether it can be calculated;
+``calculate`` runs the position's risk on the run's joint realisations and wraps its
+``RiskResult`` in the common envelope, with typed metrics and the position's
 contribution to the credit-loss slice.
 """
 
@@ -18,7 +18,7 @@ from . import calibration, profile
 from .contracts import RiskResult
 from .factors import FACTORS
 from .families import family_for
-from .track_a import MODEL_VERSION, AssetRiskInput, review_flags, run_asset
+from .position_risk import MODEL_VERSION, AssetRiskInput, review_flags, run_asset
 
 PLUGIN_ID = "credit"
 PLUGIN_VERSION = "3.2.0"
@@ -61,7 +61,7 @@ class CreditModel(CalculationModel):
         self.family = family
         self.model_id = family.model_id
         self.instrument_types = tuple(family.types)
-        self.label = "Track A v3.2: " + ", ".join(family.types.values()).lower()
+        self.label = "Кредитный риск: " + ", ".join(family.types.values()).lower()
         self.description = (
             "Помесячная модель заёмщика на совместных сценариях: PD, ожидаемые потери, "
             "ковенанты, ликвидность, вклад каналов и обратный стресс-тест."
@@ -88,7 +88,7 @@ class CreditModel(CalculationModel):
         if context.instrument.currency != "RUB" or context.base_currency != "RUB":
             return blocked(
                 "credit_currency_unsupported",
-                "кредитные модели Track A считают позиции и портфели только в рублях",
+                "кредитные модели считают позиции и портфели только в рублях",
             )
         if context.issuer is None or not context.issuer.okved:
             return blocked("issuer_okved_missing", "у заёмщика не указан ОКВЭД")

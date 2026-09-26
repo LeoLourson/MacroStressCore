@@ -9,7 +9,7 @@
   },
   "parties": [
    {
-    "party_id": "DEMO-1:EQ-OIL",
+    "party_id": "OIL-PRODUCER",
     "name": "Нефтегазовая компания",
     "kind": "company",
     "okved": "06.10",
@@ -19,15 +19,15 @@
      {
       "kind": "expert_assumption",
       "source_id": "demo:market",
-      "locator": "EQ-OIL/issuer",
+      "locator": "OIL-PRODUCER/issuer",
       "fragment_sha256": "bce0b68d6aa536c2eb86ab60e2b87172951e7447df65c98641405ea14cfc8fd8",
-      "author": "demo:spec-v3",
+      "author": "demo:data-desk",
       "as_of": "2026-09-11"
      }
     ]
    },
    {
-    "party_id": "DEMO-1:EQ-TECH",
+    "party_id": "US-SOFTWARE-DEVELOPER",
     "name": "Технологическая компания (США)",
     "kind": "company",
     "okved": "62.01",
@@ -37,9 +37,9 @@
      {
       "kind": "expert_assumption",
       "source_id": "demo:market",
-      "locator": "EQ-TECH/issuer",
+      "locator": "US-SOFTWARE-DEVELOPER/issuer",
       "fragment_sha256": "367ac77f53db57b81cbd00f39cbcb2066838da728469663b59f6aac1459206be",
-      "author": "demo:spec-v3",
+      "author": "demo:data-desk",
       "as_of": "2026-09-11"
      }
     ]
@@ -47,11 +47,11 @@
   ],
   "instruments": [
    {
-    "instrument_id": "EQ-OIL",
+    "instrument_id": "SHARE-OIL",
     "instrument_type": "common_stock",
     "name": "Акции нефтегазовой компании",
     "currency": "RUB",
-    "issuer_id": "DEMO-1:EQ-OIL",
+    "issuer_id": "OIL-PRODUCER",
     "terms": {
      "ticker": "DOIL",
      "exchange": "MOEX",
@@ -61,11 +61,11 @@
     "schema_version": "1"
    },
    {
-    "instrument_id": "EQ-TECH",
+    "instrument_id": "SHARE-US-TECH",
     "instrument_type": "common_stock",
     "name": "Акции технологической компании",
     "currency": "USD",
-    "issuer_id": "DEMO-1:EQ-TECH",
+    "issuer_id": "US-SOFTWARE-DEVELOPER",
     "terms": {
      "ticker": "DTEC",
      "exchange": "NASDAQ",
@@ -77,8 +77,8 @@
   ],
   "positions": [
    {
-    "position_id": "EQ-OIL",
-    "instrument_id": "EQ-OIL",
+    "position_id": "SHARE-OIL",
+    "instrument_id": "SHARE-OIL",
     "params": {
      "quantity": {
       "value": 2000000.0,
@@ -87,9 +87,9 @@
        {
         "kind": "expert_assumption",
         "source_id": "demo:market",
-        "locator": "EQ-OIL/quantity",
+        "locator": "SHARE-OIL/quantity",
         "fragment_sha256": "2b64e87d8bfa33fd3cf517c5cbc842369646647808e2d79c6398894aff7c453d",
-        "author": "demo:spec-v3",
+        "author": "demo:data-desk",
         "as_of": "2026-09-11"
        }
       ]
@@ -99,8 +99,8 @@
     "schema_version": "1"
    },
    {
-    "position_id": "EQ-TECH",
-    "instrument_id": "EQ-TECH",
+    "position_id": "SHARE-US-TECH",
+    "instrument_id": "SHARE-US-TECH",
     "params": {
      "quantity": {
       "value": 150000.0,
@@ -109,9 +109,9 @@
        {
         "kind": "expert_assumption",
         "source_id": "demo:market",
-        "locator": "EQ-TECH/quantity",
+        "locator": "SHARE-US-TECH/quantity",
         "fragment_sha256": "dae75ba79a0b3a05fb87e15ecf1e7f63e50d0b08123c4a26f5066f94d2674f72",
-        "author": "demo:spec-v3",
+        "author": "demo:data-desk",
         "as_of": "2026-09-11"
        }
       ]
@@ -129,9 +129,9 @@
   "kind": "demo",
   "items": [
    {
-    "item_id": "price:EQ-OIL:2026-09-11",
+    "item_id": "price:SHARE-OIL:2026-09-11",
     "kind": "price",
-    "subject": "EQ-OIL",
+    "subject": "SHARE-OIL",
     "observed_on": "2026-09-11",
     "values": {
      "price": {
@@ -141,7 +141,7 @@
        {
         "kind": "expert_assumption",
         "source_id": "demo:market",
-        "locator": "EQ-OIL/price",
+        "locator": "SHARE-OIL/price",
         "fragment_sha256": "1be52abd984701098ba0b25a273b5af50ae52e04f466739df495a8c977a9e551",
         "author": "demo:market-desk",
         "as_of": "2026-09-11"
@@ -155,9 +155,9 @@
     "evidence": []
    },
    {
-    "item_id": "sensitivity:EQ-OIL:2026-09-11",
+    "item_id": "sensitivity:SHARE-OIL:2026-09-11",
     "kind": "sensitivity",
-    "subject": "EQ-OIL",
+    "subject": "SHARE-OIL",
     "observed_on": "2026-09-11",
     "values": {
      "beta_market": {
@@ -167,7 +167,7 @@
        {
         "kind": "expert_assumption",
         "source_id": "demo:equity-sensitivities",
-        "locator": "EQ-OIL/beta_market",
+        "locator": "SHARE-OIL/beta_market",
         "fragment_sha256": "32dd0f3f249ef0053e625836e2cb3aa2cb28a50ec2b40f94688aeda7a08fa919",
         "author": "demo:market-desk",
         "as_of": "2026-09-11"
@@ -181,7 +181,7 @@
        {
         "kind": "expert_assumption",
         "source_id": "demo:equity-sensitivities",
-        "locator": "EQ-OIL/beta_sector",
+        "locator": "SHARE-OIL/beta_sector",
         "fragment_sha256": "c3a5180b1c62d09ba3a01cccf26c2d7b06584947fd0a64a0f434070471ee95b1",
         "author": "demo:market-desk",
         "as_of": "2026-09-11"
@@ -195,7 +195,7 @@
        {
         "kind": "expert_assumption",
         "source_id": "demo:equity-sensitivities",
-        "locator": "EQ-OIL/residual_volatility",
+        "locator": "SHARE-OIL/residual_volatility",
         "fragment_sha256": "3cfdcadb06b1f4047dafc409fac7394ca58bd77b6a96cd76a22c94085e243482",
         "author": "demo:market-desk",
         "as_of": "2026-09-11"
@@ -211,9 +211,9 @@
     "evidence": []
    },
    {
-    "item_id": "dividend:EQ-OIL:2026-09-11",
+    "item_id": "dividend:SHARE-OIL:2026-09-11",
     "kind": "dividend",
-    "subject": "EQ-OIL",
+    "subject": "SHARE-OIL",
     "observed_on": "2026-09-11",
     "values": {
      "amount": {
@@ -223,7 +223,7 @@
        {
         "kind": "expert_assumption",
         "source_id": "demo:market",
-        "locator": "EQ-OIL/dividend",
+        "locator": "SHARE-OIL/dividend",
         "fragment_sha256": "fa8c0a6e0372c1e114dbce0cde7ae01afa9cd77955f683ea6c6de39550490cba",
         "author": "demo:market-desk",
         "as_of": "2026-09-11"
@@ -237,9 +237,9 @@
     "evidence": []
    },
    {
-    "item_id": "price:EQ-TECH:2026-09-11",
+    "item_id": "price:SHARE-US-TECH:2026-09-11",
     "kind": "price",
-    "subject": "EQ-TECH",
+    "subject": "SHARE-US-TECH",
     "observed_on": "2026-09-11",
     "values": {
      "price": {
@@ -249,7 +249,7 @@
        {
         "kind": "expert_assumption",
         "source_id": "demo:market",
-        "locator": "EQ-TECH/price",
+        "locator": "SHARE-US-TECH/price",
         "fragment_sha256": "8d016d040f7b7494e4733c867ec4780c5f591c12d654077ffe2db76126e3e672",
         "author": "demo:market-desk",
         "as_of": "2026-09-11"
@@ -263,9 +263,9 @@
     "evidence": []
    },
    {
-    "item_id": "sensitivity:EQ-TECH:2026-09-11",
+    "item_id": "sensitivity:SHARE-US-TECH:2026-09-11",
     "kind": "sensitivity",
-    "subject": "EQ-TECH",
+    "subject": "SHARE-US-TECH",
     "observed_on": "2026-09-11",
     "values": {
      "beta_market": {
@@ -275,7 +275,7 @@
        {
         "kind": "expert_assumption",
         "source_id": "demo:equity-sensitivities",
-        "locator": "EQ-TECH/beta_market",
+        "locator": "SHARE-US-TECH/beta_market",
         "fragment_sha256": "a645c023c735a4074e473da63bd0ef7b96a9d1b4d393d3765882188ecb4fdd26",
         "author": "demo:market-desk",
         "as_of": "2026-09-11"
@@ -289,7 +289,7 @@
        {
         "kind": "expert_assumption",
         "source_id": "demo:equity-sensitivities",
-        "locator": "EQ-TECH/beta_sector",
+        "locator": "SHARE-US-TECH/beta_sector",
         "fragment_sha256": "24e0767eaee28987ae7b5939ca0964d1bf102cb96776ec11c57256ddaccc10ce",
         "author": "demo:market-desk",
         "as_of": "2026-09-11"
@@ -303,7 +303,7 @@
        {
         "kind": "expert_assumption",
         "source_id": "demo:equity-sensitivities",
-        "locator": "EQ-TECH/residual_volatility",
+        "locator": "SHARE-US-TECH/residual_volatility",
         "fragment_sha256": "e433cf68509c491642631bb66cdc3973f1e63d8ea41e1d28a94d601cc2fe2ed8",
         "author": "demo:market-desk",
         "as_of": "2026-09-11"
@@ -319,9 +319,9 @@
     "evidence": []
    },
    {
-    "item_id": "dividend:EQ-TECH:2026-09-11",
+    "item_id": "dividend:SHARE-US-TECH:2026-09-11",
     "kind": "dividend",
-    "subject": "EQ-TECH",
+    "subject": "SHARE-US-TECH",
     "observed_on": "2026-09-11",
     "values": {
      "amount": {
@@ -331,7 +331,7 @@
        {
         "kind": "expert_assumption",
         "source_id": "demo:market",
-        "locator": "EQ-TECH/dividend",
+        "locator": "SHARE-US-TECH/dividend",
         "fragment_sha256": "d94c6fb8cb24065a8df914365390abd9224d322262ea38b619e7525da88672c6",
         "author": "demo:market-desk",
         "as_of": "2026-09-11"
@@ -404,7 +404,7 @@
  },
  "graph": null,
  "completes": [
-  "EQ-OIL",
-  "EQ-TECH"
+  "SHARE-OIL",
+  "SHARE-US-TECH"
  ]
 }

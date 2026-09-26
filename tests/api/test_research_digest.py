@@ -84,8 +84,8 @@ def test_research_digest_calls_its_own_mcp_tool_and_the_call_is_audited(client):
         client,
         "/v1/demo/runs",
         {
-            "portfolio_id": "DEMO-1",
-            "event": {"kind": "library", "id": "EVENT-A"},
+            "portfolio_id": "MULTI-ASSET",
+            "event": {"kind": "library", "id": "RECYCLING-FEE"},
             "agents": RESEARCH_AGENTS,
         },
     )

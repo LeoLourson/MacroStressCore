@@ -1,10 +1,11 @@
 """Dress rehearsal on the live native stack (ops/local_stack.py up), with its LLM profile.
 
-For each library event: the analyst starts a run on DEMO-1, confirms the graph and the
-scenario, the risk manager returns the report with a reason, the analyst confirms again, the
-risk manager approves. Then the results, the report and its trace are checked.
+For each library event: the analyst starts a run on the portfolio the event was prepared for
+(``metadata.portfolio_id``), confirms the graph and the scenario, the risk manager returns
+the report with a reason, the analyst confirms again, the risk manager approves. Then the
+results, the report and its trace are checked.
 
-    uv run --frozen python ops/rehearse.py [EVENT-A EVENT-B]
+    uv run --frozen python ops/rehearse.py [RECYCLING-FEE MORTGAGE-DOWN-PAYMENT]
 """
 
 import sys
@@ -18,7 +19,6 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from local_stack import API, env_file  # noqa: E402
 
 ACTIVE = {"queued", "running"}
-PORTFOLIO = "DEMO-1"
 
 
 class Rehearsal:
@@ -65,13 +65,14 @@ class Rehearsal:
 
     def run(self, event):
         print(f"\n{event['event_id']}: {event['title']}", flush=True)
-        words = (event.get("metadata") or {}).get("scenario_text")
+        metadata = event.get("metadata") or {}
+        words = metadata.get("scenario_text")
         status = self.call(
             "analyst",
             "POST",
             "/runs",
             json={
-                "portfolio_id": PORTFOLIO,
+                "portfolio_id": metadata["portfolio_id"],
                 "event": {"kind": "library", "id": event["event_id"]},
                 **({"scenario": words} if words else {}),
             },
@@ -134,7 +135,7 @@ def main():
         }
     )
     library = {event["event_id"]: event for event in rehearsal.call("analyst", "GET", "/events")}
-    for event_id in sys.argv[1:] or ["EVENT-A", "EVENT-B"]:
+    for event_id in sys.argv[1:] or ["RECYCLING-FEE", "MORTGAGE-DOWN-PAYMENT"]:
         rehearsal.started = time.monotonic()
         rehearsal.run(library[event_id])
     if rehearsal.failures:

@@ -4,7 +4,7 @@ portfolios kept for seven days together with the snapshot of the numbers they ty
 from datetime import timedelta
 from hashlib import sha256
 
-from sqlalchemy import select
+from sqlalchemy import delete, select
 
 from msa.contracts.domain import PortfolioBundle
 from msa.contracts.snapshot import DataSnapshot
@@ -58,6 +58,30 @@ class DemoRepository:
         values = {key: event[key] for key in ("event_id", "title", "text", "metadata")}
         values["sha256"] = sha256(event["text"].encode("utf-8")).hexdigest()
         upsert(self.session, self.tables["event"], values)
+
+    def retire(self, portfolio_ids, event_ids):
+        """Remove the built-in portfolios and library events the catalog no longer has.
+
+        A portfolio loses its positions and header; instruments and parties stay, and so do
+        the snapshots that past runs refer to.
+        """
+        portfolio, event = self.tables["portfolio"], self.tables["event"]
+        gone = sorted(
+            set(
+                self.session.execute(
+                    select(portfolio.c.portfolio_id).where(portfolio.c.builtin.is_(True))
+                ).scalars()
+            )
+            - set(portfolio_ids)
+        )
+        for name in ("position", "portfolio"):
+            table = self.tables[name]
+            self.session.execute(delete(table).where(table.c.portfolio_id.in_(gone)))
+        stale = sorted(
+            set(self.session.execute(select(event.c.event_id)).scalars()) - set(event_ids)
+        )
+        self.session.execute(delete(event).where(event.c.event_id.in_(stale)))
+        return {"portfolios": gone, "events": stale}
 
     def events(self):
         table = self.tables["event"]

@@ -27,14 +27,14 @@ def test_calculated_run_reaches_approval_and_publishes(graph_factory):
     state = confirm(graph, "line")
     assert stop(graph, "line")["kind"] == "human_approval"
     results = state["sorted_results"]
-    assert [r["position_id"] for r in results] == ["A3", "A5"]
+    assert [r["position_id"] for r in results] == ["LOAN-FERTILIZER", "LOAN-MACHINERY"]
     assert {r["macro_draws_sha256"] for r in results} == {state["macro_draws_sha256"]}
     assert {r["scenario_id"] for r in results} == {state["scenario_id"]}
     assert all(r["model_id"] == "credit.corporate.v3" for r in results)
     loss = results[0]["metrics"]["credit.delta_expected_loss"]["quantiles"]
     assert loss["p05"] <= loss["p50"] <= loss["p95"] and loss["p50"] > 0
     credit = state["portfolio_result"]["slices"]["credit.loss"]
-    assert set(credit["included"]) == {"A3", "A5"}
+    assert set(credit["included"]) == {"LOAN-MACHINERY", "LOAN-FERTILIZER"}
     assert "market.pnl" not in state["portfolio_result"]["slices"]
 
     state = resume_run(graph, "line", {"approved": True, "approved_by": "risk"})
@@ -42,18 +42,23 @@ def test_calculated_run_reaches_approval_and_publishes(graph_factory):
     assert state["report"]["approved_by"] == "risk"
     assert pending_interrupt(graph, "line") == []
     nodes = {row["node"] for row in journal.list_node_results("line")}
-    assert {"quant_agent/A3", "quant_agent/A5", "aggregate", "publish"} <= nodes
+    assert {
+        "quant_agent/LOAN-MACHINERY",
+        "quant_agent/LOAN-FERTILIZER",
+        "aggregate",
+        "publish",
+    } <= nodes
 
 
 def test_positions_outside_the_event_sectors_are_not_calculated(graph_factory):
     quant = agents().quant
     causal = agents().causal
-    # The graph reaches only A3's sector.
+    # The graph reaches only LOAN-MACHINERY's sector.
     causal.run_structured = _only_sector(causal.run_structured, "46.63")
     graph, _ = graph_factory(agents=agents(quant=quant, causal=causal))
     start_run(graph, run_input("select"))
     confirm(graph, "select")
-    assert quant.calls == ["A3"]
+    assert quant.calls == ["LOAN-MACHINERY"]
 
 
 def _only_sector(run_structured, okved):

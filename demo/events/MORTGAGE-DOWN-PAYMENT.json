@@ -1,9 +1,10 @@
 {
-  "event_id": "EVENT-B",
-  "title": "Первоначальный взнос по ипотеке",
+  "event_id": "MORTGAGE-DOWN-PAYMENT",
+  "title": "Повышение первоначального взноса по льготной ипотеке",
   "text": "Ужесточение требований к первоначальному взносу по льготной ипотеке",
   "metadata": {
-    "source": "TZ 9.2, 9.7-9.8; drivers of Track A v3.2",
+    "portfolio_id": "MULTI-ASSET",
+    "source": "Синтетическое событие демо-каталога",
     "distributions": {
       "construction_volume": {
         "kind": "triangular",

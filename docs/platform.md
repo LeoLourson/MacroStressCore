@@ -248,7 +248,7 @@ observed_on, values, attributes, evidence)`: цена бумаги, курс п�
 |---|---|
 | `core` 2.0.0 (встроенный, `msa/workflows`) | процессы `stress_test` и `explain_results`, их основные агенты, серверы `mcp-portfolio`, `mcp-models`, `mcp-runs` |
 | [`market`](../src/msa/plugins/market/README.md) | валютный фактор, срез рыночного результата, виды снимка курса и цены |
-| [`credit`](../src/msa/plugins/credit/README.md) | кредитные семейства поверх Track A v3.2, срез кредитных потерь, эталон и открытые методические находки |
+| [`credit`](../src/msa/plugins/credit/README.md) | кредитные семейства на помесячной модели заёмщика, срез кредитных потерь, эталон и открытые методические находки |
 | [`equity`](../src/msa/plugins/equity/README.md) | обыкновенные акции, факторный стресс |
 | [`research`](../src/msa/plugins/research/README.md) | пример агентного плагина со своим MCP-инструментом (выключен по умолчанию) |
 

@@ -1,137 +1,137 @@
 {
   "parties": [
     {
-      "party_id": "DEMO-2:EDGE-01",
-      "name": "Дистрибьютор спецтехники",
+      "party_id": "CASE-LOSS-MAKING",
+      "name": "Дистрибьютор спецтехники (убыточный)",
       "kind": "company",
       "okved": "46.63",
       "description": "Импорт и продажа строительной спецтехники; расчёты через посредников в Азии",
       "evidence": [
         {
           "kind": "expert_assumption",
-          "source_id": "TZ-v3",
-          "locator": "9.1/EDGE-01",
+          "source_id": "demo:borrowers",
+          "locator": "CASE-LOSS-MAKING",
           "fragment_sha256": "37837bc9815814ce79ab23208832314f822fb8e7bcf7c397caf5a63eda4bba3f",
-          "author": "demo:spec-v3",
+          "author": "demo:data-desk",
           "as_of": "2026-09-11"
         }
       ]
     },
     {
-      "party_id": "DEMO-2:EDGE-02",
-      "name": "Экспортёр удобрений",
+      "party_id": "CASE-LOW-DATA-QUALITY",
+      "name": "Экспортёр удобрений (низкое качество данных)",
       "kind": "company",
       "okved": "20.15",
       "description": "Производство и экспорт удобрений; покупатели из Азии",
       "evidence": [
         {
           "kind": "expert_assumption",
-          "source_id": "TZ-v3",
-          "locator": "9.1/EDGE-02",
+          "source_id": "demo:borrowers",
+          "locator": "CASE-LOW-DATA-QUALITY",
           "fragment_sha256": "725116734351f0d82044e4a7b2fcfc3ef80a8e7277b9b06f55f210eaf898f410",
-          "author": "demo:spec-v3",
+          "author": "demo:data-desk",
           "as_of": "2026-09-11"
         }
       ]
     },
     {
-      "party_id": "DEMO-2:EDGE-03",
-      "name": "Экспортёр удобрений",
+      "party_id": "CASE-NO-FINANCIALS",
+      "name": "Экспортёр удобрений (нет отчётности)",
       "kind": "company",
       "okved": "20.15",
       "description": "Производство и экспорт удобрений; покупатели из Азии",
       "evidence": [
         {
           "kind": "expert_assumption",
-          "source_id": "TZ-v3",
-          "locator": "9.1/EDGE-03",
+          "source_id": "demo:borrowers",
+          "locator": "CASE-NO-FINANCIALS",
           "fragment_sha256": "725116734351f0d82044e4a7b2fcfc3ef80a8e7277b9b06f55f210eaf898f410",
-          "author": "demo:spec-v3",
+          "author": "demo:data-desk",
           "as_of": "2026-09-11"
         }
       ]
     },
     {
-      "party_id": "DEMO-2:EDGE-04",
-      "name": "Дистрибьютор спецтехники",
+      "party_id": "CASE-COVENANT-BREACHED",
+      "name": "Дистрибьютор спецтехники (ковенант нарушен)",
       "kind": "company",
       "okved": "46.63",
       "description": "Импорт и продажа строительной спецтехники; расчёты через посредников в Азии",
       "evidence": [
         {
           "kind": "expert_assumption",
-          "source_id": "TZ-v3",
-          "locator": "9.1/EDGE-04",
+          "source_id": "demo:borrowers",
+          "locator": "CASE-COVENANT-BREACHED",
           "fragment_sha256": "37837bc9815814ce79ab23208832314f822fb8e7bcf7c397caf5a63eda4bba3f",
-          "author": "demo:spec-v3",
+          "author": "demo:data-desk",
           "as_of": "2026-09-11"
         }
       ]
     },
     {
-      "party_id": "DEMO-2:EDGE-05",
-      "name": "Дистрибьютор спецтехники",
+      "party_id": "CASE-NO-FLOATING-DEBT",
+      "name": "Дистрибьютор спецтехники (без плавающего долга)",
       "kind": "company",
       "okved": "46.63",
       "description": "Импорт и продажа строительной спецтехники; расчёты через посредников в Азии",
       "evidence": [
         {
           "kind": "expert_assumption",
-          "source_id": "TZ-v3",
-          "locator": "9.1/EDGE-05",
+          "source_id": "demo:borrowers",
+          "locator": "CASE-NO-FLOATING-DEBT",
           "fragment_sha256": "37837bc9815814ce79ab23208832314f822fb8e7bcf7c397caf5a63eda4bba3f",
-          "author": "demo:spec-v3",
+          "author": "demo:data-desk",
           "as_of": "2026-09-11"
         }
       ]
     },
     {
-      "party_id": "DEMO-2:EDGE-06",
-      "name": "Дистрибьютор спецтехники",
+      "party_id": "CASE-LAG-18M",
+      "name": "Дистрибьютор спецтехники (лаг 18 месяцев)",
       "kind": "company",
       "okved": "46.63",
       "description": "Импорт и продажа строительной спецтехники; расчёты через посредников в Азии",
       "evidence": [
         {
           "kind": "expert_assumption",
-          "source_id": "TZ-v3",
-          "locator": "9.1/EDGE-06",
+          "source_id": "demo:borrowers",
+          "locator": "CASE-LAG-18M",
           "fragment_sha256": "37837bc9815814ce79ab23208832314f822fb8e7bcf7c397caf5a63eda4bba3f",
-          "author": "demo:spec-v3",
+          "author": "demo:data-desk",
           "as_of": "2026-09-11"
         }
       ]
     },
     {
-      "party_id": "DEMO-2:EDGE-07",
-      "name": "Экспортёр удобрений",
+      "party_id": "CASE-NO-PEERS",
+      "name": "Экспортёр удобрений (без аналогов)",
       "kind": "company",
       "okved": "20.15",
       "description": "Производство и экспорт удобрений; покупатели из Азии",
       "evidence": [
         {
           "kind": "expert_assumption",
-          "source_id": "TZ-v3",
-          "locator": "9.1/EDGE-07",
+          "source_id": "demo:borrowers",
+          "locator": "CASE-NO-PEERS",
           "fragment_sha256": "725116734351f0d82044e4a7b2fcfc3ef80a8e7277b9b06f55f210eaf898f410",
-          "author": "demo:spec-v3",
+          "author": "demo:data-desk",
           "as_of": "2026-09-11"
         }
       ]
     },
     {
-      "party_id": "DEMO-2:EDGE-08",
-      "name": "Дистрибьютор спецтехники",
+      "party_id": "CASE-OVERCOLLATERALISED",
+      "name": "Дистрибьютор спецтехники (залог больше долга)",
       "kind": "company",
       "okved": "46.63",
       "description": "Импорт и продажа строительной спецтехники; расчёты через посредников в Азии",
       "evidence": [
         {
           "kind": "expert_assumption",
-          "source_id": "TZ-v3",
-          "locator": "9.1/EDGE-08",
+          "source_id": "demo:borrowers",
+          "locator": "CASE-OVERCOLLATERALISED",
           "fragment_sha256": "37837bc9815814ce79ab23208832314f822fb8e7bcf7c397caf5a63eda4bba3f",
-          "author": "demo:spec-v3",
+          "author": "demo:data-desk",
           "as_of": "2026-09-11"
         }
       ]
@@ -148,7 +148,7 @@
           "source_id": "demo:peers",
           "locator": "PEER-20.15-1",
           "fragment_sha256": "a30a043314fa89294fa2c1c989a01fbb5329e5c085a5c5a8d27317656de24ae0",
-          "author": "demo:spec-v3",
+          "author": "demo:data-desk",
           "as_of": "2026-09-11"
         }
       ]
@@ -165,7 +165,7 @@
           "source_id": "demo:peers",
           "locator": "PEER-20.15-2",
           "fragment_sha256": "a976726b1d1bda3e1f271287f3aa7229ca3204ff8bf9cb2b581c610b9c811bef",
-          "author": "demo:spec-v3",
+          "author": "demo:data-desk",
           "as_of": "2026-09-11"
         }
       ]
@@ -173,15 +173,15 @@
   ],
   "instruments": [
     {
-      "instrument_id": "EDGE-01",
+      "instrument_id": "CASE-LOSS-MAKING",
       "instrument_type": "corp_loan",
-      "name": "Корпоративный кредит: Дистрибьютор спецтехники",
+      "name": "Корпоративный кредит: Дистрибьютор спецтехники (убыточный)",
       "currency": "RUB",
-      "issuer_id": "DEMO-2:EDGE-01",
+      "issuer_id": "CASE-LOSS-MAKING",
       "terms": {
         "covenants": [
           {
-            "covenant_id": "EDGE-01-icr",
+            "covenant_id": "CASE-LOSS-MAKING-icr",
             "metric": "icr",
             "operator": "ge",
             "threshold": 2.0,
@@ -192,16 +192,16 @@
             "evidence": [
               {
                 "kind": "expert_assumption",
-                "source_id": "TZ-v3",
-                "locator": "9.1/A3/covenant/icr",
+                "source_id": "demo:borrowers",
+                "locator": "CASE-LOSS-MAKING/covenant/icr",
                 "fragment_sha256": "9bf4d284d17e16c8013d0a0f416560cdc68e75c49fa1cd08a7c986072576d967",
-                "author": "demo:spec-v3",
+                "author": "demo:data-desk",
                 "as_of": "2026-09-11"
               }
             ]
           },
           {
-            "covenant_id": "EDGE-01-nd_ebitda",
+            "covenant_id": "CASE-LOSS-MAKING-nd_ebitda",
             "metric": "nd_ebitda",
             "operator": "le",
             "threshold": 3.5,
@@ -212,10 +212,10 @@
             "evidence": [
               {
                 "kind": "expert_assumption",
-                "source_id": "TZ-v3",
-                "locator": "9.1/A3/covenant/nd_ebitda",
+                "source_id": "demo:borrowers",
+                "locator": "CASE-LOSS-MAKING/covenant/nd_ebitda",
                 "fragment_sha256": "82cf984bf6a652d2cbf3ea9f71c99e672c6bda943e43d34bce469afa67dc2b7b",
-                "author": "demo:spec-v3",
+                "author": "demo:data-desk",
                 "as_of": "2026-09-11"
               }
             ]
@@ -226,15 +226,15 @@
       "schema_version": "1"
     },
     {
-      "instrument_id": "EDGE-02",
+      "instrument_id": "CASE-LOW-DATA-QUALITY",
       "instrument_type": "corp_loan",
-      "name": "Корпоративный кредит: Экспортёр удобрений",
+      "name": "Корпоративный кредит: Экспортёр удобрений (низкое качество данных)",
       "currency": "RUB",
-      "issuer_id": "DEMO-2:EDGE-02",
+      "issuer_id": "CASE-LOW-DATA-QUALITY",
       "terms": {
         "covenants": [
           {
-            "covenant_id": "EDGE-02-icr",
+            "covenant_id": "CASE-LOW-DATA-QUALITY-icr",
             "metric": "icr",
             "operator": "ge",
             "threshold": 3.0,
@@ -245,10 +245,10 @@
             "evidence": [
               {
                 "kind": "expert_assumption",
-                "source_id": "TZ-v3",
-                "locator": "9.1/A5/covenant/icr",
+                "source_id": "demo:borrowers",
+                "locator": "CASE-LOW-DATA-QUALITY/covenant/icr",
                 "fragment_sha256": "9bf4d284d17e16c8013d0a0f416560cdc68e75c49fa1cd08a7c986072576d967",
-                "author": "demo:spec-v3",
+                "author": "demo:data-desk",
                 "as_of": "2026-09-11"
               }
             ]
@@ -259,15 +259,15 @@
       "schema_version": "1"
     },
     {
-      "instrument_id": "EDGE-03",
+      "instrument_id": "CASE-NO-FINANCIALS",
       "instrument_type": "corp_loan",
-      "name": "Корпоративный кредит: Экспортёр удобрений",
+      "name": "Корпоративный кредит: Экспортёр удобрений (нет отчётности)",
       "currency": "RUB",
-      "issuer_id": "DEMO-2:EDGE-03",
+      "issuer_id": "CASE-NO-FINANCIALS",
       "terms": {
         "covenants": [
           {
-            "covenant_id": "EDGE-03-icr",
+            "covenant_id": "CASE-NO-FINANCIALS-icr",
             "metric": "icr",
             "operator": "ge",
             "threshold": 3.0,
@@ -278,10 +278,10 @@
             "evidence": [
               {
                 "kind": "expert_assumption",
-                "source_id": "TZ-v3",
-                "locator": "9.1/A5/covenant/icr",
+                "source_id": "demo:borrowers",
+                "locator": "CASE-NO-FINANCIALS/covenant/icr",
                 "fragment_sha256": "9bf4d284d17e16c8013d0a0f416560cdc68e75c49fa1cd08a7c986072576d967",
-                "author": "demo:spec-v3",
+                "author": "demo:data-desk",
                 "as_of": "2026-09-11"
               }
             ]
@@ -292,15 +292,15 @@
       "schema_version": "1"
     },
     {
-      "instrument_id": "EDGE-04",
+      "instrument_id": "CASE-COVENANT-BREACHED",
       "instrument_type": "corp_loan",
-      "name": "Корпоративный кредит: Дистрибьютор спецтехники",
+      "name": "Корпоративный кредит: Дистрибьютор спецтехники (ковенант нарушен)",
       "currency": "RUB",
-      "issuer_id": "DEMO-2:EDGE-04",
+      "issuer_id": "CASE-COVENANT-BREACHED",
       "terms": {
         "covenants": [
           {
-            "covenant_id": "EDGE-04-icr",
+            "covenant_id": "CASE-COVENANT-BREACHED-icr",
             "metric": "icr",
             "operator": "ge",
             "threshold": 3.0,
@@ -311,16 +311,16 @@
             "evidence": [
               {
                 "kind": "expert_assumption",
-                "source_id": "TZ-v3",
-                "locator": "9.1/A3/covenant/icr",
+                "source_id": "demo:borrowers",
+                "locator": "CASE-COVENANT-BREACHED/covenant/icr",
                 "fragment_sha256": "9bf4d284d17e16c8013d0a0f416560cdc68e75c49fa1cd08a7c986072576d967",
-                "author": "demo:spec-v3",
+                "author": "demo:data-desk",
                 "as_of": "2026-09-11"
               }
             ]
           },
           {
-            "covenant_id": "EDGE-04-nd_ebitda",
+            "covenant_id": "CASE-COVENANT-BREACHED-nd_ebitda",
             "metric": "nd_ebitda",
             "operator": "le",
             "threshold": 3.5,
@@ -331,10 +331,10 @@
             "evidence": [
               {
                 "kind": "expert_assumption",
-                "source_id": "TZ-v3",
-                "locator": "9.1/A3/covenant/nd_ebitda",
+                "source_id": "demo:borrowers",
+                "locator": "CASE-COVENANT-BREACHED/covenant/nd_ebitda",
                 "fragment_sha256": "82cf984bf6a652d2cbf3ea9f71c99e672c6bda943e43d34bce469afa67dc2b7b",
-                "author": "demo:spec-v3",
+                "author": "demo:data-desk",
                 "as_of": "2026-09-11"
               }
             ]
@@ -345,15 +345,15 @@
       "schema_version": "1"
     },
     {
-      "instrument_id": "EDGE-05",
+      "instrument_id": "CASE-NO-FLOATING-DEBT",
       "instrument_type": "corp_loan",
-      "name": "Корпоративный кредит: Дистрибьютор спецтехники",
+      "name": "Корпоративный кредит: Дистрибьютор спецтехники (без плавающего долга)",
       "currency": "RUB",
-      "issuer_id": "DEMO-2:EDGE-05",
+      "issuer_id": "CASE-NO-FLOATING-DEBT",
       "terms": {
         "covenants": [
           {
-            "covenant_id": "EDGE-05-icr",
+            "covenant_id": "CASE-NO-FLOATING-DEBT-icr",
             "metric": "icr",
             "operator": "ge",
             "threshold": 2.0,
@@ -364,16 +364,16 @@
             "evidence": [
               {
                 "kind": "expert_assumption",
-                "source_id": "TZ-v3",
-                "locator": "9.1/A3/covenant/icr",
+                "source_id": "demo:borrowers",
+                "locator": "CASE-NO-FLOATING-DEBT/covenant/icr",
                 "fragment_sha256": "9bf4d284d17e16c8013d0a0f416560cdc68e75c49fa1cd08a7c986072576d967",
-                "author": "demo:spec-v3",
+                "author": "demo:data-desk",
                 "as_of": "2026-09-11"
               }
             ]
           },
           {
-            "covenant_id": "EDGE-05-nd_ebitda",
+            "covenant_id": "CASE-NO-FLOATING-DEBT-nd_ebitda",
             "metric": "nd_ebitda",
             "operator": "le",
             "threshold": 3.5,
@@ -384,10 +384,10 @@
             "evidence": [
               {
                 "kind": "expert_assumption",
-                "source_id": "TZ-v3",
-                "locator": "9.1/A3/covenant/nd_ebitda",
+                "source_id": "demo:borrowers",
+                "locator": "CASE-NO-FLOATING-DEBT/covenant/nd_ebitda",
                 "fragment_sha256": "82cf984bf6a652d2cbf3ea9f71c99e672c6bda943e43d34bce469afa67dc2b7b",
-                "author": "demo:spec-v3",
+                "author": "demo:data-desk",
                 "as_of": "2026-09-11"
               }
             ]
@@ -398,15 +398,15 @@
       "schema_version": "1"
     },
     {
-      "instrument_id": "EDGE-06",
+      "instrument_id": "CASE-LAG-18M",
       "instrument_type": "corp_loan",
-      "name": "Корпоративный кредит: Дистрибьютор спецтехники",
+      "name": "Корпоративный кредит: Дистрибьютор спецтехники (лаг 18 месяцев)",
       "currency": "RUB",
-      "issuer_id": "DEMO-2:EDGE-06",
+      "issuer_id": "CASE-LAG-18M",
       "terms": {
         "covenants": [
           {
-            "covenant_id": "EDGE-06-icr",
+            "covenant_id": "CASE-LAG-18M-icr",
             "metric": "icr",
             "operator": "ge",
             "threshold": 2.0,
@@ -417,16 +417,16 @@
             "evidence": [
               {
                 "kind": "expert_assumption",
-                "source_id": "TZ-v3",
-                "locator": "9.1/A3/covenant/icr",
+                "source_id": "demo:borrowers",
+                "locator": "CASE-LAG-18M/covenant/icr",
                 "fragment_sha256": "9bf4d284d17e16c8013d0a0f416560cdc68e75c49fa1cd08a7c986072576d967",
-                "author": "demo:spec-v3",
+                "author": "demo:data-desk",
                 "as_of": "2026-09-11"
               }
             ]
           },
           {
-            "covenant_id": "EDGE-06-nd_ebitda",
+            "covenant_id": "CASE-LAG-18M-nd_ebitda",
             "metric": "nd_ebitda",
             "operator": "le",
             "threshold": 3.5,
@@ -437,10 +437,10 @@
             "evidence": [
               {
                 "kind": "expert_assumption",
-                "source_id": "TZ-v3",
-                "locator": "9.1/A3/covenant/nd_ebitda",
+                "source_id": "demo:borrowers",
+                "locator": "CASE-LAG-18M/covenant/nd_ebitda",
                 "fragment_sha256": "82cf984bf6a652d2cbf3ea9f71c99e672c6bda943e43d34bce469afa67dc2b7b",
-                "author": "demo:spec-v3",
+                "author": "demo:data-desk",
                 "as_of": "2026-09-11"
               }
             ]
@@ -451,15 +451,15 @@
       "schema_version": "1"
     },
     {
-      "instrument_id": "EDGE-07",
+      "instrument_id": "CASE-NO-PEERS",
       "instrument_type": "corp_loan",
-      "name": "Корпоративный кредит: Экспортёр удобрений",
+      "name": "Корпоративный кредит: Экспортёр удобрений (без аналогов)",
       "currency": "RUB",
-      "issuer_id": "DEMO-2:EDGE-07",
+      "issuer_id": "CASE-NO-PEERS",
       "terms": {
         "covenants": [
           {
-            "covenant_id": "EDGE-07-icr",
+            "covenant_id": "CASE-NO-PEERS-icr",
             "metric": "icr",
             "operator": "ge",
             "threshold": 3.0,
@@ -470,10 +470,10 @@
             "evidence": [
               {
                 "kind": "expert_assumption",
-                "source_id": "TZ-v3",
-                "locator": "9.1/A5/covenant/icr",
+                "source_id": "demo:borrowers",
+                "locator": "CASE-NO-PEERS/covenant/icr",
                 "fragment_sha256": "9bf4d284d17e16c8013d0a0f416560cdc68e75c49fa1cd08a7c986072576d967",
-                "author": "demo:spec-v3",
+                "author": "demo:data-desk",
                 "as_of": "2026-09-11"
               }
             ]
@@ -484,15 +484,15 @@
       "schema_version": "1"
     },
     {
-      "instrument_id": "EDGE-08",
+      "instrument_id": "CASE-OVERCOLLATERALISED",
       "instrument_type": "corp_loan",
-      "name": "Корпоративный кредит: Дистрибьютор спецтехники",
+      "name": "Корпоративный кредит: Дистрибьютор спецтехники (залог больше долга)",
       "currency": "RUB",
-      "issuer_id": "DEMO-2:EDGE-08",
+      "issuer_id": "CASE-OVERCOLLATERALISED",
       "terms": {
         "covenants": [
           {
-            "covenant_id": "EDGE-08-icr",
+            "covenant_id": "CASE-OVERCOLLATERALISED-icr",
             "metric": "icr",
             "operator": "ge",
             "threshold": 2.0,
@@ -503,16 +503,16 @@
             "evidence": [
               {
                 "kind": "expert_assumption",
-                "source_id": "TZ-v3",
-                "locator": "9.1/A3/covenant/icr",
+                "source_id": "demo:borrowers",
+                "locator": "CASE-OVERCOLLATERALISED/covenant/icr",
                 "fragment_sha256": "9bf4d284d17e16c8013d0a0f416560cdc68e75c49fa1cd08a7c986072576d967",
-                "author": "demo:spec-v3",
+                "author": "demo:data-desk",
                 "as_of": "2026-09-11"
               }
             ]
           },
           {
-            "covenant_id": "EDGE-08-nd_ebitda",
+            "covenant_id": "CASE-OVERCOLLATERALISED-nd_ebitda",
             "metric": "nd_ebitda",
             "operator": "le",
             "threshold": 3.5,
@@ -523,10 +523,10 @@
             "evidence": [
               {
                 "kind": "expert_assumption",
-                "source_id": "TZ-v3",
-                "locator": "9.1/A3/covenant/nd_ebitda",
+                "source_id": "demo:borrowers",
+                "locator": "CASE-OVERCOLLATERALISED/covenant/nd_ebitda",
                 "fragment_sha256": "82cf984bf6a652d2cbf3ea9f71c99e672c6bda943e43d34bce469afa67dc2b7b",
-                "author": "demo:spec-v3",
+                "author": "demo:data-desk",
                 "as_of": "2026-09-11"
               }
             ]
@@ -542,9 +542,9 @@
               {
                 "kind": "expert_assumption",
                 "source_id": "demo:edge",
-                "locator": "collateral",
+                "locator": "CASE-OVERCOLLATERALISED/collateral",
                 "fragment_sha256": "c746ee2edf45fa00fca8d08045b2575aac17cf3eeb3f2b0da5e5301fae8d1e47",
-                "author": "demo:spec-v3",
+                "author": "demo:data-desk",
                 "as_of": "2026-09-11"
               }
             ]
@@ -556,8 +556,8 @@
   ],
   "positions": [
     {
-      "position_id": "EDGE-01",
-      "instrument_id": "EDGE-01",
+      "position_id": "CASE-LOSS-MAKING",
+      "instrument_id": "CASE-LOSS-MAKING",
       "params": {
         "ead": {
           "value": 3000.0,
@@ -565,10 +565,10 @@
           "evidence": [
             {
               "kind": "expert_assumption",
-              "source_id": "TZ-v3",
-              "locator": "9.1/A3/ead",
+              "source_id": "demo:borrowers",
+              "locator": "CASE-LOSS-MAKING/ead",
               "fragment_sha256": "fcc9071baa27ca675464cc4583f5ef60f3560db7dce83d385786d554908e06b6",
-              "author": "demo:spec-v3",
+              "author": "demo:data-desk",
               "as_of": "2026-09-11"
             }
           ]
@@ -579,10 +579,10 @@
           "evidence": [
             {
               "kind": "expert_assumption",
-              "source_id": "TZ-v3",
-              "locator": "9.1/A3/lgd",
+              "source_id": "demo:borrowers",
+              "locator": "CASE-LOSS-MAKING/lgd",
               "fragment_sha256": "bffb16d6fe1445f051b3cff3025340011b817b391ffc04dcd77d1452efa10c25",
-              "author": "demo:spec-v3",
+              "author": "demo:data-desk",
               "as_of": "2026-09-11"
             }
           ]
@@ -593,10 +593,10 @@
           "evidence": [
             {
               "kind": "expert_assumption",
-              "source_id": "TZ-v3",
-              "locator": "9.1/A3/ccf",
+              "source_id": "demo:borrowers",
+              "locator": "CASE-LOSS-MAKING/ccf",
               "fragment_sha256": "d0ff5974b6aa52cf562bea5921840c032a860a91a3512f7fe8f768f6bbe005f6",
-              "author": "demo:spec-v3",
+              "author": "demo:data-desk",
               "as_of": "2026-09-11"
             }
           ]
@@ -608,9 +608,9 @@
             {
               "kind": "expert_assumption",
               "source_id": "demo:conventions",
-              "locator": "A3/import_share",
+              "locator": "CASE-LOSS-MAKING/import_share",
               "fragment_sha256": "1e9d7c27c8bbc8ddf0055c93e064a62fa995d177fee28cc8fa949bc8a4db06f4",
-              "author": "demo:spec-v3",
+              "author": "demo:data-desk",
               "as_of": "2026-09-11"
             }
           ]
@@ -625,8 +625,8 @@
       "schema_version": "1"
     },
     {
-      "position_id": "EDGE-02",
-      "instrument_id": "EDGE-02",
+      "position_id": "CASE-LOW-DATA-QUALITY",
+      "instrument_id": "CASE-LOW-DATA-QUALITY",
       "params": {
         "ead": {
           "value": 1500.0,
@@ -634,10 +634,10 @@
           "evidence": [
             {
               "kind": "expert_assumption",
-              "source_id": "TZ-v3",
-              "locator": "9.1/A5/ead",
+              "source_id": "demo:borrowers",
+              "locator": "CASE-LOW-DATA-QUALITY/ead",
               "fragment_sha256": "cbc03d01c9e075396d0b205a83023b9c3cb246054b7eb54caa9929e5d0f1c6f5",
-              "author": "demo:spec-v3",
+              "author": "demo:data-desk",
               "as_of": "2026-09-11"
             }
           ]
@@ -648,10 +648,10 @@
           "evidence": [
             {
               "kind": "expert_assumption",
-              "source_id": "TZ-v3",
-              "locator": "9.1/A5/lgd",
+              "source_id": "demo:borrowers",
+              "locator": "CASE-LOW-DATA-QUALITY/lgd",
               "fragment_sha256": "bffb16d6fe1445f051b3cff3025340011b817b391ffc04dcd77d1452efa10c25",
-              "author": "demo:spec-v3",
+              "author": "demo:data-desk",
               "as_of": "2026-09-11"
             }
           ]
@@ -662,10 +662,10 @@
           "evidence": [
             {
               "kind": "expert_assumption",
-              "source_id": "TZ-v3",
-              "locator": "9.1/A5/ccf",
+              "source_id": "demo:borrowers",
+              "locator": "CASE-LOW-DATA-QUALITY/ccf",
               "fragment_sha256": "d0ff5974b6aa52cf562bea5921840c032a860a91a3512f7fe8f768f6bbe005f6",
-              "author": "demo:spec-v3",
+              "author": "demo:data-desk",
               "as_of": "2026-09-11"
             }
           ]
@@ -676,10 +676,10 @@
           "evidence": [
             {
               "kind": "expert_assumption",
-              "source_id": "TZ-v3",
-              "locator": "9.1/A5/import_share",
+              "source_id": "demo:borrowers",
+              "locator": "CASE-LOW-DATA-QUALITY/import_share",
               "fragment_sha256": "8aed642bf5118b9d3c859bd4be35ecac75b6e873cce34e7b6f554b06f75550d7",
-              "author": "demo:spec-v3",
+              "author": "demo:data-desk",
               "as_of": "2026-09-11"
             }
           ]
@@ -697,8 +697,8 @@
       "schema_version": "1"
     },
     {
-      "position_id": "EDGE-03",
-      "instrument_id": "EDGE-03",
+      "position_id": "CASE-NO-FINANCIALS",
+      "instrument_id": "CASE-NO-FINANCIALS",
       "params": {
         "ead": {
           "value": 1500.0,
@@ -706,10 +706,10 @@
           "evidence": [
             {
               "kind": "expert_assumption",
-              "source_id": "TZ-v3",
-              "locator": "9.1/A5/ead",
+              "source_id": "demo:borrowers",
+              "locator": "CASE-NO-FINANCIALS/ead",
               "fragment_sha256": "cbc03d01c9e075396d0b205a83023b9c3cb246054b7eb54caa9929e5d0f1c6f5",
-              "author": "demo:spec-v3",
+              "author": "demo:data-desk",
               "as_of": "2026-09-11"
             }
           ]
@@ -720,10 +720,10 @@
           "evidence": [
             {
               "kind": "expert_assumption",
-              "source_id": "TZ-v3",
-              "locator": "9.1/A5/lgd",
+              "source_id": "demo:borrowers",
+              "locator": "CASE-NO-FINANCIALS/lgd",
               "fragment_sha256": "bffb16d6fe1445f051b3cff3025340011b817b391ffc04dcd77d1452efa10c25",
-              "author": "demo:spec-v3",
+              "author": "demo:data-desk",
               "as_of": "2026-09-11"
             }
           ]
@@ -734,10 +734,10 @@
           "evidence": [
             {
               "kind": "expert_assumption",
-              "source_id": "TZ-v3",
-              "locator": "9.1/A5/ccf",
+              "source_id": "demo:borrowers",
+              "locator": "CASE-NO-FINANCIALS/ccf",
               "fragment_sha256": "d0ff5974b6aa52cf562bea5921840c032a860a91a3512f7fe8f768f6bbe005f6",
-              "author": "demo:spec-v3",
+              "author": "demo:data-desk",
               "as_of": "2026-09-11"
             }
           ]
@@ -748,10 +748,10 @@
           "evidence": [
             {
               "kind": "expert_assumption",
-              "source_id": "TZ-v3",
-              "locator": "9.1/A5/import_share",
+              "source_id": "demo:borrowers",
+              "locator": "CASE-NO-FINANCIALS/import_share",
               "fragment_sha256": "8aed642bf5118b9d3c859bd4be35ecac75b6e873cce34e7b6f554b06f75550d7",
-              "author": "demo:spec-v3",
+              "author": "demo:data-desk",
               "as_of": "2026-09-11"
             }
           ]
@@ -770,8 +770,8 @@
       "schema_version": "1"
     },
     {
-      "position_id": "EDGE-04",
-      "instrument_id": "EDGE-04",
+      "position_id": "CASE-COVENANT-BREACHED",
+      "instrument_id": "CASE-COVENANT-BREACHED",
       "params": {
         "ead": {
           "value": 3000.0,
@@ -779,10 +779,10 @@
           "evidence": [
             {
               "kind": "expert_assumption",
-              "source_id": "TZ-v3",
-              "locator": "9.1/A3/ead",
+              "source_id": "demo:borrowers",
+              "locator": "CASE-COVENANT-BREACHED/ead",
               "fragment_sha256": "fcc9071baa27ca675464cc4583f5ef60f3560db7dce83d385786d554908e06b6",
-              "author": "demo:spec-v3",
+              "author": "demo:data-desk",
               "as_of": "2026-09-11"
             }
           ]
@@ -793,10 +793,10 @@
           "evidence": [
             {
               "kind": "expert_assumption",
-              "source_id": "TZ-v3",
-              "locator": "9.1/A3/lgd",
+              "source_id": "demo:borrowers",
+              "locator": "CASE-COVENANT-BREACHED/lgd",
               "fragment_sha256": "bffb16d6fe1445f051b3cff3025340011b817b391ffc04dcd77d1452efa10c25",
-              "author": "demo:spec-v3",
+              "author": "demo:data-desk",
               "as_of": "2026-09-11"
             }
           ]
@@ -807,10 +807,10 @@
           "evidence": [
             {
               "kind": "expert_assumption",
-              "source_id": "TZ-v3",
-              "locator": "9.1/A3/ccf",
+              "source_id": "demo:borrowers",
+              "locator": "CASE-COVENANT-BREACHED/ccf",
               "fragment_sha256": "d0ff5974b6aa52cf562bea5921840c032a860a91a3512f7fe8f768f6bbe005f6",
-              "author": "demo:spec-v3",
+              "author": "demo:data-desk",
               "as_of": "2026-09-11"
             }
           ]
@@ -822,9 +822,9 @@
             {
               "kind": "expert_assumption",
               "source_id": "demo:conventions",
-              "locator": "A3/import_share",
+              "locator": "CASE-COVENANT-BREACHED/import_share",
               "fragment_sha256": "1e9d7c27c8bbc8ddf0055c93e064a62fa995d177fee28cc8fa949bc8a4db06f4",
-              "author": "demo:spec-v3",
+              "author": "demo:data-desk",
               "as_of": "2026-09-11"
             }
           ]
@@ -839,8 +839,8 @@
       "schema_version": "1"
     },
     {
-      "position_id": "EDGE-05",
-      "instrument_id": "EDGE-05",
+      "position_id": "CASE-NO-FLOATING-DEBT",
+      "instrument_id": "CASE-NO-FLOATING-DEBT",
       "params": {
         "ead": {
           "value": 3000.0,
@@ -848,10 +848,10 @@
           "evidence": [
             {
               "kind": "expert_assumption",
-              "source_id": "TZ-v3",
-              "locator": "9.1/A3/ead",
+              "source_id": "demo:borrowers",
+              "locator": "CASE-NO-FLOATING-DEBT/ead",
               "fragment_sha256": "fcc9071baa27ca675464cc4583f5ef60f3560db7dce83d385786d554908e06b6",
-              "author": "demo:spec-v3",
+              "author": "demo:data-desk",
               "as_of": "2026-09-11"
             }
           ]
@@ -862,10 +862,10 @@
           "evidence": [
             {
               "kind": "expert_assumption",
-              "source_id": "TZ-v3",
-              "locator": "9.1/A3/lgd",
+              "source_id": "demo:borrowers",
+              "locator": "CASE-NO-FLOATING-DEBT/lgd",
               "fragment_sha256": "bffb16d6fe1445f051b3cff3025340011b817b391ffc04dcd77d1452efa10c25",
-              "author": "demo:spec-v3",
+              "author": "demo:data-desk",
               "as_of": "2026-09-11"
             }
           ]
@@ -876,10 +876,10 @@
           "evidence": [
             {
               "kind": "expert_assumption",
-              "source_id": "TZ-v3",
-              "locator": "9.1/A3/ccf",
+              "source_id": "demo:borrowers",
+              "locator": "CASE-NO-FLOATING-DEBT/ccf",
               "fragment_sha256": "d0ff5974b6aa52cf562bea5921840c032a860a91a3512f7fe8f768f6bbe005f6",
-              "author": "demo:spec-v3",
+              "author": "demo:data-desk",
               "as_of": "2026-09-11"
             }
           ]
@@ -891,9 +891,9 @@
             {
               "kind": "expert_assumption",
               "source_id": "demo:conventions",
-              "locator": "A3/import_share",
+              "locator": "CASE-NO-FLOATING-DEBT/import_share",
               "fragment_sha256": "1e9d7c27c8bbc8ddf0055c93e064a62fa995d177fee28cc8fa949bc8a4db06f4",
-              "author": "demo:spec-v3",
+              "author": "demo:data-desk",
               "as_of": "2026-09-11"
             }
           ]
@@ -908,8 +908,8 @@
       "schema_version": "1"
     },
     {
-      "position_id": "EDGE-06",
-      "instrument_id": "EDGE-06",
+      "position_id": "CASE-LAG-18M",
+      "instrument_id": "CASE-LAG-18M",
       "params": {
         "ead": {
           "value": 3000.0,
@@ -917,10 +917,10 @@
           "evidence": [
             {
               "kind": "expert_assumption",
-              "source_id": "TZ-v3",
-              "locator": "9.1/A3/ead",
+              "source_id": "demo:borrowers",
+              "locator": "CASE-LAG-18M/ead",
               "fragment_sha256": "fcc9071baa27ca675464cc4583f5ef60f3560db7dce83d385786d554908e06b6",
-              "author": "demo:spec-v3",
+              "author": "demo:data-desk",
               "as_of": "2026-09-11"
             }
           ]
@@ -931,10 +931,10 @@
           "evidence": [
             {
               "kind": "expert_assumption",
-              "source_id": "TZ-v3",
-              "locator": "9.1/A3/lgd",
+              "source_id": "demo:borrowers",
+              "locator": "CASE-LAG-18M/lgd",
               "fragment_sha256": "bffb16d6fe1445f051b3cff3025340011b817b391ffc04dcd77d1452efa10c25",
-              "author": "demo:spec-v3",
+              "author": "demo:data-desk",
               "as_of": "2026-09-11"
             }
           ]
@@ -945,10 +945,10 @@
           "evidence": [
             {
               "kind": "expert_assumption",
-              "source_id": "TZ-v3",
-              "locator": "9.1/A3/ccf",
+              "source_id": "demo:borrowers",
+              "locator": "CASE-LAG-18M/ccf",
               "fragment_sha256": "d0ff5974b6aa52cf562bea5921840c032a860a91a3512f7fe8f768f6bbe005f6",
-              "author": "demo:spec-v3",
+              "author": "demo:data-desk",
               "as_of": "2026-09-11"
             }
           ]
@@ -960,9 +960,9 @@
             {
               "kind": "expert_assumption",
               "source_id": "demo:conventions",
-              "locator": "A3/import_share",
+              "locator": "CASE-LAG-18M/import_share",
               "fragment_sha256": "1e9d7c27c8bbc8ddf0055c93e064a62fa995d177fee28cc8fa949bc8a4db06f4",
-              "author": "demo:spec-v3",
+              "author": "demo:data-desk",
               "as_of": "2026-09-11"
             }
           ]
@@ -977,8 +977,8 @@
       "schema_version": "1"
     },
     {
-      "position_id": "EDGE-07",
-      "instrument_id": "EDGE-07",
+      "position_id": "CASE-NO-PEERS",
+      "instrument_id": "CASE-NO-PEERS",
       "params": {
         "ead": {
           "value": 1500.0,
@@ -986,10 +986,10 @@
           "evidence": [
             {
               "kind": "expert_assumption",
-              "source_id": "TZ-v3",
-              "locator": "9.1/A5/ead",
+              "source_id": "demo:borrowers",
+              "locator": "CASE-NO-PEERS/ead",
               "fragment_sha256": "cbc03d01c9e075396d0b205a83023b9c3cb246054b7eb54caa9929e5d0f1c6f5",
-              "author": "demo:spec-v3",
+              "author": "demo:data-desk",
               "as_of": "2026-09-11"
             }
           ]
@@ -1000,10 +1000,10 @@
           "evidence": [
             {
               "kind": "expert_assumption",
-              "source_id": "TZ-v3",
-              "locator": "9.1/A5/lgd",
+              "source_id": "demo:borrowers",
+              "locator": "CASE-NO-PEERS/lgd",
               "fragment_sha256": "bffb16d6fe1445f051b3cff3025340011b817b391ffc04dcd77d1452efa10c25",
-              "author": "demo:spec-v3",
+              "author": "demo:data-desk",
               "as_of": "2026-09-11"
             }
           ]
@@ -1014,10 +1014,10 @@
           "evidence": [
             {
               "kind": "expert_assumption",
-              "source_id": "TZ-v3",
-              "locator": "9.1/A5/ccf",
+              "source_id": "demo:borrowers",
+              "locator": "CASE-NO-PEERS/ccf",
               "fragment_sha256": "d0ff5974b6aa52cf562bea5921840c032a860a91a3512f7fe8f768f6bbe005f6",
-              "author": "demo:spec-v3",
+              "author": "demo:data-desk",
               "as_of": "2026-09-11"
             }
           ]
@@ -1028,10 +1028,10 @@
           "evidence": [
             {
               "kind": "expert_assumption",
-              "source_id": "TZ-v3",
-              "locator": "9.1/A5/import_share",
+              "source_id": "demo:borrowers",
+              "locator": "CASE-NO-PEERS/import_share",
               "fragment_sha256": "8aed642bf5118b9d3c859bd4be35ecac75b6e873cce34e7b6f554b06f75550d7",
-              "author": "demo:spec-v3",
+              "author": "demo:data-desk",
               "as_of": "2026-09-11"
             }
           ]
@@ -1047,8 +1047,8 @@
       "schema_version": "1"
     },
     {
-      "position_id": "EDGE-08",
-      "instrument_id": "EDGE-08",
+      "position_id": "CASE-OVERCOLLATERALISED",
+      "instrument_id": "CASE-OVERCOLLATERALISED",
       "params": {
         "ead": {
           "value": 3000.0,
@@ -1056,10 +1056,10 @@
           "evidence": [
             {
               "kind": "expert_assumption",
-              "source_id": "TZ-v3",
-              "locator": "9.1/A3/ead",
+              "source_id": "demo:borrowers",
+              "locator": "CASE-OVERCOLLATERALISED/ead",
               "fragment_sha256": "fcc9071baa27ca675464cc4583f5ef60f3560db7dce83d385786d554908e06b6",
-              "author": "demo:spec-v3",
+              "author": "demo:data-desk",
               "as_of": "2026-09-11"
             }
           ]
@@ -1070,8 +1070,8 @@
           "evidence": [
             {
               "kind": "expert_assumption",
-              "source_id": "demo:track-a-v3.2",
-              "locator": "EDGE-08/lgd",
+              "source_id": "demo:derived",
+              "locator": "CASE-OVERCOLLATERALISED/lgd",
               "fragment_sha256": "6c00ab974adb2685ecab984e5a924f9d9f48920b080af6fc298c12b824cc653b",
               "author": "demo:methodology",
               "as_of": "2026-09-11"
@@ -1084,10 +1084,10 @@
           "evidence": [
             {
               "kind": "expert_assumption",
-              "source_id": "TZ-v3",
-              "locator": "9.1/A3/ccf",
+              "source_id": "demo:borrowers",
+              "locator": "CASE-OVERCOLLATERALISED/ccf",
               "fragment_sha256": "d0ff5974b6aa52cf562bea5921840c032a860a91a3512f7fe8f768f6bbe005f6",
-              "author": "demo:spec-v3",
+              "author": "demo:data-desk",
               "as_of": "2026-09-11"
             }
           ]
@@ -1099,9 +1099,9 @@
             {
               "kind": "expert_assumption",
               "source_id": "demo:conventions",
-              "locator": "A3/import_share",
+              "locator": "CASE-OVERCOLLATERALISED/import_share",
               "fragment_sha256": "1e9d7c27c8bbc8ddf0055c93e064a62fa995d177fee28cc8fa949bc8a4db06f4",
-              "author": "demo:spec-v3",
+              "author": "demo:data-desk",
               "as_of": "2026-09-11"
             }
           ]

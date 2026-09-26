@@ -24,7 +24,7 @@ from msa.platform.registry import registry
 
 SEED = 20260911
 AS_OF = "2026-09-11"
-SNAPSHOT_ID = "DEMO-2026-09-11"
+SNAPSHOT_ID = "SYNTHETIC-2026-09-11"
 
 SCENARIO = {
     "demand_drop": {
@@ -83,7 +83,7 @@ THRESHOLDS = {
 }
 
 
-def bundle(portfolio="DEMO-1") -> PortfolioBundle:
+def bundle(portfolio="MULTI-ASSET") -> PortfolioBundle:
     return demo_catalog.bundle(portfolio)
 
 
@@ -91,7 +91,7 @@ def snapshot() -> DataSnapshot:
     return demo_catalog.snapshot(SNAPSHOT_ID)
 
 
-def positions(portfolio="DEMO-1", ids=None) -> list[dict]:
+def positions(portfolio="MULTI-ASSET", ids=None) -> list[dict]:
     return [
         context.model_dump(mode="json")
         for context in contexts(bundle(portfolio))
@@ -99,8 +99,8 @@ def positions(portfolio="DEMO-1", ids=None) -> list[dict]:
     ]
 
 
-def run_input(run_id, *, portfolio="DEMO-1", ids=None, **overrides) -> dict:
-    chosen = positions(portfolio, ids if ids is not None else {"A3", "A5"})
+def run_input(run_id, *, portfolio="MULTI-ASSET", ids=None, **overrides) -> dict:
+    chosen = positions(portfolio, ids if ids is not None else {"LOAN-MACHINERY", "LOAN-FERTILIZER"})
     names = {p["position"]["position_id"]: (p.get("issuer") or {}).get("name", "") for p in chosen}
     return {
         "run_id": run_id,
@@ -204,7 +204,7 @@ def agents(*, calculate=False, **overrides) -> Agents:
     reg = registry()
     data = snapshot()
     sectors = {}
-    for name in ("DEMO-1", "DEMO-2", "DEMO-3"):
+    for name in ("MULTI-ASSET", "ATYPICAL-BORROWERS", "LOAD-TEST"):
         sectors.update({p.party_id: p.okved for p in bundle(name).parties})
     values = {
         "ingest": TextIngest(),
