@@ -26,6 +26,7 @@ dependencies = [
 [dependency-groups]
 dev = [
     "graphifyy==0.9.67",
+    "import-linter==2.15",
     "pytest==8.4.2",
     "ruff==0.12.12",
 ]
@@ -53,3 +54,41 @@ extend-exclude = ["ui"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B"]
+
+# The boundary between the core and the plugins (docs/plugins.md, "Границы и совместная
+# работа"). The core is everything under msa outside msa.plugins; a plugin is one package
+# msa.plugins.<id>. Wildcards keep a new plugin out of this file. A plugin's own tests
+# (msa.plugins.<id>.tests) drive the platform as a harness and may import the core.
+[tool.importlinter]
+root_package = "msa"
+
+[[tool.importlinter.contracts]]
+name = "The core does not import plugins"
+type = "forbidden"
+source_modules = ["msa.*"]
+forbidden_modules = ["msa.plugins"]
+
+[[tool.importlinter.contracts]]
+name = "Plugins import only msa.plugin_sdk, msa.contracts and their own package"
+type = "forbidden"
+source_modules = ["msa.plugins.*"]
+forbidden_modules = ["msa.*"]
+allow_indirect_imports = true
+ignore_imports = [
+  "msa.plugins.** -> msa.plugin_sdk",
+  "msa.plugins.** -> msa.plugin_sdk.**",
+  "msa.plugins.** -> msa.contracts",
+  "msa.plugins.** -> msa.contracts.**",
+  "msa.plugins.*.tests.** -> msa.**",
+]
+unmatched_ignore_imports_alerting = "none"
+
+[[tool.importlinter.contracts]]
+name = "Plugins are independent of each other, except for the base plugin market"
+type = "independence"
+modules = ["msa.plugins.*"]
+ignore_imports = [
+  "msa.plugins.** -> msa.plugins.market",
+  "msa.plugins.** -> msa.plugins.market.**",
+]
+unmatched_ignore_imports_alerting = "none"

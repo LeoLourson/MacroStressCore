@@ -1,8 +1,9 @@
 """Discovery and validation of plugins, and the catalogs everything else reads.
 
-At start-up every package under ``msa.plugins`` is imported and its ``plugin`` declaration
-checked. The checks are all-or-nothing: the process does not start with a partial set of
-plugins, and the error lists every problem with the plugin that caused it.
+At start-up the built-in ``core`` declaration (``msa.workflows``) and every package under
+``msa.plugins`` are imported and their ``plugin`` declarations checked. The checks are
+all-or-nothing: the process does not start with a partial set of plugins, and the error
+lists every problem with the plugin that caused it.
 
 Nothing outside ``msa.plugins`` branches on an instrument type: the dispatcher, the
 aggregator, the report, the API and the screens find what they need here.
@@ -34,6 +35,8 @@ from msa.plugin_sdk.specs import (
 from msa.plugin_sdk.version import SDK_VERSION, compatible, parse
 
 PACKAGE = "msa.plugins"
+#: The platform's own workflows and core agents: declared like a plugin, part of the core.
+BUILT_IN = "msa.workflows"
 
 
 class PluginError(RuntimeError):
@@ -258,13 +261,15 @@ def build(plugins: Iterable[Plugin]) -> Registry:
 
 
 def discover(package: str = PACKAGE) -> list[Plugin]:
-    """Import every plugin package under ``package`` by the module convention."""
+    """The built-in ``core`` declaration, then every plugin package under ``package``."""
     root = importlib.import_module(package)
+    names = [BUILT_IN] + [
+        f"{package}.{info.name}"
+        for info in sorted(pkgutil.iter_modules(root.__path__), key=lambda item: item.name)
+        if not info.name.startswith("_")
+    ]
     plugins, problems = [], []
-    for info in sorted(pkgutil.iter_modules(root.__path__), key=lambda item: item.name):
-        if info.name.startswith("_"):
-            continue
-        name = f"{package}.{info.name}"
+    for name in names:
         try:
             module = importlib.import_module(name)
         except Exception as exc:  # noqa: BLE001 - a broken plugin must name itself
