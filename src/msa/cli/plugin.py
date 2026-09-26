@@ -138,7 +138,8 @@ def new_agent(
         "label": label or plugin_id,
         "workflow": workflow,
         "point": point,
-        "consumes": repr(tuple(found.available)),
+        # One key per line, as ruff formats a tuple with a trailing comma.
+        "consumes": "(\n" + "".join(f'    "{key}",\n' for key in found.available) + ")",
     }
     target.mkdir(parents=True)
     _write("agent", AGENT_FILES, target, values)

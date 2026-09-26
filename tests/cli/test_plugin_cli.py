@@ -14,7 +14,7 @@ from msa.cli.plugin import check, demo_run, load, main, new_agent, new_asset
 
 
 def test_an_asset_scaffold_passes_the_check_and_calculates(tmp_path):
-    target = new_asset("gold", label="Золото", dest=tmp_path)
+    target = new_asset("scaffoldgold", label="Золото", dest=tmp_path)
     assert sorted(p.name for p in target.iterdir()) == [
         "README.md",
         "__init__.py",
@@ -25,19 +25,19 @@ def test_an_asset_scaffold_passes_the_check_and_calculates(tmp_path):
         "schemas.py",
         "tests",
     ]
-    assert (target / "tests" / "test_gold.py").is_file()
+    assert (target / "tests" / "test_scaffoldgold.py").is_file()
     assert (target / "demo_data" / "README.md").is_file()
     assert check(path=target) == []
     output = demo_run(None, path=target, points=64)
-    assert "X-1  gold.model.v1  рассчитано, статус ok" in output
+    assert "X-1  scaffoldgold.model.v1  рассчитано, статус ok" in output
     assert "Срез Рыночный результат: P5 / P50 / P95" in output
     plugin = load(target)
-    assert plugin.instrument_types[0].type_id == "gold_position"
-    assert plugin.models[0].model_id == "gold.model.v1"
+    assert plugin.instrument_types[0].type_id == "scaffoldgold_position"
+    assert plugin.models[0].model_id == "scaffoldgold.model.v1"
 
 
 def test_an_agent_scaffold_joins_its_point_and_stays_off(tmp_path):
-    target = new_agent("watcher", point="before_report", dest=tmp_path)
+    target = new_agent("scaffoldwatcher", point="before_report", dest=tmp_path)
     assert check(path=target) == []
     plugin = load(target)
     (agent,) = plugin.agents
@@ -45,14 +45,14 @@ def test_an_agent_scaffold_joins_its_point_and_stays_off(tmp_path):
     assert agent.enabled_by_default is False
     assert "report" in agent.consumes
     # It calls its own read-only MCP tool, has a prompt, tests and a view of its output.
-    assert agent.tools == ("watcher.notes.summarize",)
-    assert [server.name for server in plugin.mcp_servers] == ["watcher.notes"]
+    assert agent.tools == ("scaffoldwatcher.notes.summarize",)
+    assert [server.name for server in plugin.mcp_servers] == ["scaffoldwatcher.notes"]
     assert plugin.prompts == {"note": "v1"}
     assert (target / "prompts" / "note-v1.txt").is_file()
-    assert (target / "tests" / "test_watcher.py").is_file()
-    ui = tmp_path / "ui" / "watcher"
+    assert (target / "tests" / "test_scaffoldwatcher.py").is_file()
+    ui = tmp_path / "ui" / "scaffoldwatcher"
     assert sorted(p.name for p in ui.iterdir()) == ["index.tsx", "plugin.json"]
-    assert '"agents": ["watcher.agent"]' in (ui / "plugin.json").read_text(encoding="utf-8")
+    assert '"agents": ["scaffoldwatcher.agent"]' in (ui / "plugin.json").read_text(encoding="utf-8")
 
 
 def test_a_broken_plugin_fails_the_check(tmp_path, capsys):

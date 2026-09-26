@@ -39,8 +39,13 @@ def _position(position_id: str, key: str, beta: float, quantity: float, price: f
     position = {
         "position_id": position_id,
         "instrument_id": position_id,
-        "params": {"quantity": {"value": quantity, "unit": "count",
-                                "evidence": _evidence(f"{position_id}/quantity")}},
+        "params": {
+            "quantity": {
+                "value": quantity,
+                "unit": "count",
+                "evidence": _evidence(f"{position_id}/quantity"),
+            }
+        },
         "schema_version": "1",
     }
     item = {
@@ -48,8 +53,13 @@ def _position(position_id: str, key: str, beta: float, quantity: float, price: f
         "kind": "price",
         "subject": position_id,
         "observed_on": AS_OF,
-        "values": {"price": {"value": price, "unit": "RUB_per_unit",
-                             "evidence": _evidence(f"{position_id}/price")}},
+        "values": {
+            "price": {
+                "value": price,
+                "unit": "RUB_per_unit",
+                "evidence": _evidence(f"{position_id}/price"),
+            }
+        },
         "attributes": {},
         "evidence": [],
     }
@@ -57,20 +67,39 @@ def _position(position_id: str, key: str, beta: float, quantity: float, price: f
 
 
 def cases() -> list[DemoCase]:
-    rows = [_position("X-1", "main", 1.2, 10_000.0, 1_500.0),
-            _position("X-2", "main", 0.6, 4_000.0, 2_000.0)]
+    rows = [
+        _position("X-1", "main", 1.2, 10_000.0, 1_500.0),
+        _position("X-2", "main", 0.6, 4_000.0, 2_000.0),
+    ]
     bundle = {
-        "portfolio": {"portfolio_id": CASE, "name": "Пример", "base_currency": "RUB",
-                      "as_of": AS_OF, "snapshot_id": CASE},
+        "portfolio": {
+            "portfolio_id": CASE,
+            "name": "Пример",
+            "base_currency": "RUB",
+            "as_of": AS_OF,
+            "snapshot_id": CASE,
+        },
         "parties": [],
         "instruments": [row[0] for row in rows],
         "positions": [row[1] for row in rows],
     }
-    snapshot = {"snapshot_id": CASE, "as_of": AS_OF, "label": "Пример",
-                "items": [row[2] for row in rows]}
+    snapshot = {
+        "snapshot_id": CASE,
+        "as_of": AS_OF,
+        "label": "Пример",
+        "items": [row[2] for row in rows],
+    }
     scenario = {
-        "driver": {"label": "Фактор примера", "kind": "triangular", "low": -0.3, "mode": -0.1,
-                   "high": 0.05, "unit": "log_return", "factor": DRIVER, "key": "main"},
+        "driver": {
+            "label": "Фактор примера",
+            "kind": "triangular",
+            "low": -0.3,
+            "mode": -0.1,
+            "high": 0.05,
+            "unit": "log_return",
+            "factor": DRIVER,
+            "key": "main",
+        },
     }
     return [
         DemoCase(
