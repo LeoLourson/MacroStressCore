@@ -6,10 +6,15 @@
     "credit": "3.2.0",
     "equity": "1.0.0",
     "market": "1.0.0",
-    "research": "1.0.0"
+    "research": "1.1.0"
   },
   "components": {
     "credit.position": "credit",
     "equity.position": "equity"
+  },
+  "agents": {
+    "research.brief": "research",
+    "research.concentration": "research",
+    "research.digest": "research"
   }
 }

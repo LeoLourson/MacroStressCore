@@ -1,10 +1,11 @@
 // The contract of a UI plugin: a richer view of the results of one server plugin.
 //
 // A UI plugin lives in src/plugins/<name>/ with two files:
-//   plugin.json — { "plugin_id", "versions", "components": [...] }: the server plugin it
-//                 renders, the range of its versions it understands, the view components
-//                 it implements (ResultView.component of the catalog);
-//   index.tsx   — a default export of UiPlugin with the same id and components.
+//   plugin.json — { "plugin_id", "versions", "components": [...], "agents": [...] }: the
+//                 server plugin it renders, the range of its versions it understands, the
+//                 view components it implements (ResultView.component of the catalog) and
+//                 the agents whose outputs it draws (AgentPlugin.agent_id);
+//   index.tsx   — a default export of UiPlugin with the same id, components and agents.
 // It is found by import.meta.glob (src/plugins/index.ts); scripts/check-plugins.mjs checks
 // plugin.json against src/plugins/manifest.json, generated from the server's registry, and
 // fails the build on a mismatch. A component the server declares without a UI plugin is
@@ -30,6 +31,14 @@ export interface UiPluginMeta {
   /** Server plugin versions this UI understands: ">=3.2.0 <4.0.0". */
   versions: string;
   components: string[];
+  /** Agents of the server plugin whose outputs this UI draws. */
+  agents?: string[];
+}
+
+/** An agent plugin's output (its namespace of the run state) and the run's artifacts. */
+export interface AgentViewProps {
+  output: Record<string, unknown>;
+  artifacts: Artifacts;
 }
 
 /** What a plugin reads to name the machine identifiers of a run in plain words. */
@@ -37,7 +46,7 @@ export interface GlossContext {
   artifacts: Artifacts;
 }
 
-export interface UiPlugin extends UiPluginMeta {
+export interface UiPlugin extends Omit<UiPluginMeta, 'agents'> {
   /** View components by ResultView.component id. */
   views: Record<string, ComponentType<PositionViewProps>>;
   /** Notes the portfolio tab and the report show beside the numbers (a calibration in force). */
@@ -50,4 +59,6 @@ export interface UiPlugin extends UiPluginMeta {
   glosses?: (context: GlossContext) => Iterable<[string, string]>;
   /** Terms of the plugin's screens, explained in one sentence each (<Term name="…">). */
   glossary?: Record<string, string>;
+  /** Views of the plugin's agents' outputs by agent id; without one the output is drawn as is. */
+  agents?: Record<string, ComponentType<AgentViewProps>>;
 }

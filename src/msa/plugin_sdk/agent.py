@@ -15,7 +15,7 @@ input and output adapters. Cycles are allowed inside a subgraph, bounded by
 
 from collections.abc import Callable
 from dataclasses import dataclass, field
-from typing import Any
+from typing import Any, Protocol
 
 from pydantic import BaseModel
 
@@ -23,15 +23,45 @@ from pydantic import BaseModel
 EXTENSION_PREFIX = "ext:"
 
 
+class AgentTools(Protocol):
+    """The MCP tools an agent declared in ``AgentPlugin.tools``, through the run's gateway.
+
+    A tool is named ``<server>.<tool>``. Calling a tool the agent did not declare is refused
+    (``PermissionError``). Every call is audited under the agent's node of the run.
+    """
+
+    def call(self, tool: str, /, **arguments) -> Any:
+        """A call the agent's code makes itself (initiator ``workflow``)."""
+        ...
+
+    def call_as(
+        self, tool: str, arguments: dict, *, initiator: str = "llm", call_id: str | None = None
+    ) -> Any:
+        """A call an LLM chose; ``tool`` may also be the function name of ``functions()``."""
+        ...
+
+    def functions(self) -> list[dict]:
+        """The declared tools as OpenAI function definitions, for ``complete_with_tools``."""
+        ...
+
+
 @dataclass(frozen=True)
 class AgentContext:
-    """What an agent is built with: its declaration, the run's services, the registry."""
+    """What an agent is built with: its declaration, the run's services, the registry, the
+    run's LLM client and its declared tools.
+
+    ``llm`` is ``None`` when the deployment runs without a model (``mock``): an agent that
+    needs one says so in its output or fails with that reason. ``tools`` is an
+    ``AgentTools`` limited to ``AgentPlugin.tools``; outside a run with MCP servers (a unit
+    test of the graph) a call fails with its reason, and a plugin agent's failure is
+    recorded in its own namespace.
+    """
 
     agent: "AgentPlugin"
     services: Any = None
     registry: Any = None
     llm: Any = None
-    tools: Any = None
+    tools: AgentTools | None = None
 
 
 @dataclass(frozen=True)
@@ -47,7 +77,8 @@ class AgentPlugin:
     consumes: tuple[str, ...] = ()
     #: Keys the agent writes, inside its own namespace.
     produces: tuple[str, ...] = ()
-    #: MCP tools the agent may call, ``server.tool``.
+    #: MCP tools the agent may call, ``server.tool``; the compiler checks each exists and
+    #: ``AgentContext.tools`` refuses any other.
     tools: tuple[str, ...] = ()
     input_schema: type[BaseModel] | None = None
     output_schema: type[BaseModel] | None = None

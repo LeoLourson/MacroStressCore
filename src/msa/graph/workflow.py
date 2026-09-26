@@ -26,8 +26,11 @@ def build_graph(
     options=None,
     enabled=(),
     workflow_id=WORKFLOW_ID,
+    llm=None,
+    gateway=None,
 ):
-    """``enabled`` names agent plugins that are off by default but join this run."""
+    """``enabled`` names agent plugins that are off by default but join this run; ``llm``
+    and ``gateway`` are what agent plugins call (their declared tools only)."""
     from msa.platform.registry import registry as current
 
     if checkpointer is None:
@@ -45,7 +48,13 @@ def build_graph(
     )
     spec = registry.workflows[workflow_id]
     return compile_workflow(
-        spec, registry, checkpointer=checkpointer, runtime=context, enabled=enabled
+        spec,
+        registry,
+        checkpointer=checkpointer,
+        runtime=context,
+        enabled=enabled,
+        llm=llm,
+        gateway=gateway,
     )
 
 
@@ -57,7 +66,9 @@ class ExplainContext:
     repository: object
 
 
-def build_explanation_graph(*, explainer, repository, registry=None, enabled=()):
+def build_explanation_graph(
+    *, explainer, repository, registry=None, enabled=(), llm=None, gateway=None
+):
     """The explanation workflow over one run's journal.
 
     It has no human stop, so its checkpoints live in memory for one question; the answer,
@@ -72,4 +83,6 @@ def build_explanation_graph(*, explainer, repository, registry=None, enabled=())
         checkpointer=InMemorySaver(),
         runtime=ExplainContext(explainer, repository),
         enabled=enabled,
+        llm=llm,
+        gateway=gateway,
     )

@@ -10,6 +10,7 @@ from collections.abc import Callable
 from dataclasses import dataclass, field
 from typing import Any
 
+from .mcp import McpServerSpec
 from .model import CalculationModel
 from .specs import (
     ActionSpec,
@@ -79,6 +80,12 @@ class Plugin:
     notes: Callable | None = None
     agents: tuple[Any, ...] = ()
     workflows: tuple[Any, ...] = ()
+    #: Read-only MCP servers whose tools the plugin's agents call (``msa.plugin_sdk.mcp``).
+    mcp_servers: tuple[McpServerSpec, ...] = ()
+    #: Prompt name -> its version in force, e.g. ``{"brief": "v1"}``: the text is
+    #: ``prompts/<name>-<version>.txt`` in the plugin's package, read with
+    #: ``msa.prompts.registry.get("<plugin_id>.<name>")``.
+    prompts: dict[str, str] = field(default_factory=dict)
     #: Options a run of each namespace passes to the plugin's models.
     run_options: Callable[[str], dict] | None = None
     demo: Callable[[], list[DemoCase]] | None = None

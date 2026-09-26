@@ -10,14 +10,17 @@ aggregator, the report, the API and the screens find what they need here.
 """
 
 import importlib
+import inspect
 import pkgutil
-from collections.abc import Iterable, Iterator
+import sys
+from collections.abc import Callable, Iterable, Iterator
 from contextlib import contextmanager
 from dataclasses import dataclass, field
 from threading import RLock
 
 from msa.contracts.domain import PositionContext
 from msa.contracts.units import is_unit
+from msa.plugin_sdk.mcp import McpServerSpec
 from msa.plugin_sdk.model import CalculationModel
 from msa.plugin_sdk.plugin import PLUGIN_ID, Plugin
 from msa.plugin_sdk.specs import (
@@ -37,6 +40,7 @@ from msa.plugin_sdk.version import SDK_VERSION, compatible, parse
 PACKAGE = "msa.plugins"
 #: The platform's own workflows and core agents: declared like a plugin, part of the core.
 BUILT_IN = "msa.workflows"
+CORE = "core"
 
 
 class PluginError(RuntimeError):
@@ -71,6 +75,9 @@ class Registry:
     observations: dict[str, object] = field(default_factory=dict)
     agents: dict[str, object] = field(default_factory=dict)
     workflows: dict[str, object] = field(default_factory=dict)
+    mcp_servers: dict[str, McpServerSpec] = field(default_factory=dict)
+    #: Server name -> its tools by name, as ``register`` defines them.
+    mcp_tools: dict[str, dict[str, Callable]] = field(default_factory=dict)
     #: Which plugin declared each identifier, for messages and the catalog.
     owner: dict[str, str] = field(default_factory=dict)
 
@@ -216,6 +223,19 @@ def build(plugins: Iterable[Plugin]) -> Registry:
             claim(
                 "workflow", workflow.workflow_id, plugin, registry.workflows, workflow, spaced=False
             )
+        for spec in plugin.mcp_servers:
+            # The platform's own servers keep their short names: mcp-models, mcp-runs, ...
+            spaced = plugin.plugin_id != CORE
+            claim("mcp server", spec.name, plugin, registry.mcp_servers, spec, spaced=spaced)
+            tools, found = mcp_tools(spec)
+            registry.mcp_tools[spec.name] = tools
+            problems.extend(f"{plugin.plugin_id}: {problem}" for problem in found)
+        for name, version in plugin.prompts.items():
+            if prompt_file(plugin, name, version) is None:
+                problems.append(
+                    f"{plugin.plugin_id}: prompt {name!r} {version} has no file "
+                    f"prompts/{name}-{version}.txt in the plugin's package"
+                )
 
     # Words of evidence sources and authors are shared: a disagreement is a problem.
     for kind, attribute in (("source", "sources"), ("author", "authors")):
@@ -277,6 +297,47 @@ def build(plugins: Iterable[Plugin]) -> Registry:
     if problems:
         raise PluginError(problems)
     return registry
+
+
+def mcp_tools(spec: McpServerSpec) -> tuple[dict[str, Callable], list[str]]:
+    """The server's tools as ``register`` defines them, and what is wrong with them.
+
+    ``register`` runs with a recording decorator and no services: it only defines functions.
+    Each tool must take ``audit`` (the gateway's call context) for the audit to record it.
+    """
+    tools: dict[str, Callable] = {}
+
+    def record(fn):
+        tools[fn.__name__] = fn
+        return fn
+
+    try:
+        spec.register(record, None)
+    except Exception as exc:  # noqa: BLE001 - a broken server must name itself
+        return {}, [f"mcp server {spec.name!r} cannot list its tools: {type(exc).__name__}: {exc}"]
+    problems = [
+        f"mcp server {spec.name!r}: tool {name} has no `audit` parameter"
+        for name, fn in tools.items()
+        if "audit" not in inspect.signature(fn).parameters
+    ]
+    if not tools:
+        problems.append(f"mcp server {spec.name!r} defines no tools")
+    return tools, problems
+
+
+def prompt_file(plugin: Plugin, name: str, version: str):
+    """The text of a plugin's prompt, ``prompts/<name>-<version>.txt`` of its package."""
+    from importlib.resources import files
+
+    module = next(
+        (m for m in list(sys.modules.values()) if getattr(m, "plugin", None) is plugin), None
+    )
+    package = getattr(module, "__name__", f"{PACKAGE}.{plugin.plugin_id}")
+    try:
+        path = files(package).joinpath("prompts", f"{name}-{version}.txt")
+    except ModuleNotFoundError:
+        return None
+    return path if path.is_file() else None
 
 
 def discover(package: str = PACKAGE) -> list[Plugin]:

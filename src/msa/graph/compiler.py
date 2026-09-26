@@ -4,16 +4,19 @@ The compiler places the agents of each extension point after its pass-through no
 layered by their ``before``/``after`` relations: agents of one layer run in parallel and
 the next layer waits for all of them. Before anything runs it checks the declarations:
 unknown agents and points, missing and cyclic dependencies, reads of keys nobody
-provides, writes into core state or into another agent's namespace, and SDK and version
-ranges (through the registry).
+provides, writes into core state or into another agent's namespace, MCP tools no server
+defines, and SDK and version ranges (through the registry). Every agent is built with the
+run's LLM client and a gateway limited to the tools it declared.
 """
 
 import concurrent.futures
+import contextvars
 from collections.abc import Iterable
 
 from langgraph.graph import END, START, StateGraph
 
 from msa.agents.base import AgentFailure
+from msa.mcp.tools import DeclaredTools
 from msa.plugin_sdk.agent import EXTENSION_PREFIX, AgentContext, AgentPlugin, WorkflowSpec
 
 from .runtime import journaled
@@ -66,6 +69,18 @@ def layers(agents: list[AgentPlugin]) -> list[list[AgentPlugin]]:
     return result
 
 
+def tool_problems(agent: AgentPlugin, registry) -> list[str]:
+    """Declared tools ``server.tool`` that no registered MCP server defines."""
+    problems = []
+    for tool in agent.tools:
+        server, _, name = tool.rpartition(".")
+        if server not in registry.mcp_servers:
+            problems.append(f"{agent.agent_id} declares tool {tool!r} of unknown server {server!r}")
+        elif name not in registry.mcp_tools.get(server, {}):
+            problems.append(f"{agent.agent_id} declares tool {tool!r}, which {server} lacks")
+    return problems
+
+
 def check(spec: WorkflowSpec, registry, enabled: Iterable[str] = ()) -> list[str]:
     problems = []
     node_ids = [node.node_id for node in spec.nodes]
@@ -80,6 +95,8 @@ def check(spec: WorkflowSpec, registry, enabled: Iterable[str] = ()) -> list[str
             problems.append(f"node {node.node_id} runs unknown agent {node.agent!r}")
         elif node.agent is not None and not registry.agents[node.agent].core:
             problems.append(f"node {node.node_id} runs a plugin agent as a core node")
+        elif node.agent is not None:
+            problems.extend(tool_problems(registry.agents[node.agent], registry))
     known = {"__start__", "__end__", *node_ids}
     for source, target in spec.edges:
         if source not in known or target not in known:
@@ -127,6 +144,7 @@ def check(spec: WorkflowSpec, registry, enabled: Iterable[str] = ()) -> list[str
                             f"{agent.agent_id} writes core state key {key!r}; plugin agents "
                             "write only to their own namespace"
                         )
+                problems.extend(tool_problems(agent, registry))
                 if not 1 <= agent.retries <= 3:
                     problems.append(f"{agent.agent_id}: retries must be between 1 and 3")
                 if agent.max_iterations < 1 or agent.timeout_s <= 0:
@@ -173,7 +191,9 @@ def plugin_node(agent: AgentPlugin, built):
         errors = []
         for _ in range(agent.retries):
             with concurrent.futures.ThreadPoolExecutor(max_workers=1) as pool:
-                future = pool.submit(call, view)
+                # The node's run, node and attempt follow the agent into the worker thread,
+                # so its LLM and tool calls are audited under it.
+                future = pool.submit(contextvars.copy_context().run, call, view)
                 try:
                     return {"extensions": {agent.agent_id: future.result(agent.timeout_s)}}
                 except concurrent.futures.TimeoutError:
@@ -197,17 +217,31 @@ def compile_workflow(
     enabled: Iterable[str] = (),
     services=None,
     interrupt_before=None,
+    llm=None,
+    gateway=None,
 ):
+    """``llm`` and ``gateway`` (the run's ``ToolGateway``) reach every agent through its
+    ``AgentContext``; the gateway only as the tools the agent declared."""
     problems = check(spec, registry, enabled)
     if problems:
         raise WorkflowError(problems)
+
+    def context(agent, services):
+        return AgentContext(
+            agent=agent,
+            services=services,
+            registry=registry,
+            llm=llm,
+            tools=DeclaredTools(gateway, agent.agent_id, agent.tools),
+        )
+
     builder = StateGraph(spec.state_schema, input_schema=spec.input_schema)
     for node in spec.nodes:
         if node.agent is None:
             builder.add_node(node.node_id, _pass)
             continue
         agent = registry.agents[node.agent]
-        fn = agent.build(AgentContext(agent=agent, services=runtime, registry=registry))
+        fn = agent.build(context(agent, runtime))
         consumes = agent.consumes
 
         def inputs(state, consumes=consumes):
@@ -232,9 +266,7 @@ def compile_workflow(
         ordered = layers(agents)
         for layer in ordered:
             for agent in layer:
-                built = agent.build(
-                    AgentContext(agent=agent, services=services or runtime, registry=registry)
-                )
+                built = agent.build(context(agent, services or runtime))
                 builder.add_node(
                     agent.agent_id,
                     journaled(

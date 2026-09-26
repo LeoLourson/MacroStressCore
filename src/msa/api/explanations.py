@@ -45,6 +45,8 @@ class ExplanationService:
             graph = build_explanation_graph(
                 explainer=self.agents.explainer(scope),
                 repository=DurableRunRepository(self.db, scope),
+                llm=self.agents.llm_client(scope),
+                gateway=self.agents.tools(scope),
             )
             state = graph.invoke(
                 {

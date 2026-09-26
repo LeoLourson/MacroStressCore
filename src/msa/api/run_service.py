@@ -83,6 +83,8 @@ class RunService:
             options=self.agents.options(scope),
             enabled=payload.get("agents") or (),
             workflow_id=payload.get("workflow_id", "stress_test"),
+            llm=self.agents.llm_client(scope),
+            gateway=self.agents.tools(scope),
         )
 
     def prepare(self, scope, request, principal, *, run_id=None):

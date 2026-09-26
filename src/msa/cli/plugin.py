@@ -15,8 +15,8 @@ it on the next start. ``check`` runs the conformance check (``msa.plugin_sdk.tes
 compiles every workflow with the plugin's agents enabled; it exits with 1 on any finding.
 ``demo-run`` calculates the plugin's demo cases and prints P5/P50/P95 per position and slice.
 ``ui-manifest`` writes what the web UI's build checks its UI plugins against
-(``ui/web/src/plugins/manifest.json``): the installed plugins, their versions and the view
-components they declare.
+(``ui/web/src/plugins/manifest.json``): the installed plugins, their versions, the view
+components they declare and their agents.
 """
 
 import argparse
@@ -245,6 +245,12 @@ def ui_manifest() -> dict:
             view.component: reg.owner["view:" + view.view_id]
             for view in sorted(reg.views.values(), key=lambda v: v.view_id)
             if view.component
+        },
+        # Agent plugins whose outputs a UI plugin may draw (UiPlugin.agents).
+        "agents": {
+            agent_id: reg.owner["agent:" + agent_id]
+            for agent_id, agent in sorted(reg.agents.items())
+            if not agent.core
         },
     }
 

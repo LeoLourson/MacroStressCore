@@ -3,10 +3,11 @@
 ``core`` is built in: the registry loads it before it looks at ``msa.plugins``, so every
 package under ``msa.plugins`` is an extension. Its workflows (``stress_test``,
 ``explain_results``) and their core agents belong to the platform; plugins join them at
-their extension points.
+their extension points. Its MCP servers are declared the way a plugin declares its own.
 """
 
-from msa.plugin_sdk import Plugin
+from msa.mcp import models, portfolio, runs
+from msa.plugin_sdk import McpServerSpec, Plugin
 
 from .explain import AGENT as EXPLAIN_AGENT
 from .explain import EXPLAIN
@@ -20,4 +21,24 @@ plugin = Plugin(
     description="Стресс-тест портфеля по тексту события и объяснение результатов прогона.",
     agents=(*CORE_AGENTS, EXPLAIN_AGENT),
     workflows=(STRESS_TEST, EXPLAIN),
+    mcp_servers=(
+        McpServerSpec(
+            "portfolio",
+            portfolio.register,
+            label="Данные портфеля",
+            description="Состав портфеля и данные позиции из снимка на дату оценки.",
+        ),
+        McpServerSpec(
+            "models",
+            models.register,
+            label="Расчётные модели",
+            description="Расчёт позиции зарегистрированной моделью и каталог моделей.",
+        ),
+        McpServerSpec(
+            "runs",
+            runs.register,
+            label="Результаты прогона",
+            description="Чтение результатов рассчитанного прогона для объяснения.",
+        ),
+    ),
 )

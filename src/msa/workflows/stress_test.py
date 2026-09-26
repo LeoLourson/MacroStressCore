@@ -113,13 +113,14 @@ def after_approval(state):
     return {"approved": "publish", "returned": "before_scenario_approval"}.get(state["status"], END)
 
 
-def _core(agent_id, label, module, *, consumes=(), version="2.0.0"):
+def _core(agent_id, label, module, *, consumes=(), tools=(), version="2.0.0"):
     return AgentPlugin(
         agent_id=f"core.{agent_id}",
         version=version,
         label=label,
         build=lambda ctx, module=module: partial(module.run, context=ctx.services),
         consumes=consumes,
+        tools=tools,
         core=True,
     )
 
@@ -139,6 +140,7 @@ CORE_AGENTS = (
         "Отбор позиций и данные",
         exposure,
         consumes=("graph", "macro_parameters", "portfolio_positions", "as_of", "snapshot_id"),
+        tools=("portfolio.resolve_inputs",),
     ),
     _core(
         "draw_macro",
@@ -151,6 +153,7 @@ CORE_AGENTS = (
         "Расчёт позиции",
         quant_asset,
         consumes=("scenario_set", "branch_position_id", "prepared", "diagnostics"),
+        tools=("models.run_model",),
     ),
     _core(
         "aggregate",

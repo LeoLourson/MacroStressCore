@@ -11,7 +11,7 @@ import { capitalize, describePath, formatter, number, pathValue, percent, positi
 import { ACTIONS, RESULT_STATUS, RULES, flagList, label, translateFlags } from '../../lib/labels';
 import type { Entries } from '../../lib/provenance';
 import { hasReport } from '../../lib/stages';
-import { pluginNotes } from '../../plugins';
+import { agentComponent, pluginNotes } from '../../plugins';
 import type { RunTabProps } from './RunPage';
 import { useOrigins } from './useOrigins';
 
@@ -215,7 +215,31 @@ function Recommendations({ report, artifacts }: { report: Report; artifacts: Art
   );
 }
 
-/** What agent plugins added to the run, each in its own namespace; never part of the numbers. */
+/** An agent's output drawn as is: lists of lines as lists, anything else as JSON. */
+function PlainOutput({ output }: { output: Record<string, unknown> }) {
+  return (
+    <>
+      {Object.entries(output).map(([key, value]) =>
+        Array.isArray(value) && value.every((v) => typeof v === 'string') ? (
+          <List key={key} size="sm" spacing={2}>
+            {(value as string[]).map((line) => (
+              <List.Item key={line}>{line}</List.Item>
+            ))}
+          </List>
+        ) : (
+          <Code key={key} block fz="xs">
+            {key}: {JSON.stringify(value, null, 1)}
+          </Code>
+        ),
+      )}
+    </>
+  );
+}
+
+/**
+ * What agent plugins added to the run, each in its own namespace; never part of the numbers.
+ * A UI plugin may draw its agents' outputs (UiPlugin.agents); a failed agent is shown as such.
+ */
 export function Extensions({ artifacts }: { artifacts: Artifacts }) {
   const items = Object.entries(artifacts.extensions ?? {});
   if (!items.length) return null;
@@ -226,7 +250,9 @@ export function Extensions({ artifacts }: { artifacts: Artifacts }) {
       <Text size="sm" c="dimmed" maw="80ch">
         Агенты плагинов пишут только в своё пространство: их выводы не меняют сценарий, расчёты и отчёт.
       </Text>
-      {items.map(([agentId, output]) => (
+      {items.map(([agentId, output]) => {
+        const View = output.failed === true ? null : agentComponent(agentId);
+        return (
         <Paper key={agentId} p="md">
           <Stack gap={4}>
             <Group gap="xs">
@@ -238,22 +264,11 @@ export function Extensions({ artifacts }: { artifacts: Artifacts }) {
                 </Group>
               )}
             </Group>
-            {Object.entries(output).map(([key, value]) =>
-              Array.isArray(value) && value.every((v) => typeof v === 'string') ? (
-                <List key={key} size="sm" spacing={2}>
-                  {(value as string[]).map((line) => (
-                    <List.Item key={line}>{line}</List.Item>
-                  ))}
-                </List>
-              ) : (
-                <Code key={key} block fz="xs">
-                  {key}: {JSON.stringify(value, null, 1)}
-                </Code>
-              ),
-            )}
+            {View ? <View output={output} artifacts={artifacts} /> : <PlainOutput output={output} />}
           </Stack>
         </Paper>
-      ))}
+        );
+      })}
     </Stack>
   );
 }

@@ -1,3 +1,10 @@
+"""Versioned prompts: the platform's own in ``templates/``, a plugin's in its package.
+
+A plugin's prompt is named ``<plugin_id>.<name>``: its version in force is declared in
+``Plugin.prompts`` and its text is ``prompts/<name>-<version>.txt`` of the plugin's package
+(the registry refuses a declared prompt without its file).
+"""
+
 import json
 from importlib.resources import files
 
@@ -5,12 +12,37 @@ _CURRENT = {"causal": "v3", "advisory": "v2", "explain": "v2"}
 _KNOWN = {"causal": {"v1", "v2", "v3"}, "advisory": {"v1", "v2"}, "explain": {"v1", "v2"}}
 
 
+def _plugin_prompt(name: str):
+    """``(plugin, short name)`` of a plugin's prompt, or ``None`` for a platform prompt."""
+    plugin_id, dot, short = name.partition(".")
+    if not dot:
+        return None
+    from msa.platform.registry import registry
+
+    plugin = registry().plugins.get(plugin_id)
+    if plugin is None or short not in plugin.prompts:
+        raise KeyError(name)
+    return plugin, short
+
+
 def current_version(name: str) -> str:
+    found = _plugin_prompt(name)
+    if found is not None:
+        plugin, short = found
+        return plugin.prompts[short]
     return _CURRENT[name]
 
 
 def get(name: str, version: str | None = None) -> str:
     version = version or current_version(name)
+    found = _plugin_prompt(name)
+    if found is not None:
+        from msa.platform.registry import prompt_file
+
+        path = prompt_file(*found, version)
+        if path is None:
+            raise KeyError((name, version))
+        return path.read_text(encoding="utf-8")
     if name not in _CURRENT or version not in _KNOWN[name]:
         raise KeyError((name, version))
     return (
