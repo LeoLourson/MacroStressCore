@@ -243,7 +243,11 @@ function PlainOutput({ output }: { output: Record<string, unknown> }) {
 export function Extensions({ artifacts }: { artifacts: Artifacts }) {
   const items = Object.entries(artifacts.extensions ?? {});
   if (!items.length) return null;
-  const labels = Object.fromEntries((artifacts.workflow?.agents ?? []).map((a) => [a.agent_id, a.label]));
+  // The run's workflow names its plugin agents in its stages; the catalog adds the rest.
+  const labels: Record<string, string> = Object.fromEntries([
+    ...(artifacts.workflow?.stages ?? []).flatMap((stage) => stage.nodes.map((n) => [n.node, n.label])),
+    ...(artifacts.workflow?.agents ?? []).map((a) => [a.agent_id, a.label]),
+  ]);
   return (
     <Stack gap="xs">
       <Title order={4}>Дополнительные агенты</Title>
