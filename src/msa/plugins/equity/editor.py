@@ -10,7 +10,7 @@ from msa.plugin_sdk import EditorField, EditorGroup
 from msa.plugins.market.fx import pair
 from msa.plugins.market.kinds import FX_RATE, PRICE
 
-from .schemas import DIVIDEND, SCHEMA_VERSION, SENSITIVITY
+from .schemas import DIVIDEND, MAX_RESIDUAL_VOLATILITY, SCHEMA_VERSION, SENSITIVITY
 from .sectors import OKVED_SECTORS, SECTORS, sector_for_okved
 
 EDITOR = (
@@ -130,6 +130,8 @@ EDITOR = (
                 f"snapshot:{SENSITIVITY}",
                 unit="fraction",
                 required=True,
+                minimum=0.0,
+                maximum=MAX_RESIDUAL_VOLATILITY,
                 hint="Годовая волатильность, не объяснённая рынком и отраслью, в процентах. "
                 "Для 20% введите 20. Значение 0 явно исключает остаточный риск.",
             ),
@@ -156,7 +158,7 @@ EDITOR = (
 
 def from_draft(row: dict, ctx) -> dict:
     position_id = row["position_id"]
-    instrument_id = f"{ctx.portfolio_id}:{position_id}"
+    instrument_id = ctx.instrument_id(position_id)
     currency = row.get("currency", "RUB")
     values = dict(row.get("values") or {})
     if not values.get("sector"):

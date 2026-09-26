@@ -1,15 +1,16 @@
 """The monthly signal a scenario parameter sends through the economic graph to one asset.
 
 A ``graph``-scope factor enters at a channel node and reaches the asset through the sector
-its activity falls under (deepest OKVED match); the temporal graph spreads the shock over
-the months by the edges' lags (spec 3). The calculation and the scenario preview use this
-one method, so the analyst sees the shock the assets will receive.
+its activity falls under (deepest match on its OKVED branch); the temporal graph spreads the
+shock over the months by the edges' lags (spec 3). A factor node shared by several sectors
+carries to the asset only the shock of its own sector. The calculation and the scenario
+preview use this one method, so the analyst sees the shock the assets will receive.
 """
 
 import numpy as np
 
 from .graph_adapter import coordinate, temporal_graph
-from .okved import okved_depth
+from .okved import okved_covers
 from .transmission import direct_input, relative_change
 
 
@@ -20,11 +21,11 @@ def factor_signal(graph, parameter, factor, okved, value, horizon, *, flags) -> 
     The signal is a log factor for proportional factors and days or rate points for
     additive ones.
     """
-    temporal = temporal_graph(graph, factor, horizon)
     source = parameter.channel
-    target = target_node(graph, factor.factor_id, okved, source)
-    if target is None or source not in {node.id for node in temporal.nodes}:
+    target, depth = target_node(graph, factor.factor_id, okved, source)
+    if target is None or source not in {node.id for node in graph.nodes}:
         return None
+    temporal = temporal_graph(own_sectors(graph, target, okved, depth), factor, horizon)
     raw = np.asarray(value, dtype=float)
     natural = np.broadcast_to(raw[..., None], raw.shape + (horizon,))
     source_node = next(node for node in temporal.nodes if node.id == source)
@@ -45,7 +46,7 @@ def target_node(graph, factor_id, okved, source):
 
     Sectors match the asset by the OKVED hierarchy, as the exposure selects assets; the
     deepest match wins. A factor node of another sector never carries its shock to this
-    asset.
+    asset. Returns the node and the depth of the match (``0`` for a sectorless node).
     """
     nodes = {node.id: node for node in graph.nodes}
     best, best_depth, sectorless = None, 0, []
@@ -62,13 +63,33 @@ def target_node(graph, factor_id, okved, source):
         if not sectors:
             sectorless.append(node.id)
             continue
-        depth = max(okved_depth(okved, sector) for sector in sectors)
+        depth = max(okved_covers(sector, okved) for sector in sectors)
         if depth > best_depth:
             best, best_depth = node.id, depth
     if best is not None:
-        return best
+        return best, best_depth
     # A graph with a single factor node need not include a sector node.
-    return sectorless[0] if len(sectorless) == 1 else None
+    return (sectorless[0] if len(sectorless) == 1 else None), 0
+
+
+def own_sectors(graph, target, okved, depth):
+    """The graph without the edges into ``target`` from sectors other than the asset's own.
+
+    A factor node shared by several sectors sums their shocks; the asset takes only those of
+    the sectors that cover it at the matched ``depth``. Several sectors of its own industry
+    (different channels) still add up.
+    """
+    okveds = {node.id: node.okved for node in graph.nodes if node.okved}
+    edges = [
+        edge
+        for edge in graph.edges
+        if not (
+            edge.dst == target
+            and edge.src in okveds
+            and okved_covers(okveds[edge.src], okved) < depth
+        )
+    ]
+    return graph.model_copy(update={"edges": edges})
 
 
 def reachable(graph, source, target) -> bool:

@@ -48,6 +48,7 @@ FLAGS = {
     "pd_clipped_for_numerical_stability": "PD ограничена для устойчивости расчёта",
     "shapley_not_efficient": "сумма вкладов каналов не равна итогу",
     "simplified_tax": "налог рассчитан упрощённо",
+    "fx_without_import_share": "валютный шок не затрагивает затраты: доля импорта не задана",
     "volume_floor_binding": "объём упёрся в нижнюю границу",
     "calibration_synthetic": "PD по синтетической демо-калибровке, не эмпирической",
     "market_inputs_from_profile": "рыночные входы облигации взяты из условий выпуска",
@@ -69,6 +70,9 @@ FLAGS = {
     "covenant_metric_unavailable:": "показатель ковенанта модель не рассчитывает",
     "covenant_metric_undefined:": "показатель ковенанта не определён в стрессовом сценарии",
     "reverse_stress_undefined:": "обратный стресс-тест не выполнен: показатель теряет смысл",
+    "reverse_stress_direction_undefined": (
+        "обратный стресс-тест не выполнен: центральный сценарий не сдвигает факторы"
+    ),
     "out_of_domain:": "значения вне области применимости модели",
     "profile_needs_review:": "профиль позиции требует проверки",
     "V2:": "вход модели вне объявленных единиц или границ",
@@ -86,6 +90,8 @@ INFORMATIONAL = frozenset(
         "missing_pre_horizon_history",
         "funding_gap",
         "project_funding_gap",
+        "fx_without_import_share",
+        "reverse_stress_direction_undefined",
     }
 )
 

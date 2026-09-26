@@ -225,6 +225,11 @@ class CreditProfile(Contract):
             )
         return value
 
+    @property
+    def exposure(self) -> float:
+        """The amount at risk: EAD times the share of it drawn by default (CCF)."""
+        return float(self.ead) * float(self.ccf)
+
     @model_validator(mode="after")
     def numeric_sources(self):
         for name in ("ead", "lgd", "dq", "ccf", "import_share"):

@@ -33,7 +33,7 @@ class CausalOutput(Contract):
     inferred_okved: list[Identifier]
     graph: TransmissionGraph
     scenario: dict[Identifier, ScenarioParameter] = {}
-    prompt_version: Identifier = "v3"
+    prompt_version: Identifier = "v4"
 
     @property
     def all_okved(self):
@@ -88,6 +88,15 @@ def scenario_violations(scenario, graph, *, required=False) -> list[dict]:
         if parameter.unit != spec.unit:
             problems.append(
                 problem(path, f"Для фактора «{spec.label}» нужна единица «{spec.unit}».")
+            )
+        lowest = parameter.value if parameter.kind == "point" else parameter.low
+        if spec.lower_bound is not None and lowest is not None and lowest <= spec.lower_bound:
+            problems.append(
+                problem(
+                    path,
+                    f"Шок фактора «{spec.label}» выходит из его области: значение должно быть "
+                    f"больше {spec.lower_bound:g}.",
+                )
             )
         if spec.scope != "graph":
             if parameter.key is None:

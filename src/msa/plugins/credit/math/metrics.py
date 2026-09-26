@@ -54,12 +54,17 @@ def trailing_sum(series, prior=None, window: int = 12, flags: list[str] | None =
 
 
 def raw_icr(ltm_ebitda, ltm_cash_interest, flags: list[str] | None = None) -> RawMetric:
-    """``ICR_raw = LTM EBITDA / LTM CashInterest`` where the denominator is positive."""
+    """``ICR_raw = LTM EBITDA / LTM CashInterest`` where the denominator is positive.
+
+    Without interest at positive EBITDA there is nothing to cover: the value is ``+inf``,
+    still undefined as a ratio to report, and the PD feature reads it as the best coverage.
+    """
     ebitda = np.asarray(ltm_ebitda, dtype=float)
     interest = np.asarray(ltm_cash_interest, dtype=float)
     defined = interest > 0
     with np.errstate(divide="ignore", invalid="ignore"):
-        value = np.where(defined, ebitda / np.where(defined, interest, 1.0), np.nan)
+        unlimited = np.where(ebitda > 0, np.inf, np.nan)
+        value = np.where(defined, ebitda / np.where(defined, interest, 1.0), unlimited)
     if flags is not None and not bool(np.all(defined)):
         _add(flags, INTEREST_NONPOSITIVE_FLAG)
     return RawMetric(value=value, defined=defined)

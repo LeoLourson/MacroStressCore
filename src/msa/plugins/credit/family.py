@@ -126,6 +126,8 @@ class Inputs:
         self._fields = {item.name: item for item in fields}
         self._values = {name: float(item.value) for name, item in profile.financials.items()}
         self._flags = flags
+        #: The share of costs bought abroad: the part of them a currency shock moves.
+        self.import_share = float(profile.import_share)
 
     def __contains__(self, name: str) -> bool:
         self._field(name)

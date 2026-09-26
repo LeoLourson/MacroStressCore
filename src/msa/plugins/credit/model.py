@@ -75,8 +75,13 @@ class CreditModel(CalculationModel):
         context = prepared.context
         items: list[Diagnostic] = []
         params = context.position.params
-        ead = (params.get("ead") or {}).get("value") if isinstance(params, dict) else None
-        exposures = {SLICE: float(ead) if ead is not None else None}
+        ead, ccf = (
+            ((params.get(name) or {}).get("value") for name in ("ead", "ccf"))
+            if isinstance(params, dict)
+            else (None, None)
+        )
+        # The amount at risk, as the calculation reads it: EAD times CCF.
+        exposures = {SLICE: float(ead) * float(ccf) if None not in (ead, ccf) else None}
 
         def blocked(code, message, status="invalid"):
             return Diagnostics(
@@ -158,7 +163,7 @@ class CreditModel(CalculationModel):
                 )
             if credit.lgd is not None:
                 metrics["credit.lgd"] = scalar("credit.lgd", "fraction", credit.lgd)
-        metrics["credit.ead"] = scalar("credit.ead", RUB, built.ead)
+        metrics["credit.ead"] = scalar("credit.ead", RUB, built.exposure)
 
         contributions = []
         if risk.aggregation_draws is not None:
@@ -176,7 +181,7 @@ class CreditModel(CalculationModel):
                     unit=RUB,
                     horizon=risk.horizon,
                     scenario_id=context.scenario.scenario_id,
-                    exposure=built.ead,
+                    exposure=built.exposure,
                     exposure_basis="ead",
                     admission=admission,
                     draws=list(risk.aggregation_draws),

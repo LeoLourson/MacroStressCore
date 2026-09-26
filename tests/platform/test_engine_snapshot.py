@@ -221,7 +221,7 @@ def test_peers_ranked_by_deepest_okved_match_first():
     sectors = {"ME": "23.61", "X": "23.60", "Y": "23.61", "Z": "99.99"}
     req = DataRequirement(key="k", kind="rate", peers_of="ME", many=True)
     result = peers(idx, req, sectors.get)
-    # Y matches all 4 digits, X matches 2 (23), Z matches nothing and is excluded.
+    # Y matches all 4 digits, X matches 3 (23.6), Z matches nothing and is excluded.
     assert result == ["Y", "X"]
 
 

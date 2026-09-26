@@ -1,10 +1,10 @@
 """Which positions an approved scenario reaches, whatever their type.
 
 A position is reached through the factors its model is sensitive to. A ``graph``-scope
-factor reaches it when the event's graph passes through a sector its issuer's activity
-falls under (deepest OKVED match, as before the platform). A direct factor reaches it when
-the scenario moves that factor for the position's key: its market index, currency pair or
-sector. A position the scenario does not reach is not calculated and is reported as such.
+factor reaches it when the event's graph passes through a sector on the same OKVED branch
+as its issuer's activity (``okved_covers``). A direct factor reaches it when the scenario
+moves that factor for the position's key: its market index, currency pair or sector. A
+position the scenario does not reach is not calculated and is reported as such.
 """
 
 from msa.contracts.domain import PositionContext
@@ -13,7 +13,7 @@ from msa.contracts.scenario import MacroParameter
 from msa.platform.registry import Registry
 from msa.plugin_sdk.model import DataRequirements
 
-from .okved import okved_depth
+from .okved import okved_covers
 
 
 def reached_sectors(graph: TransmissionGraph, factor_ids=None) -> list[str]:
@@ -47,7 +47,7 @@ def reasons(
     if graph_factors and graph is not None and context.okved:
         depth = max(
             (
-                okved_depth(context.okved, s)
+                okved_covers(s, context.okved)
                 for s in reached_sectors(graph, {item.factor_id for item in graph_factors})
             ),
             default=0,
@@ -93,7 +93,7 @@ def missing_direct_scenario(context, requirements, graph, parameters, registry) 
                 for node in targets
                 if context.okved
                 and any(
-                    okved_depth(context.okved, sector.okved)
+                    okved_covers(sector.okved, context.okved)
                     and graph.simple_paths(graph.event_id, sector.id)
                     and graph.simple_paths(sector.id, node.id)
                     for sector in graph.nodes
@@ -119,7 +119,7 @@ def missing_direct_scenario(context, requirements, graph, parameters, registry) 
         return missing
     if (
         not context.okved
-        or not any(okved_depth(context.okved, code) for code in reached_sectors(graph))
+        or not any(okved_covers(code, context.okved) for code in reached_sectors(graph))
         or reasons(context, requirements, graph, parameters, registry)
     ):
         return []

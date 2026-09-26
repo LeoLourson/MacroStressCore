@@ -8,7 +8,7 @@ plugin; the editor is built from the same declaration.
 """
 
 import re
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import date
 from hashlib import sha256
 
@@ -45,6 +45,8 @@ class DraftContext:
     source_id: str
     portfolio_id: str
     base_currency: str = "RUB"
+    #: Position id -> its instrument; rows naming one security share it (``identity``).
+    instruments: dict[str, str] = field(default_factory=dict)
 
     def evidence(self, position_id, field, value) -> list[dict]:
         return [
@@ -60,6 +62,9 @@ class DraftContext:
 
     def issuer_id(self, position_id) -> str:
         return f"{self.portfolio_id}:{position_id}"
+
+    def instrument_id(self, position_id) -> str:
+        return self.instruments.get(position_id, f"{self.portfolio_id}:{position_id}")
 
 
 def build(draft: PortfolioDraft, *, author, today, registry, portfolio_id):
@@ -77,6 +82,8 @@ def build(draft: PortfolioDraft, *, author, today, registry, portfolio_id):
     )
     snapshot_id = f"{portfolio_id}:inputs"
     parties, instruments, positions, items = [], [], [], {}
+    #: (type, currency, identity) -> the first row of that security and what it states.
+    securities: dict[tuple, tuple[str, tuple]] = {}
     for row in draft.positions:
         try:
             spec = registry.instrument_type(row.instrument_type)
@@ -84,7 +91,33 @@ def build(draft: PortfolioDraft, *, author, today, registry, portfolio_id):
             raise ValueError(f"{row.position_id}: {exc.args[0]}") from None
         if spec.from_draft is None:
             raise ValueError(f"{row.position_id}: {spec.label} cannot be typed in the editor")
+        _within_bounds(row, spec)
+        identity = row.values.get(spec.identity) if spec.identity else None
+        key = (row.instrument_type, row.currency, identity) if identity not in (None, "") else None
+        first = securities[key][0] if key in securities else row.position_id
+        ctx.instruments[row.position_id] = f"{portfolio_id}:{first}"
         parts = spec.from_draft(row.model_dump(mode="json"), ctx)
+        instrument_id = ctx.instrument_id(row.position_id)
+        stated = (row.okved, _plain(parts["terms"]), _plain(parts.get("items", [])))
+        if key in securities:
+            # Another lot of a security already typed: one instrument, one issuer, one set
+            # of quotes, so its terms and data must be those of the first lot.
+            if stated != securities[key][1]:
+                raise ValueError(
+                    f"{row.position_id}: {identity} is typed with other terms or data "
+                    f"than in {first}"
+                )
+            positions.append(
+                Position(
+                    position_id=row.position_id,
+                    instrument_id=instrument_id,
+                    params=parts["params"],
+                    schema_version=parts.get("schema_version", spec.schema_version),
+                )
+            )
+            continue
+        if key is not None:
+            securities[key] = (row.position_id, stated)
         issuer_id = None
         if spec.issuer_required or row.okved:
             if spec.issuer_required and not row.okved:
@@ -99,7 +132,6 @@ def build(draft: PortfolioDraft, *, author, today, registry, portfolio_id):
                     evidence=ctx.evidence(row.position_id, "issuer", row.name),
                 )
             )
-        instrument_id = f"{portfolio_id}:{row.position_id}"
         instruments.append(
             Instrument(
                 instrument_id=instrument_id,
@@ -146,6 +178,35 @@ def build(draft: PortfolioDraft, *, author, today, registry, portfolio_id):
         metadata={"author": author},
     )
     return bundle, snapshot
+
+
+def _within_bounds(row: DraftPosition, spec) -> None:
+    """The editor's bounds hold on the server too: a request need not come from the form."""
+    for group in spec.editor:
+        for item in group.fields:
+            if item.columns:
+                cells = [
+                    (f"{item.name}.{column.name}", line.get(column.name), column)
+                    for line in row.tables.get(item.name, [])
+                    for column in item.columns
+                ]
+            else:
+                cells = [(item.name, row.values.get(item.name), item)]
+            for name, value, declared in cells:
+                if isinstance(value, bool) or not isinstance(value, int | float):
+                    continue
+                low, high = declared.minimum, declared.maximum
+                if (low is not None and value < low) or (high is not None and value > high):
+                    raise ValueError(f"{row.position_id}: {name} must lie within [{low}, {high}]")
+
+
+def _plain(value):
+    """What a row states, without the sources that name the row that typed it."""
+    if isinstance(value, dict):
+        return {k: _plain(v) for k, v in value.items() if k != "evidence"}
+    if isinstance(value, list):
+        return [_plain(v) for v in value]
+    return value
 
 
 def _consistent(items) -> None:

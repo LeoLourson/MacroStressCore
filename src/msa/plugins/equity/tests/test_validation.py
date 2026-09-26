@@ -120,6 +120,21 @@ def test_dividend_horizon_mismatch_is_an_error():
     assert "dividend_horizon_mismatch" in codes
 
 
+# -- validate(): residual_volatility_invalid -------------------------------------------------
+
+
+def test_residual_volatility_above_the_declared_maximum_is_an_error():
+    raw = CASE.snapshot.model_dump(mode="json")
+    for item in raw["items"]:
+        if item["item_id"] == "sensitivity:SHARE-OIL:2026-09-11":
+            item["values"]["residual_volatility"]["value"] = 3.0
+    snapshot = DataSnapshot.model_validate(raw)
+    prepared, diagnostics = prepared_and_diagnostics("SHARE-OIL", snapshot)
+    codes = [d.code for d in diagnostics.items]
+    assert "residual_volatility_invalid" in codes
+    assert diagnostics.blocking
+
+
 # -- validate(): price_stale is a warning, not blocking --------------------------------------
 
 

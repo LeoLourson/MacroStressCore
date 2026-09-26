@@ -68,6 +68,7 @@ LGD_NOT_APPLICABLE_FLAG = "lgd_not_applicable"
 COVENANT_OUTSIDE_PREFIX = "covenant_outside_horizon:"
 COVENANT_UNDEFINED_PREFIX = "covenant_metric_undefined:"
 REVERSE_UNDEFINED_PREFIX = "reverse_stress_undefined:"
+REVERSE_DIRECTION_UNDEFINED_FLAG = "reverse_stress_direction_undefined"
 
 #: Gaps of any model that send a result to review (spec 19); models add their own.
 GENERIC_REVIEW_FLAGS = frozenset({"numerical_tolerance_not_met", SYNTHETIC_CALIBRATION_FLAG})
@@ -192,7 +193,7 @@ class _Asset:
         return expected_loss(
             marginal,
             np.full(pd_path.shape, float(profile.lgd)),
-            np.full(pd_path.shape, float(profile.ead)),
+            np.full(pd_path.shape, profile.exposure),
             self.calendar.discount_factors(0.0),
         )
 
@@ -260,7 +261,7 @@ def run_asset(
         pd=float(stress.credit_score.pd[..., -1]) if calibrated else None,
         lgd=float(profile.lgd) if model.lgd_applicable else None,
         lgd_applicable=model.lgd_applicable,
-        ead=float(profile.ead),
+        ead=profile.exposure,
         expected_loss=None if stress_el is None else float(np.asarray(stress_el)),
         delta_expected_loss=None if stress_el is None else central_target,
     )
@@ -454,6 +455,11 @@ def _covenants(asset: _Asset, scenario_set, stress, random, flags):
             lambda_max=_lambda_max(scenario_set),
             plausibility="Confirmed management scenario scaled proportionally.",
         )
+        if not direction.norm() > 0:
+            # A scenario centred on zero (a symmetric range, a zero shock) has no direction
+            # to scale along; the covenant itself is tested as usual.
+            _add(flags, REVERSE_DIRECTION_UNDEFINED_FLAG)
+            continue
 
         def metric_at(
             lam,

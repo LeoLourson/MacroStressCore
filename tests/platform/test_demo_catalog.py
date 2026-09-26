@@ -13,11 +13,15 @@ from demo.catalog import (
     snapshot,
     snapshot_data,
 )
+from demo.pilot import EVENT_ID as PILOT_EVENT_ID
+from demo.pilot import seed_pilot
 from demo.seed_demo import seed_demo
 from msa.cli.plugin import load
+from msa.contracts.domain import Portfolio, PortfolioBundle
 from msa.db.migrate import migrate
-from msa.db.session import engine
-from msa.platform.registry import Registry, installed
+from msa.db.repositories.demo import DemoRepository
+from msa.db.session import engine, session_scope
+from msa.platform.registry import Registry, installed, registry
 from msa.plugin_sdk.plugin import Plugin
 
 PLUGIN_INIT = """\
@@ -277,3 +281,32 @@ def test_seed_demo_counts_positions_and_snapshot_items(tmp_path):
         bind.dispose()
     assert counts["MULTI-ASSET"] == 7
     assert counts["SYNTHETIC-2026-09-11"] == 71
+
+
+def test_reseeding_retires_stale_builtin_portfolios_and_events_but_keeps_the_pilot(tmp_path):
+    bind = engine(f"sqlite:///{tmp_path / 'msa.db'}")
+    try:
+        migrate(bind)
+        seed_demo(bind)
+        seed_pilot(bind)
+        with session_scope(bind, scope="demo", scopes={"demo:*"}) as session:
+            repository = DemoRepository(session)
+            repository.seed_portfolio(
+                PortfolioBundle(portfolio=Portfolio(portfolio_id="STALE-PORTFOLIO", name="S")),
+                registry=registry(),
+            )
+            repository.seed_event(
+                {"event_id": "STALE-EVENT", "title": "t", "text": "t", "metadata": {}}
+            )
+        seed_demo(bind)
+        with session_scope(bind, scope="demo", scopes={"demo:*"}) as session:
+            repository = DemoRepository(session)
+            portfolios = repository.portfolios.list_portfolios()
+            portfolio_ids_after = {row["portfolio_id"] for row in portfolios}
+            event_ids_after = {row["event_id"] for row in repository.events()}
+    finally:
+        bind.dispose()
+    assert {"MULTI-ASSET", "ATYPICAL-BORROWERS", "LOAD-TEST"} <= portfolio_ids_after
+    assert "STALE-PORTFOLIO" not in portfolio_ids_after
+    assert {"RECYCLING-FEE", "MORTGAGE-DOWN-PAYMENT", PILOT_EVENT_ID} <= event_ids_after
+    assert "STALE-EVENT" not in event_ids_after
