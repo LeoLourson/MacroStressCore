@@ -1,0 +1,22 @@
+"""``mcp-{{plugin_id}}.notes``: the plugin's read-only MCP server.
+
+The platform wraps each tool in the audit and marks it read-only; the agent calls it through
+``AgentContext.tools`` and must declare it in ``AgentPlugin.tools``.
+"""
+
+from msa.plugin_sdk import CallContext, McpServerSpec
+
+
+def register(tool, services):
+    @tool
+    def summarize(keys: list[str], audit: CallContext) -> dict:
+        """What the agent saw at its extension point: the state keys that carry a value."""
+        return {"count": len(keys), "keys": sorted(keys)}
+
+
+SERVER = McpServerSpec(
+    "{{plugin_id}}.notes",
+    register,
+    label="{{label}}",
+    description="Сводка того, что агент увидел в точке расширения; без доступа к данным.",
+)

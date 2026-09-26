@@ -4,15 +4,22 @@
 
   msa-plugin new asset <plugin_id> [--type-id ID] [--label TEXT] [--dest DIR]
   msa-plugin new agent <plugin_id> [--workflow ID] [--point ID] [--label TEXT] [--dest DIR]
+                       [--ui-dest DIR]
   msa-plugin check [<plugin_id> | --path DIR]
   msa-plugin demo-run <plugin_id> [--path DIR] [--points N] [--seed N]
   msa-plugin ui-manifest [--out PATH]
 
-``new`` writes a package that already passes ``check``: an asset plugin with a model, a
-factor, metrics, an editor form and a demo case; an agent plugin joining an extension
-point. By default it goes to ``src/msa/plugins/<plugin_id>``, where the platform discovers
-it on the next start. ``check`` runs the conformance check (``msa.plugin_sdk.testing``) and
-compiles every workflow with the plugin's agents enabled; it exits with 1 on any finding.
+``new`` writes a package that already passes ``check``, in the layout of a plugin: its code,
+``tests/``, ``README.md``, and ``demo_data/`` (asset) or ``prompts/`` (agent). An asset
+plugin has a model, a factor, metrics, an editor form and a demo case; an agent plugin
+joins an extension point, calls its own read-only MCP tool and has a view of its output in
+the web UI. By default the package goes to ``src/msa/plugins/<plugin_id>``, where the
+platform discovers it on the next start, and the UI plugin to
+``ui/web/src/plugins/<plugin_id>``; with ``--dest DIR`` both go under ``DIR``
+(``DIR/<plugin_id>``, ``DIR/ui/<plugin_id>``).
+
+``check`` runs the conformance check (``msa.plugin_sdk.testing``) and compiles every
+workflow with the plugin's agents enabled; it exits with 1 on any finding.
 ``demo-run`` calculates the plugin's demo cases and prints P5/P50/P95 per position and slice.
 ``ui-manifest`` writes what the web UI's build checks its UI plugins against
 (``ui/web/src/plugins/manifest.json``): the installed plugins, their versions, the view
@@ -31,14 +38,42 @@ from importlib.resources import files
 from pathlib import Path
 
 PLUGINS = Path(__file__).resolve().parents[1] / "plugins"
-UI_MANIFEST = (
-    Path(__file__).resolve().parents[3] / "ui" / "web" / "src" / "plugins" / "manifest.json"
-)
+UI_PLUGINS = Path(__file__).resolve().parents[3] / "ui" / "web" / "src" / "plugins"
+UI_MANIFEST = UI_PLUGINS / "manifest.json"
+#: Template file -> the file it becomes, for each kind of plugin.
+ASSET_FILES = {
+    "__init__.py.tmpl": "__init__.py",
+    "schemas.py.tmpl": "schemas.py",
+    "model.py.tmpl": "model.py",
+    "editor.py.tmpl": "editor.py",
+    "demo.py.tmpl": "demo.py",
+    "README.md.tmpl": "README.md",
+    "demo_data/README.md.tmpl": "demo_data/README.md",
+    "tests/__init__.py.tmpl": "tests/__init__.py",
+    "tests/test_plugin.py.tmpl": "tests/test_{plugin_id}.py",
+}
+AGENT_FILES = {
+    "__init__.py.tmpl": "__init__.py",
+    "tools.py.tmpl": "tools.py",
+    "README.md.tmpl": "README.md",
+    "prompts/note-v1.txt.tmpl": "prompts/note-v1.txt",
+    "tests/__init__.py.tmpl": "tests/__init__.py",
+    "tests/test_plugin.py.tmpl": "tests/test_{plugin_id}.py",
+}
+AGENT_UI_FILES = {"ui/plugin.json.tmpl": "plugin.json", "ui/index.tsx.tmpl": "index.tsx"}
 _ID = re.compile(r"^[a-z][a-z0-9_]*$")
 
 
 def _template(kind: str, name: str) -> str:
-    return files("msa.cli").joinpath("templates", kind, name).read_text(encoding="utf-8")
+    path = files("msa.cli").joinpath("templates", kind, *name.split("/"))
+    return path.read_text(encoding="utf-8")
+
+
+def _write(kind: str, names: dict[str, str], target: Path, values: dict) -> None:
+    for template, name in names.items():
+        path = target / name.format(plugin_id=values["plugin_id"])
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(_render(_template(kind, template), values), encoding="utf-8")
 
 
 def _render(text: str, values: dict) -> str:
@@ -70,18 +105,26 @@ def new_asset(plugin_id, *, type_id=None, label=None, dest=None) -> Path:
         "type_label": label or type_id,
     }
     target.mkdir(parents=True)
-    for name in ("__init__", "schemas", "model", "editor", "demo"):
-        text = _render(_template("asset", f"{name}.py.tmpl"), values)
-        (target / f"{name}.py").write_text(text, encoding="utf-8")
+    _write("asset", ASSET_FILES, target, values)
     return target
 
 
 def new_agent(
-    plugin_id, *, workflow="stress_test", point="after_calculation", label=None, dest=None
+    plugin_id,
+    *,
+    workflow="stress_test",
+    point="after_calculation",
+    label=None,
+    dest=None,
+    ui_dest=None,
 ) -> Path:
     from msa.platform.registry import registry
 
     target = _target(plugin_id, dest)
+    ui_root = Path(ui_dest) if ui_dest else (Path(dest) / "ui" if dest else UI_PLUGINS)
+    ui_target = ui_root / plugin_id
+    if ui_target.exists():
+        raise SystemExit(f"{ui_target} already exists")
     spec = registry().workflows.get(workflow)
     if spec is None:
         raise SystemExit(f"unknown workflow {workflow!r}; known: {sorted(registry().workflows)}")
@@ -98,8 +141,8 @@ def new_agent(
         "consumes": repr(tuple(found.available)),
     }
     target.mkdir(parents=True)
-    text = _render(_template("agent", "__init__.py.tmpl"), values)
-    (target / "__init__.py").write_text(text, encoding="utf-8")
+    _write("agent", AGENT_FILES, target, values)
+    _write("agent", AGENT_UI_FILES, ui_target, values)
     return target
 
 
@@ -131,9 +174,8 @@ def _chosen(plugin_id, path):
 
 
 def check(plugin_id=None, *, path=None) -> list[str]:
-    from msa.graph.compiler import check as check_workflow
     from msa.platform.registry import registry
-    from msa.plugin_sdk.testing import check_plugin
+    from msa.plugin_sdk.testing import check_plugin, workflow_problems
 
     if plugin_id is None and path is None:
         plugins, scope = list(registry().plugins.values()), nullcontext(registry())
@@ -145,12 +187,7 @@ def check(plugin_id=None, *, path=None) -> list[str]:
         for plugin in plugins:
             problems += [str(f) for f in check_plugin(plugin, reg)]
             # Every workflow must still compile with the plugin's agents switched on.
-            agents = [a.agent_id for a in plugin.agents if not a.core]
-            for workflow in reg.workflows.values():
-                problems += [
-                    f"{plugin.plugin_id} workflow {workflow.workflow_id}: {problem}"
-                    for problem in check_workflow(workflow, reg, agents)
-                ]
+            problems += workflow_problems(plugin, reg)
     return list(dict.fromkeys(problems))
 
 
@@ -271,6 +308,7 @@ def main(argv=None) -> int:
     agent.add_argument("--point", default="after_calculation")
     agent.add_argument("--label")
     agent.add_argument("--dest")
+    agent.add_argument("--ui-dest", help="where the UI plugin goes (default: ui/web/src/plugins)")
     checking = commands.add_parser("check", help="conformance of one plugin or all")
     checking.add_argument("plugin_id", nargs="?")
     checking.add_argument("--path")
@@ -298,6 +336,7 @@ def main(argv=None) -> int:
                 point=args.point,
                 label=args.label,
                 dest=args.dest,
+                ui_dest=args.ui_dest,
             )
         print(f"created {target}")
         where = f" --path {target}" if args.dest else f" {args.plugin_id}"

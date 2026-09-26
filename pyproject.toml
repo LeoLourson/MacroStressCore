@@ -41,9 +41,11 @@ msa-plugin = "msa.cli.plugin:main"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/msa"]
+# A plugin's tests live in its folder (src/msa/plugins/<id>/tests) and stay out of the wheel.
+exclude = ["src/msa/plugins/*/tests"]
 
 [tool.pytest.ini_options]
-testpaths = ["tests"]
+testpaths = ["tests", "src/msa/plugins"]
 pythonpath = ["src", "."]
 addopts = "-ra"
 

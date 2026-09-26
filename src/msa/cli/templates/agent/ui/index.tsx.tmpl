@@ -1,0 +1,29 @@
+// {{label}}: the view of the {{agent_id}} agent's output on the portfolio tab
+// (scaffolded by msa-plugin new agent). Without it the output is drawn as is.
+import { List, Text } from '@mantine/core';
+import type { AgentViewProps, UiPlugin } from '../sdk';
+import meta from './plugin.json';
+
+function Output({ output }: AgentViewProps) {
+  const seen = (output.seen ?? []) as string[];
+  const note = typeof output.note === 'string' ? output.note : null;
+  return (
+    <>
+      <Text size="sm">Ключей состояния с данными: {seen.length}</Text>
+      <List size="sm" spacing={2}>
+        {seen.map((key) => (
+          <List.Item key={key}>{key}</List.Item>
+        ))}
+      </List>
+      {note && <Text size="sm">{note}</Text>}
+    </>
+  );
+}
+
+const plugin: UiPlugin = {
+  ...meta,
+  views: {},
+  agents: { '{{agent_id}}': Output },
+};
+
+export default plugin;

@@ -20,15 +20,15 @@ from pathlib import Path
 
 import pytest
 
-from msa.contracts import DataSnapshot, PortfolioBundle, TransmissionGraph
+from demo import catalog
+from msa.contracts import PortfolioBundle, TransmissionGraph
 from msa.contracts.domain import contexts
 from msa.engine.aggregation import aggregate_slices
 from msa.engine.runner import run_batch
 from msa.platform.registry import registry
 
-ROOT = Path(__file__).resolve().parents[2]
 GOLDEN = json.loads((Path(__file__).with_name("credit_v3_2.json")).read_text("utf-8"))
-SNAPSHOT = ROOT / "demo" / "snapshots" / "DEMO-2026-09-11.json"
+SNAPSHOT_ID = "DEMO-2026-09-11"
 NOT_COMPARED = ("/coverage/input_data", "/axes/4/measures/data_quality", "/input_sources/dq")
 TOLERANCE = 1e-9
 
@@ -85,11 +85,11 @@ def differences(expected, actual, path=""):
 
 @pytest.fixture(scope="module")
 def runs():
-    snapshot = DataSnapshot.model_validate(json.loads(SNAPSHOT.read_text("utf-8")))
+    snapshot = catalog.snapshot(SNAPSHOT_ID)
     reg = registry()
     out = {}
     for portfolio_id, captured in GOLDEN["portfolios"].items():
-        raw = json.loads((ROOT / "demo" / "portfolios" / f"{portfolio_id}.json").read_text("utf-8"))
+        raw = catalog.bundle_data(portfolio_id)
         # The demo portfolio has since gained shares; the reference covers its credit positions.
         raw["positions"] = [p for p in raw["positions"] if p["position_id"] in captured["assets"]]
         bundle = PortfolioBundle.model_validate(raw)

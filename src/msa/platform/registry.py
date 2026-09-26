@@ -325,16 +325,24 @@ def mcp_tools(spec: McpServerSpec) -> tuple[dict[str, Callable], list[str]]:
     return tools, problems
 
 
+def package_of(plugin: Plugin) -> str:
+    """The package that declares ``plugin``: where its prompts and demo data live.
+
+    An installed plugin is ``msa.plugins.<id>`` (the core ``msa.workflows``); a plugin loaded
+    from a folder under development has the module name it was loaded under.
+    """
+    module = next(
+        (m for m in list(sys.modules.values()) if getattr(m, "plugin", None) is plugin), None
+    )
+    return getattr(module, "__name__", f"{PACKAGE}.{plugin.plugin_id}")
+
+
 def prompt_file(plugin: Plugin, name: str, version: str):
     """The text of a plugin's prompt, ``prompts/<name>-<version>.txt`` of its package."""
     from importlib.resources import files
 
-    module = next(
-        (m for m in list(sys.modules.values()) if getattr(m, "plugin", None) is plugin), None
-    )
-    package = getattr(module, "__name__", f"{PACKAGE}.{plugin.plugin_id}")
     try:
-        path = files(package).joinpath("prompts", f"{name}-{version}.txt")
+        path = files(package_of(plugin)).joinpath("prompts", f"{name}-{version}.txt")
     except ModuleNotFoundError:
         return None
     return path if path.is_file() else None

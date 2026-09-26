@@ -1,4 +1,4 @@
-"""Acceptance of the equity plugin (plan, stage C and section 5).
+"""Acceptance of the equity plugin.
 
 - a share is calculated without EAD, LGD or a financial statement;
 - zero shocks keep the price; quantity scales value and P&L; an FX shock moves the result
@@ -17,6 +17,7 @@ from datetime import date
 import numpy as np
 import pytest
 
+from demo import catalog
 from msa.agents.exposure import ExposureAgent, LocalResolver
 from msa.contracts import DataSnapshot, PortfolioBundle, TransmissionGraph
 from msa.contracts.domain import contexts
@@ -26,11 +27,8 @@ from msa.engine.exposure import scenario_coverage
 from msa.engine.runner import run_batch
 from msa.platform.registry import registry
 from msa.plugin_sdk.model import Diagnostics, RunOptions
+from msa.plugin_sdk.testing import graph_reaching
 from msa.plugins.equity.demo import cases
-from tests.platform.test_exposure import graph_reaching
-
-from ..support import bundle as demo_bundle
-from ..support import snapshot as demo_snapshot
 
 AS_OF = date(2026, 9, 11)
 
@@ -316,7 +314,7 @@ def test_the_market_slice_adds_realisations_before_quantiles(case):
 
 
 def test_credit_and_market_slices_never_mix_in_the_mixed_portfolio():
-    bundle = demo_bundle("DEMO-1")
+    bundle = catalog.bundle("DEMO-1")
     graph = {
         "event_id": "event",
         "nodes": [
@@ -384,7 +382,12 @@ def test_credit_and_market_slices_never_mix_in_the_mixed_portfolio():
             ],
         }
     )
-    batch = run(chosen, demo_snapshot(), scenario, TransmissionGraph.model_validate(graph))
+    batch = run(
+        chosen,
+        catalog.snapshot("DEMO-2026-09-11"),
+        scenario,
+        TransmissionGraph.model_validate(graph),
+    )
     portfolio = aggregate_slices(
         "mixed",
         batch.results,

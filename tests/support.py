@@ -6,10 +6,9 @@ scenario set, the models, the portfolio slices and the report. What is replaced 
 the calculation.
 """
 
-import json
 from copy import deepcopy
-from pathlib import Path
 
+from demo import catalog as demo_catalog
 from msa.agents import Agents
 from msa.agents.advisory import AdvisoryAgent
 from msa.agents.aggregate import AggregateAgent
@@ -23,8 +22,6 @@ from msa.contracts.domain import contexts
 from msa.graph.interrupts import pending_interrupt, resume_run
 from msa.platform.registry import registry
 
-ROOT = Path(__file__).resolve().parents[1]
-DEMO = ROOT / "demo"
 SEED = 20260911
 AS_OF = "2026-09-11"
 SNAPSHOT_ID = "DEMO-2026-09-11"
@@ -87,13 +84,11 @@ THRESHOLDS = {
 
 
 def bundle(portfolio="DEMO-1") -> PortfolioBundle:
-    raw = json.loads((DEMO / "portfolios" / f"{portfolio}.json").read_text("utf-8"))
-    return PortfolioBundle.model_validate(raw)
+    return demo_catalog.bundle(portfolio)
 
 
 def snapshot() -> DataSnapshot:
-    raw = json.loads((DEMO / "snapshots" / f"{SNAPSHOT_ID}.json").read_text("utf-8"))
-    return DataSnapshot.model_validate(raw)
+    return demo_catalog.snapshot(SNAPSHOT_ID)
 
 
 def positions(portfolio="DEMO-1", ids=None) -> list[dict]:

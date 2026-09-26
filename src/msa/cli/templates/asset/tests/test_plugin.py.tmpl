@@ -1,0 +1,27 @@
+"""Tests of the {{label}} plugin: they live in its folder and run with the platform's."""
+
+from dataclasses import replace
+
+import pytest
+
+from msa.plugin_sdk.testing import calculate_case, check_plugin
+
+from .. import plugin
+from ..demo import cases
+
+
+def test_the_plugin_passes_the_conformance_check():
+    assert [str(finding) for finding in check_plugin(plugin)] == []
+
+
+def test_a_zero_shock_loses_nothing():
+    (case,) = cases()
+    zero = {
+        name: {key: item[key] for key in ("label", "unit", "factor", "key")}
+        | {"kind": "point", "value": 0.0}
+        for name, item in case.scenario.items()
+    }
+    batch = calculate_case(replace(case, scenario=zero))
+    for result in batch.results:
+        loss = result.metrics[f"{plugin.plugin_id}.loss"].quantiles
+        assert loss.p05 == pytest.approx(0.0) and loss.p95 == pytest.approx(0.0)

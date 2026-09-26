@@ -1,0 +1,23 @@
+"""Tests of the {{label}} plugin: they live in its folder and run with the platform's."""
+
+from msa.plugin_sdk.prompts import prompt
+from msa.plugin_sdk.testing import tools_of, workflow_problems
+
+from .. import plugin
+from ..tools import SERVER
+
+
+def test_every_workflow_compiles_with_the_agent():
+    assert workflow_problems(plugin) == []
+
+
+def test_the_tool_answers_from_its_arguments_only():
+    summarize = tools_of(SERVER)["summarize"]
+    assert summarize(keys=["report", "graph"], audit=None) == {
+        "count": 2,
+        "keys": ["graph", "report"],
+    }
+
+
+def test_the_prompt_in_force_is_readable():
+    assert "risk manager" in prompt("{{plugin_id}}.note")

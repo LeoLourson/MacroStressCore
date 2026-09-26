@@ -1,0 +1,21 @@
+# Who reviews what (docs/plugins.md, «Границы и совместная работа»). The last matching line
+# wins. Owners are @LeoLourson until the teams are named.
+
+# The core: everything in src/msa and ui/web/src outside a plugin's folder, the build, ops.
+*                               @LeoLourson
+
+# Plugins: a plugin is src/msa/plugins/<id>/ and, optionally, ui/web/src/plugins/<id>/.
+# A new plugin works without a line here; its owners are added when its team is named.
+/src/msa/plugins/credit/        @LeoLourson
+/ui/web/src/plugins/credit/     @LeoLourson
+/src/msa/plugins/equity/        @LeoLourson
+/ui/web/src/plugins/equity/     @LeoLourson
+/src/msa/plugins/market/        @LeoLourson
+/src/msa/plugins/research/      @LeoLourson
+/ui/web/src/plugins/research/   @LeoLourson
+
+# The demo stand's headers and events; the positions and data are in each plugin's demo_data.
+/demo/                          @LeoLourson
+
+# Documentation.
+/docs/                          @LeoLourson

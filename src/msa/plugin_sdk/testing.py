@@ -12,6 +12,13 @@ through the platform's own dispatcher, so a plugin is judged by the same path a 
 - the calculation is deterministic (same seed, same numbers) and does not depend on the
   order of the positions;
 - the slices aggregate.
+
+Helpers for a plugin's own tests (``src/msa/plugins/<id>/tests``), so they need nothing
+from the core's modules: ``calculate_case`` runs a demo case (or a variant of it) through
+the platform's dispatcher, ``tools_of`` gives the functions of a plugin's MCP server,
+``workflow_problems`` compiles every workflow with the plugin's agents switched on, and
+``graph_reaching`` builds the smallest economic graph an event can have: the event, one
+channel, one sector and one factor node.
 """
 
 import json
@@ -64,6 +71,35 @@ def _declarations(plugin) -> list[Finding]:
     return findings
 
 
+def graph_reaching(sector_okved: str, factor_id: str):
+    """An event graph whose one path reaches ``factor_id`` in the sector ``sector_okved``."""
+    from msa.contracts.evidence import Evidence
+    from msa.contracts.graph import Edge, Node, PointDistribution, TransmissionGraph
+
+    evidence = [Evidence(kind="document", source_id="S", locator="l", fragment_sha256="a" * 64)]
+
+    def edge(src, dst):
+        return Edge(
+            src=src,
+            dst=dst,
+            sign=1,
+            elasticity=PointDistribution(value=1.0),
+            lag_months=0,
+            evidence=evidence,
+        )
+
+    return TransmissionGraph(
+        event_id="event",
+        nodes=[
+            Node(id="event", kind="event", label="e"),
+            Node(id="channel", kind="channel", label="c"),
+            Node(id="sector", kind="sector", label="s", okved=sector_okved),
+            Node(id="factor", kind="factor", label="f", factor=factor_id),
+        ],
+        edges=[edge("event", "channel"), edge("channel", "sector"), edge("sector", "factor")],
+    )
+
+
 def _fingerprint(results) -> str:
     return json.dumps(
         {r.position_id: r.model_dump(mode="json", exclude={"code_sha256"}) for r in results},
@@ -71,11 +107,71 @@ def _fingerprint(results) -> str:
     )
 
 
+def calculate_case(
+    case,
+    registry=None,
+    *,
+    positions=None,
+    seed: int = 20260911,
+    points: int = 64,
+    replicates: int = 8,
+    horizon: int = 12,
+):
+    """The case calculated by the platform: a batch with ``results`` (one per position),
+    ``draws``, ``exposures`` and ``realisations``. ``positions`` reorders or narrows the
+    case's positions; replace ``case.scenario`` (``dataclasses.replace``) to try a shock."""
+    from msa.contracts.graph import TransmissionGraph
+    from msa.engine.runner import run_batch
+    from msa.platform.registry import registry as current
+
+    registry = registry or current()
+    graph = None if case.graph is None else TransmissionGraph.model_validate(case.graph)
+    sectors = {party.party_id: party.okved for party in case.bundle.parties}
+    return run_batch(
+        contexts(case.bundle) if positions is None else positions,
+        case.snapshot,
+        case.scenario,
+        graph,
+        as_of=case.bundle.portfolio.as_of or case.snapshot.as_of,
+        horizon=horizon,
+        seed=seed,
+        registry=registry,
+        sector_of=sectors.get,
+        points=points,
+        replicates=replicates,
+        options=registry.run_options("demo"),
+    )
+
+
+def tools_of(spec) -> dict:
+    """Tool name -> the function a plugin's MCP server (``McpServerSpec``) defines; call it
+    with ``audit=None`` to test what it answers without the gateway."""
+    from msa.platform.registry import mcp_tools
+
+    tools, problems = mcp_tools(spec)
+    if problems:
+        raise ValueError("; ".join(problems))
+    return tools
+
+
+def workflow_problems(plugin, registry=None) -> list[str]:
+    """What stops a workflow from compiling with the plugin's agents switched on."""
+    from msa.graph.compiler import check as check_workflow
+    from msa.platform.registry import registry as current
+
+    registry = registry or current()
+    agents = [a.agent_id for a in plugin.agents if not a.core]
+    return [
+        f"{plugin.plugin_id} workflow {workflow.workflow_id}: {problem}"
+        for workflow in registry.workflows.values()
+        for problem in check_workflow(workflow, registry, agents)
+    ]
+
+
 def check_plugin(plugin, registry=None, *, points: int = 64, replicates: int = 8):
     """Every problem found with ``plugin``; an empty list means it conforms."""
     from msa.db.repositories.portfolios import check_bundle
     from msa.engine.aggregation import aggregate_slices
-    from msa.engine.runner import run_batch
     from msa.platform.registry import registry as current
 
     registry = registry or current()
@@ -94,28 +190,10 @@ def check_plugin(plugin, registry=None, *, points: int = 64, replicates: int = 8
         for problem in check_bundle(case.bundle, registry):
             fail("schema", problem)
         positions = contexts(case.bundle)
-        sectors = {party.party_id: party.okved for party in case.bundle.parties}
-        options = registry.run_options("demo")
-        graph = None
-        if case.graph is not None:
-            from msa.contracts.graph import TransmissionGraph
 
-            graph = TransmissionGraph.model_validate(case.graph)
-
-        def run(order, seed=20260911, case=case, graph=graph, sectors=sectors, options=options):
-            return run_batch(
-                order,
-                case.snapshot,
-                case.scenario,
-                graph,
-                as_of=case.bundle.portfolio.as_of or case.snapshot.as_of,
-                horizon=12,
-                seed=seed,
-                registry=registry,
-                sector_of=sectors.get,
-                points=points,
-                replicates=replicates,
-                options=options,
+        def run(order, case=case):
+            return calculate_case(
+                case, registry, positions=order, points=points, replicates=replicates
             )
 
         first = run(positions)
