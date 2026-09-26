@@ -1,4 +1,4 @@
-"""Explaining a calculated run through the API (plan, stage D).
+"""Explaining a calculated run through the API.
 
 - a run without results cannot be explained;
 - a provider that does not call tools gets the structured answer from the run summary;

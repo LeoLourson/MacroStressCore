@@ -1,4 +1,4 @@
-"""Agent plugins in a run (plan, stage D): the example research plugin.
+"""Agent plugins in a run: the example research plugin.
 
 - it is off by default and joins a run only when named;
 - its subgraph keeps its own state behind adapters and publishes only its namespace;

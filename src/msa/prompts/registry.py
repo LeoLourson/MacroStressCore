@@ -9,7 +9,7 @@ import json
 from importlib.resources import files
 
 _CURRENT = {"causal": "v3", "advisory": "v2", "explain": "v2"}
-_KNOWN = {"causal": {"v1", "v2", "v3"}, "advisory": {"v1", "v2"}, "explain": {"v1", "v2"}}
+_KNOWN = {name: {version} for name, version in _CURRENT.items()}
 
 
 def _plugin_prompt(name: str):

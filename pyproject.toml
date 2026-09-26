@@ -5,7 +5,7 @@ build-backend = "hatchling.build"
 [project]
 name = "macrostress-core"
 version = "0.2.0"
-description = "MacroStress-Agent: event text -> transmission graph -> Track A v3.2 stress test -> approved report"
+description = "MacroStress Core: a portfolio stress test from the text of an event, on a platform whose asset types, models and agents are plugins"
 requires-python = ">=3.12,<3.13"
 dependencies = [
   "numpy==2.4.4",
