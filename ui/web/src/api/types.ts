@@ -18,6 +18,8 @@ export interface LlmInfo {
   model?: string | null;
   base_url?: string | null;
   external?: boolean;
+  /** A slower, stronger model of the same provider that a run may choose. */
+  strong_model?: string | null;
 }
 
 export type RunState =
@@ -84,6 +86,8 @@ export interface RunStatus {
   pending_interrupt?: Interrupt[];
   errors?: string[];
   node?: string | null;
+  /** While running: the nodes the run starts next (a retry goes back, not on). */
+  next?: string[] | null;
   attempt?: number;
   error?: string | null;
   report_url?: string | null;
@@ -93,6 +97,19 @@ export interface RunStatus {
   snapshot_id?: string | null;
   scenario_id?: string | null;
   macro_draws_sha256?: string | null;
+  /** What the run was fixed to: the answering model, the prompt and the code. */
+  versions?: { model_version?: string | null; prompt_version?: string | null } | null;
+  /** The model is working on an answer right now; recorded in the activity once answered. */
+  llm_waiting?: LlmWaiting | null;
+}
+
+export interface LlmWaiting {
+  node: string;
+  attempt: number;
+  model: string;
+  schema: string;
+  purpose: string;
+  started_at: string;
 }
 
 export interface Evidence {

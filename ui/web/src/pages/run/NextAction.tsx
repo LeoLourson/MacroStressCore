@@ -1,4 +1,4 @@
-import { Alert, Anchor, Button, Collapse, Group, List, Stack, Text } from '@mantine/core';
+import { Alert, Anchor, Button, Collapse, Group, List, Loader, Stack, Text } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import {
   IconAlertTriangle,
@@ -10,11 +10,12 @@ import {
 } from '@tabler/icons-react';
 import type { ReactNode } from 'react';
 import { useNavigate } from 'react-router';
-import type { Artifacts, Me, RunStatus } from '../../api/types';
+import type { Artifacts, LlmWaiting, Me, RunStatus } from '../../api/types';
 import { canApprove, canFixGraph } from '../../auth/session';
+import { Elapsed } from '../../components/Elapsed';
 import { approver, lowerFirst, timestamp } from '../../lib/format';
 import { reasonText } from '../../lib/labels';
-import { nowText, stopOf, type Tab } from '../../lib/stages';
+import { currentStage, llmDoing, nowText, stopOf, type Tab } from '../../lib/stages';
 import type { RerunState } from '../NewRun';
 
 function Banner({
@@ -75,6 +76,18 @@ function Failure({ status, rerun }: { status: RunStatus; rerun: ReactNode }) {
   );
 }
 
+/** The model is working: shown while it answers, not only once it has answered. */
+function Waiting({ waiting }: { waiting: LlmWaiting }) {
+  return (
+    <Group gap={8} wrap="nowrap">
+      <Loader size={14} color="steel" />
+      <Text size="sm">
+        Языковая модель {llmDoing(waiting)} · <Elapsed since={waiting.started_at} />
+      </Text>
+    </Group>
+  );
+}
+
 /** One message about what happens next, and the one move forward for this person. */
 export function NextAction({
   status,
@@ -114,12 +127,30 @@ export function NextAction({
   switch (status.status) {
     case 'queued':
     case 'running': {
-      const doing = nowText(status.node, artifacts?.workflow, artifacts?.position_names);
+      const waiting = status.llm_waiting && <Waiting waiting={status.llm_waiting} />;
+      // The numbers are ready before the report: they are not held back while it is written.
+      if (status.status === 'running' && currentStage(status, artifacts?.workflow) === 'report') {
+        return (
+          <Banner
+            color="steel"
+            icon={<IconClock />}
+            title="Расчёт готов, пишется отчёт"
+            action={go('portfolio', 'Открыть итоги')}
+          >
+            <Text size="sm">
+              Итоги по позициям и срезам портфеля уже можно смотреть. Отчёт появится, когда модель допишет текст.
+            </Text>
+            {waiting}
+          </Banner>
+        );
+      }
+      const doing = nowText(status, artifacts?.workflow);
       return (
         <Banner color="steel" icon={<IconClock />} title="Идёт расчёт">
           <Text size="sm">
             Сейчас: {lowerFirst(doing)}. Страница обновляется сама; результаты появляются по мере готовности.
           </Text>
+          {waiting}
         </Banner>
       );
     }

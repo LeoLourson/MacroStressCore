@@ -35,7 +35,7 @@ OPERATING_FIELDS: tuple[F, ...] = (
         "Оборачиваемость дебиторской задолженности",
         default=45.0,
         assumption=ASSUMED_WORKING_CAPITAL_FLAG,
-        hint="без неё — 45 дней по допущению",
+        hint="За сколько дней покупатели оплачивают счета",
         minimum=0.0,
     ),
     F(
@@ -44,7 +44,7 @@ OPERATING_FIELDS: tuple[F, ...] = (
         "Оборачиваемость запасов",
         default=30.0,
         assumption=ASSUMED_WORKING_CAPITAL_FLAG,
-        hint="без неё — 30 дней по допущению",
+        hint="За сколько дней запасы превращаются в продажи",
         minimum=0.0,
     ),
     F(
@@ -53,7 +53,7 @@ OPERATING_FIELDS: tuple[F, ...] = (
         "Оборачиваемость кредиторской задолженности",
         default=30.0,
         assumption=ASSUMED_WORKING_CAPITAL_FLAG,
-        hint="без неё — 30 дней по допущению",
+        hint="За сколько дней компания оплачивает счета поставщиков",
         minimum=0.0,
     ),
     F(
@@ -62,7 +62,7 @@ OPERATING_FIELDS: tuple[F, ...] = (
         "Ставка налога на прибыль",
         default=0.20,
         assumption="assumed_tax_rate",
-        hint="без неё — 20 % по допущению",
+        hint="Доля прибыли, уходящая государству в виде налога",
     ),
     F(
         "demand_elasticity",
@@ -70,7 +70,7 @@ OPERATING_FIELDS: tuple[F, ...] = (
         "Эластичность спроса по цене",
         default=-1.0,
         assumption="assumed_demand_elasticity",
-        hint="отрицательное число, например −1,25; без неё — −1 по допущению",
+        hint="На сколько меняется спрос при росте цены; число отрицательное",
         maximum=0.0,
     ),
     F(
@@ -79,13 +79,13 @@ OPERATING_FIELDS: tuple[F, ...] = (
         "Доля переноса затрат в цену",
         default=0.0,
         assumption="assumed_no_pass_through",
-        hint="без неё рост затрат в цену не переносится",
+        hint="Доля подорожавших затрат, переносимая в цену товара",
     ),
     F(
         "gross_debt",
         M,
         "Валовый долг",
-        hint="без него — чистый долг плюс денежные средства",
+        hint="Весь процентный долг без вычета денег. Если пусто — чистый долг плюс деньги",
         advanced=True,
     ),
     F("margin", "fraction", "Маржа к ставке", default=0.0, advanced=True),

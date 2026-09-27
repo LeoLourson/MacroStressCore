@@ -1,9 +1,9 @@
 // Where a stress test stands: the stages of its workflow as the server declares them
 // (GET /v1/workflows, artifacts.workflow), their state for this person, and the tab a run
 // opens on. A plugin agent that joins the workflow appears in its stage by itself.
-import type { Artifacts, FixGraphStop, Me, RunState, RunStatus, WorkflowView } from '../api/types';
+import type { Artifacts, FixGraphStop, LlmWaiting, Me, RunState, RunStatus, WorkflowView } from '../api/types';
 import { canApprove, canFixGraph } from '../auth/session';
-import { approver, plural, positionTitle, timestamp } from './format';
+import { approver, plural, timestamp } from './format';
 
 export const ACTIVE: RunState[] = ['queued', 'running'];
 export const FINAL: RunState[] = ['completed', 'rejected', 'failed'];
@@ -14,6 +14,7 @@ const FALLBACK: WorkflowView['stages'] = [
   { stage_id: 'scenario', title: 'Проверка графа и сценария', nodes: [] },
   { stage_id: 'calculation', title: 'Расчёт по позициям', nodes: [] },
   { stage_id: 'portfolio', title: 'Итоги по портфелю', nodes: [] },
+  { stage_id: 'report', title: 'Написание отчёта', nodes: [] },
   { stage_id: 'decision', title: 'Решение по отчёту', nodes: [] },
 ];
 
@@ -30,36 +31,24 @@ function nodeIndex(workflow: WorkflowView | null | undefined): Map<string, { sta
   return index;
 }
 
-/** The node after a finished one, in the order the workflow lists them. */
-function following(node: string, workflow: WorkflowView | null | undefined): string {
-  const order = stagesOf(workflow).flatMap((stage) => stage.nodes.map((n) => n.node));
-  const at = order.indexOf(node);
-  if (at < 0) return node;
-  // A branch node (one per position) stays the current step until all branches are done.
-  const current = stagesOf(workflow).flatMap((s) => s.nodes).find((n) => n.node === node);
-  if (current?.branch) return node;
-  // A human stop that has been passed is followed by the automatic nodes after it.
-  let next = at + 1;
-  while (next < order.length && stagesOf(workflow).flatMap((s) => s.nodes)[next]?.human) next += 1;
-  return order[next] ?? node;
+/**
+ * The node a running stress test is on: the first node the server says it starts next that
+ * the workflow shows, else the last one it finished. Only the server knows which way a route
+ * turns: a graph that fails its check goes back to the model, not on to the calculation.
+ */
+function runningNode(status: Pick<RunStatus, 'node' | 'next'>, workflow: WorkflowView | null | undefined): string {
+  const index = nodeIndex(workflow);
+  return status.next?.find((node) => index.has(node)) ?? (status.node ?? '').split('/')[0];
 }
 
-/** What a running stress test is busy with, in words: «Расчёт позиции (готова LOAN-MACHINERY — …)». */
-export function nowText(
-  node: string | null | undefined,
-  workflow: WorkflowView | null | undefined,
-  names?: Record<string, string> | null,
-): string {
-  const [head, branch] = (node ?? '').split('/', 2);
+/** What a running stress test is busy with, in words: «Построение графа влияния». */
+export function nowText(status: Pick<RunStatus, 'node' | 'next'>, workflow: WorkflowView | null | undefined): string {
   const index = nodeIndex(workflow);
-  if (!head) return index.values().next().value?.label ?? 'Разбор события';
-  if (branch) return `${index.get(head)?.label ?? head} (готова ${positionTitle(branch, names)})`;
-  const next = following(head, workflow);
-  return index.get(next)?.label ?? next;
+  return index.get(runningNode(status, workflow))?.label ?? index.values().next().value?.label ?? 'Разбор события';
 }
 
 /** The step a run stands on right now. */
-export function currentStep(status: Pick<RunStatus, 'status' | 'node'>, workflow: WorkflowView | null | undefined): number {
+export function currentStep(status: Pick<RunStatus, 'status' | 'node' | 'next'>, workflow: WorkflowView | null | undefined): number {
   const stages = stagesOf(workflow);
   const index = nodeIndex(workflow);
   const stageOf = (node: string) => index.get(node)?.stage ?? 0;
@@ -74,9 +63,29 @@ export function currentStep(status: Pick<RunStatus, 'status' | 'node'>, workflow
       return stages.length - 1;
     case 'queued':
     case 'running':
-      return head ? stageOf(following(head, workflow)) : 0;
+      return stageOf(runningNode(status, workflow));
     default:
       return stageOf(head);
+  }
+}
+
+/** The stage a run stands on: `report` means its numbers are ready and the report is being written. */
+export function currentStage(status: Pick<RunStatus, 'status' | 'node' | 'next'>, workflow: WorkflowView | null | undefined): string | undefined {
+  return stagesOf(workflow)[currentStep(status, workflow)]?.stage_id;
+}
+
+/** What the language model is busy with, in words: «пишет текст отчёта». */
+export function llmDoing(waiting: LlmWaiting): string {
+  if (waiting.purpose === 'repair') return 'исправляет свой ответ';
+  switch (waiting.schema) {
+    case 'CausalOutput':
+      return 'строит граф влияния и сценарий';
+    case 'AdvisoryNarrative':
+      return 'пишет текст отчёта';
+    case 'tools':
+      return 'отвечает на вопрос по результатам';
+    default:
+      return 'готовит ответ';
   }
 }
 
@@ -96,16 +105,19 @@ export function stopOf(status: RunStatus): FixGraphStop | null {
 export function steps(status: RunStatus, artifacts: Artifacts | undefined, me: Me | null): StepView[] {
   const workflow = artifacts?.workflow;
   const here = currentStep(status, workflow);
-  const names = artifacts?.position_names;
   return stagesOf(workflow).map((stage, index) => {
     const title = stage.title;
+    // The model answered, but no answer passed the checks: the analysis did not succeed.
+    if (index < here && stage.stage_id === 'event' && !artifacts?.graph?.nodes?.length) {
+      return { title, state: 'failed', note: 'Граф не построен' };
+    }
     if (index < here) return { title, state: 'done', note: doneNote(stage.stage_id, artifacts) };
     if (index > here) return { title, state: 'todo', note: '' };
     switch (status.status) {
       case 'queued':
         return { title, state: 'running', note: 'В очереди' };
       case 'running':
-        return { title, state: 'running', note: nowText(status.node, workflow, names) };
+        return { title, state: 'running', note: nowText(status, workflow) };
       case 'human_fix_graph':
         return canFixGraph(me)
           ? { title, state: 'yours', note: 'Ждёт вашей проверки' }
@@ -138,6 +150,8 @@ function doneNote(stageId: string, artifacts: Artifacts | undefined): string {
       return plural(artifacts?.results?.length ?? 0, 'позиция', 'позиции', 'позиций');
     case 'portfolio':
       return plural(Object.keys(artifacts?.portfolio?.slices ?? {}).length, 'срез', 'среза', 'срезов');
+    case 'report':
+      return 'Отчёт готов';
     default:
       return '';
   }
@@ -149,7 +163,7 @@ export const TABS: { value: Tab; title: string; empty: string }[] = [
   { value: 'scenario', title: 'Сценарий и граф', empty: '' },
   { value: 'positions', title: 'Позиции', empty: 'Появится после расчёта по позициям' },
   { value: 'portfolio', title: 'Портфель', empty: 'Появится после сведения итогов по срезам портфеля' },
-  { value: 'report', title: 'Отчёт', empty: 'Появится, когда отчёт будет готов' },
+  { value: 'report', title: 'Отчёт', empty: 'Появится, когда отчёт будет написан' },
   { value: 'provenance', title: 'Происхождение чисел', empty: 'Появится вместе с отчётом' },
   { value: 'explain', title: 'Вопрос по результатам', empty: 'Появится после расчёта по позициям' },
   { value: 'activity', title: 'Вызовы LLM и MCP', empty: '' },
@@ -176,7 +190,7 @@ export function available(tab: Tab, status: RunStatus, artifacts: Artifacts | un
 
 /** Opening a run leads where this person is needed, not always to the first tab. */
 export function defaultTab(status: RunStatus, artifacts: Artifacts | undefined): Tab {
-  const byStage: Record<string, Tab> = { calculation: 'positions', portfolio: 'portfolio', decision: 'report' };
+  const byStage: Record<string, Tab> = { calculation: 'positions', portfolio: 'portfolio', report: 'portfolio', decision: 'report' };
   switch (status.status) {
     case 'human_fix_graph':
       return 'scenario';

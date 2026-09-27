@@ -6,6 +6,7 @@ from uuid import uuid4
 
 from sqlalchemy import select, update
 
+from msa import activity
 from msa.agents.advisory import channel_factors
 from msa.agents.causal_output import scenario_violations
 from msa.agents.ingest import fragment
@@ -21,7 +22,7 @@ from msa.db.repositories.snapshots import SnapshotsRepository
 from msa.engine.exposure import scenario_coverage
 from msa.graph.checkpoint import run_config
 from msa.graph.compiler import describe
-from msa.graph.interrupts import pending_interrupt, resume_run, start_run
+from msa.graph.interrupts import drive, pending_interrupt, resume_run, start_run
 from msa.graph.workflow import build_graph
 from msa.platform.registry import registry
 from msa.plugin_sdk.model import RunOptions
@@ -70,7 +71,8 @@ class RunService:
         from msa.contracts import SourceDocument
 
         payload = job["payload"]
-        agents = self.agents.agents(scope, portfolio_id=payload["portfolio_id"])
+        model = payload.get("llm_model")
+        agents = self.agents.agents(scope, portfolio_id=payload["portfolio_id"], model=model)
         agents = replace(
             agents, ingest=FixedDocument(SourceDocument.model_validate(payload["document"]))
         )
@@ -83,7 +85,7 @@ class RunService:
             options=self.agents.options(scope),
             enabled=payload.get("agents") or (),
             workflow_id=payload.get("workflow_id", "stress_test"),
-            llm=self.agents.llm_client(scope),
+            llm=self.agents.llm_client(scope, model),
             gateway=self.agents.tools(scope),
         )
 
@@ -97,6 +99,9 @@ class RunService:
         if request.workflow_id not in reg.workflows:
             raise Problem(422, f"Неизвестный процесс {request.workflow_id}")
         workflow = reg.workflows[request.workflow_id]
+        llm_model = self.agents.llm()["strong_model"] if request.strong_model else None
+        if request.strong_model and llm_model is None:
+            raise Problem(422, "У текущей языковой модели нет более сильной версии")
         unknown = sorted(set(request.agents) - set(reg.agents))
         if unknown:
             raise Problem(422, f"Неизвестные агенты: {', '.join(unknown)}")
@@ -168,6 +173,8 @@ class RunService:
             "as_of": as_of.isoformat(),
             "auto_approve": request.auto_approve,
             "request_graph_review": request.request_graph_review,
+            # None: the provider's default model answers.
+            "llm_model": llm_model,
         }
         return {
             "job_id": run_id,
@@ -199,7 +206,7 @@ class RunService:
             position_ids=[p["position"]["position_id"] for p in payload["portfolio_positions"]],
             plugins=payload["plugins"],
             models=payload["models"],
-            versions=self.agents.stamp(),
+            versions=self.agents.stamp(payload.get("llm_model")),
             actor=actor,
         )
         upsert(session, tables_for(session)["api_job"], job)
@@ -229,16 +236,17 @@ class RunService:
             graph = self.graph(scope, job)
             snapshot = graph.get_state(run_config(run_id))
             answer = job["payload"].get("resume")
+            step = self.progress(scope, job)
             if answer is not None and pending_interrupt(graph, run_id):
-                state = resume_run(graph, run_id, answer)
+                state = resume_run(graph, run_id, answer, step)
             elif snapshot.values:
                 state = (
-                    graph.invoke(None, config=run_config(run_id))
+                    drive(graph, None, run_config(run_id), step)
                     if snapshot.next and not pending_interrupt(graph, run_id)
                     else snapshot.values
                 )
             else:
-                state = start_run(graph, self.graph_input(job["payload"]))
+                state = start_run(graph, self.graph_input(job["payload"]), step)
             self.save_state(scope, job, graph, state)
         except Exception as exc:
             logging.getLogger(__name__).exception("Run %s failed", run_id)
@@ -272,6 +280,40 @@ class RunService:
             "request_graph_review",
         )
         return {key: payload[key] for key in keys}
+
+    def progress(self, scope, job):
+        """While a run moves: the step it finished, the nodes it starts next, and its numbers
+        as soon as they exist.
+
+        The report is written after the calculation; the positions and the portfolio slices
+        are readable while it is being written.
+        """
+        seen = {}
+
+        def step(state, upcoming=()):
+            node = (state.get("trace") or [None])[-1]
+            # A retry goes back to an earlier node: the screens show where the run goes.
+            upcoming = list(dict.fromkeys(upcoming))
+            numbers = (state.get("sorted_results") or [], state.get("portfolio_result"))
+            # Numbers first: a screen that sees the new step re-reads them once, then waits.
+            # The first state is the one the run resumed from: its numbers are saved already.
+            if "numbers" in seen and numbers != seen["numbers"]:
+                with self.db.session(scope) as session:
+                    self.save_results(ApplicationRunRepository(session), job["job_id"], state)
+            seen["numbers"] = numbers
+            if (node, upcoming) != (job["state"].get("node"), job["state"].get("next", [])):
+                job["state"] = {**job["state"], "node": node, "next": upcoming}
+                self.db.put(scope, "api_job", job)
+
+        return step
+
+    @staticmethod
+    def save_results(repository, run_id, state):
+        repository.delete_results(run_id, ("position", "portfolio"))
+        for result in state.get("sorted_results", []):
+            repository.save_result(run_id, "position", result["position_id"], result)
+        if state.get("portfolio_result"):
+            repository.save_result(run_id, "portfolio", run_id, state["portfolio_result"])
 
     def save_state(self, scope, job, graph, state):
         run_id = job["job_id"]
@@ -322,7 +364,6 @@ class RunService:
             if report and report.get("approved_by"):
                 parsed = Report.model_validate(report)
                 repository.set_approval(run_id, parsed.approved_by, parsed.approved_at)
-            repository.delete_results(run_id, ("position", "portfolio"))
             db_status = {
                 "human_fix_graph": "awaiting_graph_fix",
                 "human_approval": "awaiting_approval",
@@ -331,10 +372,7 @@ class RunService:
                 "failed": "needs_review",
             }[status]
             repository.update_run(run_id, status=db_status)
-            for result in state.get("sorted_results", []):
-                repository.save_result(run_id, "position", result["position_id"], result)
-            if state.get("portfolio_result"):
-                repository.save_result(run_id, "portfolio", run_id, state["portfolio_result"])
+            self.save_results(repository, run_id, state)
         job.update(status=status, state=projection, error=None)
         job["payload"].pop("resume", None)
         self.db.put(scope, "api_job", job)
@@ -359,6 +397,8 @@ class RunService:
             "scenario_id": row["scenario_id"],
             "macro_draws_sha256": row["macro_draws_sha256"],
             "report_url": f"{base}/{run_id}/report" if row["report"] else None,
+            # The model is working on an answer right now: shown before it is recorded.
+            "llm_waiting": activity.llm_waiting_for(run_id),
         }
 
     def list_runs(self, scope, limit=100):
@@ -610,6 +650,20 @@ class RunService:
             return sum((i["details"].get(field) or 0) for i in items if i["kind"] == kind)
 
         llm = [i for i in items if i["kind"] == "llm"]
+        waiting = activity.llm_waiting_for(run_id)
+        if waiting is not None:
+            items.append(
+                {
+                    "at": waiting["started_at"],
+                    "kind": "llm",
+                    "status": "waiting",
+                    "node": waiting["node"],
+                    "attempt": waiting["attempt"],
+                    "name": waiting["model"],
+                    "initiator": "workflow",
+                    "details": {k: waiting[k] for k in ("model", "schema", "purpose")},
+                }
+            )
         return {
             "run_id": run_id,
             "llm": {

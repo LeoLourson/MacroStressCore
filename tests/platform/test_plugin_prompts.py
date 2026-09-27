@@ -62,5 +62,5 @@ def test_a_declared_prompt_without_its_file_makes_installed_raise_naming_it(tmp_
 
 
 def test_platform_prompts_still_work_outside_any_plugin_install():
-    assert current_version("causal") == "v4"
+    assert current_version("causal") == "v5"
     assert get("causal")

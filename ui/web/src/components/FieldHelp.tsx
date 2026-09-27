@@ -1,5 +1,5 @@
 import { Popover, Text } from '@mantine/core';
-import { IconInfoCircle } from '@tabler/icons-react';
+import { IconHelpCircle, IconInfoCircle } from '@tabler/icons-react';
 import { useEffect, useId, useRef, useState, type ReactNode } from 'react';
 
 /** Help never changes a form row's height. Hover, keyboard focus and touch all work. */
@@ -33,4 +33,52 @@ export function FieldHelp({ label, help }: { label: ReactNode; help: string }) {
       </Popover>
     </span>
   );
+}
+
+export interface ExplainedProps {
+  label: ReactNode;
+  description?: ReactNode;
+}
+
+/**
+ * A label whose short explanation opens in place, under the label, on «?». The editor's grid
+ * aligns the inputs of a row by their bottom edge, so an open explanation moves no input.
+ */
+export function useExplanation(label: ReactNode, text: string | undefined): ExplainedProps {
+  const [opened, setOpened] = useState(false);
+  if (!text) return { label };
+  return {
+    label: (
+      <span className="field-label">
+        <span>{label}</span>
+        <button
+          type="button"
+          className="field-help-trigger"
+          aria-expanded={opened}
+          aria-label={opened ? 'Скрыть пояснение' : `Что такое «${typeof label === 'string' ? label : 'это поле'}»`}
+          onClick={(event) => {
+            event.preventDefault();
+            setOpened(!opened);
+          }}
+        >
+          <IconHelpCircle size={16} aria-hidden />
+        </button>
+      </span>
+    ),
+    description: opened ? text : undefined,
+  };
+}
+
+/** `useExplanation` for an input that is not a component of its own. */
+export function Explained({
+  label,
+  text,
+  children,
+}: {
+  label: ReactNode;
+  text?: string;
+  children: (props: ExplainedProps) => ReactNode;
+}) {
+  const props = useExplanation(label, text);
+  return <>{children(props)}</>;
 }

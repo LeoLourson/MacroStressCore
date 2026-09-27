@@ -7,6 +7,8 @@ from urllib.request import Request
 
 from pydantic import BaseModel
 
+from msa import activity
+
 from .network import on_prem_url, open_without_redirect
 from .providers import active
 from .structured import decode, schema_instruction, with_schema
@@ -133,7 +135,8 @@ class LLMClient:
         }
         started = time.perf_counter()
         try:
-            body = self._post(json.dumps(payload, ensure_ascii=False).encode("utf-8"))
+            with activity.llm_waiting({k: record[k] for k in ("model", "schema", "purpose")}):
+                body = self._post(json.dumps(payload, ensure_ascii=False).encode("utf-8"))
             usage = body.get("usage") if isinstance(body, dict) else None
             if isinstance(usage, dict):
                 record.update(
@@ -207,7 +210,8 @@ class LLMClient:
         }
         started = time.perf_counter()
         try:
-            body = self._post(json.dumps(payload, ensure_ascii=False).encode("utf-8"))
+            with activity.llm_waiting({k: record[k] for k in ("model", "schema", "purpose")}):
+                body = self._post(json.dumps(payload, ensure_ascii=False).encode("utf-8"))
             usage = body.get("usage") if isinstance(body, dict) else None
             if isinstance(usage, dict):
                 details = usage.get("completion_tokens_details") or {}

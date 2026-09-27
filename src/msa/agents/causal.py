@@ -197,9 +197,6 @@ class CausalAgent:
             "evidence": [{**evidence, "locator": words.locator, "fragment_sha256": words.sha256}],
         }
         proposals = {"channel_shock": scenario} if selected else {}
-        if not selected:
-            graph["nodes"] = graph["nodes"][:2]
-            graph["edges"] = graph["edges"][:1]
         direct = sorted(
             {
                 (item["factor_id"], item["key"])
@@ -208,6 +205,10 @@ class CausalAgent:
                 if specs[item["factor_id"]]["scope"] != "graph"
             }
         )
+        if not selected:
+            # A channel that reaches no factor is rejected (V3): without any factor, the event.
+            graph["nodes"] = graph["nodes"][: 2 if direct else 1]
+            graph["edges"] = graph["edges"][: 1 if direct else 0]
         for index, (factor_id, key) in enumerate(direct):
             spec = specs[factor_id]
             low, mode, high = (15, 30, 45) if spec["unit"] == "days" else (-0.15, -0.1, -0.05)
@@ -325,13 +326,18 @@ class CausalAgent:
             for position in context["positions"]
             for item in position["factors"]
         }
+
+        # The retry prompt carries this text: it names the keys the model may use instead.
+        def unused(factor, key):
+            keys = sorted(str(k) for f, k in references if f == factor and k is not None)
+            known = f"its keys here: {', '.join(keys)}" if keys else "no position reads it"
+            return f"{factor} with key {key} is not used by this portfolio; {known}"
+
         for node in output.graph.nodes:
             if node.kind != "factor":
                 continue
             if (node.factor, node.key) not in references:
-                raise AgentError(
-                    f"Factor/key is not used by this portfolio: {node.factor}:{node.key}"
-                )
+                raise AgentError(f"Factor node {node.id}: {unused(node.factor, node.key)}")
             paths = output.graph.simple_paths(output.graph.event_id, node.id)
             if not paths:
                 raise AgentError(f"Factor {node.id} has no path from the event")
@@ -342,11 +348,15 @@ class CausalAgent:
                     for path in paths
                 ):
                     raise AgentError(f"Graph factor {node.id} needs a channel and a sector")
-        for parameter in output.scenario.values():
+        for name, parameter in output.scenario.items():
+            if parameter.factor is None:
+                raise AgentError(
+                    f"Scenario parameter {name} moves no factor: name a factor and key of "
+                    "portfolio_context, or keep the magnitude in parameters only"
+                )
             if (parameter.factor, parameter.key) not in references:
                 raise AgentError(
-                    f"Scenario factor/key is not used by this portfolio: "
-                    f"{parameter.factor}:{parameter.key}"
+                    f"Scenario parameter {name}: {unused(parameter.factor, parameter.key)}"
                 )
             if parameter.unit != specs[parameter.factor]["unit"]:
                 raise AgentError(f"Scenario unit does not match factor {parameter.factor}")

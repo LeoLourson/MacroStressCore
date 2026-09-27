@@ -125,6 +125,26 @@ table,
   cursor: help;
 }
 
+.status-badge .mantine-Badge-label {
+  overflow: visible;
+  text-overflow: clip;
+}
+
+.status-badge-text {
+  display: inline-grid;
+  justify-items: start;
+  text-align: left;
+}
+
+.status-badge-text > span {
+  grid-area: 1 / 1;
+  visibility: hidden;
+}
+
+.status-badge-text > span:not([aria-hidden]) {
+  visibility: visible;
+}
+
 .clickable-row {
   cursor: pointer;
 }

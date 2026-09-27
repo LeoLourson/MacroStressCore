@@ -4,6 +4,7 @@ import {
   Anchor,
   Badge,
   Button,
+  Collapse,
   Group,
   List,
   Menu,
@@ -27,8 +28,10 @@ import {
   IconPencil,
   IconPlayerPlay,
   IconPlus,
+  IconRefresh,
 } from '@tabler/icons-react';
 import { useMemo, useState } from 'react';
+import { useNavigate } from 'react-router';
 import { ApiError } from '../../../api/client';
 import { useResumeGraph, useScenarioCheck } from '../../../api/queries';
 import type {
@@ -44,10 +47,10 @@ import type {
 import { canFixGraph, useSession } from '../../../auth/session';
 import { ErrorAlert } from '../../../components/ErrorAlert';
 import { Term } from '../../../components/Term';
-import { day, elasticityText, metricValue, nodeLabels, number, plural, scenarioValue } from '../../../lib/format';
+import { day, elasticityText, nodeLabels, number, plural, scenarioValue } from '../../../lib/format';
 import { factorLabel } from '../../../api/catalog';
-import { PASSPORT } from '../../../lib/labels';
 import { ACTIVE, stopOf } from '../../../lib/stages';
+import type { RerunState } from '../../NewRun';
 import type { RunTabProps } from '../RunPage';
 import { EdgeDrawer, fragmentText } from './EdgeDrawer';
 import { edgeCaption, GraphCanvas } from './GraphCanvas';
@@ -67,40 +70,9 @@ function quote(evidence: ScenarioParameter['evidence'] | undefined, document: So
   return '—';
 }
 
-function Understanding({ plan, document }: { plan: ScenarioPlan; document: SourceDocument | null | undefined }) {
-  const passport = plan.passport ?? {};
-  const facts = Object.entries(PASSPORT)
-    .filter(([key]) => passport[key as keyof typeof passport])
-    .map(([key, name]) => {
-      const value = passport[key as keyof typeof passport] as string;
-      return `${name}: ${key === 'effective_date' ? day(value) : value}`;
-    });
-  const numbers = Object.values(plan.numbers ?? {});
-  if (!facts.length && !numbers.length) return null;
-  return (
-    <Stack gap="xs">
-      <Title order={4}>Что система поняла из текста</Title>
-      {facts.length > 0 && <Text size="sm">{facts.join(' · ')}</Text>}
-      {numbers.length > 0 && (
-        <Table withTableBorder fz="sm">
-          <Table.Thead>
-            <Table.Tr>
-              <Table.Th w={160}>Число</Table.Th>
-              <Table.Th>Где сказано</Table.Th>
-            </Table.Tr>
-          </Table.Thead>
-          <Table.Tbody>
-            {numbers.map((item, i) => (
-              <Table.Tr key={i}>
-                <Table.Td className="num">{metricValue(item.value, item.unit)}</Table.Td>
-                <Table.Td>{quote(item.evidence, document)}</Table.Td>
-              </Table.Tr>
-            ))}
-          </Table.Tbody>
-        </Table>
-      )}
-    </Stack>
-  );
+/** A graph the screens can draw; an answer that failed every check leaves an empty object. */
+function drawable(graph: Graph | null | undefined): Graph | null {
+  return graph && Array.isArray(graph.nodes) && Array.isArray(graph.edges) ? graph : null;
 }
 
 function Gate({
@@ -121,7 +93,8 @@ function Gate({
   onEdge: (index: number) => void;
 }) {
   const { graph: graphProblems, scenario: scenarioProblems } = split(violations);
-  const words = gateWords(stop, plan, changed, graphProblems, scenarioProblems);
+  const built = !!graph?.nodes.length;
+  const words = gateWords(stop, plan, changed, graphProblems, scenarioProblems, built);
   const color = words.tone === 'problem' ? 'orange' : words.tone === 'task' ? 'yellow' : 'steel';
   const icon =
     words.tone === 'problem' ? <IconAlertTriangle /> : words.tone === 'task' ? <IconMessageReport /> : <IconInfoCircle />;
@@ -129,7 +102,7 @@ function Gate({
     <Alert color={color} variant="light" icon={icon} title={words.title} styles={{ title: { fontSize: 'var(--mantine-font-size-md)' } }}>
       <Stack gap="xs">
         <Text size="sm">{words.text}</Text>
-        {violations.length > 0 && (
+        {built && violations.length > 0 && (
           <List size="sm" spacing={4}>
             {graphProblems.map((v, i) => {
               const index = edgeIndex(v.path);
@@ -208,7 +181,7 @@ function ScenarioTable({
           {plan.text
             ? 'Сценарий не задан: модель не извлекла параметры из описания силы события.'
             : 'Сценарий не задан: при запуске не описали силу события.'}
-          {editing ? ' Добавьте параметры вручную.' : ''}
+          {editing && graph?.nodes.length ? ' Добавьте параметры вручную.' : ''}
         </Alert>
       ) : (
         <Table.ScrollContainer minWidth={720}>
@@ -295,9 +268,14 @@ function Effects({ effects }: { effects: { label: string; sector: string; okved:
 
 function EdgesTable({ graph, flagged, onSelect }: { graph: Graph; flagged: Set<number>; onSelect: (i: number) => void }) {
   const names = nodeLabels(graph);
+  // The graph above shows the same links; the list is for checking them one by one.
+  const [opened, setOpened] = useState(flagged.size > 0);
   return (
     <Stack gap="xs">
-      <Title order={5}>Связи и их источники</Title>
+      <Anchor component="button" type="button" size="sm" w="fit-content" onClick={() => setOpened(!opened)}>
+        {opened ? 'Скрыть список связей' : `Список связей и их источников (${graph.edges.length})`}
+      </Anchor>
+      <Collapse in={opened}>
       <Table.ScrollContainer minWidth={720}>
         <Table withTableBorder highlightOnHover fz="sm">
           <Table.Thead>
@@ -332,6 +310,7 @@ function EdgesTable({ graph, flagged, onSelect }: { graph: Graph; flagged: Set<n
           </Table.Tbody>
         </Table>
       </Table.ScrollContainer>
+      </Collapse>
     </Stack>
   );
 }
@@ -387,9 +366,10 @@ function Body({
   draft: Draft | null;
 }) {
   const { me } = useSession();
+  const navigate = useNavigate();
   const plan = artifacts.scenario ?? {};
   const document = artifacts.document;
-  const graph = draft ? draft.graph : (artifacts.graph ?? stop?.graph ?? null);
+  const graph = draft ? draft.graph : (drawable(artifacts.graph) ?? drawable(stop?.graph));
   const parameters = draft ? draft.parameters : (plan.parameters ?? {});
   const hasGraph = !!graph?.nodes?.length;
   const check = useScenarioCheck(
@@ -444,6 +424,19 @@ function Body({
     );
   };
 
+  // A graph the model could not build may be within reach of the provider's stronger model.
+  const strong = me?.llm?.strong_model;
+  const stronger = !!strong && status.versions?.model_version !== strong;
+  const rerun = () => {
+    const state: RerunState = {
+      portfolioId: artifacts.portfolio_id ?? undefined,
+      eventText: artifacts.event_text ?? undefined,
+      scenario: plan.text ?? undefined,
+      strongModel: stronger,
+    };
+    navigate('/new', { state });
+  };
+
   const modalName = newOne ? newOne[0] : editingName;
   const modalParameter = newOne ? newOne[1] : editingName ? parameters[editingName] : null;
   const blocking = violations.length > 0;
@@ -461,8 +454,6 @@ function Body({
           onEdge={setSelected}
         />
       )}
-
-      <Understanding plan={plan} document={document} />
 
       <Paper p="lg">
         <Stack gap="lg">
@@ -517,11 +508,18 @@ function Body({
             <Alert color="orange" variant="light" title="Модель не смогла построить граф">
               <Stack gap="xs">
                 <Text size="sm">
-                  Загрузите граф вручную или запустите стресс-тест заново с уточнённым текстом события.
+                  {stronger
+                    ? `Запустите стресс-тест заново более сильной моделью (${strong}), уточните текст события или загрузите граф вручную.`
+                    : 'Запустите стресс-тест заново с уточнённым текстом события или загрузите граф вручную.'}
                 </Text>
-                <Button variant="light" w="fit-content" onClick={() => setJsonOpen(true)}>
-                  Загрузить граф из JSON
-                </Button>
+                <Group gap="sm">
+                  <Button variant="light" leftSection={<IconRefresh size={16} />} onClick={rerun}>
+                    {stronger ? 'Запустить заново более сильной моделью' : 'Запустить заново'}
+                  </Button>
+                  <Button variant="default" onClick={() => setJsonOpen(true)}>
+                    Загрузить граф из JSON
+                  </Button>
+                </Group>
               </Stack>
             </Alert>
           ) : (
@@ -592,7 +590,9 @@ function Body({
             )}
             <Group justify="space-between">
               <Text size="sm" c={blocking ? 'orange.9' : 'dimmed'}>
-                {blocking
+                {!hasGraph
+                  ? 'Подтверждать нечего: графа нет'
+                  : blocking
                   ? `${plural(violations.length, 'проблема мешает', 'проблемы мешают', 'проблем мешают')} продолжить`
                   : draft.changed
                     ? check.isFetching
@@ -610,7 +610,7 @@ function Body({
                   leftSection={draft.changed ? <IconPlayerPlay size={16} /> : <IconCheck size={16} />}
                   onClick={confirm}
                   loading={resume.isPending}
-                  disabled={blocking}
+                  disabled={blocking || !hasGraph}
                 >
                   {draft.changed ? 'Подтвердить правки и продолжить' : 'Подтвердить как есть'}
                 </Button>
@@ -626,7 +626,7 @@ function Body({
 function Editor({ status, artifacts, stop, interruptId }: RunTabProps & { stop: FixGraphStop; interruptId: string }) {
   const initial = useMemo(
     () => ({
-      graph: (artifacts.graph ?? stop.graph ?? { event_id: 'event', nodes: [], edges: [], factor_elasticity: {} }) as Graph,
+      graph: drawable(artifacts.graph) ?? drawable(stop.graph) ?? { event_id: 'event', nodes: [], edges: [], factor_elasticity: {} },
       parameters: (stop.macro_parameters ?? artifacts.scenario?.parameters ?? {}) as Record<string, ScenarioParameter>,
     }),
     [artifacts.graph, artifacts.scenario?.parameters, stop],

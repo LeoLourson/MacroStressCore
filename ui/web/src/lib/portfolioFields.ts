@@ -73,22 +73,11 @@ export function fieldValue(field: EditorField, position: DraftPosition): unknown
   return empty(value) ? derivedValue(field, position) ?? field.default : value;
 }
 
-export function fieldHelp(field: EditorField, base: string, currency = base): string {
+/** What the field is, in a few words, as its plugin explains it; dates also say their format. */
+export function fieldHelp(field: EditorField): string | undefined {
   const parts = [field.hint];
-  const unit = unitSuffix(field.unit, base, currency);
-  if (field.unit === 'fraction') parts.push('Введите процент: например, 15 для 15%.');
-  else if (unit) parts.push(`Единицы ввода: ${unit}.`);
-  if (field.kind === 'dates') parts.push('Даты через запятую в формате ГГГГ-ММ-ДД.');
-  if (field.default != null && !field.derive_from) {
-    const value = typeof field.default === 'number' ? toScreen(field.unit, field.default) : field.default;
-    parts.push(`Если поле пусто, применяется ${String(value)}${unit ? ` ${unit}` : ''}.`);
-  }
-  if (!field.hint) {
-    parts.unshift(field.target === 'position' ? 'Параметр вашей позиции в портфеле.'
-      : field.target.startsWith('snapshot:') ? 'Укажите значение на дату оценки из отчётности или вашей оценки.'
-        : 'Укажите значение из условий инструмента.');
-  }
-  return parts.filter(Boolean).join(' ');
+  if (field.kind === 'dates') parts.push('даты через запятую, ГГГГ-ММ-ДД');
+  return parts.filter(Boolean).join('; ') || undefined;
 }
 
 /**

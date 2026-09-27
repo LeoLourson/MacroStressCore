@@ -192,7 +192,7 @@ STRESS_TEST = WorkflowSpec(
         NodeSpec("quant_agent", "core.quant", "calculation", branch="branch_position_id"),
         NodeSpec("aggregate", "core.aggregate", "portfolio"),
         NodeSpec("after_calculation", None, "portfolio"),
-        NodeSpec("advisory_agent", "core.advisory", "portfolio"),
+        NodeSpec("advisory_agent", "core.advisory", "report"),
         NodeSpec("before_report", None, "decision"),
         NodeSpec("human_approval", "core.human_approval", "decision", human=True),
         NodeSpec("publish", "core.publish", "decision"),
@@ -275,9 +275,9 @@ STRESS_TEST = WorkflowSpec(
         StageSpec(
             "calculation", "Расчёт по позициям", ("exposure_profiler", "draw_macro", "quant_agent")
         ),
-        StageSpec(
-            "portfolio", "Итоги по портфелю", ("aggregate", "after_calculation", "advisory_agent")
-        ),
+        StageSpec("portfolio", "Итоги по портфелю", ("aggregate", "after_calculation")),
+        # The numbers are ready before the report: writing it is a step of its own.
+        StageSpec("report", "Написание отчёта", ("advisory_agent",)),
         StageSpec("decision", "Решение по отчёту", ("before_report", "human_approval", "publish")),
     ),
     core_keys=CORE_KEYS,

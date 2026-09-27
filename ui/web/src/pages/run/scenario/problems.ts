@@ -1,6 +1,6 @@
 // What the graph stop says, in words about the edges and parameters it concerns.
 import type { FixGraphStop, Graph, GraphEdge, ScenarioParameter, ScenarioPlan, Violation } from '../../../api/types';
-import { approver, nodeLabels, timestamp } from '../../../lib/format';
+import { approver, nodeLabels, plural, timestamp } from '../../../lib/format';
 import { RULE_CHECKS } from '../../../lib/labels';
 
 /** Verdicts that block the graph; stop payloads also carry the checks that passed. */
@@ -37,7 +37,8 @@ export function problemText(violation: Violation, graph: Graph | null | undefine
   // The contract rejects an empty source list before V8 runs.
   if ((violation.path ?? '').endsWith('/evidence')) rule = 'V8';
   let what = RULE_CHECKS[rule] ?? message;
-  if (!['V7', 'V8'].includes(rule) && message && what !== message) what += ` (${message})`;
+  // V3, V7 and V8 say everything in their own words; their message is for the model.
+  if (!['V3', 'V7', 'V8'].includes(rule) && message && what !== message) what += ` (${message})`;
   const edge = index != null ? graph?.edges?.[index] : undefined;
   if (edge) return `Связь «${names[edge.src] ?? edge.src} → ${names[edge.dst] ?? edge.dst}»: ${what}`;
   return `Граф: ${what || 'не прошёл проверку'}`;
@@ -56,8 +57,17 @@ export function gateWords(
   changed: boolean,
   graphProblems: Violation[],
   scenarioProblems: Violation[],
+  built: boolean,
 ): { title: string; text: string; tone: 'task' | 'problem' | 'calm' } {
   const decision = stop.decision;
+  // Without a graph the checks only say its fields are missing; the stop says what to do.
+  if (!built) {
+    return {
+      title: 'Модель не построила граф',
+      text: `Ни одна из ${plural(stop.attempts ?? 0, 'попытки', 'попыток', 'попыток')} языковой модели не прошла проверку. Запустите стресс-тест заново или загрузите граф из JSON.`,
+      tone: 'problem',
+    };
+  }
   if (decision?.outcome === 'returned') {
     return {
       title: 'Риск-менеджер вернул отчёт на доработку',

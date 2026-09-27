@@ -118,7 +118,12 @@ export function RunsList() {
           </Text>
         </Stack>
         {canRun(me) && (
-          <Button component={Link} to="/new" leftSection={<IconPlus size={18} />}>
+          <Button
+            component={Link}
+            to="/new"
+            leftSection={<IconPlus size={18} />}
+            w={{ base: '100%', sm: 320 }}
+          >
             Новый стресс-тест
           </Button>
         )}
@@ -140,7 +145,7 @@ export function RunsList() {
                 leftSection={<IconSearch size={16} />}
                 value={search}
                 onChange={(e) => setSearch(e.currentTarget.value)}
-                w={320}
+                w={{ base: '100%', sm: 320 }}
               />
             </Group>
             <Paper>

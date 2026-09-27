@@ -49,7 +49,7 @@ function Mark({ state, index }: { state: StepState; index: number }) {
 /** The whole path of the stress test: what is done, where it is now, what is still ahead. */
 export function RunSteps({ steps }: { steps: StepView[] }) {
   return (
-    <SimpleGrid cols={{ base: 1, sm: 5 }} spacing="xs" component="ol" style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+    <SimpleGrid cols={{ base: 1, sm: 3, lg: steps.length }} spacing="xs" component="ol" style={{ listStyle: 'none', padding: 0, margin: 0 }}>
       {steps.map((step, index) => {
         const current = step.state !== 'done' && step.state !== 'todo';
         return (
