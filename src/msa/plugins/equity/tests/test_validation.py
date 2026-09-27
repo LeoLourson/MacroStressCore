@@ -56,7 +56,7 @@ def edit_values(snapshot, item_id, **value_changes):
 
 def test_requirements_include_fx_for_a_foreign_currency_share():
     model = ShareFactorStress()
-    ctx = context_of("EQ-TECH")  # USD share, RUB base
+    ctx = context_of("SHARE-US-TECH")  # USD share, RUB base
     needs = model.requirements(ctx, options())
     assert any(f.factor_id == "market.fx" for f in needs.factors)
     assert any(d.key == "fx" for d in needs.data)
@@ -64,7 +64,7 @@ def test_requirements_include_fx_for_a_foreign_currency_share():
 
 def test_requirements_omit_fx_for_a_base_currency_share():
     model = ShareFactorStress()
-    ctx = context_of("EQ-OIL")  # RUB share, RUB base
+    ctx = context_of("SHARE-OIL")  # RUB share, RUB base
     needs = model.requirements(ctx, options())
     assert not any(f.factor_id == "market.fx" for f in needs.factors)
     assert not any(d.key == "fx" for d in needs.data)
@@ -72,7 +72,7 @@ def test_requirements_omit_fx_for_a_base_currency_share():
 
 def test_requirements_always_include_market_and_sector_factors():
     model = ShareFactorStress()
-    ctx = context_of("EQ-OIL")
+    ctx = context_of("SHARE-OIL")
     needs = model.requirements(ctx, options())
     assert {f.factor_id for f in needs.factors} >= {"equity.market", "equity.sector"}
 
@@ -83,10 +83,10 @@ def test_requirements_always_include_market_and_sector_factors():
 def test_price_currency_mismatch_is_an_error():
     snapshot = edit_values(
         CASE.snapshot,
-        "price:EQ-OIL:2026-09-11",
+        "price:SHARE-OIL:2026-09-11",
         price={"value": 100.0, "unit": "USD_per_unit", "evidence": [_evidence()]},
     )
-    prepared, diagnostics = prepared_and_diagnostics("EQ-OIL", snapshot)
+    prepared, diagnostics = prepared_and_diagnostics("SHARE-OIL", snapshot)
     codes = [d.code for d in diagnostics.items]
     assert "price_currency_mismatch" in codes
     assert diagnostics.blocking
@@ -98,10 +98,10 @@ def test_price_currency_mismatch_is_an_error():
 def test_sensitivity_missing_beta_market_is_an_error():
     raw = CASE.snapshot.model_dump(mode="json")
     for item in raw["items"]:
-        if item["item_id"] == "sensitivity:EQ-OIL:2026-09-11":
+        if item["item_id"] == "sensitivity:SHARE-OIL:2026-09-11":
             del item["values"]["beta_market"]
     snapshot = DataSnapshot.model_validate(raw)
-    prepared, diagnostics = prepared_and_diagnostics("EQ-OIL", snapshot)
+    prepared, diagnostics = prepared_and_diagnostics("SHARE-OIL", snapshot)
     codes = [d.code for d in diagnostics.items]
     assert "sensitivity_missing:beta_market" in codes
 
@@ -112,12 +112,27 @@ def test_sensitivity_missing_beta_market_is_an_error():
 def test_dividend_horizon_mismatch_is_an_error():
     raw = CASE.snapshot.model_dump(mode="json")
     for item in raw["items"]:
-        if item["item_id"] == "dividend:EQ-OIL:2026-09-11":
+        if item["item_id"] == "dividend:SHARE-OIL:2026-09-11":
             item["attributes"] = {**item.get("attributes", {}), "horizon_months": 6}
     snapshot = DataSnapshot.model_validate(raw)
-    prepared, diagnostics = prepared_and_diagnostics("EQ-OIL", snapshot)
+    prepared, diagnostics = prepared_and_diagnostics("SHARE-OIL", snapshot)
     codes = [d.code for d in diagnostics.items]
     assert "dividend_horizon_mismatch" in codes
+
+
+# -- validate(): residual_volatility_invalid -------------------------------------------------
+
+
+def test_residual_volatility_above_the_declared_maximum_is_an_error():
+    raw = CASE.snapshot.model_dump(mode="json")
+    for item in raw["items"]:
+        if item["item_id"] == "sensitivity:SHARE-OIL:2026-09-11":
+            item["values"]["residual_volatility"]["value"] = 3.0
+    snapshot = DataSnapshot.model_validate(raw)
+    prepared, diagnostics = prepared_and_diagnostics("SHARE-OIL", snapshot)
+    codes = [d.code for d in diagnostics.items]
+    assert "residual_volatility_invalid" in codes
+    assert diagnostics.blocking
 
 
 # -- validate(): price_stale is a warning, not blocking --------------------------------------
@@ -125,8 +140,8 @@ def test_dividend_horizon_mismatch_is_an_error():
 
 def test_price_stale_is_a_warning_not_blocking():
     stale_date = (AS_OF - timedelta(days=30)).isoformat()
-    snapshot = edit_item(CASE.snapshot, "price:EQ-OIL:2026-09-11", observed_on=stale_date)
-    prepared, diagnostics = prepared_and_diagnostics("EQ-OIL", snapshot)
+    snapshot = edit_item(CASE.snapshot, "price:SHARE-OIL:2026-09-11", observed_on=stale_date)
+    prepared, diagnostics = prepared_and_diagnostics("SHARE-OIL", snapshot)
     stale = [d for d in diagnostics.items if d.code == "price_stale"]
     assert stale and stale[0].severity == "warning"
     assert prepared is not None

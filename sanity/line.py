@@ -45,6 +45,17 @@ class TextIngest:
         )
 
 
+class LibraryIngest:
+    """The text as the platform ingests it: the document id is the text's sha256, so the mock
+    profile recognises a library event and answers with its prepared graph and scenario."""
+
+    def run(self, payload) -> SourceDocument:
+        part = fragment(payload["text"], "p1")
+        return SourceDocument(
+            doc_id=part.sha256, sha256=part.sha256, mime="text/plain", fragments=[part]
+        )
+
+
 class AnalystGraph:
     """The causal step's answer: the event's graph and scenario, cited to the event text."""
 
@@ -101,13 +112,24 @@ class Outcome:
     error: str | None = None
 
 
-def run(bundle, snapshot, event: Event, *, seed=SEED, mc_points=MC_POINTS, horizon=12) -> Outcome:
+def run(
+    bundle,
+    snapshot,
+    event: Event,
+    *,
+    seed=SEED,
+    mc_points=MC_POINTS,
+    horizon=12,
+    ingest=None,
+    causal=None,
+) -> Outcome:
+    """``causal`` and ``ingest`` replace the analyst's graph of ``event`` and the plain text."""
     reg = registry()
     run_id = f"sanity-{next(_RUNS)}-{event.event_id}"
     sectors = {party.party_id: party.okved for party in bundle.parties}
     agents = Agents(
-        ingest=TextIngest(),
-        causal=AnalystGraph(event),
+        ingest=ingest or TextIngest(),
+        causal=causal or AnalystGraph(event),
         exposure=ExposureAgent(registry=reg, resolver=LocalResolver(snapshot, sectors.get)),
         draw_macro=DrawMacroAgent(registry=reg),
         quant=QuantAgent(registry=reg),

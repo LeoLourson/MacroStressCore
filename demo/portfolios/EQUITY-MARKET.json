@@ -1,0 +1,15 @@
+{
+  "portfolio": {
+    "portfolio_id": "EQUITY-MARKET",
+    "name": "Рынок акций",
+    "base_currency": "RUB",
+    "as_of": "2026-09-11",
+    "snapshot_id": "SYNTHETIC-THEMES-2026-09-11",
+    "builtin": true,
+    "metadata": {
+      "synthetic": true,
+      "description": "Акции компаний разных отраслей на Московской бирже и одна американская акция.",
+      "generated_by": "demo/build_catalog.py"
+    }
+  }
+}

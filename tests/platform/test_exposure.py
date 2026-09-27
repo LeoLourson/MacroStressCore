@@ -104,6 +104,26 @@ def test_reasons_no_graph_sector_when_okved_does_not_match():
     assert result == []
 
 
+def test_reasons_no_graph_sector_when_graph_sector_is_a_narrower_branch():
+    # A graph reaching only the class 23.61 does not reach a position of the sibling 23.51.
+    reg = registry_with_factor("credit.revenue", scope="graph")
+    ctx = context(okved="23.51")
+    g = graph_reaching("23.61", "credit.revenue")
+    requirements = DataRequirements(factors=[FactorRequirement(factor_id="credit.revenue")])
+    result = reasons(ctx, requirements, g, {}, reg)
+    assert result == []
+
+
+def test_reasons_graph_sector_when_graph_sector_is_a_broader_section():
+    # A graph reaching the section 23 reaches a position of the narrower 23.61.
+    reg = registry_with_factor("credit.revenue", scope="graph")
+    ctx = context(okved="23.61")
+    g = graph_reaching("23", "credit.revenue")
+    requirements = DataRequirements(factors=[FactorRequirement(factor_id="credit.revenue")])
+    result = reasons(ctx, requirements, g, {}, reg)
+    assert result == ["graph_sector:23.61"]
+
+
 def test_reasons_no_graph_sector_without_a_graph():
     reg = registry_with_factor("credit.revenue", scope="graph")
     ctx = context(okved="23.61")

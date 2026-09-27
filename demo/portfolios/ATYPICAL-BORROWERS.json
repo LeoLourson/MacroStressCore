@@ -1,0 +1,32 @@
+{
+  "portfolio": {
+    "portfolio_id": "ATYPICAL-BORROWERS",
+    "name": "Нестандартные заёмщики",
+    "base_currency": "RUB",
+    "as_of": "2026-09-11",
+    "snapshot_id": "SYNTHETIC-2026-09-11",
+    "builtin": true,
+    "metadata": {
+      "synthetic": true,
+      "cases": {
+        "CASE-LOSS-MAKING": "negative_ebitda",
+        "CASE-LOW-DATA-QUALITY": "dq_010",
+        "CASE-NO-FINANCIALS": "missing_financials",
+        "CASE-COVENANT-BREACHED": "base_covenant_breached",
+        "CASE-NO-FLOATING-DEBT": "zero_floating_debt",
+        "CASE-LAG-18M": "lag_18_months",
+        "CASE-NO-PEERS": "no_peers",
+        "CASE-OVERCOLLATERALISED": "collateral_cr_gt_1"
+      },
+      "graph_overrides": {
+        "CASE-LAG-18M": {
+          "lag_months": 18
+        }
+      },
+      "conventions": [
+        "Lag is an edge property; F/A apply graph_overrides when constructing the edge-case scenario. It is not a financial field.",
+        "Each case restates LOAN-MACHINERY (46.63) or LOAN-FERTILIZER (20.15) of MULTI-ASSET with one feature changed"
+      ]
+    }
+  }
+}

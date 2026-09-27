@@ -1,0 +1,62 @@
+{
+  "parties": [
+    {
+      "party_id": "SUPERMARKET-CHAIN",
+      "name": "Сеть супермаркетов",
+      "kind": "company",
+      "okved": "47.11",
+      "country": "RU",
+      "description": "Продуктовые супермаркеты",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "demo:companies",
+          "locator": "SUPERMARKET-CHAIN",
+          "fragment_sha256": "9b405867c413bbea4608259c87316a86e7631cabd64582d6b0d541f921039ed5",
+          "author": "demo:catalog",
+          "as_of": "2026-09-11"
+        }
+      ]
+    }
+  ],
+  "instruments": [
+    {
+      "instrument_id": "SHARE-SUPERMARKET-CHAIN",
+      "instrument_type": "common_stock",
+      "name": "Обыкновенная акция: Сеть супермаркетов",
+      "currency": "RUB",
+      "issuer_id": "SUPERMARKET-CHAIN",
+      "terms": {
+        "ticker": "SMKT",
+        "market_index": "MOEX",
+        "sector": "trade"
+      },
+      "schema_version": "1"
+    }
+  ],
+  "positions": [
+    {
+      "position_id": "SHARE-SUPERMARKET-CHAIN",
+      "instrument_id": "SHARE-SUPERMARKET-CHAIN",
+      "params": {
+        "quantity": {
+          "value": 1000000,
+          "unit": "shares",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "SUPERMARKET-CHAIN/quantity",
+              "fragment_sha256": "6b64dfd61ad35516ef066fbb8461959bb0119578560e3c012ac599c1bb6dc7ec",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "direction": "long"
+      },
+      "schema_version": "1",
+      "model_id": null
+    }
+  ]
+}

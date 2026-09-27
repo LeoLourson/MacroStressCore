@@ -1,5 +1,5 @@
 # Native stack on Windows without Docker: PostgreSQL + the API with the browser app.
-#   .\msa.ps1 up [deepseek|local|mock] | down | status | logs [name] | rehearse [EVENT-A EVENT-B]
+#   .\msa.ps1 up [deepseek|local|mock] | down | status | logs [name] | rehearse [RECYCLING-FEE MORTGAGE-DOWN-PAYMENT]
 #   deepseek — DeepSeek API (DEEPSEEK_API_KEY), local — LM Studio on 127.0.0.1:1234, mock — no LLM
 param(
     [Parameter(Position = 0)]

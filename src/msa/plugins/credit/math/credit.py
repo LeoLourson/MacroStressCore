@@ -152,10 +152,15 @@ def corporate_features(
 
 
 def coverage_feature(ratio, defined, *, cap=DEFAULT_ICR_CAP) -> np.ndarray:
-    """``log(1 + 1/ratio)`` of a coverage ratio; ``cap`` where it is undefined or not positive."""
+    """``log(1 + 1/ratio)`` of a coverage ratio; ``cap`` where it is undefined or not positive.
+
+    An unlimited coverage (``+inf``: no interest at positive earnings, a project without
+    debt) is the best value, 0.
+    """
     ratio = np.asarray(ratio, dtype=float)
     usable = np.asarray(defined, dtype=bool) & (ratio > 0)
-    return np.where(usable, np.log1p(1.0 / np.where(usable, ratio, 1.0)), cap)
+    feature = np.where(usable, np.log1p(1.0 / np.where(usable, ratio, 1.0)), cap)
+    return np.where(np.isposinf(ratio), 0.0, feature)
 
 
 def score(

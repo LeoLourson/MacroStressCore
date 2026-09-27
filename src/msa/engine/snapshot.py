@@ -4,7 +4,7 @@ For each requirement the latest item of its kind and subject dated no later than
 is taken; an item dated after ``as_of`` is never used, and when only such items exist the
 requirement is reported ``dated_after_as_of`` rather than silently missing. Peers are the
 statements of other parties whose activity matches the party's OKVED branch, deepest match
-first — the same ranking as before the platform, now bounded by the valuation date.
+first, bounded by the valuation date.
 """
 
 from collections import defaultdict

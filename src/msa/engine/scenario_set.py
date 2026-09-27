@@ -3,9 +3,12 @@
 The platform draws the realisations once, before any position is calculated, from the
 confirmed factor distributions and the run seed: ``R`` independently scrambled Sobol
 replicates of ``N`` points (spec 13), columns in the sorted order of parameter names.
-Subject-specific shocks (an equity's residual return) are drawn by the platform too, each
-from its own deterministic stream keyed by the run seed and the subject, so they do not
-depend on which other positions the run holds or in which order.
+Subject-specific shocks (an equity's residual return) and the uncertain elasticities of the
+graph's edges are drawn by the platform too, each from its own deterministic stream keyed by
+the run seed and the subject or edge, so they do not depend on which other positions the run
+holds or in which order. These streams are stratified: every replicate covers the
+distribution evenly, one point in each of ``N`` equal intervals, in a random order that makes
+them independent of the scenario's Sobol points and of each other.
 
 ``scenario_id`` identifies the set: the factors and their order, the distributions, the
 dependence, the dates, the draw sizes, the seed, the factor versions and the realised
@@ -19,7 +22,6 @@ from hashlib import sha256
 
 import numpy as np
 from scipy import stats
-from scipy.stats import qmc
 
 from msa.contracts.graph import TransmissionGraph
 from msa.contracts.scenario import MacroParameter
@@ -140,16 +142,46 @@ def scenario_set_from_parameters(
     )
 
 
-def idiosyncratic_draws(shock: IdiosyncraticFactor, seed: int, points: int, replicates: int):
-    """A subject's own shock, shaped ``(replicates, points)``, from its own Sobol stream."""
-    digest = sha256(f"{seed}:{shock.subject}:{shock.name}".encode()).digest()
-    stream = int.from_bytes(digest[:4], "big")
-    m = points.bit_length() - 1
+def stratified(key: str, points: int, replicates: int) -> np.ndarray:
+    """Uniform draws ``(replicates, points)`` of one stream: each replicate puts one point in
+    each of ``points`` equal intervals, in a random order, from ``default_rng([key, r])``."""
+    stream = int.from_bytes(sha256(key.encode()).digest()[:8], "big")
     blocks = []
     for replicate in range(replicates):
-        unit = qmc.Sobol(d=1, scramble=True, seed=stream + replicate).random_base2(m)[:, 0]
-        blocks.append(stats.norm.ppf(np.clip(unit, _EPS, 1 - _EPS)) * shock.sigma)
+        rng = np.random.default_rng([stream, replicate])
+        blocks.append((rng.permutation(points) + rng.random(points)) / points)
     return np.stack(blocks)
+
+
+def idiosyncratic_draws(shock: IdiosyncraticFactor, seed: int, points: int, replicates: int):
+    """A subject's own shock, shaped ``(replicates, points)``, from its own stream."""
+    unit = stratified(f"{seed}:{shock.subject}:{shock.name}", points, replicates)
+    return stats.norm.ppf(np.clip(unit, _EPS, 1 - _EPS)) * shock.sigma
+
+
+def edge_elasticities(graph, seed: int, points: int, replicates: int) -> dict:
+    """``(src, dst)`` -> realisations ``(replicates, points)`` of each uncertain elasticity.
+
+    A triangular, uniform or lognormal elasticity of an edge is drawn from the edge's own
+    stream; a point elasticity has no realisations and the edge keeps its value.
+    """
+    result = {}
+    for edge in TransmissionGraph.model_validate(graph).edges:
+        spec = edge.elasticity
+        if spec.family == "point":
+            continue
+        if spec.family == "lognormal":
+            marginal_ = Marginal(kind="lognormal", mean=spec.mu, sigma=spec.sigma)
+        else:
+            marginal_ = Marginal(
+                kind=spec.family,
+                low=spec.low,
+                mode=getattr(spec, "mode", None),
+                high=spec.high,
+            )
+        unit = stratified(f"{seed}:edge:{edge.src}->{edge.dst}", points, replicates)
+        result[(edge.src, edge.dst)] = marginal_.ppf(unit)
+    return result
 
 
 @dataclass

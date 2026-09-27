@@ -11,6 +11,8 @@ SCHEMA_VERSION = "1"
 
 #: Snapshot kinds the equity plugin declares.
 SENSITIVITY = "sensitivity"
+#: Annual residual volatility above 200 % is a typing error (20 for 0.2), not a view.
+MAX_RESIDUAL_VOLATILITY = 2.0
 DIVIDEND = "dividend"
 
 

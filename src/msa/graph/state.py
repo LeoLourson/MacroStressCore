@@ -39,6 +39,8 @@ class RunState(TypedDict, total=False):
     #: Position id -> prepared inputs and the model's verdict on them.
     prepared: dict
     diagnostics: dict
+    #: Position id -> slice id -> exposure of the positions the scenario does not reach.
+    unreached_exposures: dict
     #: Position id -> what a person calls it.
     position_names: dict[str, str]
     #: The approved scenario set: its specification, identity and the shared matrix hash.

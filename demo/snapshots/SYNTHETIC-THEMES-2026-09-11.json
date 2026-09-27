@@ -1,0 +1,10 @@
+{
+  "snapshot_id": "SYNTHETIC-THEMES-2026-09-11",
+  "as_of": "2026-09-11",
+  "label": "Синтетические данные тематических портфелей на 11.09.2026",
+  "kind": "demo",
+  "metadata": {
+    "synthetic": true,
+    "generated_by": "demo/build_catalog.py"
+  }
+}

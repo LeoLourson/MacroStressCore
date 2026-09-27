@@ -9,7 +9,7 @@ its sector and the scenario parameters that reached it.
 from msa.contracts import CalculationResult, PositionContext, TransmissionGraph
 from msa.contracts.evidence import Evidence
 from msa.contracts.report import Report
-from msa.engine.okved import okved_depth
+from msa.engine.okved import okved_covers
 
 from .numbers import resolve_pointer
 from .tree import metric_tree
@@ -22,7 +22,7 @@ def _latest(rows, node):
 
 def _graph_sources(graph, okved):
     sectors = {
-        node.id for node in graph.nodes if node.kind == "sector" and okved_depth(okved, node.okved)
+        node.id for node in graph.nodes if node.kind == "sector" and okved_covers(node.okved, okved)
     }
     evidence = []
     for factor in (node.id for node in graph.nodes if node.kind == "factor"):
@@ -100,7 +100,7 @@ def trace_number(run_id, metric_path, repository, registry=None):
                     and position.okved
                     and any(
                         node.kind == "sector"
-                        and okved_depth(position.okved, node.okved)
+                        and okved_covers(node.okved, position.okved)
                         and graph.simple_paths(channel, node.id)
                         for node in graph.nodes
                     )

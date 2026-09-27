@@ -16,6 +16,7 @@ from ..math.operating import run as run_operating
 ANNUAL_FINANCIALS_FLAG = "annual_financials_spread_evenly"
 ASSUMED_WORKING_CAPITAL_FLAG = "assumed_working_capital_days"
 INVALID_ELASTICITY_FLAG = "demand_elasticity_missing_or_invalid"
+FX_WITHOUT_IMPORT_FLAG = "fx_without_import_share"
 
 MONTHS = 12
 M = "RUB_million"
@@ -170,7 +171,11 @@ class OperatingCompany(CreditFamily):
     def evaluate(self, inputs: Inputs, calendar, drivers) -> Evaluation:
         flags: list[str] = []
         base = self.base(inputs, flags)
-        unit_cost = compound(drivers["cogs"], drivers["logistics"], drivers["fx"])
+        # A currency shock moves only the imported part of the costs.
+        fx = np.asarray(drivers["fx"], dtype=float)
+        if inputs.import_share == 0 and np.any(fx != 0):
+            flags.append(FX_WITHOUT_IMPORT_FLAG)
+        unit_cost = compound(drivers["cogs"], drivers["logistics"], inputs.import_share * fx)
         revenue_driver = np.asarray(drivers["revenue"], dtype=float)
         price = np.zeros_like(unit_cost + revenue_driver)
         demand = revenue_driver

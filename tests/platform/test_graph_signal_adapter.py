@@ -16,6 +16,8 @@ from msa.contracts.graph import (
 from msa.contracts.scenario import MacroParameter
 from msa.engine.graph_adapter import central_elasticity, coordinate, temporal_graph
 from msa.engine.graph_signal import factor_change, factor_signal, reachable, target_node
+from msa.engine.scenario_set import edge_elasticities
+from msa.engine.transmission import DelayKernel, TemporalEdge
 from msa.plugin_sdk.specs import FactorSpec
 
 HORIZON = 3
@@ -68,7 +70,16 @@ def parameter(channel="channel", factor="credit.revenue"):
     )
 
 
-def signal_of(g, spec, *, okved=None, value=0.1, channel="channel", param_factor="credit.revenue"):
+def signal_of(
+    g,
+    spec,
+    *,
+    okved=None,
+    value=0.1,
+    channel="channel",
+    param_factor="credit.revenue",
+    elasticities=None,
+):
     return factor_signal(
         g,
         parameter(channel=channel, factor=param_factor),
@@ -77,6 +88,7 @@ def signal_of(g, spec, *, okved=None, value=0.1, channel="channel", param_factor
         value=value,
         horizon=HORIZON,
         flags=[],
+        elasticities=elasticities,
     )
 
 
@@ -184,6 +196,32 @@ def test_temporal_graph_sensitivity_is_the_absolute_central_elasticity():
     assert into_driver.gain() == 2.0  # sign +1 keeps the gain positive
 
 
+def test_temporal_graph_elasticities_override_an_edges_sensitivity_with_its_draws():
+    g = two_node_graph()
+    draws = np.array([[0.5, 1.0], [1.5, 2.0]])  # (replicates=2, points=2)
+    temporal = temporal_graph(g, log_factor(), HORIZON, {("channel", "factor"): draws})
+    into_driver = next(e for e in temporal.edges if e.dst == "factor")
+    assert np.array_equal(into_driver.sensitivity, draws)
+
+
+# -- TemporalEdge / TemporalGraph.propagate: array sensitivity (B10) ------------------------
+
+
+def test_temporal_edge_accepts_an_array_sensitivity():
+    draws = np.array([0.5, 1.0, 1.5])
+    e = TemporalEdge(src="a", dst="b", sign=1, sensitivity=draws, kernel=DelayKernel.fixed(0))
+    assert np.array_equal(e.gain(), draws)
+
+
+def test_temporal_graph_propagate_broadcasts_edge_draws_over_a_scalar_direct_input():
+    g = two_node_graph()
+    draws = np.array([[0.5, 1.0], [1.5, 2.0]])  # (replicates=2, points=2)
+    temporal = temporal_graph(g, log_factor(), HORIZON, {("channel", "factor"): draws})
+    direct = {"event": np.full(HORIZON, 0.1)}  # shape (H,), no draw axes
+    signals = temporal.propagate(direct, horizon=HORIZON)
+    assert signals["factor"].shape == (2, 2, HORIZON)
+
+
 # -- factor_signal() / factor_change() -----------------------------------------------------
 
 
@@ -245,6 +283,95 @@ def test_factor_signal_scales_with_edge_sensitivity():
     assert np.allclose(signal, 2.0 * np.log1p(0.1))
 
 
+def triangular_elasticity_graph():
+    """event -> channel -> factor, the last edge with a triangular elasticity (B10)."""
+    return TransmissionGraph(
+        event_id="event",
+        nodes=[
+            Node(id="event", kind="event", label="e"),
+            Node(id="channel", kind="channel", label="c"),
+            Node(id="factor", kind="factor", label="f", factor="credit.revenue"),
+        ],
+        edges=[
+            edge("event", "channel"),
+            Edge(
+                src="channel",
+                dst="factor",
+                sign=1,
+                elasticity=TriangularDistribution(low=0.5, mode=1.0, high=1.5),
+                lag_months=0,
+                evidence=evidence(),
+            ),
+        ],
+    )
+
+
+def test_factor_signal_without_elasticities_has_no_draw_axis():
+    g = triangular_elasticity_graph()
+    signal = signal_of(g, log_factor(), value=-0.1)
+    assert signal.shape == (HORIZON,)
+
+
+def test_factor_signal_with_elasticities_spreads_the_last_month_p5_below_p95():
+    g = triangular_elasticity_graph()
+    elasticities = edge_elasticities(g, seed=1, points=64, replicates=8)
+    signal = signal_of(g, log_factor(), value=-0.1, elasticities=elasticities)
+    p05, p95 = np.percentile(signal[..., -1], [5, 95])
+    assert p05 < p95
+
+
+def shared_factor_graph(*sectors, factor_id="credit.revenue"):
+    """One channel feeding one factor node through several sector nodes."""
+    nodes = [
+        Node(id="event", kind="event", label="e"),
+        Node(id="channel", kind="channel", label="c"),
+        Node(id="factor", kind="factor", label="f", factor=factor_id),
+    ]
+    edges = [edge("event", "channel")]
+    for i, okved in enumerate(sectors):
+        sector_id = f"s{i}"
+        nodes.append(Node(id=sector_id, kind="sector", label=sector_id, okved=okved))
+        edges.append(edge("channel", sector_id))
+        edges.append(edge(sector_id, "factor"))
+    return TransmissionGraph(event_id="event", nodes=nodes, edges=edges)
+
+
+def test_factor_signal_ignores_shocks_of_sectors_sharing_a_factor_node_with_another_okved():
+    shared = shared_factor_graph("23.61", "41.20", "46.63")
+    alone = shared_factor_graph("23.61")
+    shocked = signal_of(shared, log_factor(), okved="23.61", value=-0.1)
+    solo = signal_of(alone, log_factor(), okved="23.61", value=-0.1)
+    assert shocked is not None
+    assert np.allclose(shocked, solo)
+    assert np.allclose(shocked, np.log(0.9))
+
+
+def test_factor_signal_same_sector_on_two_channels_each_keeps_its_own_full_shock():
+    g = TransmissionGraph(
+        event_id="event",
+        nodes=[
+            Node(id="event", kind="event", label="e"),
+            Node(id="channel1", kind="channel", label="c1"),
+            Node(id="channel2", kind="channel", label="c2"),
+            Node(id="s1", kind="sector", label="s1", okved="23.61"),
+            Node(id="s2", kind="sector", label="s2", okved="23.61"),
+            Node(id="factor", kind="factor", label="f", factor="credit.revenue"),
+        ],
+        edges=[
+            edge("event", "channel1"),
+            edge("event", "channel2"),
+            edge("channel1", "s1"),
+            edge("channel2", "s2"),
+            edge("s1", "factor"),
+            edge("s2", "factor"),
+        ],
+    )
+    signal1 = signal_of(g, log_factor(), okved="23.61", value=0.1, channel="channel1")
+    signal2 = signal_of(g, log_factor(), okved="23.61", value=0.1, channel="channel2")
+    assert np.allclose(signal1, np.log1p(0.1))
+    assert np.allclose(signal2, np.log1p(0.1))
+
+
 # -- target_node(): deepest-sector choice and sectorless fallback --------------------------
 
 
@@ -268,12 +395,12 @@ def sectored_graph(*sectors_and_factors):
 def test_target_node_picks_the_deepest_okved_match():
     g = sectored_graph(("s1", "23.60", "f1"), ("s2", "23.61", "f2"))
     result = target_node(g, "credit.revenue", "23.61", "channel")
-    assert result == "f2"
+    assert result == ("f2", 4)
 
 
 def test_target_node_returns_none_when_no_sector_matches():
     g = sectored_graph(("s1", "11.11", "f1"))
-    assert target_node(g, "credit.revenue", "23.61", "channel") is None
+    assert target_node(g, "credit.revenue", "23.61", "channel") == (None, 0)
 
 
 def test_target_node_sectorless_single_factor_fallback():
@@ -286,7 +413,7 @@ def test_target_node_sectorless_single_factor_fallback():
         ],
         edges=[edge("event", "channel"), edge("channel", "factor")],
     )
-    assert target_node(g, "credit.revenue", "any-okved", "channel") == "factor"
+    assert target_node(g, "credit.revenue", "any-okved", "channel") == ("factor", 0)
 
 
 def test_target_node_ambiguous_sectorless_factors_return_none():
@@ -298,7 +425,7 @@ def test_target_node_ambiguous_sectorless_factors_return_none():
     ]
     edges = [edge("event", "channel"), edge("channel", "factor1"), edge("channel", "factor2")]
     g = TransmissionGraph(event_id="event", nodes=nodes, edges=edges)
-    assert target_node(g, "credit.revenue", "any", "channel") is None
+    assert target_node(g, "credit.revenue", "any", "channel") == (None, 0)
 
 
 def test_target_node_ignores_unreachable_factor_nodes():
@@ -310,7 +437,7 @@ def test_target_node_ignores_unreachable_factor_nodes():
     ]
     edges = [edge("event", "channel"), edge("event", "other"), edge("other", "factor")]
     g = TransmissionGraph(event_id="event", nodes=nodes, edges=edges)
-    assert target_node(g, "credit.revenue", "any", "channel") is None
+    assert target_node(g, "credit.revenue", "any", "channel") == (None, 0)
 
 
 # -- reachable() ---------------------------------------------------------------------------

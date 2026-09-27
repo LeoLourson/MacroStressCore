@@ -44,7 +44,7 @@ function following(node: string, workflow: WorkflowView | null | undefined): str
   return order[next] ?? node;
 }
 
-/** What a running stress test is busy with, in words: «Расчёт позиции (готова A3 — …)». */
+/** What a running stress test is busy with, in words: «Расчёт позиции (готова LOAN-MACHINERY — …)». */
 export function nowText(
   node: string | null | undefined,
   workflow: WorkflowView | null | undefined,

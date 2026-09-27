@@ -1,11 +1,10 @@
-"""The Track A profile of a credit position, assembled from the platform's data.
+"""The credit profile of a position, assembled from the platform's data.
 
 The borrower's figures come from its financial statement in the data snapshot, the latest
 one dated no later than the valuation date (audit finding A2: a historical stress never
 reads a later statement). The instrument's contractual terms and the snapshot's market
 quotes complete the family's inputs. The data-quality score and the peer substitution are
-those of the exposure agent before the platform (TZ 3.3), now a pure function of the
-prepared inputs.
+a pure function of the prepared inputs.
 """
 
 from math import exp
@@ -99,7 +98,7 @@ def financials(prepared) -> dict[str, Parameter]:
 
 
 def build(prepared) -> CreditProfile:
-    """The profile Track A reads, with its data-quality score and peer substitution."""
+    """The profile the credit model reads, with its data-quality score and peer substitution."""
     context = prepared.context
     family = family_for(context.instrument.instrument_type)
     params = CreditPosition.model_validate(context.position.params)

@@ -191,6 +191,9 @@ class Coverage(Contract):
     #: Share of the slice's exposure whose numbers entered the slice.
     covered_share: Probability
     limit: Probability
+    #: Share of the portfolio's exposure on this slice that the event reached; ``None`` when
+    #: the positions it did not reach were not measured.
+    portfolio_share: Probability | None = None
     #: Positions of the slice whose exposure could not be measured.
     unknown_exposure: list[Identifier] = Field(default_factory=list)
 

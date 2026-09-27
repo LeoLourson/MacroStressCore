@@ -46,6 +46,11 @@ def metric_tree(results, portfolio, *, registry, context=None) -> dict:
                         c.position_id: c.model_dump(mode="json") for c in item.contributions
                     },
                     "covered_percent": item.coverage.covered_share * 100,
+                    **(
+                        {"portfolio_percent": item.coverage.portfolio_share * 100}
+                        if item.coverage.portfolio_share is not None
+                        else {}
+                    ),
                 }
                 for slice_id, item in portfolio.slices.items()
             },

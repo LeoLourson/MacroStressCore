@@ -1,0 +1,212 @@
+{
+  "items": [
+    {
+      "item_id": "fx_rate:USD/RUB:2026-09-11",
+      "kind": "fx_rate",
+      "subject": "USD/RUB",
+      "observed_on": "2026-09-11",
+      "values": {
+        "rate": {
+          "value": 92.5,
+          "unit": "RUB_per_unit",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "US-PHARMA/fx_rate",
+              "fragment_sha256": "afd22667a970fdac27da1f06c1370b9efc85c74421d330be83f0bd97f7051341",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "entered_by": "demo:catalog"
+      },
+      "evidence": []
+    },
+    {
+      "item_id": "price:SHARE-COMMERCIAL-BANK",
+      "kind": "price",
+      "subject": "SHARE-COMMERCIAL-BANK",
+      "observed_on": "2026-09-11",
+      "values": {
+        "price": {
+          "value": 300.0,
+          "unit": "RUB_per_unit",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "COMMERCIAL-BANK/price",
+              "fragment_sha256": "bcc49e52e80bffebaabaeeaaf2eb37c34fc502cd1d1a851491616cd89c3af8ab",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "entered_by": "demo:catalog"
+      },
+      "evidence": []
+    },
+    {
+      "item_id": "price:SHARE-IT-DEVELOPER",
+      "kind": "price",
+      "subject": "SHARE-IT-DEVELOPER",
+      "observed_on": "2026-09-11",
+      "values": {
+        "price": {
+          "value": 400.0,
+          "unit": "RUB_per_unit",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "IT-DEVELOPER/price",
+              "fragment_sha256": "25a42d0349380e2cdda392f8d0dc14f2cd34d2e0a4a9bb73c39b3dfbda022a00",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "entered_by": "demo:catalog"
+      },
+      "evidence": []
+    },
+    {
+      "item_id": "price:SHARE-OIL-MAJOR",
+      "kind": "price",
+      "subject": "SHARE-OIL-MAJOR",
+      "observed_on": "2026-09-11",
+      "values": {
+        "price": {
+          "value": 500.0,
+          "unit": "RUB_per_unit",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "OIL-MAJOR/price",
+              "fragment_sha256": "2844894ab176917728d6aa4672838570bc0f83c947d77c33f4450213df5de095",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "entered_by": "demo:catalog"
+      },
+      "evidence": []
+    },
+    {
+      "item_id": "price:SHARE-STEEL-EXPORTER",
+      "kind": "price",
+      "subject": "SHARE-STEEL-EXPORTER",
+      "observed_on": "2026-09-11",
+      "values": {
+        "price": {
+          "value": 120.0,
+          "unit": "RUB_per_unit",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "STEEL-EXPORTER/price",
+              "fragment_sha256": "10960c93ceac71727ad04fac5c719e7970defbf64520df958ddf9048ee51dd52",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "entered_by": "demo:catalog"
+      },
+      "evidence": []
+    },
+    {
+      "item_id": "price:SHARE-SUPERMARKET-CHAIN",
+      "kind": "price",
+      "subject": "SHARE-SUPERMARKET-CHAIN",
+      "observed_on": "2026-09-11",
+      "values": {
+        "price": {
+          "value": 250.0,
+          "unit": "RUB_per_unit",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "SUPERMARKET-CHAIN/price",
+              "fragment_sha256": "cdb55e3206b2fd0be8e24adde7752a2fe43cbb6427368d77e597cb2f59d10538",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "entered_by": "demo:catalog"
+      },
+      "evidence": []
+    },
+    {
+      "item_id": "price:SHARE-TELECOM-OPERATOR",
+      "kind": "price",
+      "subject": "SHARE-TELECOM-OPERATOR",
+      "observed_on": "2026-09-11",
+      "values": {
+        "price": {
+          "value": 200.0,
+          "unit": "RUB_per_unit",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "TELECOM-OPERATOR/price",
+              "fragment_sha256": "015298d68322adc89b17d56b2d4094a4cd80d4655352a4627b190192f991bfe6",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "entered_by": "demo:catalog"
+      },
+      "evidence": []
+    },
+    {
+      "item_id": "price:SHARE-US-PHARMA",
+      "kind": "price",
+      "subject": "SHARE-US-PHARMA",
+      "observed_on": "2026-09-11",
+      "values": {
+        "price": {
+          "value": 150.0,
+          "unit": "USD_per_unit",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "US-PHARMA/price",
+              "fragment_sha256": "4cb148e58be0523f08b189f0e43caa0d44b1c009218d6f8a418b151e52c38ced",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "entered_by": "demo:catalog"
+      },
+      "evidence": []
+    }
+  ]
+}

@@ -16,4 +16,5 @@ def run(state, *, context):
         "reach": found["reach"],
         "prepared": found["prepared"],
         "diagnostics": found["diagnostics"],
+        "unreached_exposures": found["unreached_exposures"],
     }

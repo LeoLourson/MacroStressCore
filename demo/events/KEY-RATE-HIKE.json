@@ -1,0 +1,59 @@
+{
+  "event_id": "KEY-RATE-HIKE",
+  "title": "Повышение ключевой ставки на 3 п.п.",
+  "text": "Банк России повысил ключевую ставку на 3 процентных пункта. Банки поднимают ставки по кредитам компаниям.",
+  "metadata": {
+    "portfolio_id": "RATE-RISK",
+    "source": "Синтетическое событие демо-каталога",
+    "scenario_text": "Стоимость заёмных средств для компаний вырастет на 2–5 п.п., в центральном сценарии на 3 п.п."
+  },
+  "mock_answer": {
+    "event_type": "Повышение ключевой ставки",
+    "channels": {
+      "borrowing_cost": "Ставки по кредитам компаниям"
+    },
+    "links": [
+      {
+        "channel": "borrowing_cost",
+        "okved": "41.20",
+        "factor": "credit.interest"
+      },
+      {
+        "channel": "borrowing_cost",
+        "okved": "47.11",
+        "factor": "credit.interest"
+      },
+      {
+        "channel": "borrowing_cost",
+        "okved": "52.10",
+        "factor": "credit.interest"
+      },
+      {
+        "channel": "borrowing_cost",
+        "okved": "61.10",
+        "factor": "credit.interest"
+      }
+    ],
+    "scenario": {
+      "borrowing_cost": {
+        "kind": "triangular",
+        "low": 0.02,
+        "mode": 0.03,
+        "high": 0.05,
+        "label": "Рост ставок по кредитам",
+        "unit": "fraction",
+        "factor": "credit.interest",
+        "channel": "borrowing_cost"
+      }
+    }
+  },
+  "expect": {
+    "loses": [
+      "LOAN-LEVERAGED-DEVELOPER",
+      "LOAN-DISCOUNTER-CHAIN",
+      "LOAN-WAREHOUSE-OPERATOR",
+      "BOND-FIXED-TELECOM-OPERATOR",
+      "BOND-FLOATING-TELECOM-OPERATOR"
+    ]
+  }
+}

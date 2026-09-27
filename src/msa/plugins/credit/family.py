@@ -1,6 +1,7 @@
 """A credit family: one monthly model of a borrower, shared by its instrument types.
 
-A family declares everything Track A and the platform need to know about its types:
+A family declares everything the credit model and the platform need to know about its
+types:
 
 - the inputs it reads, each with its unit, Russian label, whether it is required, the
   default used when it is absent, and where it comes from: the borrower's statement in
@@ -12,7 +13,7 @@ A family declares everything Track A and the platform need to know about its typ
 - the PD segment it belongs to by default;
 - ``evaluate``: the monthly model under a set of driver shocks.
 
-Track A (``track_a``) is family-agnostic: scenario draws, transmission, the PD score,
+The credit model (``position_risk``) is family-agnostic: scenario draws, transmission, the PD score,
 expected loss, covenants, Shapley and reverse stress work the same for every family.
 """
 
@@ -125,6 +126,8 @@ class Inputs:
         self._fields = {item.name: item for item in fields}
         self._values = {name: float(item.value) for name, item in profile.financials.items()}
         self._flags = flags
+        #: The share of costs bought abroad: the part of them a currency shock moves.
+        self.import_share = float(profile.import_share)
 
     def __contains__(self, name: str) -> bool:
         self._field(name)
@@ -210,10 +213,12 @@ class CreditFamily(ABC):
     def evaluate(self, inputs: Inputs, calendar, drivers: dict[str, np.ndarray]) -> Evaluation:
         """The monthly model under the given driver shocks (zero shocks give the base)."""
 
-    def market(self, profile, inputs, registry, flags, pd):
+    def market(self, profile, inputs, registry, flags, pd, rate=None):
         """Central market repricing and the position change per realisation, if any.
 
-        ``pd`` is ``(base, stress, realised)`` at the horizon end when the PD is calibrated.
+        ``pd`` is ``(base, stress, realised)`` at the horizon end when the PD is calibrated;
+        ``rate`` is the ``(central, realised)`` change of the borrower's rate at the horizon
+        end, in annual rate points.
         """
         return None, None
 

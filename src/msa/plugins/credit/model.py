@@ -1,9 +1,9 @@
-"""Track A v3.2 as the platform's credit models: one per family.
+"""The credit model as the platform's calculation models: one per family.
 
 ``requirements`` asks for the borrower's statement, peers and the family's market quotes;
-``validate`` assembles the Track A profile and judges it as the exposure and quant agents
-did before the platform; ``calculate`` runs Track A on the run's joint realisations and
-wraps its ``RiskResult`` in the common envelope, with typed metrics and the position's
+``validate`` assembles the credit profile and judges whether it can be calculated;
+``calculate`` runs the position's risk on the run's joint realisations and wraps its
+``RiskResult`` in the common envelope, with typed metrics and the position's
 contribution to the credit-loss slice.
 """
 
@@ -18,10 +18,10 @@ from . import calibration, profile
 from .contracts import RiskResult
 from .factors import FACTORS
 from .families import family_for
-from .track_a import MODEL_VERSION, AssetRiskInput, review_flags, run_asset
+from .position_risk import MODEL_VERSION, AssetRiskInput, review_flags, run_asset
 
 PLUGIN_ID = "credit"
-PLUGIN_VERSION = "3.2.0"
+PLUGIN_VERSION = "3.3.0"
 SLICE = "credit.loss"
 REGISTRY_OPTION = "credit.registry_id"
 RUB = "RUB_million"
@@ -61,7 +61,7 @@ class CreditModel(CalculationModel):
         self.family = family
         self.model_id = family.model_id
         self.instrument_types = tuple(family.types)
-        self.label = "Track A v3.2: " + ", ".join(family.types.values()).lower()
+        self.label = "Кредитный риск: " + ", ".join(family.types.values()).lower()
         self.description = (
             "Помесячная модель заёмщика на совместных сценариях: PD, ожидаемые потери, "
             "ковенанты, ликвидность, вклад каналов и обратный стресс-тест."
@@ -75,8 +75,13 @@ class CreditModel(CalculationModel):
         context = prepared.context
         items: list[Diagnostic] = []
         params = context.position.params
-        ead = (params.get("ead") or {}).get("value") if isinstance(params, dict) else None
-        exposures = {SLICE: float(ead) if ead is not None else None}
+        ead, ccf = (
+            ((params.get(name) or {}).get("value") for name in ("ead", "ccf"))
+            if isinstance(params, dict)
+            else (None, None)
+        )
+        # The amount at risk, as the calculation reads it: EAD times CCF.
+        exposures = {SLICE: float(ead) * float(ccf) if None not in (ead, ccf) else None}
 
         def blocked(code, message, status="invalid"):
             return Diagnostics(
@@ -88,7 +93,7 @@ class CreditModel(CalculationModel):
         if context.instrument.currency != "RUB" or context.base_currency != "RUB":
             return blocked(
                 "credit_currency_unsupported",
-                "кредитные модели Track A считают позиции и портфели только в рублях",
+                "кредитные модели считают позиции и портфели только в рублях",
             )
         if context.issuer is None or not context.issuer.okved:
             return blocked("issuer_okved_missing", "у заёмщика не указан ОКВЭД")
@@ -158,7 +163,7 @@ class CreditModel(CalculationModel):
                 )
             if credit.lgd is not None:
                 metrics["credit.lgd"] = scalar("credit.lgd", "fraction", credit.lgd)
-        metrics["credit.ead"] = scalar("credit.ead", RUB, built.ead)
+        metrics["credit.ead"] = scalar("credit.ead", RUB, built.exposure)
 
         contributions = []
         if risk.aggregation_draws is not None:
@@ -176,7 +181,7 @@ class CreditModel(CalculationModel):
                     unit=RUB,
                     horizon=risk.horizon,
                     scenario_id=context.scenario.scenario_id,
-                    exposure=built.ead,
+                    exposure=built.exposure,
                     exposure_basis="ead",
                     admission=admission,
                     draws=list(risk.aggregation_draws),

@@ -1,11 +1,11 @@
-"""Track A v3.2 for one credit position: scenario draws -> driver shocks -> the family -> risk.
+"""The risk of one credit position: scenario draws -> driver shocks -> the family -> risk.
 
 Nothing here depends on the instrument type. The position's ``CreditFamily`` turns driver
 shocks into monthly trajectories, metrics and PD features; this module turns those into the
 credit, market, liquidity and covenant results, their P5/P50/P95 over the run's joint
 realisations, Shapley contributions by channel and the reverse stress test.
 
-Track A reads the run's joint scenario matrix and uses the parameters that move a credit
+The model reads the run's joint scenario matrix and uses the parameters that move a credit
 factor; parameters of other families' factors (an equity index, a currency pair) belong to
 the same realisations but do not shock a borrower.
 """
@@ -26,6 +26,7 @@ from msa.plugin_sdk.calc import (
     NO_PATH_FLAG,
     ScenarioSet,
     code_sha256,
+    edge_elasticities,
     estimate,
     expected_shortfall,
     factor_change,
@@ -62,15 +63,21 @@ from .math.credit import (
     score,
 )
 
-MODEL_VERSION = "3.2.0"
+MODEL_VERSION = "3.3.0"
 SYNTHETIC_CALIBRATION_FLAG = "calibration_synthetic"
 LGD_NOT_APPLICABLE_FLAG = "lgd_not_applicable"
 COVENANT_OUTSIDE_PREFIX = "covenant_outside_horizon:"
 COVENANT_UNDEFINED_PREFIX = "covenant_metric_undefined:"
 REVERSE_UNDEFINED_PREFIX = "reverse_stress_undefined:"
+REVERSE_DIRECTION_UNDEFINED_FLAG = "reverse_stress_direction_undefined"
+#: EBITDA is not positive already in the base: every PD feature sits at its cap, so no
+#: scenario can move the PD and the change of losses is not measurable.
+PD_AT_MAXIMUM_FLAG = "pd_at_model_maximum"
 
 #: Gaps of any model that send a result to review (spec 19); models add their own.
-GENERIC_REVIEW_FLAGS = frozenset({"numerical_tolerance_not_met", SYNTHETIC_CALIBRATION_FLAG})
+GENERIC_REVIEW_FLAGS = frozenset(
+    {"numerical_tolerance_not_met", SYNTHETIC_CALIBRATION_FLAG, PD_AT_MAXIMUM_FLAG}
+)
 REVIEW_PREFIXES = (
     COVENANT_OUTSIDE_PREFIX,
     "covenant_metric_unavailable:",
@@ -116,7 +123,7 @@ class BondMarketCalibration:
 
 
 @dataclass
-class V3ModelRegistry:
+class ModelRegistry:
     """Approved calibrations and process rules injected into the pure calculation."""
 
     calibrations: CalibrationRegistry = field(default_factory=CalibrationRegistry)
@@ -134,7 +141,7 @@ class V3ModelRegistry:
         default_factory=lambda: {
             name: MODEL_VERSION
             for name in (
-                "track_a",
+                "position_risk",
                 "transmission",
                 "operating",
                 "credit",
@@ -160,6 +167,7 @@ class _Evaluation:
     metrics: dict[str, np.ndarray]
     credit_score: CreditScore
     flags: list[str]
+    features: dict[str, np.ndarray] = field(default_factory=dict)
 
 
 @dataclass
@@ -170,7 +178,7 @@ class _Asset:
     model: CreditFamily
     inputs: Inputs
     calendar: Calendar
-    registry: V3ModelRegistry
+    registry: ModelRegistry
     segment: str
 
     def evaluate(self, drivers) -> _Evaluation:
@@ -183,7 +191,7 @@ class _Asset:
             flags=flags,
         )
         series = {**evaluation.series, "risk_score": credit.value}
-        return _Evaluation(series, evaluation.metrics, credit, flags)
+        return _Evaluation(series, evaluation.metrics, credit, flags, evaluation.features)
 
     def expected_loss(self, evaluation: _Evaluation):
         pd_path = np.asarray(evaluation.credit_score.pd, dtype=float)
@@ -192,7 +200,7 @@ class _Asset:
         return expected_loss(
             marginal,
             np.full(pd_path.shape, float(profile.lgd)),
-            np.full(pd_path.shape, float(profile.ead)),
+            np.full(pd_path.shape, profile.exposure),
             self.calendar.discount_factors(0.0),
         )
 
@@ -200,11 +208,11 @@ class _Asset:
 def run_asset(
     input: AssetRiskInput,
     scenario_set: ScenarioSet,
-    model_registry: V3ModelRegistry | None,
+    model_registry: ModelRegistry | None,
     seed: int,
 ) -> RiskResult:
-    """Track A v3.2 for one credit position: ``RiskResult`` of spec 20."""
-    registry = model_registry or V3ModelRegistry()
+    """The risk of one credit position: ``RiskResult`` of spec 20."""
+    registry = model_registry or ModelRegistry()
     profile = input.profile
     model = family_for(profile.asset_type)
     flags: list[str] = []
@@ -221,10 +229,21 @@ def run_asset(
         name: marginal.central_value() for name, marginal in scenario_set.marginals().items()
     }
     random_values = {name: sampled.stacked(name) for name in sampled.names}  # (replicate, point)
+    # The realisations also draw the uncertain elasticities of the graph's edges; the
+    # central evaluation, Shapley and reverse stress stay on the central graph.
+    elasticities = edge_elasticities(
+        input.graph, seed, scenario_set.points, scenario_set.replicates
+    )
 
     base = asset.evaluate(_zero_drivers((), input.horizon))
-    stress = asset.evaluate(_driver_shocks(input, scenario_set, central, flags=flags))
-    random = asset.evaluate(_driver_shocks(input, scenario_set, random_values, flags=flags))
+    stress_drivers = _driver_shocks(input, scenario_set, central, flags=flags)
+    random_drivers = _driver_shocks(
+        input, scenario_set, random_values, flags=flags, elasticities=elasticities
+    )
+    stress, random = asset.evaluate(stress_drivers), asset.evaluate(random_drivers)
+    nonpositive = base.features.get("ebitda_nonpositive")
+    if nonpositive is not None and np.any(np.asarray(nonpositive)[..., -1] > 0):
+        _add(flags, PD_AT_MAXIMUM_FLAG)
     for item in (*base.flags, *stress.flags, *random.flags):
         _add(flags, item)
 
@@ -260,7 +279,7 @@ def run_asset(
         pd=float(stress.credit_score.pd[..., -1]) if calibrated else None,
         lgd=float(profile.lgd) if model.lgd_applicable else None,
         lgd_applicable=model.lgd_applicable,
-        ead=float(profile.ead),
+        ead=profile.exposure,
         expected_loss=None if stress_el is None else float(np.asarray(stress_el)),
         delta_expected_loss=None if stress_el is None else central_target,
     )
@@ -279,7 +298,14 @@ def run_asset(
             if calibrated
             else None
         )
-        market, position_draws = model.market(profile, asset.inputs, registry, flags, realised)
+        # The borrower's rate change at the horizon end, central and in each realisation.
+        rate = (
+            float(np.asarray(stress_drivers["interest"])[..., -1]),
+            np.asarray(random_drivers["interest"], dtype=float)[..., -1],
+        )
+        market, position_draws = model.market(
+            profile, asset.inputs, registry, flags, realised, rate
+        )
     if calibrated and registry.synthetic_calibration:
         _add(flags, SYNTHETIC_CALIBRATION_FLAG)
 
@@ -359,10 +385,19 @@ def credit_parameters(scenario_set) -> dict:
     }
 
 
-def driver_signal(graph, parameter, okved, value, horizon, *, flags) -> np.ndarray | None:
+def driver_signal(
+    graph, parameter, okved, value, horizon, *, flags, elasticities=None
+) -> np.ndarray | None:
     """The monthly signal one credit parameter sends to its driver for an asset of ``okved``."""
     return factor_signal(
-        graph, parameter, FACTORS[parameter.factor], okved, value, horizon, flags=flags
+        graph,
+        parameter,
+        FACTORS[parameter.factor],
+        okved,
+        value,
+        horizon,
+        flags=flags,
+        elasticities=elasticities,
     )
 
 
@@ -371,7 +406,7 @@ def driver_change(driver: str, signal) -> np.ndarray:
     return factor_change(FACTORS["credit." + driver], signal)
 
 
-def _driver_shocks(input, scenario_set, values, *, flags) -> dict[str, np.ndarray]:
+def _driver_shocks(input, scenario_set, values, *, flags, elasticities=None) -> dict:
     """Monthly shock of every driver of this asset under the given parameter values."""
     horizon = input.horizon
     signals: dict[str, list[np.ndarray]] = {name: [] for name in DRIVERS}
@@ -380,7 +415,13 @@ def _driver_shocks(input, scenario_set, values, *, flags) -> dict[str, np.ndarra
             _add(flags, f"scenario_parameter_unmapped:{name}")
             continue
         signal = driver_signal(
-            input.graph, parameter, input.profile.okved, values[name], horizon, flags=flags
+            input.graph,
+            parameter,
+            input.profile.okved,
+            values[name],
+            horizon,
+            flags=flags,
+            elasticities=elasticities,
         )
         if signal is None:
             _add(flags, f"{NO_PATH_FLAG}:{name}")
@@ -454,6 +495,11 @@ def _covenants(asset: _Asset, scenario_set, stress, random, flags):
             lambda_max=_lambda_max(scenario_set),
             plausibility="Confirmed management scenario scaled proportionally.",
         )
+        if not direction.norm() > 0:
+            # A scenario centred on zero (a symmetric range, a zero shock) has no direction
+            # to scale along; the covenant itself is tested as usual.
+            _add(flags, REVERSE_DIRECTION_UNDEFINED_FLAG)
+            continue
 
         def metric_at(
             lam,

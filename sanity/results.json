@@ -13,7 +13,7 @@
    "delta_el": 0.0,
    "delta_pd": 0.0
   },
-  "seconds": 0.59
+  "seconds": 0.36
  },
  {
   "check_id": "A2",
@@ -29,7 +29,7 @@
    "down": 4.272986152944698,
    "up": -2.5391501057272468
   },
-  "seconds": 0.5
+  "seconds": 0.33
  },
  {
   "check_id": "A3",
@@ -42,24 +42,24 @@
   "ok": true,
   "observed": "ΔEL: 1.83, 4.273, 12.65, 33.95, 288.3",
   "numbers": {
-   "-0.05": 1.8298659604403955,
+   "-0.05": 1.829865960440399,
    "-0.1": 4.272986152944698,
    "-0.2": 12.646069173431142,
    "-0.3": 33.95351683953092,
    "-0.45": 288.3211209515639
   },
-  "seconds": 1.38
+  "seconds": 0.84
  },
  {
   "check_id": "A4",
   "group": "A",
   "title": "Каждый неблагоприятный драйвер увеличивает потери",
   "expectation": "Выручка −10 %, себестоимость +10 %, логистика +10 %, оборотный капитал +30 дней, ставка +3 п.п., capex +20 %, валютный курс +20 %: у каждого ΔEL > 0",
-  "portfolio": "1 заёмщик 23.61 (поддерживающий capex 600 в год)",
+  "portfolio": "1 заёмщик 23.61 (поддерживающий capex 600 в год, половина затрат — импорт)",
   "event": "7 событий, по одному на драйвер",
   "known": null,
   "ok": true,
-  "observed": "revenue: 4.493; cogs: 19.86; logistics: 19.86; working_capital: 1.831; interest: 1.995; capex: 0.1228; fx: 374.9",
+  "observed": "revenue: 4.493; cogs: 19.86; logistics: 19.86; working_capital: 1.831; interest: 1.995; capex: 0.1228; fx: 19.86",
   "numbers": {
    "credit.revenue": 4.493308496951354,
    "credit.cogs": 19.85996350227581,
@@ -67,9 +67,9 @@
    "credit.working_capital": 1.8314829839781837,
    "credit.interest": 1.9946698976961947,
    "credit.capex": 0.12282532627843246,
-   "credit.fx": 374.89730269497676
+   "credit.fx": 19.85996350227581
   },
-  "seconds": 1.64
+  "seconds": 1.15
  },
  {
   "check_id": "A5",
@@ -82,10 +82,10 @@
   "ok": true,
   "observed": "ΔEL 0,5×: 0.1984; 4,5×: 5.425",
   "numbers": {
-   "low": 0.19835171277664898,
-   "high": 5.424886196857564
+   "low": 0.1983517127766481,
+   "high": 5.424886196857575
   },
-  "seconds": 0.55
+  "seconds": 0.3
  },
  {
   "check_id": "A6",
@@ -114,13 +114,13 @@
    ],
    "delta_el": [
     0.28993850355048334,
-    1.9189094814416148,
+    1.9189094814416112,
     4.272986152944698,
-    7.404403732312645,
-    11.251475344280003
+    7.404403732312652,
+    11.251475344280006
    ]
   },
-  "seconds": 2.6
+  "seconds": 0.79
  },
  {
   "check_id": "A7",
@@ -148,11 +148,11 @@
    "delta_el": [
     6.9636653195529465,
     4.048649604450423,
-    3.2802537128454468,
-    2.7222479138105715
+    3.2802537128454503,
+    2.722247913810575
    ]
   },
-  "seconds": 1.64
+  "seconds": 0.62
  },
  {
   "check_id": "A8",
@@ -166,10 +166,10 @@
   "observed": "ΔEL: 19.01, 8.063, 2.73",
   "numbers": {
    "0.0": 19.011474991543892,
-   "0.5": 8.062685099266412,
+   "0.5": 8.062685099266409,
    "1.0": 2.730121936564947
   },
-  "seconds": 0.79
+  "seconds": 0.43
  },
  {
   "check_id": "A9",
@@ -186,7 +186,7 @@
    "-1.0": 2.730121936564947,
    "-2.0": 6.187391098412222
   },
-  "seconds": 0.96
+  "seconds": 0.48
  },
  {
   "check_id": "A10",
@@ -203,7 +203,7 @@
    "1000.0": 4.272986152944698,
    "2000.0": 8.545972305889396
   },
-  "seconds": 0.89
+  "seconds": 0.42
  },
  {
   "check_id": "A11",
@@ -216,11 +216,11 @@
   "ok": true,
   "observed": "ΔEL: 1.899, 3.798, 7.596",
   "numbers": {
-   "0.2": 1.8991049568643135,
-   "0.4": 3.798209913728627,
-   "0.8": 7.596419827457254
+   "0.2": 1.8991049568643117,
+   "0.4": 3.7982099137286234,
+   "0.8": 7.596419827457247
   },
-  "seconds": 0.9
+  "seconds": 0.42
  },
  {
   "check_id": "A12",
@@ -242,7 +242,7 @@
     4.272986152944698
    ]
   },
-  "seconds": 0.57
+  "seconds": 0.34
  },
  {
   "check_id": "A13",
@@ -252,13 +252,13 @@
   "portfolio": "2 одинаковых заёмщика 23.61 с CCF 1 и 0,5",
   "event": "выручка 23.61: −10 %",
   "known": null,
-  "ok": false,
-  "observed": "ΔEL при CCF 1: 4.273; при CCF 0,5: 4.273; флаги о CCF: нет",
+  "ok": true,
+  "observed": "ΔEL при CCF 1: 4.273; при CCF 0,5: 2.136; флаги о CCF: нет",
   "numbers": {
    "ccf1": 4.272986152944698,
-   "ccf05": 4.272986152944698
+   "ccf05": 2.136493076472349
   },
-  "seconds": 0.48
+  "seconds": 0.29
  },
  {
   "check_id": "A14",
@@ -268,30 +268,30 @@
   "portfolio": "2 одинаковых заёмщика 23.61 с долей импорта в затратах 0 и 0,8",
   "event": "валютный курс (credit.fx) 23.61: +20 %",
   "known": null,
-  "ok": false,
-  "observed": "ΔEL без импорта: 372.9; импортёр: 372.9; флаги об импорте: нет",
+  "ok": true,
+  "observed": "ΔEL без импорта: 0; импортёр: 89.84; флаг «шок курса без доли импорта» у заёмщика без импорта: есть",
   "numbers": {
-   "domestic": 372.90379107441055,
-   "importer": 372.90379107441055
+   "domestic": 0.0,
+   "importer": 89.83900778555015
   },
-  "seconds": 0.49
+  "seconds": 0.28
  },
  {
   "check_id": "A15",
   "group": "A",
   "title": "Убыточный заёмщик под новым шоком",
-  "expectation": "EBITDA < 0; выручка −10 %: потери растут (ΔEL > 0) или результат помечен как вырожденный",
+  "expectation": "EBITDA < 0; выручка −10 %: потери растут (ΔEL > 0) или результат помечен как вырожденный (pd_at_model_maximum) и уходит на проверку",
   "portfolio": "1 заёмщик 23.61 с EBITDA −500 (себестоимость 10000, опер. расходы 2500)",
   "event": "выручка 23.61: −10 %",
-  "known": "credit README, находка 2 (вырождение PD при EBITDA ≤ 0)",
-  "ok": false,
-  "observed": "PD база 0.9802, PD стресс 0.9802, ΔEL 0, статус needs_review; флаги: annual_financials_spread_evenly, simplified_tax, funding_gap, ltm_annualised, ebitda_nonpositive, calibration_synthetic",
+  "known": null,
+  "ok": true,
+  "observed": "PD база 0.9802, PD стресс 0.9802, ΔEL 0, статус needs_review; флаги: pd_at_model_maximum, annual_financials_spread_evenly, simplified_tax, funding_gap, ltm_annualised, ebitda_nonpositive, calibration_synthetic",
   "numbers": {
    "pd_base": 0.9801596942659225,
    "pd_stress": 0.9801596942659225,
    "delta_el": 0.0
   },
-  "seconds": 0.21
+  "seconds": 0.15
  },
  {
   "check_id": "A16",
@@ -301,13 +301,13 @@
   "portfolio": "2 заёмщика 23.61: валовый долг 0 (чистый долг −500, деньги 500) и валовый долг 1000 (чистый долг −2000, деньги 3000)",
   "event": "выручка 23.61: −10 %",
   "known": null,
-  "ok": false,
-  "observed": "PD база без долга: 0.5; с долгом 1000: 0.007766; флаги без долга: annual_financials_spread_evenly, simplified_tax, ltm_annualised, cash_interest_nonpositive, calibration_synthetic, icr_undefined_in_some_scenarios",
+  "ok": true,
+  "observed": "PD база без долга: 0.006693; с долгом 1000: 0.007766; флаги без долга: annual_financials_spread_evenly, simplified_tax, ltm_annualised, cash_interest_nonpositive, calibration_synthetic, icr_undefined_in_some_scenarios",
   "numbers": {
-   "no_debt": 0.5,
-   "small_debt": 0.007766048943619766
+   "no_debt": 0.0066928509242848554,
+   "small_debt": 0.007766048943619768
   },
-  "seconds": 0.49
+  "seconds": 0.3
  },
  {
   "check_id": "A17",
@@ -317,21 +317,21 @@
   "portfolio": "2 одинаковых заёмщика 23.61: без ковенанта и с ковенантом ICR ≥ 2",
   "event": "выручка 23.61: треуг. −5 / 0 / +5 %",
   "known": null,
-  "ok": false,
-  "observed": "без ковенанта: P5/P95 ΔEL -1.004/1.197; с ковенантом: failed/invalid model_error:ValidationError (1 validation error for ReverseStressDirection: Input should be greater than 0 [type=greater_than, input_value=0.0, input_type=float])",
+  "ok": true,
+  "observed": "без ковенанта: P5/P95 ΔEL -1.003/1.196; с ковенантом: completed/needs_review annual_financials_spread_evenly, simplified_tax, ltm_annualised, reverse_stress_direction_undefined, calibration_synthetic",
   "numbers": {
    "spans": {
     "FREE": [
-     -1.0041690612796417,
-     1.1969157968227282
+     -1.003334766704191,
+     1.19587285550446
     ],
     "COV": [
-     null,
-     null
+     -1.003334766704191,
+     1.19587285550446
     ]
    }
   },
-  "seconds": 0.57
+  "seconds": 0.3
  },
  {
   "check_id": "A18",
@@ -345,11 +345,11 @@
   "observed": "PD стресс 0.9802; ΔEL P95 426.4; предел LGD·EAD − EL базы = 450 − 14.7 = 435.3",
   "numbers": {
    "pd": 0.9801596942659225,
-   "delta_el_p95": 426.3767677099091,
+   "delta_el_p95": 426.376767709909,
    "base_el": 14.69509470975612,
    "cap": 435.3049052902439
   },
-  "seconds": 0.36
+  "seconds": 0.23
  },
  {
   "check_id": "B1",
@@ -366,7 +366,7 @@
     "CONC"
    ]
   },
-  "seconds": 0.25
+  "seconds": 0.16
  },
  {
   "check_id": "B2",
@@ -376,21 +376,17 @@
   "portfolio": "3 заёмщика: 23.61, 23.51, 23.99",
   "event": "выручка 23.61: −10 %",
   "known": null,
-  "ok": false,
-  "observed": "достигнуты: ['C2351', 'C2361', 'C2399']; изменение выручки: C2351 -0.1, C2361 -0.1, C2399 -0.1",
+  "ok": true,
+  "observed": "достигнуты: ['C2361']; изменение выручки: C2361 -0.1",
   "numbers": {
    "reached": [
-    "C2351",
-    "C2361",
-    "C2399"
+    "C2361"
    ],
    "revenue_change": {
-    "C2351": -0.09999999999999998,
-    "C2361": -0.09999999999999998,
-    "C2399": -0.09999999999999998
+    "C2361": -0.09999999999999998
    }
   },
-  "seconds": 0.95
+  "seconds": 0.17
  },
  {
   "check_id": "B3",
@@ -408,7 +404,7 @@
     "C2361"
    ]
   },
-  "seconds": 0.5
+  "seconds": 0.29
  },
  {
   "check_id": "B4",
@@ -437,7 +433,7 @@
     4.272986152944698
    ]
   },
-  "seconds": 0.68
+  "seconds": 0.51
  },
  {
   "check_id": "B5",
@@ -456,25 +452,25 @@
    "9": 0.1916844686608723,
    "12": 0.0
   },
-  "seconds": 1.33
+  "seconds": 0.79
  },
  {
   "check_id": "B6",
   "group": "B",
   "title": "Два способа записать «продажи упадут на 35 %»",
-  "expectation": "Канал «продажи» −35 % со знаком +1 и канал «падение продаж» +35 % со знаком −1 (так велит промпт каузального агента: канал формулируется как растущий) дают одно и то же падение выручки 35 %",
+  "expectation": "Канал «продажи» −35 % со знаком +1 даёт падение выручки на 35 %. Запись «падение продаж» +35 % со знаком −1 означает обратную зависимость (1/1,35 − 1): предпросмотр аналитика показывает то же число, что расчёт, а промпт каузального агента требует первой записи",
   "portfolio": "1 заёмщик 23.61",
   "event": "(а) −0,35, знак +1; (б) +0,35, знак −1",
   "known": null,
-  "ok": false,
-  "observed": "выручка (а) -0.35, (б) -0.2593; ΔEL (а) 60.58, (б) 22.4; предпросмотр аналитика: (а) -0.35, (б) -0.2593",
+  "ok": true,
+  "observed": "выручка (а) -0.35, (б) -0.2593; ΔEL (а) 60.58, (б) 22.4; предпросмотр аналитика: (а) -0.35, (б) -0.2593; промпт v4 требует записи (а): да",
   "numbers": {
-   "revenue_a": -0.35,
+   "revenue_a": -0.34999999999999987,
    "revenue_b": -0.2592592592592593,
-   "delta_el_a": 60.58320485791514,
+   "delta_el_a": 60.583204857915156,
    "delta_el_b": 22.40060879224088
   },
-  "seconds": 0.62
+  "seconds": 0.37
  },
  {
   "check_id": "B7",
@@ -492,11 +488,11 @@
     -0.09750000000000003
    ],
    "delta_el": [
-    4.13182915731292,
-    4.13182915731292
+    4.131829157312916,
+    4.131829157312916
    ]
   },
-  "seconds": 0.61
+  "seconds": 0.32
  },
  {
   "check_id": "B8",
@@ -506,13 +502,13 @@
   "portfolio": "1 заёмщик 23.61",
   "event": "выручка −10 % на отрасли 23.61, 41.20, 46.63: (а) узел фактора на каждую отрасль; (б) общий узел фактора",
   "known": null,
-  "ok": false,
-  "observed": "выручка 23.61: отдельные узлы -0.1, общий узел -0.271; ΔEL 4.273 и 25.17; предпросмотр аналитика: -0.1 и -0.271",
+  "ok": true,
+  "observed": "выручка 23.61: отдельные узлы -0.1, общий узел -0.1; ΔEL 4.273 и 4.273; предпросмотр аналитика: -0.1 и -0.1",
   "numbers": {
    "separate": -0.09999999999999998,
-   "shared": -0.271
+   "shared": -0.09999999999999998
   },
-  "seconds": 0.68
+  "seconds": 0.34
  },
  {
   "check_id": "B9",
@@ -527,7 +523,7 @@
   "numbers": {
    "reached": []
   },
-  "seconds": 0.06
+  "seconds": 0.02
  },
  {
   "check_id": "B10",
@@ -537,13 +533,13 @@
   "portfolio": "1 заёмщик 23.61",
   "event": "выручка 23.61: точечно −10 %; эластичность ребра (а) 1, (б) треуг. 0,5–1–1,5",
   "known": null,
-  "ok": false,
-  "observed": "ширина P5–P95 ΔEL: точечная 0, треугольная 0",
+  "ok": true,
+  "observed": "ширина P5–P95 ΔEL: точечная 0, треугольная 3.714",
   "numbers": {
    "point": 0.0,
-   "triangular": 0.0
+   "triangular": 3.714478792087669
   },
-  "seconds": 0.52
+  "seconds": 0.34
  },
  {
   "check_id": "B11",
@@ -554,9 +550,9 @@
   "event": "выручка 23.61: точечно −100 % и −150 %",
   "known": null,
   "ok": true,
-  "observed": "-100%: сценарий принят на остановке аналитика; failed/invalid: model_error:ValueError (relative shock for channel must be greater than -1); -150%: сценарий принят на остановке аналитика; failed/invalid: model_error:ValueError (relative shock for channel must be greater than -1)",
+  "observed": "-100%: сценарий отклонён на остановке; сценарий не принят: Шок фактора «Выручка» выходит из его области: значение должно быть больше -1. (); -150%: сценарий отклонён на остановке; сценарий не принят: Шок фактора «Выручка» выходит из его области: значение должно быть больше -1. ()",
   "numbers": {},
-  "seconds": 0.23
+  "seconds": 0.04
  },
  {
   "check_id": "B12",
@@ -569,7 +565,7 @@
   "ok": true,
   "observed": "сценарий не принят: Для фактора «Выручка» нужна единица «fraction».",
   "numbers": {},
-  "seconds": 0.03
+  "seconds": 0.02
  },
  {
   "check_id": "C1",
@@ -580,12 +576,12 @@
   "event": "выручка 23.61: треуг. −15 / −10 / −5 %",
   "known": null,
   "ok": true,
-  "observed": "P95 среза 19.3911 при сумме 19.3911; P50 12.8189 при сумме 12.8189",
+  "observed": "P95 среза 19.3853 при сумме 19.3853; P50 12.8187 при сумме 12.8187",
   "numbers": {
-   "slice_p95": 19.391129690335596,
-   "sum_p95": 19.391129690335596
+   "slice_p95": 19.385250084070453,
+   "sum_p95": 19.385250084070456
   },
-  "seconds": 1.07
+  "seconds": 0.43
  },
  {
   "check_id": "C2",
@@ -596,20 +592,20 @@
   "event": "выручка 23.61: треуг. −15 / −10 / −5 %",
   "known": null,
   "ok": true,
-  "observed": "P5/P50/P95: 2.524/4.273/6.464 и 2.524/4.273/6.464",
+  "observed": "P5/P50/P95: 2.525/4.273/6.462 и 2.525/4.273/6.462",
   "numbers": {
    "one": [
-    2.5235467114861656,
-    4.272961551408635,
-    6.463709896778532
+    2.5249673699725292,
+    4.272904499041335,
+    6.461750028023485
    ],
    "split": [
-    2.523546711486167,
-    4.2729615514086365,
-    6.463709896778534
+    2.5249673699725315,
+    4.272904499041337,
+    6.4617500280234825
    ]
   },
-  "seconds": 0.78
+  "seconds": 0.5
  },
  {
   "check_id": "C3",
@@ -620,30 +616,31 @@
   "event": "выручка 23.61: треуг. −15 / −10 / −5 %",
   "known": null,
   "ok": true,
-  "observed": "P95: 6.4637099 и 6.4637099",
+  "observed": "P95: 6.46175 и 6.46175",
   "numbers": {
    "p95": [
-    6.463709896778532,
-    6.463709896778532
+    6.461750028023485,
+    6.461750028023485
    ]
   },
-  "seconds": 0.48
+  "seconds": 0.32
  },
  {
   "check_id": "C4",
   "group": "C",
   "title": "Концентрация и охват по всему портфелю",
-  "expectation": "В портфеле 5 равных заёмщиков, событие задевает одного: HHI и охват описывают портфель (HHI 0,2) или явно сказано, что они по затронутым позициям",
+  "expectation": "В портфеле 5 равных заёмщиков, событие задевает одного: HHI описывает портфель (0,2), а срез говорит, что событие затронуло 20 % портфеля",
   "portfolio": "5 равных заёмщиков: 23.61, 41.20, 62.01, 10.11, 46.71",
   "event": "выручка 23.61: −10 %",
-  "known": "credit README, находка 1 (F07: охват и HHI по затронутым позициям)",
-  "ok": false,
-  "observed": "HHI 1; охват 1; достигнуты ['L0']",
+  "known": null,
+  "ok": true,
+  "observed": "HHI 0.2; охват расчётом 1; доля затронутого портфеля 0.2; достигнуты ['L0']",
   "numbers": {
-   "herfindahl": 1.0,
-   "covered_share": 1.0
+   "herfindahl": 0.20000000000000004,
+   "covered_share": 1.0,
+   "portfolio_share": 0.2
   },
-  "seconds": 0.3
+  "seconds": 0.17
  },
  {
   "check_id": "C5",
@@ -654,30 +651,30 @@
   "event": "выручка 23.61: треуг. −15 / −10 / −5 %",
   "known": null,
   "ok": true,
-  "observed": "P95 по позициям и срезу: 1.5434209, 6.4637099, 14.033373, 22.040504 | 1.5434209, 6.4637099, 14.033373, 22.040504 | 1.5434209, 6.4637099, 14.033373, 22.040504",
+  "observed": "P95 по позициям и срезу: 1.5429681, 6.46175, 14.029081, 22.033799 | 1.5429681, 6.46175, 14.029081, 22.033799 | 1.5429681, 6.46175, 14.029081, 22.033799",
   "numbers": {
    "runs": [
     [
-     1.5434208508839995,
-     6.463709896778532,
-     14.033372959190537,
-     22.04050370685307
+     1.5429681242923032,
+     6.461750028023485,
+     14.02908089821301,
+     22.0337990505288
     ],
     [
-     1.5434208508839995,
-     6.463709896778532,
-     14.033372959190537,
-     22.04050370685307
+     1.5429681242923032,
+     6.461750028023485,
+     14.02908089821301,
+     22.0337990505288
     ],
     [
-     1.5434208508839995,
-     6.463709896778532,
-     14.033372959190537,
-     22.04050370685307
+     1.5429681242923032,
+     6.461750028023485,
+     14.02908089821301,
+     22.0337990505288
     ]
    ]
   },
-  "seconds": 2.93
+  "seconds": 1.35
  },
  {
   "check_id": "C6",
@@ -688,16 +685,16 @@
   "event": "выручка 23.61: треуг. −30 / −10 / 0 %",
   "known": null,
   "ok": true,
-  "observed": "P95: 19.5019, 19.5384, 19.5428; разброс 0.209%",
+  "observed": "P95: 19.5106, 19.5461, 19.525; разброс 0.182%",
   "numbers": {
    "p95": [
-    19.501906261285562,
-    19.538412399379343,
-    19.542831328768884
+    19.5105855199737,
+    19.546079866389483,
+    19.524981506620918
    ],
-   "spread": 0.0020941217162876577
+   "spread": 0.0018159317192200399
   },
-  "seconds": 0.84
+  "seconds": 0.5
  },
  {
   "check_id": "C7",
@@ -714,7 +711,7 @@
    "meat": -2.5391501057272468,
    "slice": 1.7338360472174514
   },
-  "seconds": 0.61
+  "seconds": 0.31
  },
  {
   "check_id": "C8",
@@ -724,16 +721,16 @@
   "portfolio": "1 заёмщик 23.61 (для C8 прогон линии — зёрна 1 и 2; выборка — функцией ядра)",
   "event": "выручка 23.61: треуг. −30 / −10 / 0 %",
   "known": null,
-  "ok": false,
-  "observed": "общих реплик у зёрен 1 и 2: 7 из 8; P95 среза: 19.50190626 и 19.50190626",
+  "ok": true,
+  "observed": "общих реплик у зёрен 1 и 2: 0 из 8; P95 среза: 19.51058552 и 19.53849799",
   "numbers": {
-   "shared_replicates": 7,
+   "shared_replicates": 0,
    "p95": [
-    19.501906261285562,
-    19.501906261285562
+    19.5105855199737,
+    19.538497992291656
    ]
   },
-  "seconds": 0.57
+  "seconds": 0.41
  },
  {
   "check_id": "C9",
@@ -746,7 +743,7 @@
   "ok": true,
   "observed": "сценарий не принят: S: граф указывает влияние на позицию, но для модели позиции не задано изменение факторов. Добавьте параметр сценария: Рынок акций: MOEX; Отрасль (акции): materials. Нулевое влияние также нужно задать явно. Потери пока не оценены.",
   "numbers": {},
-  "seconds": 0.05
+  "seconds": 0.01
  },
  {
   "check_id": "D1",
@@ -759,7 +756,7 @@
   "ok": true,
   "observed": "потеря P5/P50/P95: -0/-0/0",
   "numbers": {},
-  "seconds": 0.13
+  "seconds": 0.1
  },
  {
   "check_id": "D2",
@@ -777,7 +774,7 @@
    "1.0": 10.0,
    "2.0": 19.0
   },
-  "seconds": 1.1
+  "seconds": 0.3
  },
  {
   "check_id": "D3",
@@ -794,7 +791,7 @@
     "US"
    ]
   },
-  "seconds": 0.15
+  "seconds": 0.1
  },
  {
   "check_id": "D4",
@@ -812,7 +809,7 @@
    ],
    "oil": 15.0
   },
-  "seconds": 0.14
+  "seconds": 0.09
  },
  {
   "check_id": "D5",
@@ -828,7 +825,7 @@
    "one": 10.0,
    "two": 20.0
   },
-  "seconds": 0.31
+  "seconds": 0.15
  },
  {
   "check_id": "D6",
@@ -844,7 +841,7 @@
    "value": 92.5,
    "loss": -9.250000000000014
   },
-  "seconds": 0.14
+  "seconds": 0.1
  },
  {
   "check_id": "D7",
@@ -859,7 +856,7 @@
   "numbers": {
    "loss": 0.924999999999983
   },
-  "seconds": 0.25
+  "seconds": 0.1
  },
  {
   "check_id": "D8",
@@ -870,12 +867,12 @@
   "event": "MOEX: 0",
   "known": null,
   "ok": true,
-  "observed": "P95 потери 38.91 млн ₽ (ожидалось 38.95)",
+  "observed": "P95 потери 38.94 млн ₽ (ожидалось 38.95)",
   "numbers": {
-   "p95": 38.9066538267455,
+   "p95": 38.93511096311959,
    "expected": 38.94872371007374
   },
-  "seconds": 0.17
+  "seconds": 0.1
  },
  {
   "check_id": "D9",
@@ -886,11 +883,11 @@
   "event": "MOEX: 0",
   "known": null,
   "ok": true,
-  "observed": "P95 среза 62.03; сумма P95 77.86; отношение 0.797",
+  "observed": "P95 среза 55.86; сумма P95 77.9; отношение 0.717",
   "numbers": {
-   "ratio": 0.79669616374455
+   "ratio": 0.7170201730487741
   },
-  "seconds": 0.37
+  "seconds": 0.18
  },
  {
   "check_id": "D10",
@@ -900,12 +897,12 @@
   "portfolio": "2 строки редактора с одним тикером AAA по 100 млн ₽, σ = 0,3",
   "event": "MOEX: 0",
   "known": null,
-  "ok": false,
-  "observed": "P95 среза 56.46; сумма P95 77.83; отношение 0.725",
+  "ok": true,
+  "observed": "P95 среза 77.8; сумма P95 77.8; отношение 1.000",
   "numbers": {
-   "ratio": 0.7254297511152685
+   "ratio": 1.0
   },
-  "seconds": 0.4
+  "seconds": 0.17
  },
  {
   "check_id": "D11",
@@ -920,7 +917,7 @@
   "numbers": {
    "loss": -5.0
   },
-  "seconds": 0.16
+  "seconds": 0.08
  },
  {
   "check_id": "D12",
@@ -930,22 +927,22 @@
   "portfolio": "2 разные акции (AAA 23.61, BBB 10.11) по 100 млн ₽, σ = 0,3",
   "event": "MOEX: 0",
   "known": null,
-  "ok": false,
-  "observed": "ρ по репликам: +0.83, -0.69, +0.82, +0.46, -0.41, +0.91, +0.76, -0.63; по всем точкам +0.257",
+  "ok": true,
+  "observed": "ρ по репликам: -0.08, -0.02, +0.03, +0.03, -0.05, -0.00, -0.01, +0.04; по всем точкам -0.007",
   "numbers": {
    "per_replicate": [
-    0.8266039612056159,
-    -0.6917772185360069,
-    0.8205306733548933,
-    0.4639172923373804,
-    -0.4060714471312408,
-    0.9089233726916557,
-    0.7641620355978794,
-    -0.6335127035880765
+    -0.07630543023596364,
+    -0.023292841024009286,
+    0.02939960286420065,
+    0.02686519719841147,
+    -0.04577833220021615,
+    -0.0012250403208589132,
+    -0.011145801297999974,
+    0.04427258625235882
    ],
-   "pooled": 0.2568047628707263
+   "pooled": -0.007394416203290875
   },
-  "seconds": 0.4
+  "seconds": 0.19
  },
  {
   "check_id": "D13",
@@ -955,22 +952,22 @@
   "portfolio": "1 акция 23.61 на 100 млн ₽, β = 1, σ = 0,3",
   "event": "MOEX: треуг. ln 0,8 / 0 / ln 1,2",
   "known": null,
-  "ok": false,
-  "observed": "ρ(f_m, ε) по репликам: -0.69, -0.42, -0.74, -0.42, -0.64, -0.70, +0.66, -0.70; по всем точкам -0.456; σ(ε) = 0.3001",
+  "ok": true,
+  "observed": "ρ(f_m, ε) по репликам: +0.04, +0.03, -0.01, +0.04, -0.06, -0.01, +0.03, -0.03; по всем точкам +0.005; σ(ε) = 0.3002",
   "numbers": {
    "per_replicate": [
-    -0.688626397727295,
-    -0.41897139967496394,
-    -0.7402226618635838,
-    -0.42144465432942774,
-    -0.6392314374947493,
-    -0.6984178638173866,
-    0.6556604779396258,
-    -0.6998467714609494
+    0.04369196747984916,
+    0.031724174276161816,
+    -0.006582574158133271,
+    0.04399895609296168,
+    -0.05734200725039587,
+    -0.013435225179002244,
+    0.03022861636271238,
+    -0.032650049830599576
    ],
-   "pooled": -0.4564306511547114
+   "pooled": 0.004970216289880685
   },
-  "seconds": 0.22
+  "seconds": 0.1
  },
  {
   "check_id": "E1",
@@ -986,7 +983,7 @@
    "price_change": -45.346007423471235,
    "delta_el": 12.646069173431142
   },
-  "seconds": 0.31
+  "seconds": 0.15
  },
  {
   "check_id": "E2",
@@ -995,14 +992,14 @@
   "expectation": "Рост ставок на 3 п.п.: облигация с фиксированным купоном дешевеет сильнее флоатера",
   "portfolio": "фикс. купон и флоатер одного эмитента, те же условия",
   "event": "ставка по долгу 23.61: +3 п.п. (credit.interest; другого фактора ставки нет)",
-  "known": "credit README, находка 4 (флоатер как фикс; безрисковая ставка не переоценивает)",
-  "ok": false,
-  "observed": "изменение цены P50: фикс -7.132, флоатер -7.132 млн ₽",
+  "known": null,
+  "ok": true,
+  "observed": "изменение цены P50: фикс -78.98, флоатер -7.132 млн ₽",
   "numbers": {
-   "fixed": -7.131922352037776,
-   "floater": -7.131922352037776
+   "fixed": -78.98370221653394,
+   "floater": -7.131922352037634
   },
-  "seconds": 0.54
+  "seconds": 0.35
  },
  {
   "check_id": "F1",
@@ -1016,9 +1013,9 @@
   "observed": "ΔEL: 0.6, 1.261, 1.995; покрытие P50: 0.9091, 0.8441, 0.7792",
   "numbers": {
    "delta_el": [
-    0.5999771932178106,
-    1.2612729216356868,
-    1.99495582319539
+    0.5999771932178177,
+    1.261272921635694,
+    1.9949558231953972
    ],
    "coverage": [
     0.9090788951582933,
@@ -1026,7 +1023,7 @@
     0.7792104815642514
    ]
   },
-  "seconds": 0.76
+  "seconds": 0.46
  },
  {
   "check_id": "F2",
@@ -1039,10 +1036,10 @@
   "ok": true,
   "observed": "ΔEL capex 0.261; ставка 0.1676",
   "numbers": {
-   "capex": 0.26101115492872395,
-   "rate": 0.16757302690827203
+   "capex": 0.26101115492873106,
+   "rate": 0.16757302690827913
   },
-  "seconds": 0.67
+  "seconds": 0.3
  },
  {
   "check_id": "G1",
@@ -1051,13 +1048,13 @@
   "expectation": "Ставка фондирования +3 п.п.: ΔEL > 0; результат с пометкой о непокрытых потерях лизингополучателей входит в срез по правилу включения",
   "portfolio": "лизинговая компания 64.91 (портфель 40000, долг 33000, капитал 8000)",
   "event": "ставка 64.91: +3 п.п.",
-  "known": "credit README, находка 5 (ECL лизингополучателей не моделируется)",
+  "known": "credit README, находка 3 (ECL лизингополучателей не моделируется)",
   "ok": true,
-  "observed": "ΔEL 1.444; статус needs_review; в срезе: ['LS']; флаги среза: ['needs_review_included_by_rule', 'inclusion_rule:S19-DEMO-1', 'included_by_rule:LS']",
+  "observed": "ΔEL 1.444; статус needs_review; в срезе: ['LS']; флаги среза: ['needs_review_included_by_rule', 'inclusion_rule:S19-SYNTHETIC-REVIEW', 'included_by_rule:LS']",
   "numbers": {
-   "delta_el": 1.443945184903388
+   "delta_el": 1.4439451849033915
   },
-  "seconds": 0.22
+  "seconds": 0.15
  },
  {
   "check_id": "G2",
@@ -1070,9 +1067,9 @@
   "ok": true,
   "observed": "ΔEL 0.2666",
   "numbers": {
-   "delta_el": 0.26658068000485713
+   "delta_el": 0.2665806800048607
   },
-  "seconds": 0.25
+  "seconds": 0.15
  },
  {
   "check_id": "H1",
@@ -1085,7 +1082,7 @@
   "ok": true,
   "observed": "рекомендации: нет",
   "numbers": {},
-  "seconds": 0.26
+  "seconds": 0.15
  },
  {
   "check_id": "H2",
@@ -1098,7 +1095,7 @@
   "ok": true,
   "observed": "рекомендации: ['credit.R5:watchlist']",
   "numbers": {},
-  "seconds": 0.26
+  "seconds": 0.16
  },
  {
   "check_id": "H3",
@@ -1114,7 +1111,7 @@
    "icr": 0.2990033222591362,
    "delta_pd": 0.5543763362096797
   },
-  "seconds": 0.27
+  "seconds": 0.17
  },
  {
   "check_id": "H4",
@@ -1127,7 +1124,7 @@
   "ok": true,
   "observed": "рекомендации: нет",
   "numbers": {},
-  "seconds": 0.27
+  "seconds": 0.17
  },
  {
   "check_id": "H5",
@@ -1143,7 +1140,7 @@
    "calm": 0.0,
    "hit": 1.0
   },
-  "seconds": 0.82
+  "seconds": 0.43
  },
  {
   "check_id": "I1",
@@ -1167,7 +1164,7 @@
   "event": "выручка 23.61: −10 %",
   "known": null,
   "ok": true,
-  "observed": "отказ при вводе: L/params: Value error, ead must be positive",
+  "observed": "отказ при вводе: L: ead must lie within [0.0, None]",
   "numbers": {},
   "seconds": 0.0
  },
@@ -1179,10 +1176,10 @@
   "portfolio": "1 акция, residual_volatility = 20",
   "event": "MOEX: 0",
   "known": null,
-  "ok": false,
-  "observed": "рассчитано; флаги: factor_not_in_scenario:equity.sector:materials; потеря P5 -1.951e+16, P50 -0.06705, P95 100 при стоимости 100 млн ₽",
+  "ok": true,
+  "observed": "отказ при вводе: S: residual_volatility must lie within [0.0, 2.0]",
   "numbers": {},
-  "seconds": 0.34
+  "seconds": 0.0
  },
  {
   "check_id": "I4",
@@ -1193,9 +1190,9 @@
   "event": "себестоимость 23.61: +10 %",
   "known": null,
   "ok": true,
-  "observed": "not_run/invalid: V2:/financials/pass_through",
+  "observed": "отказ при вводе: L: pass_through must lie within [0.0, 1.0]",
   "numbers": {},
-  "seconds": 0.1
+  "seconds": 0.0
  },
  {
   "check_id": "I5",
@@ -1206,9 +1203,9 @@
   "event": "себестоимость 23.61: +10 %",
   "known": null,
   "ok": true,
-  "observed": "not_run/invalid: V2:/financials/demand_elasticity",
+  "observed": "отказ при вводе: L: demand_elasticity must lie within [None, 0.0]",
   "numbers": {},
-  "seconds": 0.09
+  "seconds": 0.0
  },
  {
   "check_id": "S1",
@@ -1219,37 +1216,37 @@
   "event": "ставка +5 п.п. всем отраслям книги; MOEX −10 %; SPX 0 (аналитик задаёт явно)",
   "known": null,
   "ok": true,
-  "observed": "CONC ΔEL 3.28 (0.328 % EAD); CEM ΔEL 0.644 (0.0805 % EAD); DEV ΔEL 0.259 (0.00432 % EAD); DIST ΔEL 13.2 (0.44 % EAD); FERT ΔEL 1.92 (0.128 % EAD); LEASE ΔEL 2.44 (0.122 % EAD); ITC ΔEL 0.134 (0.0446 % EAD); BOND ΔEL 4.37 (0.437 % EAD); S_BANK потеря 10.9 %; S_OIL потеря 1.04 %; S_DEVS потеря 12.8 %; S_US потеря 0.00261 %. Не достигнуты: нет",
+  "observed": "CONC ΔEL 3.28 (0.328 % EAD); CEM ΔEL 0.644 (0.0805 % EAD); DEV ΔEL 0.259 (0.00432 % EAD); DIST ΔEL 13.2 (0.44 % EAD); FERT ΔEL 1.92 (0.128 % EAD); LEASE ΔEL 2.44 (0.122 % EAD); ITC ΔEL 0.134 (0.0446 % EAD); BOND ΔEL 4.37 (0.437 % EAD); S_BANK потеря 10.9 %; S_OIL потеря 1.05 %; S_DEVS потеря 12.8 %; S_US потеря -0.000343 %. Не достигнуты: нет",
   "numbers": {
    "CONC": {
     "reached": true,
-    "delta_el_p50": 3.2796823421216583,
-    "per_ead": 0.003279682342121658
+    "delta_el_p50": 3.279682342121662,
+    "per_ead": 0.003279682342121662
    },
    "CEM": {
     "reached": true,
-    "delta_el_p50": 0.6439835830676701,
-    "per_ead": 0.0008049794788345877
+    "delta_el_p50": 0.6439835830676692,
+    "per_ead": 0.0008049794788345865
    },
    "DEV": {
     "reached": true,
-    "delta_el_p50": 0.2590104891753171,
-    "per_ead": 4.316841486255285e-05
+    "delta_el_p50": 0.2590104891753242,
+    "per_ead": 4.3168414862554036e-05
    },
    "DIST": {
     "reached": true,
-    "delta_el_p50": 13.199271326751045,
-    "per_ead": 0.004399757108917015
+    "delta_el_p50": 13.199271326751052,
+    "per_ead": 0.0043997571089170176
    },
    "FERT": {
     "reached": true,
-    "delta_el_p50": 1.9202300517350253,
-    "per_ead": 0.0012801533678233501
+    "delta_el_p50": 1.920230051735027,
+    "per_ead": 0.0012801533678233514
    },
    "LEASE": {
     "reached": true,
-    "delta_el_p50": 2.4421591392207525,
-    "per_ead": 0.0012210795696103761
+    "delta_el_p50": 2.4421591392207596,
+    "per_ead": 0.0012210795696103798
    },
    "ITC": {
     "reached": true,
@@ -1258,35 +1255,35 @@
    },
    "BOND": {
     "reached": true,
-    "delta_el_p50": 4.372909789495548,
-    "per_ead": 0.004372909789495548
+    "delta_el_p50": 4.3729097894955515,
+    "per_ead": 0.004372909789495552
    },
    "S_BANK": {
     "reached": true,
-    "loss_p50": 10.944344676812264,
-    "loss_share": 0.10944344676812263
+    "loss_p50": 10.943034426776947,
+    "loss_share": 0.10943034426776947
    },
    "S_OIL": {
     "reached": true,
-    "loss_p50": 1.042894807058147,
-    "loss_share": 0.01042894807058147
+    "loss_p50": 1.049074263471816,
+    "loss_share": 0.010490742634718159
    },
    "S_DEVS": {
     "reached": true,
-    "loss_p50": 12.80760856053174,
-    "loss_share": 0.1280760856053174
+    "loss_p50": 12.80385605614142,
+    "loss_share": 0.1280385605614142
    },
    "S_US": {
     "reached": true,
-    "loss_p50": 0.0024163995065933364,
-    "loss_share": 2.612323790911715e-05
+    "loss_p50": -0.00031719151229481213,
+    "loss_share": -3.429097430214185e-06
    },
    "_slices": {
-    "credit.loss": 26.250961236392772,
-    "market.pnl": 12.730278452353737
+    "credit.loss": 26.2509612363928,
+    "market.pnl": 13.359719088754215
    }
   },
-  "seconds": 5.59
+  "seconds": 1.82
  },
  {
   "check_id": "S2",
@@ -1297,7 +1294,7 @@
   "event": "канал «курс»: валютные затраты 46.63 +25 %, выручка 20.15 +25 %; USD/RUB +25 %; SPX 0",
   "known": null,
   "ok": true,
-  "observed": "DIST ΔEL 207 (6.91 % EAD); FERT ΔEL -2.73 (-0.182 % EAD); S_US потеря -25 %. Не достигнуты: CONC, CEM, DEV, LEASE, ITC, BOND, S_BANK, S_OIL, S_DEVS; центральная потеря S_US -25 %",
+  "observed": "DIST ΔEL 111 (3.7 % EAD); FERT ΔEL -2.73 (-0.182 % EAD); S_US потеря -25 %. Не достигнуты: CONC, CEM, DEV, LEASE, ITC, BOND, S_BANK, S_OIL, S_DEVS; центральная потеря S_US -25 %",
   "numbers": {
    "CONC": {
     "reached": false
@@ -1310,8 +1307,8 @@
    },
    "DIST": {
     "reached": true,
-    "delta_el_p50": 207.3956100767757,
-    "per_ead": 0.0691318700255919
+    "delta_el_p50": 110.94911438914352,
+    "per_ead": 0.036983038129714506
    },
    "FERT": {
     "reached": true,
@@ -1338,15 +1335,15 @@
    },
    "S_US": {
     "reached": true,
-    "loss_p50": -23.130435954653308,
-    "loss_share": -0.25005876707733304
+    "loss_p50": -23.113023262137553,
+    "loss_share": -0.24987052175283841
    },
    "_slices": {
-    "credit.loss": 204.66366144471888,
-    "market.pnl": -23.130435954653308
+    "credit.loss": 108.21716575708669,
+    "market.pnl": -23.113023262137553
    }
   },
-  "seconds": 0.69
+  "seconds": 0.39
  },
  {
   "check_id": "S3",
@@ -1399,18 +1396,18 @@
    },
    "S_DEVS": {
     "reached": true,
-    "loss_p50": 20.000067112289855,
-    "loss_share": 0.20000067112289854
+    "loss_p50": 19.99889935818181,
+    "loss_share": 0.1999889935818181
    },
    "S_US": {
     "reached": false
    },
    "_slices": {
     "credit.loss": 15.857990729384873,
-    "market.pnl": 20.000067112289855
+    "market.pnl": 19.99889935818181
    }
   },
-  "seconds": 1.96
+  "seconds": 0.75
  },
  {
   "check_id": "S4",
@@ -1420,8 +1417,8 @@
   "portfolio": "та же книга",
   "event": "канал «сбор»: себестоимость 46.63 +10 %; канал «расчёты»: оборотный капитал 46.63 +45 дней; канал «лизинг»: выручка (новый бизнес) 64.91 −8 %",
   "known": null,
-  "ok": false,
-  "observed": "первый прогон остановлен: сценарий не принят: S_BANK: граф указывает влияние на позицию, но для модели позиции не задано изменение факторов. Добавьте параметр сценария: Рынок акций: MOEX; Отрасль (акции): financials. Нулевое влияние также нужно задать явно. Потери пока не оценены. После нуля для financials: DIST ΔEL 51.1 (1.7 % EAD); LEASE ΔEL 0.0916 (0.00458 % EAD); S_BANK потеря -0.0037 %. Не достигнуты: CONC, CEM, DEV, FERT, ITC, BOND, S_OIL, S_DEVS, S_US",
+  "ok": true,
+  "observed": "DIST ΔEL 51.1 (1.7 % EAD); LEASE ΔEL 0.0916 (0.00458 % EAD); S_BANK потеря 0.000328 %. Не достигнуты: CONC, CEM, DEV, FERT, ITC, BOND, S_OIL, S_DEVS, S_US",
   "numbers": {
    "CONC": {
     "reached": false
@@ -1434,16 +1431,16 @@
    },
    "DIST": {
     "reached": true,
-    "delta_el_p50": 51.050686025416994,
-    "per_ead": 0.017016895341805664
+    "delta_el_p50": 51.050686025417,
+    "per_ead": 0.017016895341805668
    },
    "FERT": {
     "reached": false
    },
    "LEASE": {
     "reached": true,
-    "delta_el_p50": 0.09161796273582468,
-    "per_ead": 4.580898136791234e-05
+    "delta_el_p50": 0.09161796273583178,
+    "per_ead": 4.580898136791589e-05
    },
    "ITC": {
     "reached": false
@@ -1453,8 +1450,8 @@
    },
    "S_BANK": {
     "reached": true,
-    "loss_p50": -0.0036982066623494347,
-    "loss_share": -3.6982066623494345e-05
+    "loss_p50": 0.00032801493612311106,
+    "loss_share": 3.2801493612311104e-06
    },
    "S_OIL": {
     "reached": false
@@ -1466,11 +1463,11 @@
     "reached": false
    },
    "_slices": {
-    "credit.loss": 51.14230398815282,
-    "market.pnl": -0.0036982066623494347
+    "credit.loss": 51.14230398815283,
+    "market.pnl": 0.00032801493612311106
    }
   },
-  "seconds": 0.7
+  "seconds": 0.87
  },
  {
   "check_id": "S5",
@@ -1509,26 +1506,26 @@
    },
    "S_BANK": {
     "reached": true,
-    "loss_p50": 27.125976652481945,
-    "loss_share": 0.2712597665248195
+    "loss_p50": 27.128203000407446,
+    "loss_share": 0.27128203000407447
    },
    "S_OIL": {
     "reached": true,
-    "loss_p50": 14.81009238976145,
-    "loss_share": 0.1481009238976145
+    "loss_p50": 14.816342054588056,
+    "loss_share": 0.14816342054588055
    },
    "S_DEVS": {
     "reached": true,
-    "loss_p50": 31.21107832158294,
-    "loss_share": 0.3121107832158294
+    "loss_p50": 31.206484329185535,
+    "loss_share": 0.31206484329185535
    },
    "S_US": {
     "reached": true,
-    "loss_p50": 14.654235199906651,
-    "loss_share": 0.15842416432331516
+    "loss_p50": 14.645344074702543,
+    "loss_share": 0.1583280440508383
    },
    "_slices": {
-    "market.pnl": 80.70382725547447
+    "market.pnl": 78.37127301129482
    },
    "central": {
     "S_DEVS": 0.3120139340181987,
@@ -1537,6 +1534,154 @@
     "S_US": 0.15840980018476739
    }
   },
-  "seconds": 1.16
+  "seconds": 0.35
+ },
+ {
+  "check_id": "M1",
+  "group": "M",
+  "title": "Распродажа на рынке акций",
+  "expectation": "теряют: SHARE-COMMERCIAL-BANK, SHARE-OIL-MAJOR, SHARE-STEEL-EXPORTER, SHARE-SUPERMARKET-CHAIN, SHARE-IT-DEVELOPER, SHARE-TELECOM-OPERATOR; не затронуты: SHARE-US-PHARMA",
+  "portfolio": "EQUITY-MARKET",
+  "event": "EQUITY-SELLOFF",
+  "known": null,
+  "ok": true,
+  "observed": "Медиана потерь: SHARE-COMMERCIAL-BANK 57.33, SHARE-IT-DEVELOPER 34.92, SHARE-OIL-MAJOR 23.54, SHARE-STEEL-EXPORTER 33.97, SHARE-SUPERMARKET-CHAIN 33.32, SHARE-TELECOM-OPERATOR 14.34",
+  "numbers": {
+   "losses": {
+    "SHARE-COMMERCIAL-BANK": 57.32670316897587,
+    "SHARE-IT-DEVELOPER": 34.91889502162172,
+    "SHARE-OIL-MAJOR": 23.53594745301959,
+    "SHARE-STEEL-EXPORTER": 33.97322775453577,
+    "SHARE-SUPERMARKET-CHAIN": 33.31930974509818,
+    "SHARE-TELECOM-OPERATOR": 14.335555895762454
+   }
+  },
+  "seconds": 0.56
+ },
+ {
+  "check_id": "M2",
+  "group": "M",
+  "title": "Повышение ключевой ставки на 3 п.п.",
+  "expectation": "теряют: LOAN-LEVERAGED-DEVELOPER, LOAN-DISCOUNTER-CHAIN, LOAN-WAREHOUSE-OPERATOR, BOND-FIXED-TELECOM-OPERATOR, BOND-FLOATING-TELECOM-OPERATOR",
+  "portfolio": "RATE-RISK",
+  "event": "KEY-RATE-HIKE",
+  "known": null,
+  "ok": true,
+  "observed": "Медиана потерь: BOND-FIXED-TELECOM-OPERATOR 1.92, BOND-FLOATING-TELECOM-OPERATOR 1.92, LOAN-DISCOUNTER-CHAIN 2.14, LOAN-LEVERAGED-DEVELOPER 25.92, LOAN-WAREHOUSE-OPERATOR 6.432",
+  "numbers": {
+   "losses": {
+    "BOND-FIXED-TELECOM-OPERATOR": 1.920257905941945,
+    "BOND-FLOATING-TELECOM-OPERATOR": 1.920257905941945,
+    "LOAN-DISCOUNTER-CHAIN": 2.139673338435516,
+    "LOAN-LEVERAGED-DEVELOPER": 25.920665986028183,
+    "LOAN-WAREHOUSE-OPERATOR": 6.4315828225217615
+   }
+  },
+  "seconds": 0.84
+ },
+ {
+  "check_id": "M3",
+  "group": "M",
+  "title": "Повышение первоначального взноса по льготной ипотеке",
+  "expectation": "теряют: PROJECT-HOUSING, BOND-CONCRETE; не затронуты: LOAN-MACHINERY, LOAN-LEASING, LOAN-FERTILIZER, SHARE-OIL, SHARE-US-TECH",
+  "portfolio": "MULTI-ASSET",
+  "event": "MORTGAGE-DOWN-PAYMENT",
+  "known": null,
+  "ok": true,
+  "observed": "Медиана потерь: BOND-CONCRETE 3.914, PROJECT-HOUSING 2.147",
+  "numbers": {
+   "losses": {
+    "BOND-CONCRETE": 3.9142565961897073,
+    "PROJECT-HOUSING": 2.146902519566069
+   }
+  },
+  "seconds": 0.38
+ },
+ {
+  "check_id": "M4",
+  "group": "M",
+  "title": "Падение реальных доходов населения",
+  "expectation": "теряют: LOAN-SUPERMARKET-CHAIN, LOAN-MEAT-PROCESSOR, LOAN-DAIRY-PRODUCER, LOAN-RESTAURANT-CHAIN, LOAN-APPAREL-RETAILER, SHARE-SUPERMARKET-CHAIN",
+  "portfolio": "CONSUMER-DEMAND",
+  "event": "REAL-INCOME-DROP",
+  "known": null,
+  "ok": true,
+  "observed": "Медиана потерь: LOAN-APPAREL-RETAILER 14.11, LOAN-DAIRY-PRODUCER 0.6097, LOAN-MEAT-PROCESSOR 1.547, LOAN-RESTAURANT-CHAIN 8.614, LOAN-SUPERMARKET-CHAIN 2.507, SHARE-SUPERMARKET-CHAIN 6.311",
+  "numbers": {
+   "losses": {
+    "LOAN-APPAREL-RETAILER": 14.110984599300021,
+    "LOAN-DAIRY-PRODUCER": 0.6097177773557343,
+    "LOAN-MEAT-PROCESSOR": 1.5472772143719418,
+    "LOAN-RESTAURANT-CHAIN": 8.613789582178352,
+    "LOAN-SUPERMARKET-CHAIN": 2.5073615667888767,
+    "SHARE-SUPERMARKET-CHAIN": 6.310851118802191
+   }
+  },
+  "seconds": 1.0
+ },
+ {
+  "check_id": "M5",
+  "group": "M",
+  "title": "Утилизационный сбор на спецтехнику и задержки расчётов",
+  "expectation": "теряют: LOAN-MACHINERY, LOAN-FERTILIZER; затронуты: LOAN-LEASING; не затронуты: BOND-CONCRETE, PROJECT-HOUSING, SHARE-OIL, SHARE-US-TECH",
+  "portfolio": "MULTI-ASSET",
+  "event": "RECYCLING-FEE",
+  "known": null,
+  "ok": true,
+  "observed": "Медиана потерь: LOAN-FERTILIZER 3.286, LOAN-LEASING 0.09162, LOAN-MACHINERY 88.11",
+  "numbers": {
+   "losses": {
+    "LOAN-FERTILIZER": 3.2860695662349766,
+    "LOAN-LEASING": 0.09161923465160093,
+    "LOAN-MACHINERY": 88.10995256350078
+   }
+  },
+  "seconds": 1.01
+ },
+ {
+  "check_id": "M6",
+  "group": "M",
+  "title": "Укрепление рубля на 15 %",
+  "expectation": "выигрывают: LOAN-CAR-IMPORTER, LOAN-DRUG-DISTRIBUTOR, LOAN-ELECTRONICS-RETAILER; теряют: LOAN-STEEL-EXPORTER, LOAN-POTASH-EXPORTER, SHARE-US-PHARMA, SHARE-STEEL-EXPORTER",
+  "portfolio": "CURRENCY-RISK",
+  "event": "RUB-APPRECIATION",
+  "known": null,
+  "ok": true,
+  "observed": "Медиана потерь: LOAN-CAR-IMPORTER -27, LOAN-DRUG-DISTRIBUTOR -7.464, LOAN-ELECTRONICS-RETAILER -18.92, LOAN-POTASH-EXPORTER 3.904, LOAN-STEEL-EXPORTER 3.108, SHARE-STEEL-EXPORTER 8.222, SHARE-US-PHARMA 92.01",
+  "numbers": {
+   "losses": {
+    "LOAN-CAR-IMPORTER": -27.004793943398553,
+    "LOAN-DRUG-DISTRIBUTOR": -7.463580220966163,
+    "LOAN-ELECTRONICS-RETAILER": -18.91800312550844,
+    "LOAN-POTASH-EXPORTER": 3.9040511803975395,
+    "LOAN-STEEL-EXPORTER": 3.108144608503494,
+    "SHARE-STEEL-EXPORTER": 8.22237651417528,
+    "SHARE-US-PHARMA": 92.00606531052381
+   }
+  },
+  "seconds": 1.15
+ },
+ {
+  "check_id": "M7",
+  "group": "M",
+  "title": "Ослабление рубля на 20 %",
+  "expectation": "теряют: LOAN-CAR-IMPORTER, LOAN-DRUG-DISTRIBUTOR, LOAN-ELECTRONICS-RETAILER; выигрывают: LOAN-STEEL-EXPORTER, LOAN-POTASH-EXPORTER, SHARE-US-PHARMA, SHARE-STEEL-EXPORTER",
+  "portfolio": "CURRENCY-RISK",
+  "event": "RUB-DEPRECIATION",
+  "known": null,
+  "ok": true,
+  "observed": "Медиана потерь: LOAN-CAR-IMPORTER 834.9, LOAN-DRUG-DISTRIBUTOR 50.2, LOAN-ELECTRONICS-RETAILER 703.8, LOAN-POTASH-EXPORTER -3.069, LOAN-STEEL-EXPORTER -2.667, SHARE-STEEL-EXPORTER -28.71, SHARE-US-PHARMA -155.9",
+  "numbers": {
+   "losses": {
+    "LOAN-CAR-IMPORTER": 834.8614443440846,
+    "LOAN-DRUG-DISTRIBUTOR": 50.20315575387083,
+    "LOAN-ELECTRONICS-RETAILER": 703.7520229802221,
+    "LOAN-POTASH-EXPORTER": -3.068814741608767,
+    "LOAN-STEEL-EXPORTER": -2.6666290767993335,
+    "SHARE-STEEL-EXPORTER": -28.70562335218287,
+    "SHARE-US-PHARMA": -155.886826034828
+   }
+  },
+  "seconds": 1.13
  }
 ]

@@ -4,6 +4,7 @@ import json
 
 import pytest
 
+from demo import build_catalog
 from demo.catalog import (
     CatalogError,
     bundle,
@@ -13,11 +14,15 @@ from demo.catalog import (
     snapshot,
     snapshot_data,
 )
+from demo.pilot import EVENT_ID as PILOT_EVENT_ID
+from demo.pilot import seed_pilot
 from demo.seed_demo import seed_demo
 from msa.cli.plugin import load
+from msa.contracts.domain import Portfolio, PortfolioBundle
 from msa.db.migrate import migrate
-from msa.db.session import engine
-from msa.platform.registry import Registry, installed
+from msa.db.repositories.demo import DemoRepository
+from msa.db.session import engine, session_scope
+from msa.platform.registry import Registry, installed, registry
 from msa.plugin_sdk.plugin import Plugin
 
 PLUGIN_INIT = """\
@@ -67,28 +72,36 @@ def root(tmp_path):
 
 
 def test_portfolio_ids_include_the_demo_portfolios():
-    assert {"DEMO-1", "DEMO-2", "DEMO-3"} <= set(portfolio_ids())
+    assert {"MULTI-ASSET", "ATYPICAL-BORROWERS", "LOAD-TEST"} <= set(portfolio_ids())
 
 
 def test_demo1_bundle_position_order_is_credit_then_equity():
-    positions = bundle("DEMO-1").positions
-    assert [p.position_id for p in positions] == ["A1", "A2", "A3", "A4", "A5", "EQ-OIL", "EQ-TECH"]
+    positions = bundle("MULTI-ASSET").positions
+    assert [p.position_id for p in positions] == [
+        "BOND-CONCRETE",
+        "PROJECT-HOUSING",
+        "LOAN-MACHINERY",
+        "LOAN-LEASING",
+        "LOAN-FERTILIZER",
+        "SHARE-OIL",
+        "SHARE-US-TECH",
+    ]
 
 
 def test_demo2_and_demo3_bundles_validate():
-    assert bundle("DEMO-2").portfolio.portfolio_id == "DEMO-2"
-    assert bundle("DEMO-3").portfolio.portfolio_id == "DEMO-3"
+    assert bundle("ATYPICAL-BORROWERS").portfolio.portfolio_id == "ATYPICAL-BORROWERS"
+    assert bundle("LOAD-TEST").portfolio.portfolio_id == "LOAD-TEST"
 
 
 def test_demo1_instrument_issuers_are_among_its_parties():
-    b = bundle("DEMO-1")
+    b = bundle("MULTI-ASSET")
     party_ids = {p.party_id for p in b.parties}
     for instrument in b.instruments:
         assert instrument.issuer_id in party_ids
 
 
 def test_snapshot_items_are_sorted_and_cover_credit_and_equity_kinds():
-    items = snapshot("DEMO-2026-09-11").items
+    items = snapshot("SYNTHETIC-2026-09-11").items
     ids = [item.item_id for item in items]
     assert ids == sorted(ids)
     kinds = {item.kind for item in items}
@@ -267,5 +280,58 @@ def test_seed_demo_counts_positions_and_snapshot_items(tmp_path):
         counts = seed_demo(bind)
     finally:
         bind.dispose()
-    assert counts["DEMO-1"] == 7
-    assert counts["DEMO-2026-09-11"] == 71
+    assert counts["MULTI-ASSET"] == 7
+    assert counts["SYNTHETIC-2026-09-11"] == 71
+
+
+def test_reseeding_retires_stale_builtin_portfolios_and_events_but_keeps_the_pilot(tmp_path):
+    bind = engine(f"sqlite:///{tmp_path / 'msa.db'}")
+    try:
+        migrate(bind)
+        seed_demo(bind)
+        seed_pilot(bind)
+        with session_scope(bind, scope="demo", scopes={"demo:*"}) as session:
+            repository = DemoRepository(session)
+            repository.seed_portfolio(
+                PortfolioBundle(portfolio=Portfolio(portfolio_id="STALE-PORTFOLIO", name="S")),
+                registry=registry(),
+            )
+            repository.seed_event(
+                {"event_id": "STALE-EVENT", "title": "t", "text": "t", "metadata": {}}
+            )
+        seed_demo(bind)
+        with session_scope(bind, scope="demo", scopes={"demo:*"}) as session:
+            repository = DemoRepository(session)
+            portfolios = repository.portfolios.list_portfolios()
+            portfolio_ids_after = {row["portfolio_id"] for row in portfolios}
+            event_ids_after = {row["event_id"] for row in repository.events()}
+    finally:
+        bind.dispose()
+    assert {"MULTI-ASSET", "ATYPICAL-BORROWERS", "LOAD-TEST"} <= portfolio_ids_after
+    assert "STALE-PORTFOLIO" not in portfolio_ids_after
+    assert {"RECYCLING-FEE", "MORTGAGE-DOWN-PAYMENT", PILOT_EVENT_ID} <= event_ids_after
+    assert "STALE-EVENT" not in event_ids_after
+
+
+# -- the generated part of the catalog --------------------------------------------------------
+
+
+def test_the_generated_catalog_files_match_the_generator():
+    stale = [
+        str(path)
+        for path, text in build_catalog.outputs().items()
+        if not path.exists() or path.read_text("utf-8") != text
+    ]
+    assert stale == [], "run: uv run --frozen python -m demo.build_catalog"
+
+
+def test_every_library_event_names_a_catalog_portfolio_and_what_must_follow():
+    events = sorted((build_catalog.CATALOG / "events").glob("*.json"))
+    assert events
+    for path in events:
+        event = json.loads(path.read_text("utf-8"))
+        assert event["event_id"] == path.stem
+        assert event["metadata"]["portfolio_id"] in portfolio_ids()
+        positions = {p.position_id for p in bundle(event["metadata"]["portfolio_id"]).positions}
+        named = {pid for ids in event["expect"].values() for pid in ids}
+        assert named <= positions, path.stem

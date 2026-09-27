@@ -131,6 +131,9 @@ class InstrumentTypeSpec:
     description: str = ""
     #: Whether an issuer is required; a sector-reached event needs one.
     issuer_required: bool = True
+    #: The editor value that names the security (a share's ticker): rows of this type and
+    #: currency with the same value are positions in one instrument of one issuer.
+    identity: str | None = None
     editor: tuple[EditorGroup, ...] = ()
     #: Turns an editor row into instrument terms, position params and snapshot items.
     from_draft: Callable[..., Any] | None = None

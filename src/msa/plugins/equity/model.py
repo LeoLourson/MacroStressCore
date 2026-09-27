@@ -36,7 +36,14 @@ from msa.plugin_sdk.results import distribution, envelope, scalar
 from msa.plugins.market import fx
 from msa.plugins.market.kinds import PRICE
 
-from .schemas import DIVIDEND, SENSITIVITY, ShareDetails, SharePosition, ShareTerms
+from .schemas import (
+    DIVIDEND,
+    MAX_RESIDUAL_VOLATILITY,
+    SENSITIVITY,
+    ShareDetails,
+    SharePosition,
+    ShareTerms,
+)
 
 PLUGIN_ID = "equity"
 PLUGIN_VERSION = "1.0.0"
@@ -206,6 +213,13 @@ class ShareFactorStress(CalculationModel):
         residual = None
         if sensitivity is not None and "residual_volatility" in sensitivity.values:
             residual = sensitivity.values["residual_volatility"].value
+            if not 0 <= residual <= MAX_RESIDUAL_VOLATILITY:
+                error(
+                    "residual_volatility_invalid",
+                    "остаточная волатильность должна лежать в пределах от 0 до "
+                    f"{MAX_RESIDUAL_VOLATILITY:g} (в долях за год)",
+                    "/data/sensitivity/residual_volatility",
+                )
             sigma = residual * sqrt(prepared.horizon / 12)
             if sigma > 0:
                 shocks.append(

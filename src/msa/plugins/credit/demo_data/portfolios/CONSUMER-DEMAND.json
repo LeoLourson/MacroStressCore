@@ -1,0 +1,498 @@
+{
+  "parties": [
+    {
+      "party_id": "SUPERMARKET-CHAIN",
+      "name": "Сеть супермаркетов",
+      "kind": "company",
+      "okved": "47.11",
+      "country": "RU",
+      "description": "Продуктовые супермаркеты",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "demo:companies",
+          "locator": "SUPERMARKET-CHAIN",
+          "fragment_sha256": "9b405867c413bbea4608259c87316a86e7631cabd64582d6b0d541f921039ed5",
+          "author": "demo:catalog",
+          "as_of": "2026-09-11"
+        }
+      ]
+    },
+    {
+      "party_id": "MEAT-PROCESSOR",
+      "name": "Мясокомбинат",
+      "kind": "company",
+      "okved": "10.11",
+      "country": "RU",
+      "description": "Переработка и консервирование мяса",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "demo:companies",
+          "locator": "MEAT-PROCESSOR",
+          "fragment_sha256": "5fe2b4df68a1c7a96326edb61b182872ee172d50bf2ca850eeb8f9586697f4ca",
+          "author": "demo:catalog",
+          "as_of": "2026-09-11"
+        }
+      ]
+    },
+    {
+      "party_id": "DAIRY-PRODUCER",
+      "name": "Молочный завод",
+      "kind": "company",
+      "okved": "10.51",
+      "country": "RU",
+      "description": "Производство молочной продукции",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "demo:companies",
+          "locator": "DAIRY-PRODUCER",
+          "fragment_sha256": "da91510c2b5251771bc66dcfe7310fb6b72fdf0e7c04537683f28879041d9eb8",
+          "author": "demo:catalog",
+          "as_of": "2026-09-11"
+        }
+      ]
+    },
+    {
+      "party_id": "RESTAURANT-CHAIN",
+      "name": "Сеть ресторанов",
+      "kind": "company",
+      "okved": "56.10",
+      "country": "RU",
+      "description": "Рестораны и кафе",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "demo:companies",
+          "locator": "RESTAURANT-CHAIN",
+          "fragment_sha256": "7e87cde6125915d017b809317f4678983ff94853781e99b3cc3ec6c77740a9d2",
+          "author": "demo:catalog",
+          "as_of": "2026-09-11"
+        }
+      ]
+    },
+    {
+      "party_id": "APPAREL-RETAILER",
+      "name": "Сеть магазинов одежды",
+      "kind": "company",
+      "okved": "47.71",
+      "country": "RU",
+      "description": "Розничная продажа одежды",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "demo:companies",
+          "locator": "APPAREL-RETAILER",
+          "fragment_sha256": "3913b411611210cda71859dd6a85713fdd53b95ed954b752acc5fca9e2e94b22",
+          "author": "demo:catalog",
+          "as_of": "2026-09-11"
+        }
+      ]
+    }
+  ],
+  "instruments": [
+    {
+      "instrument_id": "LOAN-SUPERMARKET-CHAIN",
+      "instrument_type": "corp_loan",
+      "name": "Корпоративный кредит: Сеть супермаркетов",
+      "currency": "RUB",
+      "issuer_id": "SUPERMARKET-CHAIN",
+      "terms": {
+        "covenants": [],
+        "collateral": []
+      },
+      "schema_version": "1"
+    },
+    {
+      "instrument_id": "LOAN-MEAT-PROCESSOR",
+      "instrument_type": "corp_loan",
+      "name": "Корпоративный кредит: Мясокомбинат",
+      "currency": "RUB",
+      "issuer_id": "MEAT-PROCESSOR",
+      "terms": {
+        "covenants": [],
+        "collateral": []
+      },
+      "schema_version": "1"
+    },
+    {
+      "instrument_id": "LOAN-DAIRY-PRODUCER",
+      "instrument_type": "corp_loan",
+      "name": "Корпоративный кредит: Молочный завод",
+      "currency": "RUB",
+      "issuer_id": "DAIRY-PRODUCER",
+      "terms": {
+        "covenants": [],
+        "collateral": []
+      },
+      "schema_version": "1"
+    },
+    {
+      "instrument_id": "LOAN-RESTAURANT-CHAIN",
+      "instrument_type": "corp_loan",
+      "name": "Корпоративный кредит: Сеть ресторанов",
+      "currency": "RUB",
+      "issuer_id": "RESTAURANT-CHAIN",
+      "terms": {
+        "covenants": [],
+        "collateral": []
+      },
+      "schema_version": "1"
+    },
+    {
+      "instrument_id": "LOAN-APPAREL-RETAILER",
+      "instrument_type": "corp_loan",
+      "name": "Корпоративный кредит: Сеть магазинов одежды",
+      "currency": "RUB",
+      "issuer_id": "APPAREL-RETAILER",
+      "terms": {
+        "covenants": [],
+        "collateral": []
+      },
+      "schema_version": "1"
+    }
+  ],
+  "positions": [
+    {
+      "position_id": "LOAN-SUPERMARKET-CHAIN",
+      "instrument_id": "LOAN-SUPERMARKET-CHAIN",
+      "params": {
+        "ead": {
+          "value": 2500.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "SUPERMARKET-CHAIN/ead",
+              "fragment_sha256": "5745028a86752e077f5aec15c30cebe0d05732f6ed57533d6fa567933f5479fc",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "lgd": {
+          "value": 0.4,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "SUPERMARKET-CHAIN/lgd",
+              "fragment_sha256": "17c975fef0cf15845a615f621e2d21affdf8bcd948bce5db1b7a5d7528007136",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "ccf": {
+          "value": 1.0,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "SUPERMARKET-CHAIN/ccf",
+              "fragment_sha256": "4acd7abd6095603104e7494cc17879dff92d818bddbd9a345647ee628c55fe02",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "import_share": {
+          "value": 0.0,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "SUPERMARKET-CHAIN/import_share",
+              "fragment_sha256": "845e35d422585c7502405a1e4f9b93566567dc80323f4404da2563d3075e8e04",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "driver_elasticity": {},
+        "proxy_peer_ids": [],
+        "status": "ok",
+        "flags": []
+      },
+      "schema_version": "1",
+      "model_id": null
+    },
+    {
+      "position_id": "LOAN-MEAT-PROCESSOR",
+      "instrument_id": "LOAN-MEAT-PROCESSOR",
+      "params": {
+        "ead": {
+          "value": 1200.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "MEAT-PROCESSOR/ead",
+              "fragment_sha256": "19d8737a3d277ea0c7633473b49b4bc8e0b4c8172542b357545fdab7eb601ec3",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "lgd": {
+          "value": 0.45,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "MEAT-PROCESSOR/lgd",
+              "fragment_sha256": "d5a601a9129b0a031718abad5744e7526370497eea3f0d5805d7cb1ad623c030",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "ccf": {
+          "value": 1.0,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "MEAT-PROCESSOR/ccf",
+              "fragment_sha256": "069d77934b70a03c3c0500ad252670755e14422e934c529a7d4faeb2b7ec5c67",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "import_share": {
+          "value": 0.0,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "MEAT-PROCESSOR/import_share",
+              "fragment_sha256": "35f8e10d4e4adbc0a3f99d913c679a49ef749dad0c5adac98ab34b94e93fd04a",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "driver_elasticity": {},
+        "proxy_peer_ids": [],
+        "status": "ok",
+        "flags": []
+      },
+      "schema_version": "1",
+      "model_id": null
+    },
+    {
+      "position_id": "LOAN-DAIRY-PRODUCER",
+      "instrument_id": "LOAN-DAIRY-PRODUCER",
+      "params": {
+        "ead": {
+          "value": 1000.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "DAIRY-PRODUCER/ead",
+              "fragment_sha256": "87f4d63096e3c10c61a6f5a586a5e6327852c2c58f5d20d68046dd32d48fd3a1",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "lgd": {
+          "value": 0.45,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "DAIRY-PRODUCER/lgd",
+              "fragment_sha256": "36f8068a6bd6f8c6b19782f2b6ba0e9446c3915a52f71ab888f438e8da5d4e8c",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "ccf": {
+          "value": 1.0,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "DAIRY-PRODUCER/ccf",
+              "fragment_sha256": "5b1ddfd1036a5a324a3e29ae9bd2920e555c4234a54d50bbbdce817dc21b2944",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "import_share": {
+          "value": 0.0,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "DAIRY-PRODUCER/import_share",
+              "fragment_sha256": "95092a6b398b5433004f4d06fa4cf392cb9cc5f011b2be416de635d5311c6166",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "driver_elasticity": {},
+        "proxy_peer_ids": [],
+        "status": "ok",
+        "flags": []
+      },
+      "schema_version": "1",
+      "model_id": null
+    },
+    {
+      "position_id": "LOAN-RESTAURANT-CHAIN",
+      "instrument_id": "LOAN-RESTAURANT-CHAIN",
+      "params": {
+        "ead": {
+          "value": 800.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "RESTAURANT-CHAIN/ead",
+              "fragment_sha256": "bc15ffdaab42d25779499111a9fbc68ad052b395a9b980e71a821a09fbc0ce98",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "lgd": {
+          "value": 0.55,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "RESTAURANT-CHAIN/lgd",
+              "fragment_sha256": "5736773245e8de890ec1c158148ec88cbb41ce6f129ff951ee8dae20a41a089e",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "ccf": {
+          "value": 1.0,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "RESTAURANT-CHAIN/ccf",
+              "fragment_sha256": "a93b1f5f0f46549eccdc17cc5b11ce6ae10133acd1a566afc4c331642399cf52",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "import_share": {
+          "value": 0.0,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "RESTAURANT-CHAIN/import_share",
+              "fragment_sha256": "92066e685c9911d0c4caa0a308b531c6b3f07dcb2fa5238705e0837e3d0adee7",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "driver_elasticity": {},
+        "proxy_peer_ids": [],
+        "status": "ok",
+        "flags": []
+      },
+      "schema_version": "1",
+      "model_id": null
+    },
+    {
+      "position_id": "LOAN-APPAREL-RETAILER",
+      "instrument_id": "LOAN-APPAREL-RETAILER",
+      "params": {
+        "ead": {
+          "value": 900.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "APPAREL-RETAILER/ead",
+              "fragment_sha256": "0fed7a347cdfd3786e7f69b5e83e0cea6d008d207255aeb26b45711e8fbc1099",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "lgd": {
+          "value": 0.55,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "APPAREL-RETAILER/lgd",
+              "fragment_sha256": "862471daeafaa85df018e835a3ee76390e2fb363d440f107702a9e687a86b4a0",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "ccf": {
+          "value": 1.0,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "APPAREL-RETAILER/ccf",
+              "fragment_sha256": "54a84283f919e340fa60b59715db0dc832000651e09f82c5702cac94d3db66b3",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "import_share": {
+          "value": 0.0,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "APPAREL-RETAILER/import_share",
+              "fragment_sha256": "285bf8b68bb0ccd9b7400400e3d0a367eeb46e84356d6218286d96cb768622cf",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "driver_elasticity": {},
+        "proxy_peer_ids": [],
+        "status": "ok",
+        "flags": []
+      },
+      "schema_version": "1",
+      "model_id": null
+    }
+  ]
+}

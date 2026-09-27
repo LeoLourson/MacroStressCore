@@ -1,0 +1,15 @@
+{
+  "portfolio": {
+    "portfolio_id": "RATE-RISK",
+    "name": "Процентный риск",
+    "base_currency": "RUB",
+    "as_of": "2026-09-11",
+    "snapshot_id": "SYNTHETIC-THEMES-2026-09-11",
+    "builtin": true,
+    "metadata": {
+      "synthetic": true,
+      "description": "Заёмщики с разной долговой нагрузкой и облигации одного эмитента с фиксированным и плавающим купоном.",
+      "generated_by": "demo/build_catalog.py"
+    }
+  }
+}
