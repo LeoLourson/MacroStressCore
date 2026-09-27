@@ -1,0 +1,592 @@
+{
+  "parties": [
+    {
+      "party_id": "LEVERAGED-DEVELOPER",
+      "name": "Девелопер с высоким долгом",
+      "kind": "company",
+      "okved": "41.20",
+      "country": "RU",
+      "description": "Жилищное строительство на заёмные средства",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "demo:companies",
+          "locator": "LEVERAGED-DEVELOPER",
+          "fragment_sha256": "236681e86bd00da18774a33fad78691c3ea838d9e85ea56200aa12c64c1e8584",
+          "author": "demo:catalog",
+          "as_of": "2026-09-11"
+        }
+      ]
+    },
+    {
+      "party_id": "DISCOUNTER-CHAIN",
+      "name": "Сеть магазинов у дома",
+      "kind": "company",
+      "okved": "47.11",
+      "country": "RU",
+      "description": "Продуктовые магазины у дома",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "demo:companies",
+          "locator": "DISCOUNTER-CHAIN",
+          "fragment_sha256": "caba9adb6ae554f04f6567f12d7e6e33cc8fbf01a3052537d5791e9aecd83f13",
+          "author": "demo:catalog",
+          "as_of": "2026-09-11"
+        }
+      ]
+    },
+    {
+      "party_id": "WAREHOUSE-OPERATOR",
+      "name": "Оператор складов",
+      "kind": "company",
+      "okved": "52.10",
+      "country": "RU",
+      "description": "Складская логистика и аренда складов",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "demo:companies",
+          "locator": "WAREHOUSE-OPERATOR",
+          "fragment_sha256": "b26e489451ff470bbd9708661a9a8da9918e3227217c6e3df30a435c05904104",
+          "author": "demo:catalog",
+          "as_of": "2026-09-11"
+        }
+      ]
+    },
+    {
+      "party_id": "TELECOM-OPERATOR",
+      "name": "Оператор связи",
+      "kind": "company",
+      "okved": "61.10",
+      "country": "RU",
+      "description": "Проводная связь и интернет",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "demo:companies",
+          "locator": "TELECOM-OPERATOR",
+          "fragment_sha256": "62b019b563f61a5af5371ba27b5b602cc2a16ea1c2ec9f4bd4dea7e53eefcc8a",
+          "author": "demo:catalog",
+          "as_of": "2026-09-11"
+        }
+      ]
+    }
+  ],
+  "instruments": [
+    {
+      "instrument_id": "LOAN-LEVERAGED-DEVELOPER",
+      "instrument_type": "corp_loan",
+      "name": "Корпоративный кредит: Девелопер с высоким долгом",
+      "currency": "RUB",
+      "issuer_id": "LEVERAGED-DEVELOPER",
+      "terms": {
+        "covenants": [],
+        "collateral": []
+      },
+      "schema_version": "1"
+    },
+    {
+      "instrument_id": "LOAN-DISCOUNTER-CHAIN",
+      "instrument_type": "corp_loan",
+      "name": "Корпоративный кредит: Сеть магазинов у дома",
+      "currency": "RUB",
+      "issuer_id": "DISCOUNTER-CHAIN",
+      "terms": {
+        "covenants": [],
+        "collateral": []
+      },
+      "schema_version": "1"
+    },
+    {
+      "instrument_id": "LOAN-WAREHOUSE-OPERATOR",
+      "instrument_type": "corp_loan",
+      "name": "Корпоративный кредит: Оператор складов",
+      "currency": "RUB",
+      "issuer_id": "WAREHOUSE-OPERATOR",
+      "terms": {
+        "covenants": [],
+        "collateral": []
+      },
+      "schema_version": "1"
+    },
+    {
+      "instrument_id": "BOND-FIXED-TELECOM-OPERATOR",
+      "instrument_type": "bond_fixed",
+      "name": "Облигация с фиксированным купоном: Оператор связи",
+      "currency": "RUB",
+      "issuer_id": "TELECOM-OPERATOR",
+      "terms": {
+        "covenants": [],
+        "collateral": [],
+        "face_value": {
+          "value": 1000.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "TELECOM-OPERATOR/face_value",
+              "fragment_sha256": "6788cc5476b86f6dd28f75ba4b183d0cd9260c915585e316eb59990ca6f57296",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "coupon_rate": {
+          "value": 0.15,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "TELECOM-OPERATOR/coupon_rate",
+              "fragment_sha256": "c302f03de6c0e996956a3311d74cdc291b734ab9150736663432e463ee3ae93e",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "maturity_months": {
+          "value": 48.0,
+          "unit": "months",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "TELECOM-OPERATOR/maturity_months",
+              "fragment_sha256": "a967cd8fce9eac3108544e426fd5f130fd4ce040962b21389a51d73b4c32c445",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "coupon_frequency": {
+          "value": 2.0,
+          "unit": "count",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "TELECOM-OPERATOR/coupon_frequency",
+              "fragment_sha256": "c75bc9d7ccfbb80879265d88e9c4e995c83f7a5dabf45a0a3cb090d6a072f7f0",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "schema_version": "1"
+    },
+    {
+      "instrument_id": "BOND-FLOATING-TELECOM-OPERATOR",
+      "instrument_type": "bond_floater",
+      "name": "Облигация с плавающим купоном: Оператор связи",
+      "currency": "RUB",
+      "issuer_id": "TELECOM-OPERATOR",
+      "terms": {
+        "covenants": [],
+        "collateral": [],
+        "face_value": {
+          "value": 1000.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "TELECOM-OPERATOR/face_value",
+              "fragment_sha256": "6788cc5476b86f6dd28f75ba4b183d0cd9260c915585e316eb59990ca6f57296",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "coupon_rate": {
+          "value": 0.155,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "TELECOM-OPERATOR/coupon_rate",
+              "fragment_sha256": "c21a1726d56ce8e20b36d7de9205a80fe909129f33e526be9e588c0593a6d5be",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "maturity_months": {
+          "value": 48.0,
+          "unit": "months",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "TELECOM-OPERATOR/maturity_months",
+              "fragment_sha256": "a967cd8fce9eac3108544e426fd5f130fd4ce040962b21389a51d73b4c32c445",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "coupon_frequency": {
+          "value": 4.0,
+          "unit": "count",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "TELECOM-OPERATOR/coupon_frequency",
+              "fragment_sha256": "7e613bbe69c07f2dec9d8a754f8810d426a63ac0e480703f58dda75aed53cc48",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "schema_version": "1"
+    }
+  ],
+  "positions": [
+    {
+      "position_id": "LOAN-LEVERAGED-DEVELOPER",
+      "instrument_id": "LOAN-LEVERAGED-DEVELOPER",
+      "params": {
+        "ead": {
+          "value": 3000.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "LEVERAGED-DEVELOPER/ead",
+              "fragment_sha256": "f6669c9f12632b531797b3b3f6801e1b4d90979ab8d78216bdfedf8d61c46a84",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "lgd": {
+          "value": 0.5,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "LEVERAGED-DEVELOPER/lgd",
+              "fragment_sha256": "440d59788c4be57b1c5440f112536cb85279481be0943f2c42b97ff486b22421",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "ccf": {
+          "value": 1.0,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "LEVERAGED-DEVELOPER/ccf",
+              "fragment_sha256": "0d4f095fa0755b8b8e040cd7976ed41ec5a59d18d39bf138f34d87969144235f",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "import_share": {
+          "value": 0.0,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "LEVERAGED-DEVELOPER/import_share",
+              "fragment_sha256": "ec9ad8a8189f445bec97a4a25be5570be6402c391830ed30b45d1134d559ea7e",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "driver_elasticity": {},
+        "proxy_peer_ids": [],
+        "status": "ok",
+        "flags": []
+      },
+      "schema_version": "1",
+      "model_id": null
+    },
+    {
+      "position_id": "LOAN-DISCOUNTER-CHAIN",
+      "instrument_id": "LOAN-DISCOUNTER-CHAIN",
+      "params": {
+        "ead": {
+          "value": 1500.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "DISCOUNTER-CHAIN/ead",
+              "fragment_sha256": "c5efd67e697104f867bacf821d9a5e01d7f79f6b86ac82954b4f3b8da7414278",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "lgd": {
+          "value": 0.4,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "DISCOUNTER-CHAIN/lgd",
+              "fragment_sha256": "54e5f5a7bf2ffdadac8518cffc60b6ebb4ecb66c6c09ee9eee4150c3a81f27aa",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "ccf": {
+          "value": 1.0,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "DISCOUNTER-CHAIN/ccf",
+              "fragment_sha256": "eca2a06ca369eda864dc67dc1a7ce08b6ed9cd5fb2c00e2cc64c5da67c254a0a",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "import_share": {
+          "value": 0.0,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "DISCOUNTER-CHAIN/import_share",
+              "fragment_sha256": "017060ababf0d3fecf49190997e4e0afb26a34aea7ed50eeac1d7163784d8800",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "driver_elasticity": {},
+        "proxy_peer_ids": [],
+        "status": "ok",
+        "flags": []
+      },
+      "schema_version": "1",
+      "model_id": null
+    },
+    {
+      "position_id": "LOAN-WAREHOUSE-OPERATOR",
+      "instrument_id": "LOAN-WAREHOUSE-OPERATOR",
+      "params": {
+        "ead": {
+          "value": 2000.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "WAREHOUSE-OPERATOR/ead",
+              "fragment_sha256": "4292495203ccb4c2c70f3021606a6db6b9c5b2dbc5b1c6cc9c513da0edac6b4d",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "lgd": {
+          "value": 0.35,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "WAREHOUSE-OPERATOR/lgd",
+              "fragment_sha256": "e42ed9b91d74ef197a91ee3351b993e51012927de800e277680973b5a1c8faeb",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "ccf": {
+          "value": 1.0,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "WAREHOUSE-OPERATOR/ccf",
+              "fragment_sha256": "6fa10cb771fdfb5ccbe4a933e03870503b34a8e26af3de189f7e7f0a85eebdaf",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "import_share": {
+          "value": 0.0,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "WAREHOUSE-OPERATOR/import_share",
+              "fragment_sha256": "415da7f946f7f3de568493c73fb79c44f139d285caa4c8aab7f2546af3a1a46f",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "driver_elasticity": {},
+        "proxy_peer_ids": [],
+        "status": "ok",
+        "flags": []
+      },
+      "schema_version": "1",
+      "model_id": null
+    },
+    {
+      "position_id": "BOND-FIXED-TELECOM-OPERATOR",
+      "instrument_id": "BOND-FIXED-TELECOM-OPERATOR",
+      "params": {
+        "ead": {
+          "value": 1000.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "TELECOM-OPERATOR/ead",
+              "fragment_sha256": "c2c2c0b091dff1cfe911ec4aa6dcfe90f5808927b4411c983dec78557d6a8996",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "lgd": {
+          "value": 0.6,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "TELECOM-OPERATOR/lgd",
+              "fragment_sha256": "eaf7736ffe4868c8fbb4b6907aa8a52800177d6c71d1dc2f93cfcf5693d928fa",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "ccf": {
+          "value": 1.0,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "TELECOM-OPERATOR/ccf",
+              "fragment_sha256": "c9fb4d795c7943ec5fb2d3d1874987cb2306c51bd3773958be8c66e48b38500c",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "import_share": {
+          "value": 0.0,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "TELECOM-OPERATOR/import_share",
+              "fragment_sha256": "f9ce00688ee217352ae6de53c5e8c1a197aaf78c24049b00bf6b85ace7f7ed22",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "driver_elasticity": {},
+        "proxy_peer_ids": [],
+        "status": "ok",
+        "flags": []
+      },
+      "schema_version": "1",
+      "model_id": null
+    },
+    {
+      "position_id": "BOND-FLOATING-TELECOM-OPERATOR",
+      "instrument_id": "BOND-FLOATING-TELECOM-OPERATOR",
+      "params": {
+        "ead": {
+          "value": 1000.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "TELECOM-OPERATOR/ead",
+              "fragment_sha256": "c2c2c0b091dff1cfe911ec4aa6dcfe90f5808927b4411c983dec78557d6a8996",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "lgd": {
+          "value": 0.6,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "TELECOM-OPERATOR/lgd",
+              "fragment_sha256": "eaf7736ffe4868c8fbb4b6907aa8a52800177d6c71d1dc2f93cfcf5693d928fa",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "ccf": {
+          "value": 1.0,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "TELECOM-OPERATOR/ccf",
+              "fragment_sha256": "c9fb4d795c7943ec5fb2d3d1874987cb2306c51bd3773958be8c66e48b38500c",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "import_share": {
+          "value": 0.0,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "TELECOM-OPERATOR/import_share",
+              "fragment_sha256": "f9ce00688ee217352ae6de53c5e8c1a197aaf78c24049b00bf6b85ace7f7ed22",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "driver_elasticity": {},
+        "proxy_peer_ids": [],
+        "status": "ok",
+        "flags": []
+      },
+      "schema_version": "1",
+      "model_id": null
+    }
+  ]
+}

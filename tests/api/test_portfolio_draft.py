@@ -1,12 +1,12 @@
 """msa.api.portfolio_draft.build: identity merges lots of one security (D10); editor bounds
-enforced server-side (I3).
+enforced server-side (I3); a context other than the analyst's names the records.
 """
 
 from datetime import date
 
 import pytest
 
-from msa.api.portfolio_draft import DraftPosition, PortfolioDraft, build
+from msa.api.portfolio_draft import DraftContext, DraftPosition, PortfolioDraft, build
 from msa.platform.registry import registry
 
 AS_OF = date(2026, 9, 11)
@@ -74,3 +74,36 @@ def test_a_field_above_its_declared_maximum_is_rejected_naming_the_field():
     over = row("P1", values={**row("P1")["values"], "residual_volatility": 20})
     with pytest.raises(ValueError, match="residual_volatility"):
         build_rows(over)
+
+
+# -- a context names the records: the demo catalog's securities of one company --------------
+
+
+class OneCompany(DraftContext):
+    def issuer_id(self, position_id) -> str:
+        return "OIL-COMPANY"
+
+    def instrument_id(self, position_id) -> str:
+        return self.instruments.get(position_id, position_id)
+
+
+def test_a_context_names_the_records_and_rows_share_its_issuer():
+    ordinary = row("P1")
+    preferred = row("P2", values={**row("P2")["values"], "ticker": "OILP"})
+    draft = PortfolioDraft(
+        name="Портфель", positions=[DraftPosition.model_validate(r) for r in (ordinary, preferred)]
+    )
+    context = OneCompany(author="analyst", today=AS_OF, source_id="catalog", portfolio_id="PF1")
+    bundle, _ = build(
+        draft,
+        author="analyst",
+        today=AS_OF,
+        registry=REGISTRY,
+        portfolio_id="PF1",
+        context=context,
+    )
+    assert [party.party_id for party in bundle.parties] == ["OIL-COMPANY"]
+    assert {i.instrument_id: i.issuer_id for i in bundle.instruments} == {
+        "P1": "OIL-COMPANY",
+        "P2": "OIL-COMPANY",
+    }

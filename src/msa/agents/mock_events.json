@@ -1,20 +1,478 @@
 {
-  "984f1db551611fd4714ea2dee1a8754a8200315103a9d28c98b805e418cee0e7": {
-    "event_type": "Утилизационный сбор",
-    "okved": "46.63",
-    "channel": "equipment_cost",
-    "driver": "cogs"
-  },
-  "8258dc2924f661a8cba5d604a01da49c3a60febca2011f364a5a3512567516b0": {
-    "event_type": "Первоначальный взнос по ипотеке",
-    "okved": "41.20",
-    "channel": "mortgage_downpayment",
-    "driver": "revenue"
+  "324b89aeccda0ab02065fa386dce2b0d4e32db7d94bd8917a2874c115c58757d": {
+    "event_type": "Распродажа акций",
+    "channels": {
+      "selloff": "Продажи российских акций"
+    },
+    "direct": [
+      {
+        "channel": "selloff",
+        "factor": "equity.market",
+        "key": "MOEX"
+      },
+      {
+        "channel": "selloff",
+        "factor": "equity.sector",
+        "key": "financials"
+      },
+      {
+        "channel": "selloff",
+        "factor": "equity.sector",
+        "key": "technology"
+      }
+    ],
+    "scenario": {
+      "moex": {
+        "kind": "triangular",
+        "low": -0.287682,
+        "mode": -0.162519,
+        "high": -0.105361,
+        "label": "Индекс МосБиржи",
+        "unit": "log_return",
+        "factor": "equity.market",
+        "key": "MOEX",
+        "channel": "selloff"
+      },
+      "banks": {
+        "kind": "triangular",
+        "low": -0.083382,
+        "mode": -0.051293,
+        "high": -0.020203,
+        "label": "Акции банков сверх рынка",
+        "unit": "log_return",
+        "factor": "equity.sector",
+        "key": "financials",
+        "channel": "selloff"
+      },
+      "it": {
+        "kind": "triangular",
+        "low": -0.127833,
+        "mode": -0.083382,
+        "high": -0.040822,
+        "label": "Акции ИТ-компаний сверх рынка",
+        "unit": "log_return",
+        "factor": "equity.sector",
+        "key": "technology",
+        "channel": "selloff"
+      }
+    }
   },
   "e40b7ccaa1a0d77ff01c8dba14c49a104e17f6d3a24846c6482a5fef28d837c7": {
     "event_type": "Льготная ипотека",
-    "okved": "41.20",
-    "channel": "mortgage_demand",
-    "driver": "revenue"
+    "channels": {
+      "mortgage_demand": "Спрос на льготную ипотеку"
+    },
+    "links": [
+      {
+        "channel": "mortgage_demand",
+        "okved": "41.20",
+        "factor": "credit.revenue"
+      }
+    ],
+    "scenario": {
+      "mortgage_demand": {
+        "kind": "triangular",
+        "low": -0.15,
+        "mode": -0.1,
+        "high": -0.05,
+        "label": "Спрос на льготную ипотеку",
+        "unit": "fraction",
+        "factor": "credit.revenue",
+        "channel": "mortgage_demand"
+      }
+    }
+  },
+  "fb7f949a3cb6e21b6d140491d48b1cc3dee7089c4c76e7d79862c9f291037aee": {
+    "event_type": "Повышение ключевой ставки",
+    "channels": {
+      "borrowing_cost": "Ставки по кредитам компаниям"
+    },
+    "links": [
+      {
+        "channel": "borrowing_cost",
+        "okved": "41.20",
+        "factor": "credit.interest"
+      },
+      {
+        "channel": "borrowing_cost",
+        "okved": "47.11",
+        "factor": "credit.interest"
+      },
+      {
+        "channel": "borrowing_cost",
+        "okved": "52.10",
+        "factor": "credit.interest"
+      },
+      {
+        "channel": "borrowing_cost",
+        "okved": "61.10",
+        "factor": "credit.interest"
+      }
+    ],
+    "scenario": {
+      "borrowing_cost": {
+        "kind": "triangular",
+        "low": 0.02,
+        "mode": 0.03,
+        "high": 0.05,
+        "label": "Рост ставок по кредитам",
+        "unit": "fraction",
+        "factor": "credit.interest",
+        "channel": "borrowing_cost"
+      }
+    }
+  },
+  "8258dc2924f661a8cba5d604a01da49c3a60febca2011f364a5a3512567516b0": {
+    "event_type": "Первоначальный взнос по ипотеке",
+    "channels": {
+      "housing_sales": "Продажи квартир в новостройках",
+      "construction_volume": "Объём жилищного строительства"
+    },
+    "links": [
+      {
+        "channel": "housing_sales",
+        "okved": "41.20",
+        "factor": "credit.revenue"
+      },
+      {
+        "channel": "construction_volume",
+        "okved": "23.61",
+        "factor": "credit.revenue"
+      }
+    ],
+    "scenario": {
+      "housing_sales": {
+        "kind": "triangular",
+        "low": -0.45,
+        "mode": -0.35,
+        "high": -0.2,
+        "label": "Продажи квартир в новостройках",
+        "unit": "fraction",
+        "factor": "credit.revenue",
+        "channel": "housing_sales"
+      },
+      "construction_volume": {
+        "kind": "triangular",
+        "low": -0.15,
+        "mode": -0.1,
+        "high": -0.05,
+        "label": "Объём строительства",
+        "unit": "fraction",
+        "factor": "credit.revenue",
+        "channel": "construction_volume"
+      }
+    }
+  },
+  "54a7057375a66e83aeef37a69e1e615bdf89e335dd447532ce275ae7561352fd": {
+    "event_type": "Падение реальных доходов",
+    "channels": {
+      "real_income": "Реальные доходы населения",
+      "stock_market": "Индекс МосБиржи"
+    },
+    "links": [
+      {
+        "channel": "real_income",
+        "okved": "47.11",
+        "factor": "credit.revenue",
+        "elasticity": 0.4
+      },
+      {
+        "channel": "real_income",
+        "okved": "10.11",
+        "factor": "credit.revenue",
+        "elasticity": 0.6
+      },
+      {
+        "channel": "real_income",
+        "okved": "10.51",
+        "factor": "credit.revenue",
+        "elasticity": 0.4
+      },
+      {
+        "channel": "real_income",
+        "okved": "56.10",
+        "factor": "credit.revenue",
+        "elasticity": 1.5
+      },
+      {
+        "channel": "real_income",
+        "okved": "47.71",
+        "factor": "credit.revenue",
+        "elasticity": 1.3
+      }
+    ],
+    "direct": [
+      {
+        "channel": "stock_market",
+        "factor": "equity.market",
+        "key": "MOEX"
+      }
+    ],
+    "scenario": {
+      "real_income": {
+        "kind": "triangular",
+        "low": -0.08,
+        "mode": -0.06,
+        "high": -0.03,
+        "label": "Реальные доходы населения",
+        "unit": "fraction",
+        "factor": "credit.revenue",
+        "channel": "real_income"
+      },
+      "moex": {
+        "kind": "triangular",
+        "low": -0.083382,
+        "mode": -0.051293,
+        "high": -0.020203,
+        "label": "Индекс МосБиржи",
+        "unit": "log_return",
+        "factor": "equity.market",
+        "key": "MOEX",
+        "channel": "stock_market"
+      }
+    }
+  },
+  "984f1db551611fd4714ea2dee1a8754a8200315103a9d28c98b805e418cee0e7": {
+    "event_type": "Утилизационный сбор",
+    "channels": {
+      "equipment_cost": "Стоимость закупки спецтехники",
+      "leasing_deals": "Новые лизинговые сделки со спецтехникой",
+      "payment_delay": "Срок расчётов через посредников"
+    },
+    "links": [
+      {
+        "channel": "equipment_cost",
+        "okved": "46.63",
+        "factor": "credit.cogs"
+      },
+      {
+        "channel": "leasing_deals",
+        "okved": "64.91",
+        "factor": "credit.revenue"
+      },
+      {
+        "channel": "payment_delay",
+        "okved": "46.63",
+        "factor": "credit.working_capital"
+      },
+      {
+        "channel": "payment_delay",
+        "okved": "20.15",
+        "factor": "credit.working_capital"
+      }
+    ],
+    "scenario": {
+      "equipment_cost": {
+        "kind": "triangular",
+        "low": 0.06,
+        "mode": 0.1,
+        "high": 0.14,
+        "label": "Стоимость закупки спецтехники",
+        "unit": "fraction",
+        "factor": "credit.cogs",
+        "channel": "equipment_cost"
+      },
+      "leasing_deals": {
+        "kind": "triangular",
+        "low": -0.12,
+        "mode": -0.08,
+        "high": -0.04,
+        "label": "Новые лизинговые сделки",
+        "unit": "fraction",
+        "factor": "credit.revenue",
+        "channel": "leasing_deals"
+      },
+      "payment_delay": {
+        "kind": "uniform",
+        "low": 30.0,
+        "high": 60.0,
+        "label": "Задержка расчётов",
+        "unit": "days",
+        "factor": "credit.working_capital",
+        "channel": "payment_delay"
+      }
+    }
+  },
+  "f21c1706cdd127826d9aec89203e0d086ee5098e7070475a4aa5d124473d9b7b": {
+    "event_type": "Укрепление рубля",
+    "channels": {
+      "usd_rate": "Курс доллара к рублю"
+    },
+    "links": [
+      {
+        "channel": "usd_rate",
+        "okved": "45.11",
+        "factor": "credit.fx"
+      },
+      {
+        "channel": "usd_rate",
+        "okved": "46.46",
+        "factor": "credit.fx"
+      },
+      {
+        "channel": "usd_rate",
+        "okved": "47.41",
+        "factor": "credit.fx"
+      },
+      {
+        "channel": "usd_rate",
+        "okved": "24.10",
+        "factor": "credit.revenue",
+        "elasticity": 0.6
+      },
+      {
+        "channel": "usd_rate",
+        "okved": "20.15",
+        "factor": "credit.revenue",
+        "elasticity": 0.8
+      }
+    ],
+    "direct": [
+      {
+        "channel": "usd_rate",
+        "factor": "market.fx",
+        "key": "USD/RUB"
+      },
+      {
+        "channel": "usd_rate",
+        "factor": "equity.sector",
+        "key": "materials"
+      }
+    ],
+    "scenario": {
+      "import_costs": {
+        "kind": "triangular",
+        "low": -0.2,
+        "mode": -0.15,
+        "high": -0.1,
+        "label": "Курс доллара для импортных закупок",
+        "unit": "fraction",
+        "factor": "credit.fx",
+        "channel": "usd_rate"
+      },
+      "export_revenue": {
+        "kind": "triangular",
+        "low": -0.2,
+        "mode": -0.15,
+        "high": -0.1,
+        "label": "Курс доллара для экспортной выручки",
+        "unit": "fraction",
+        "factor": "credit.revenue",
+        "channel": "usd_rate"
+      },
+      "usd_rub": {
+        "kind": "triangular",
+        "low": -0.223144,
+        "mode": -0.162519,
+        "high": -0.105361,
+        "label": "Курс USD/RUB",
+        "unit": "log_return",
+        "factor": "market.fx",
+        "key": "USD/RUB",
+        "channel": "usd_rate"
+      },
+      "metals": {
+        "kind": "triangular",
+        "low": -0.105361,
+        "mode": -0.083382,
+        "high": -0.051293,
+        "label": "Акции металлургов сверх рынка",
+        "unit": "log_return",
+        "factor": "equity.sector",
+        "key": "materials",
+        "channel": "usd_rate"
+      }
+    }
+  },
+  "6e1b406425f87633b0e9d03697925f3d869391b21a1fb419268ae161bbd4fdab": {
+    "event_type": "Ослабление рубля",
+    "channels": {
+      "usd_rate": "Курс доллара к рублю"
+    },
+    "links": [
+      {
+        "channel": "usd_rate",
+        "okved": "45.11",
+        "factor": "credit.fx"
+      },
+      {
+        "channel": "usd_rate",
+        "okved": "46.46",
+        "factor": "credit.fx"
+      },
+      {
+        "channel": "usd_rate",
+        "okved": "47.41",
+        "factor": "credit.fx"
+      },
+      {
+        "channel": "usd_rate",
+        "okved": "24.10",
+        "factor": "credit.revenue",
+        "elasticity": 0.6
+      },
+      {
+        "channel": "usd_rate",
+        "okved": "20.15",
+        "factor": "credit.revenue",
+        "elasticity": 0.8
+      }
+    ],
+    "direct": [
+      {
+        "channel": "usd_rate",
+        "factor": "market.fx",
+        "key": "USD/RUB"
+      },
+      {
+        "channel": "usd_rate",
+        "factor": "equity.sector",
+        "key": "materials"
+      }
+    ],
+    "scenario": {
+      "import_costs": {
+        "kind": "triangular",
+        "low": 0.15,
+        "mode": 0.2,
+        "high": 0.25,
+        "label": "Курс доллара для импортных закупок",
+        "unit": "fraction",
+        "factor": "credit.fx",
+        "channel": "usd_rate"
+      },
+      "export_revenue": {
+        "kind": "triangular",
+        "low": 0.15,
+        "mode": 0.2,
+        "high": 0.25,
+        "label": "Курс доллара для экспортной выручки",
+        "unit": "fraction",
+        "factor": "credit.revenue",
+        "channel": "usd_rate"
+      },
+      "usd_rub": {
+        "kind": "triangular",
+        "low": 0.139762,
+        "mode": 0.182322,
+        "high": 0.223144,
+        "label": "Курс USD/RUB",
+        "unit": "log_return",
+        "factor": "market.fx",
+        "key": "USD/RUB",
+        "channel": "usd_rate"
+      },
+      "metals": {
+        "kind": "triangular",
+        "low": 0.04879,
+        "mode": 0.076961,
+        "high": 0.09531,
+        "label": "Акции металлургов сверх рынка",
+        "unit": "log_return",
+        "factor": "equity.sector",
+        "key": "materials",
+        "channel": "usd_rate"
+      }
+    }
   }
 }

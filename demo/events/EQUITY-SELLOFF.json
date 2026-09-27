@@ -1,0 +1,81 @@
+{
+  "event_id": "EQUITY-SELLOFF",
+  "title": "Распродажа на рынке акций",
+  "text": "Инвесторы массово продают российские акции. Сильнее рынка дешевеют акции банков и ИТ-компаний.",
+  "metadata": {
+    "portfolio_id": "EQUITY-MARKET",
+    "source": "Синтетическое событие демо-каталога",
+    "scenario_text": "Индекс МосБиржи снизится на 10–25 %, в центральном сценарии на 15 %. Акции банков упадут на 2–8 % сильнее рынка, в центральном сценарии на 5 %, акции ИТ-компаний — на 4–12 %, в центральном сценарии на 8 %."
+  },
+  "mock_answer": {
+    "event_type": "Распродажа акций",
+    "channels": {
+      "selloff": "Продажи российских акций"
+    },
+    "direct": [
+      {
+        "channel": "selloff",
+        "factor": "equity.market",
+        "key": "MOEX"
+      },
+      {
+        "channel": "selloff",
+        "factor": "equity.sector",
+        "key": "financials"
+      },
+      {
+        "channel": "selloff",
+        "factor": "equity.sector",
+        "key": "technology"
+      }
+    ],
+    "scenario": {
+      "moex": {
+        "kind": "triangular",
+        "low": -0.287682,
+        "mode": -0.162519,
+        "high": -0.105361,
+        "label": "Индекс МосБиржи",
+        "unit": "log_return",
+        "factor": "equity.market",
+        "key": "MOEX",
+        "channel": "selloff"
+      },
+      "banks": {
+        "kind": "triangular",
+        "low": -0.083382,
+        "mode": -0.051293,
+        "high": -0.020203,
+        "label": "Акции банков сверх рынка",
+        "unit": "log_return",
+        "factor": "equity.sector",
+        "key": "financials",
+        "channel": "selloff"
+      },
+      "it": {
+        "kind": "triangular",
+        "low": -0.127833,
+        "mode": -0.083382,
+        "high": -0.040822,
+        "label": "Акции ИТ-компаний сверх рынка",
+        "unit": "log_return",
+        "factor": "equity.sector",
+        "key": "technology",
+        "channel": "selloff"
+      }
+    }
+  },
+  "expect": {
+    "loses": [
+      "SHARE-COMMERCIAL-BANK",
+      "SHARE-OIL-MAJOR",
+      "SHARE-STEEL-EXPORTER",
+      "SHARE-SUPERMARKET-CHAIN",
+      "SHARE-IT-DEVELOPER",
+      "SHARE-TELECOM-OPERATOR"
+    ],
+    "unaffected": [
+      "SHARE-US-PHARMA"
+    ]
+  }
+}

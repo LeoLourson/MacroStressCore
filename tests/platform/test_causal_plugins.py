@@ -1,5 +1,6 @@
 """New asset types reach causal analysis and calculation without core special cases."""
 
+import json
 from copy import deepcopy
 from dataclasses import replace
 from datetime import date
@@ -7,12 +8,14 @@ from importlib import import_module
 
 import pytest
 
+from demo.build_catalog import CATALOG
 from msa.agents.advisory import AdvisoryAgent
 from msa.agents.aggregate import AggregateAgent
 from msa.agents.base import AgentError
 from msa.agents.causal import CausalAgent
 from msa.agents.draw_macro import DrawMacroAgent
 from msa.agents.exposure import ExposureAgent, LocalResolver
+from msa.agents.ingest import fragment
 from msa.agents.quant import QuantAgent
 from msa.contracts import SourceDocument, TransmissionGraph
 from msa.contracts.common import Contract
@@ -290,3 +293,53 @@ def test_stock_portfolio_runs_with_only_its_own_factor_graph(graph_factory):
     assert all(r["execution"] == "completed" for r in state["sorted_results"])
     assert "market.pnl" in state["portfolio_result"]["slices"]
     assert "credit.loss" not in state["portfolio_result"]["slices"]
+
+
+# -- the mock profile answers a library event with its prepared graph and scenario ----------
+
+
+def library_payload(event_id, raw):
+    """The event text as the platform ingests it: the document id is the text's sha256."""
+    text = json.loads((CATALOG / "events" / f"{event_id}.json").read_text("utf-8"))["text"]
+    part = fragment(text, "p1")
+    doc = SourceDocument(
+        doc_id=part.sha256, sha256=part.sha256, mime="text/plain", fragments=[part]
+    )
+    return {
+        "document": doc.model_dump(mode="json"),
+        "seed": 42,
+        "portfolio_context": portfolio_context(raw, OPTIONS, registry()),
+    }
+
+
+def factor_nodes(output):
+    return {(n.factor, n.key) for n in output.graph.nodes if n.kind == "factor"}
+
+
+def test_a_library_event_gets_its_prepared_graph_and_scenario():
+    output = CausalAgent(mock=True).run_structured(library_payload("RECYCLING-FEE", positions()))
+    assert factor_nodes(output) == {
+        ("credit.cogs", None),
+        ("credit.revenue", None),
+        ("credit.working_capital", None),
+    }
+    assert set(output.scenario) == {"equipment_cost", "leasing_deals", "payment_delay"}
+    assert output.direct_okved == ["20.15", "46.63", "64.91"]
+    assert all(v.ok for v in validate("TransmissionGraph", output.graph))
+
+
+def test_a_prepared_answer_keeps_only_the_factors_the_portfolio_reads():
+    shares = [p for p in positions() if p["instrument"]["instrument_type"] == "common_stock"]
+    output = CausalAgent(mock=True).run_structured(library_payload("RECYCLING-FEE", shares))
+    assert factor_nodes(output) == set()
+    assert output.scenario == {}
+
+
+def test_a_prepared_answer_names_direct_factors_by_their_key():
+    output = CausalAgent(mock=True).run_structured(
+        library_payload("EQUITY-SELLOFF", positions("EQUITY-MARKET"))
+    )
+    assert ("equity.market", "MOEX") in factor_nodes(output)
+    assert {spec.factor for spec in output.scenario.values()} <= {
+        factor for factor, _ in factor_nodes(output)
+    }

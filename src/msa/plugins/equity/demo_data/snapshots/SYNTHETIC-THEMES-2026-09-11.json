@@ -1,0 +1,592 @@
+{
+  "items": [
+    {
+      "item_id": "dividend:SHARE-COMMERCIAL-BANK",
+      "kind": "dividend",
+      "subject": "SHARE-COMMERCIAL-BANK",
+      "observed_on": "2026-09-11",
+      "values": {
+        "amount": {
+          "value": 15.0,
+          "unit": "RUB_per_unit",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "COMMERCIAL-BANK/dividend",
+              "fragment_sha256": "b185080f124b52c8bb013c1d98ec07bc5f98dc029e0039a582b9bc74217a46bb",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "horizon_months": 12,
+        "entered_by": "demo:catalog"
+      },
+      "evidence": []
+    },
+    {
+      "item_id": "dividend:SHARE-IT-DEVELOPER",
+      "kind": "dividend",
+      "subject": "SHARE-IT-DEVELOPER",
+      "observed_on": "2026-09-11",
+      "values": {
+        "amount": {
+          "value": 0.0,
+          "unit": "RUB_per_unit",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "IT-DEVELOPER/dividend",
+              "fragment_sha256": "a9032206de4db78bca642ef69d78a828c657008c64a5da35c7bc9ae030aad8c6",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "horizon_months": 12,
+        "entered_by": "demo:catalog"
+      },
+      "evidence": []
+    },
+    {
+      "item_id": "dividend:SHARE-OIL-MAJOR",
+      "kind": "dividend",
+      "subject": "SHARE-OIL-MAJOR",
+      "observed_on": "2026-09-11",
+      "values": {
+        "amount": {
+          "value": 30.0,
+          "unit": "RUB_per_unit",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "OIL-MAJOR/dividend",
+              "fragment_sha256": "535f82c134763d664f6933a2c0507d6e6a481809cc734dce0de54dd8e6cee3d1",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "horizon_months": 12,
+        "entered_by": "demo:catalog"
+      },
+      "evidence": []
+    },
+    {
+      "item_id": "dividend:SHARE-STEEL-EXPORTER",
+      "kind": "dividend",
+      "subject": "SHARE-STEEL-EXPORTER",
+      "observed_on": "2026-09-11",
+      "values": {
+        "amount": {
+          "value": 5.0,
+          "unit": "RUB_per_unit",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "STEEL-EXPORTER/dividend",
+              "fragment_sha256": "77f76d9cbd9bc246e4eb141d5fc9ee0669a3d67278de6132bb2090dae0633dfd",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "horizon_months": 12,
+        "entered_by": "demo:catalog"
+      },
+      "evidence": []
+    },
+    {
+      "item_id": "dividend:SHARE-SUPERMARKET-CHAIN",
+      "kind": "dividend",
+      "subject": "SHARE-SUPERMARKET-CHAIN",
+      "observed_on": "2026-09-11",
+      "values": {
+        "amount": {
+          "value": 5.0,
+          "unit": "RUB_per_unit",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "SUPERMARKET-CHAIN/dividend",
+              "fragment_sha256": "66caea17428b7a2a9cd8aa92ead113de729dfc840e4d4e6076161186253bcb46",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "horizon_months": 12,
+        "entered_by": "demo:catalog"
+      },
+      "evidence": []
+    },
+    {
+      "item_id": "dividend:SHARE-TELECOM-OPERATOR",
+      "kind": "dividend",
+      "subject": "SHARE-TELECOM-OPERATOR",
+      "observed_on": "2026-09-11",
+      "values": {
+        "amount": {
+          "value": 10.0,
+          "unit": "RUB_per_unit",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "TELECOM-OPERATOR/dividend",
+              "fragment_sha256": "178d697f0bf71845623a5886bbdd00b61bc9e45a9c9f29cd919dbf55697d81ce",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "horizon_months": 12,
+        "entered_by": "demo:catalog"
+      },
+      "evidence": []
+    },
+    {
+      "item_id": "dividend:SHARE-US-PHARMA",
+      "kind": "dividend",
+      "subject": "SHARE-US-PHARMA",
+      "observed_on": "2026-09-11",
+      "values": {
+        "amount": {
+          "value": 3.0,
+          "unit": "USD_per_unit",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "US-PHARMA/dividend",
+              "fragment_sha256": "dd7fccab48a63b7ceb574930f4d3747a8cef4c1c9c24efa97ea309f4c4690f1d",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "horizon_months": 12,
+        "entered_by": "demo:catalog"
+      },
+      "evidence": []
+    },
+    {
+      "item_id": "sensitivity:SHARE-COMMERCIAL-BANK",
+      "kind": "sensitivity",
+      "subject": "SHARE-COMMERCIAL-BANK",
+      "observed_on": "2026-09-11",
+      "values": {
+        "beta_market": {
+          "value": 1.2,
+          "unit": "ratio",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "COMMERCIAL-BANK/beta_market",
+              "fragment_sha256": "d6893459157f21d3d2231442fcb5e027ba838864be1b931ff2837ba69e1df037",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "beta_sector": {
+          "value": 1.0,
+          "unit": "ratio",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "COMMERCIAL-BANK/beta_sector",
+              "fragment_sha256": "06849d0bddda8bf1e754bfb68835dd0b66ec801283639b06638bc30511424acc",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "residual_volatility": {
+          "value": 0.25,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "COMMERCIAL-BANK/residual_volatility",
+              "fragment_sha256": "d92f1ab3ef1a17c9d7874e9f7ce7b1f465a1f3cf5931cac4e159b5b74b8b211d",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "method": "expert",
+        "market_index": "MOEX",
+        "sector": "financials",
+        "entered_by": "demo:catalog"
+      },
+      "evidence": []
+    },
+    {
+      "item_id": "sensitivity:SHARE-IT-DEVELOPER",
+      "kind": "sensitivity",
+      "subject": "SHARE-IT-DEVELOPER",
+      "observed_on": "2026-09-11",
+      "values": {
+        "beta_market": {
+          "value": 1.4,
+          "unit": "ratio",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "IT-DEVELOPER/beta_market",
+              "fragment_sha256": "9cb19a4278a3680d53f9fadf4cc77e2bf6f8c803487968974617f4c5616a48ca",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "beta_sector": {
+          "value": 1.0,
+          "unit": "ratio",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "IT-DEVELOPER/beta_sector",
+              "fragment_sha256": "2f4a51a920b8a2141c75a73aacfede1f72e0b88fde496031d37b501bd84e1fd1",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "residual_volatility": {
+          "value": 0.35,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "IT-DEVELOPER/residual_volatility",
+              "fragment_sha256": "a0a0b11f0c01d3a6e500882a08ea0856068d5b8141dfc08bf736d1bfc691dea0",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "method": "expert",
+        "market_index": "MOEX",
+        "sector": "technology",
+        "entered_by": "demo:catalog"
+      },
+      "evidence": []
+    },
+    {
+      "item_id": "sensitivity:SHARE-OIL-MAJOR",
+      "kind": "sensitivity",
+      "subject": "SHARE-OIL-MAJOR",
+      "observed_on": "2026-09-11",
+      "values": {
+        "beta_market": {
+          "value": 0.9,
+          "unit": "ratio",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "OIL-MAJOR/beta_market",
+              "fragment_sha256": "a107f5dd3c400086d20f91499146c63b3b2a814cad719f63b1304e22190808c3",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "beta_sector": {
+          "value": 1.0,
+          "unit": "ratio",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "OIL-MAJOR/beta_sector",
+              "fragment_sha256": "0ae0b302706422b222bbaaa67cbd8412fa18dee088ba0e0d496c94f7bde28046",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "residual_volatility": {
+          "value": 0.25,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "OIL-MAJOR/residual_volatility",
+              "fragment_sha256": "b4543829f37c6801e2b63c44ec4383c67eb8ced9599153710b47814e3eb59f66",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "method": "expert",
+        "market_index": "MOEX",
+        "sector": "oil_gas",
+        "entered_by": "demo:catalog"
+      },
+      "evidence": []
+    },
+    {
+      "item_id": "sensitivity:SHARE-STEEL-EXPORTER",
+      "kind": "sensitivity",
+      "subject": "SHARE-STEEL-EXPORTER",
+      "observed_on": "2026-09-11",
+      "values": {
+        "beta_market": {
+          "value": 1.1,
+          "unit": "ratio",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "STEEL-EXPORTER/beta_market",
+              "fragment_sha256": "182726daa354924e71405887c95586ca30f3b94f069727791bef0223ba282bfe",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "beta_sector": {
+          "value": 1.0,
+          "unit": "ratio",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "STEEL-EXPORTER/beta_sector",
+              "fragment_sha256": "d6415f9c819eaceb4eca6bb28fa3be8d77a36487d56e72d184a2a0c157fef73f",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "residual_volatility": {
+          "value": 0.3,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "STEEL-EXPORTER/residual_volatility",
+              "fragment_sha256": "1aaba4f26b84dc74c406977633007861362fca8c2df6f1b78eeaf0ef316d6a60",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "method": "expert",
+        "market_index": "MOEX",
+        "sector": "materials",
+        "entered_by": "demo:catalog"
+      },
+      "evidence": []
+    },
+    {
+      "item_id": "sensitivity:SHARE-SUPERMARKET-CHAIN",
+      "kind": "sensitivity",
+      "subject": "SHARE-SUPERMARKET-CHAIN",
+      "observed_on": "2026-09-11",
+      "values": {
+        "beta_market": {
+          "value": 0.9,
+          "unit": "ratio",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "SUPERMARKET-CHAIN/beta_market",
+              "fragment_sha256": "a404ed415335d150005254e99470b2925a26f6552270da3c31889a283a6800dd",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "beta_sector": {
+          "value": 1.0,
+          "unit": "ratio",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "SUPERMARKET-CHAIN/beta_sector",
+              "fragment_sha256": "2b7f3c82ec7c7aa2a73767f2532c353cac7f5383364227a3887b5c113e134875",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "residual_volatility": {
+          "value": 0.25,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "SUPERMARKET-CHAIN/residual_volatility",
+              "fragment_sha256": "ac8e20df32d46024a90287c654bbd31f1f1051bae247005da943676d917b2d1e",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "method": "expert",
+        "market_index": "MOEX",
+        "sector": "trade",
+        "entered_by": "demo:catalog"
+      },
+      "evidence": []
+    },
+    {
+      "item_id": "sensitivity:SHARE-TELECOM-OPERATOR",
+      "kind": "sensitivity",
+      "subject": "SHARE-TELECOM-OPERATOR",
+      "observed_on": "2026-09-11",
+      "values": {
+        "beta_market": {
+          "value": 0.7,
+          "unit": "ratio",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "TELECOM-OPERATOR/beta_market",
+              "fragment_sha256": "bbe1bd0a790b3571b5c81f8b9334af0f6abdfab3f5733bb92d7a2cf501807fd8",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "beta_sector": {
+          "value": 1.0,
+          "unit": "ratio",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "TELECOM-OPERATOR/beta_sector",
+              "fragment_sha256": "6a96ede9a6f6b9849f90bdce99c84575a39ddc4efa7cf5f0881c115845015a5e",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "residual_volatility": {
+          "value": 0.2,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "TELECOM-OPERATOR/residual_volatility",
+              "fragment_sha256": "2e4d8654e32109487d35c063361def14d5af0ff88268ce1db7c34cd40a721914",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "method": "expert",
+        "market_index": "MOEX",
+        "sector": "telecom",
+        "entered_by": "demo:catalog"
+      },
+      "evidence": []
+    },
+    {
+      "item_id": "sensitivity:SHARE-US-PHARMA",
+      "kind": "sensitivity",
+      "subject": "SHARE-US-PHARMA",
+      "observed_on": "2026-09-11",
+      "values": {
+        "beta_market": {
+          "value": 0.8,
+          "unit": "ratio",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "US-PHARMA/beta_market",
+              "fragment_sha256": "4cd1068536246bcab123f080efff2fff2658deb3cee0392c56de800f5fa4090e",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "beta_sector": {
+          "value": 1.0,
+          "unit": "ratio",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "US-PHARMA/beta_sector",
+              "fragment_sha256": "12cfc34738b2a74e38228de65324f946b6b05624d1189493287dae8430b7ef38",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "residual_volatility": {
+          "value": 0.25,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "US-PHARMA/residual_volatility",
+              "fragment_sha256": "d71f135084126bda5d9e5ccb9ca739aba9358108298f9d6f77815e0472ca464e",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "method": "expert",
+        "market_index": "SPX",
+        "sector": "healthcare",
+        "entered_by": "demo:catalog"
+      },
+      "evidence": []
+    }
+  ]
+}

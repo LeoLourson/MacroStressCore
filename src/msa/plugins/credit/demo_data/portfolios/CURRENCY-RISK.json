@@ -1,0 +1,498 @@
+{
+  "parties": [
+    {
+      "party_id": "CAR-IMPORTER",
+      "name": "Автодилер-импортёр",
+      "kind": "company",
+      "okved": "45.11",
+      "country": "RU",
+      "description": "Импорт и продажа легковых автомобилей; закупки в валюте",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "demo:companies",
+          "locator": "CAR-IMPORTER",
+          "fragment_sha256": "c930454dc69a76f800b4cd9c067eb78a13b12487e45271368d5bf2450a63bde2",
+          "author": "demo:catalog",
+          "as_of": "2026-09-11"
+        }
+      ]
+    },
+    {
+      "party_id": "DRUG-DISTRIBUTOR",
+      "name": "Дистрибьютор лекарств",
+      "kind": "company",
+      "okved": "46.46",
+      "country": "RU",
+      "description": "Оптовая торговля импортными лекарствами",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "demo:companies",
+          "locator": "DRUG-DISTRIBUTOR",
+          "fragment_sha256": "f9b18c18de02829c444ef6d76abc32626e88833720f4e96178b214ebaac1318e",
+          "author": "demo:catalog",
+          "as_of": "2026-09-11"
+        }
+      ]
+    },
+    {
+      "party_id": "ELECTRONICS-RETAILER",
+      "name": "Сеть магазинов электроники",
+      "kind": "company",
+      "okved": "47.41",
+      "country": "RU",
+      "description": "Розничная продажа импортной электроники",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "demo:companies",
+          "locator": "ELECTRONICS-RETAILER",
+          "fragment_sha256": "5ed2b14236b1b9009df2d3d74a434139d40d31a0a722ef4d8299f1c0f833e788",
+          "author": "demo:catalog",
+          "as_of": "2026-09-11"
+        }
+      ]
+    },
+    {
+      "party_id": "STEEL-EXPORTER",
+      "name": "Металлургический комбинат",
+      "kind": "company",
+      "okved": "24.10",
+      "country": "RU",
+      "description": "Производство стали; большая часть выручки — экспорт",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "demo:companies",
+          "locator": "STEEL-EXPORTER",
+          "fragment_sha256": "61044e0df88fcb0145dac798334e4bb2df2e6253cc0be5ce535d53f8a7059f8c",
+          "author": "demo:catalog",
+          "as_of": "2026-09-11"
+        }
+      ]
+    },
+    {
+      "party_id": "POTASH-EXPORTER",
+      "name": "Производитель калийных удобрений",
+      "kind": "company",
+      "okved": "20.15",
+      "country": "RU",
+      "description": "Добыча и экспорт калийных удобрений",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "demo:companies",
+          "locator": "POTASH-EXPORTER",
+          "fragment_sha256": "3acaaaea90fc10a6f49fadd74c4f7db05fb8e76287d4340a32ddebc451cb6087",
+          "author": "demo:catalog",
+          "as_of": "2026-09-11"
+        }
+      ]
+    }
+  ],
+  "instruments": [
+    {
+      "instrument_id": "LOAN-CAR-IMPORTER",
+      "instrument_type": "corp_loan",
+      "name": "Корпоративный кредит: Автодилер-импортёр",
+      "currency": "RUB",
+      "issuer_id": "CAR-IMPORTER",
+      "terms": {
+        "covenants": [],
+        "collateral": []
+      },
+      "schema_version": "1"
+    },
+    {
+      "instrument_id": "LOAN-DRUG-DISTRIBUTOR",
+      "instrument_type": "corp_loan",
+      "name": "Корпоративный кредит: Дистрибьютор лекарств",
+      "currency": "RUB",
+      "issuer_id": "DRUG-DISTRIBUTOR",
+      "terms": {
+        "covenants": [],
+        "collateral": []
+      },
+      "schema_version": "1"
+    },
+    {
+      "instrument_id": "LOAN-ELECTRONICS-RETAILER",
+      "instrument_type": "corp_loan",
+      "name": "Корпоративный кредит: Сеть магазинов электроники",
+      "currency": "RUB",
+      "issuer_id": "ELECTRONICS-RETAILER",
+      "terms": {
+        "covenants": [],
+        "collateral": []
+      },
+      "schema_version": "1"
+    },
+    {
+      "instrument_id": "LOAN-STEEL-EXPORTER",
+      "instrument_type": "corp_loan",
+      "name": "Корпоративный кредит: Металлургический комбинат",
+      "currency": "RUB",
+      "issuer_id": "STEEL-EXPORTER",
+      "terms": {
+        "covenants": [],
+        "collateral": []
+      },
+      "schema_version": "1"
+    },
+    {
+      "instrument_id": "LOAN-POTASH-EXPORTER",
+      "instrument_type": "corp_loan",
+      "name": "Корпоративный кредит: Производитель калийных удобрений",
+      "currency": "RUB",
+      "issuer_id": "POTASH-EXPORTER",
+      "terms": {
+        "covenants": [],
+        "collateral": []
+      },
+      "schema_version": "1"
+    }
+  ],
+  "positions": [
+    {
+      "position_id": "LOAN-CAR-IMPORTER",
+      "instrument_id": "LOAN-CAR-IMPORTER",
+      "params": {
+        "ead": {
+          "value": 2000.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "CAR-IMPORTER/ead",
+              "fragment_sha256": "14b064f3e8be26c47e333afe1e2a83628fd673287aa20196814399b80214065d",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "lgd": {
+          "value": 0.45,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "CAR-IMPORTER/lgd",
+              "fragment_sha256": "c567184af83bdc23b61da6ed3f1afd81ae7b301ae6769694775fedee077ad1fb",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "ccf": {
+          "value": 1.0,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "CAR-IMPORTER/ccf",
+              "fragment_sha256": "b27b7cb2ab02a7cce06f131481ded467fbccfa0bc2fb5e3e58fb4a293db16d03",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "import_share": {
+          "value": 0.85,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "CAR-IMPORTER/import_share",
+              "fragment_sha256": "1d0b5141021911cc842077f4f53f923b5dc8398748432592491bed44e51e978d",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "driver_elasticity": {},
+        "proxy_peer_ids": [],
+        "status": "ok",
+        "flags": []
+      },
+      "schema_version": "1",
+      "model_id": null
+    },
+    {
+      "position_id": "LOAN-DRUG-DISTRIBUTOR",
+      "instrument_id": "LOAN-DRUG-DISTRIBUTOR",
+      "params": {
+        "ead": {
+          "value": 1500.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "DRUG-DISTRIBUTOR/ead",
+              "fragment_sha256": "45008ecba38ce1f929e42d403814efcf9766f5617b1881be27ff0cf82140a1c8",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "lgd": {
+          "value": 0.4,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "DRUG-DISTRIBUTOR/lgd",
+              "fragment_sha256": "2281d60f834ace93ee5f917ded8ef6fbee50ab71c7c31731d2966252b9870492",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "ccf": {
+          "value": 1.0,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "DRUG-DISTRIBUTOR/ccf",
+              "fragment_sha256": "f04c360d1fe207e7e27384864c13817745235809f183f2137e2c25db61cfcb36",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "import_share": {
+          "value": 0.7,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "DRUG-DISTRIBUTOR/import_share",
+              "fragment_sha256": "fc8ae6b62924484a8a63c6f3a28ac0cf161ee415c4d4158c0421078f4efb28c8",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "driver_elasticity": {},
+        "proxy_peer_ids": [],
+        "status": "ok",
+        "flags": []
+      },
+      "schema_version": "1",
+      "model_id": null
+    },
+    {
+      "position_id": "LOAN-ELECTRONICS-RETAILER",
+      "instrument_id": "LOAN-ELECTRONICS-RETAILER",
+      "params": {
+        "ead": {
+          "value": 1500.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "ELECTRONICS-RETAILER/ead",
+              "fragment_sha256": "631291d6291359ccbd68a0e215499135d4c689ceddabaf0adb62fe7bcbd99d28",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "lgd": {
+          "value": 0.5,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "ELECTRONICS-RETAILER/lgd",
+              "fragment_sha256": "d65713eda62406abc242be6a70c5b04b9b91a30396a36a010e9df4b8c73fd7bd",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "ccf": {
+          "value": 1.0,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "ELECTRONICS-RETAILER/ccf",
+              "fragment_sha256": "16ebcc6242702ab893d1ac04b6815b509dc48a66f2840d265f3e55979e24b940",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "import_share": {
+          "value": 0.9,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "ELECTRONICS-RETAILER/import_share",
+              "fragment_sha256": "678031a158f8c9e374449b2350a7aeee1150d83e168bb2f70546c079acf9f798",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "driver_elasticity": {},
+        "proxy_peer_ids": [],
+        "status": "ok",
+        "flags": []
+      },
+      "schema_version": "1",
+      "model_id": null
+    },
+    {
+      "position_id": "LOAN-STEEL-EXPORTER",
+      "instrument_id": "LOAN-STEEL-EXPORTER",
+      "params": {
+        "ead": {
+          "value": 3000.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "STEEL-EXPORTER/ead",
+              "fragment_sha256": "a78df6b6aba8d414abf830a35f0e6ef4adbcbb74dd24df31b692ad0a4a156ffe",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "lgd": {
+          "value": 0.4,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "STEEL-EXPORTER/lgd",
+              "fragment_sha256": "156a11277a68bf3bc0810110924fa151dc9f57dc2800726dde69b5a17c6b45ef",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "ccf": {
+          "value": 1.0,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "STEEL-EXPORTER/ccf",
+              "fragment_sha256": "53b243c857bdafba15b57d8e842d9b2c1819b5cc21fc738b3907cf1ff0eefc0e",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "import_share": {
+          "value": 0.1,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "STEEL-EXPORTER/import_share",
+              "fragment_sha256": "dd935fe8b725d030562853679a9264b7cb628dbbf505c5ae6d30485c1519b4a4",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "driver_elasticity": {},
+        "proxy_peer_ids": [],
+        "status": "ok",
+        "flags": []
+      },
+      "schema_version": "1",
+      "model_id": null
+    },
+    {
+      "position_id": "LOAN-POTASH-EXPORTER",
+      "instrument_id": "LOAN-POTASH-EXPORTER",
+      "params": {
+        "ead": {
+          "value": 2500.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "POTASH-EXPORTER/ead",
+              "fragment_sha256": "ec3806f1f9fd9c1b7f882a4cd5bf5442dc297e1e69f2e2173e2670eed853427f",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "lgd": {
+          "value": 0.4,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "POTASH-EXPORTER/lgd",
+              "fragment_sha256": "ef76cb7fc817d589675c2688e86cc6c8c7d1473d0dcc061d19379ef4a25f7be4",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "ccf": {
+          "value": 1.0,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "POTASH-EXPORTER/ccf",
+              "fragment_sha256": "d125ee31281077c8959584b17f67b57b563c4ba7a42c71286b479ad857777240",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "import_share": {
+          "value": 0.05,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "POTASH-EXPORTER/import_share",
+              "fragment_sha256": "d7fd7975807373e4012055bbf31c3aaf61c7290df4aec49be11ee16f5f0760e8",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "driver_elasticity": {},
+        "proxy_peer_ids": [],
+        "status": "ok",
+        "flags": []
+      },
+      "schema_version": "1",
+      "model_id": null
+    }
+  ]
+}

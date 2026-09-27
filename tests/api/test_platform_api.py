@@ -261,7 +261,9 @@ def test_equity_scenario_check_and_resume_reject_unmapped_operating_shock(client
         "/v1/demo/runs",
         {
             "portfolio_id": saved["portfolio_id"],
-            "event": {"kind": "library", "id": "RECYCLING-FEE"},
+            # Not a library event: the mock profile's generic answer names every direct
+            # factor of the portfolio for the analyst to quantify.
+            "event": {"kind": "text", "text": "Введён утилизационный сбор на спецтехнику."},
         },
     )
     status = wait(client, status["run_id"])

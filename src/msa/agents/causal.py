@@ -14,8 +14,119 @@ from .causal_output import CausalOutput
 
 @cache
 def _MOCK_EVENTS() -> dict:
-    """The mock profile's answer for the library events: their channel, sector and driver."""
+    """The mock profile's answers: the analyst's prepared answer of each library event.
+
+    Keyed by the sha256 of the event text; written by ``demo/build_catalog.py``.
+    """
     return json.loads(files(__package__).joinpath("mock_events.json").read_text("utf-8"))
+
+
+def _prepared_response(document, answer, context) -> dict:
+    """A library event's prepared answer as the causal step returns it.
+
+    One sector node per (channel, OKVED), one factor node per (OKVED, factor) and one direct
+    factor node per (factor, key). Only the factors the portfolio's models read enter the
+    graph and the scenario, as an LLM's answer is held to them.
+    """
+    source = document.fragments[0]
+    evidence = {
+        "kind": "document",
+        "source_id": document.doc_id,
+        "locator": source.locator,
+        "fragment_sha256": source.sha256,
+    }
+    words = next((f for f in document.fragments if f.locator == "scenario"), source)
+    cited = [{**evidence, "locator": words.locator, "fragment_sha256": words.sha256}]
+    used = {
+        (item["factor_id"], item["key"])
+        for position in context.get("positions", [])
+        for item in position["factors"]
+    }
+    specs = {spec["factor_id"]: spec for spec in context.get("factors", [])}
+    nodes = {"event": {"id": "event", "kind": "event", "label": answer["event_type"]}}
+    edges = []
+
+    def edge(src, dst, *, sign=1, elasticity=1.0, lag=0):
+        if isinstance(elasticity, list):
+            low, mode, high = elasticity
+            spec = {"family": "triangular", "low": low, "mode": mode, "high": high}
+        else:
+            spec = {"family": "point", "value": elasticity}
+        edges.append(
+            {
+                "src": src,
+                "dst": dst,
+                "sign": sign,
+                "elasticity": spec,
+                "lag_months": lag,
+                "evidence": [evidence],
+            }
+        )
+
+    def channel(name):
+        if name not in nodes:
+            label = answer.get("channels", {}).get(name, name)
+            nodes[name] = {"id": name, "kind": "channel", "label": label}
+            edge("event", name)
+
+    def factor_node(node_id, factor, key=None):
+        nodes.setdefault(
+            node_id,
+            {"id": node_id, "kind": "factor", "label": specs[factor]["label"], "factor": factor}
+            | ({"key": key} if key is not None else {}),
+        )
+
+    okveds = set()
+    for link in answer.get("links", []):
+        if (link["factor"], None) not in used:
+            continue
+        channel(link["channel"])
+        code = link["okved"].replace(".", "_")
+        sector = f"{link['channel']}__{code}"
+        if sector not in nodes:
+            nodes[sector] = {
+                "id": sector,
+                "kind": "sector",
+                "label": link["okved"],
+                "okved": link["okved"],
+            }
+            edge(link["channel"], sector, elasticity=link.get("exposure", 1.0))
+        target = f"{link['factor'].replace('.', '_')}__{code}"
+        factor_node(target, link["factor"])
+        edge(
+            sector,
+            target,
+            sign=link.get("sign", 1),
+            elasticity=link.get("elasticity", 1.0),
+            lag=link.get("lag", 0),
+        )
+        okveds.add(link["okved"])
+    for item in answer.get("direct", []):
+        if (item["factor"], item["key"]) not in used:
+            continue
+        channel(item["channel"])
+        target = f"{item['factor']}__{item['key']}".replace(".", "_").replace("/", "_")
+        factor_node(target, item["factor"], item["key"])
+        edge(item["channel"], target)
+    scenario = {
+        name: {**spec, "evidence": cited}
+        for name, spec in answer.get("scenario", {}).items()
+        if (spec["factor"], spec.get("key")) in used and spec.get("channel") in nodes
+    }
+    return {
+        "passport": {"event_type": answer["event_type"]},
+        "parameters": {},
+        "direct_okved": sorted(okveds),
+        "inferred_okved": [],
+        "graph": {
+            "event_id": "event",
+            "nodes": list(nodes.values()),
+            "edges": edges,
+            "factor_elasticity": {},
+        },
+        "scenario": scenario,
+        "prompt_version": current_version("causal"),
+    }
 
 
 class CausalAgent:
@@ -26,6 +137,11 @@ class CausalAgent:
 
     @staticmethod
     def _mock_response(document, scope, context):
+        answer = _MOCK_EVENTS().get(document.doc_id)
+        if answer is not None:
+            return _prepared_response(document, answer, context)
+        # Any other text: one channel to the first sector in scope, a spread around a fixed
+        # central shock, and every direct factor of the portfolio left for the analyst.
         source = document.fragments[0]
         evidence = {
             "kind": "document",
@@ -33,10 +149,8 @@ class CausalAgent:
             "locator": source.locator,
             "fragment_sha256": source.sha256,
         }
-        fixture = _MOCK_EVENTS().get(document.doc_id, {})
-        okved = fixture.get("okved", sorted(scope)[0] if scope else "46.63")
-        channel = fixture.get("channel", "channel")
-        driver = fixture.get("driver", "revenue")
+        okved = sorted(scope)[0] if scope else "46.63"
+        channel, driver = "channel", "revenue"
         specs = {spec["factor_id"]: spec for spec in context.get("factors", [])}
         graph_specs = [spec for spec in specs.values() if spec["scope"] == "graph"]
         selected = next(
@@ -128,7 +242,7 @@ class CausalAgent:
                 ],
             }
         return {
-            "passport": {"event_type": fixture.get("event_type", "mock_event")},
+            "passport": {"event_type": "mock_event"},
             "parameters": {},
             "direct_okved": [okved] if selected else [],
             "inferred_okved": [],

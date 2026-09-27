@@ -67,13 +67,17 @@ class DraftContext:
         return self.instruments.get(position_id, f"{self.portfolio_id}:{position_id}")
 
 
-def build(draft: PortfolioDraft, *, author, today, registry, portfolio_id):
-    """``(bundle, snapshot)``: the portfolio and the snapshot of the numbers typed into it."""
+def build(draft: PortfolioDraft, *, author, today, registry, portfolio_id, context=None):
+    """``(bundle, snapshot)``: the portfolio and the snapshot of the numbers typed into it.
+
+    ``context`` names the records and their sources differently from an analyst's draft
+    (the demo catalog); several rows may then name one issuer.
+    """
     ids = [item.position_id for item in draft.positions]
     if len(set(ids)) != len(ids):
         raise ValueError("Position IDs must be unique within the portfolio")
     source = "analyst-portfolio:" + (re.sub(r"[^\w-]+", "-", draft.name).strip("-") or "draft")
-    ctx = DraftContext(
+    ctx = context or DraftContext(
         author=author,
         today=today,
         source_id=source,
@@ -95,7 +99,7 @@ def build(draft: PortfolioDraft, *, author, today, registry, portfolio_id):
         identity = row.values.get(spec.identity) if spec.identity else None
         key = (row.instrument_type, row.currency, identity) if identity not in (None, "") else None
         first = securities[key][0] if key in securities else row.position_id
-        ctx.instruments[row.position_id] = f"{portfolio_id}:{first}"
+        ctx.instruments[row.position_id] = ctx.instrument_id(first)
         parts = spec.from_draft(row.model_dump(mode="json"), ctx)
         instrument_id = ctx.instrument_id(row.position_id)
         stated = (row.okved, _plain(parts["terms"]), _plain(parts.get("items", [])))
@@ -123,6 +127,7 @@ def build(draft: PortfolioDraft, *, author, today, registry, portfolio_id):
             if spec.issuer_required and not row.okved:
                 raise ValueError(f"{row.position_id}: the issuer's OKVED is required")
             issuer_id = ctx.issuer_id(row.position_id)
+        if issuer_id is not None and issuer_id not in {party.party_id for party in parties}:
             parties.append(
                 Party(
                     party_id=issuer_id,

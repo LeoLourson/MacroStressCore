@@ -7,14 +7,18 @@ diversified book loses less in the tail than the sum of its parts. ``known`` tie
 an open methodological finding already listed in a plugin's README.
 """
 
+import json
 import math
 from collections.abc import Callable
 from dataclasses import dataclass
 
 import numpy as np
 
+from demo import catalog
+from msa.agents.causal import CausalAgent
 from msa.agents.causal_output import sector_effects
 from msa.engine.scenario_set import ScenarioSet, scenario_set_from_parameters
+from msa.prompts.registry import current_version, get
 
 from .build import Direct, Event, Link, loan, portfolio, share, shock
 from .lab import (
@@ -35,7 +39,7 @@ from .lab import (
     slice_q,
     why_not_calculated,
 )
-from .line import AnalystGraph, TextIngest, run
+from .line import AnalystGraph, LibraryIngest, TextIngest, run
 
 REV, COGS, LOGISTICS, WC, RATE, CAPEX, FX = (
     "credit." + name
@@ -54,6 +58,7 @@ GROUPS = {
     "H": "Рекомендации отчёта",
     "I": "Проверка входных данных",
     "S": "Сценарии-истории на диверсифицированной книге",
+    "M": "Демо-каталог: события на своих портфелях",
 }
 
 
@@ -215,7 +220,7 @@ def a3():
     "Каждый неблагоприятный драйвер увеличивает потери",
     "Выручка −10 %, себестоимость +10 %, логистика +10 %, оборотный капитал +30 дней, "
     "ставка +3 п.п., capex +20 %, валютный курс +20 %: у каждого ΔEL > 0",
-    portfolio="1 заёмщик 23.61 (поддерживающий capex 600 в год)",
+    portfolio="1 заёмщик 23.61 (поддерживающий capex 600 в год, половина затрат — импорт)",
     event="7 событий, по одному на драйвер",
 )
 def a4():
@@ -230,7 +235,8 @@ def a4():
     }
     values = {}
     for index, (factor, value) in enumerate(drivers.items()):
-        o = one([loan("L", CONCRETE, capex=600.0)], credit_event(f"A4{index}", factor, value=value))
+        borrower = loan("L", CONCRETE, capex=600.0, import_share=0.5)
+        o = one([borrower], credit_event(f"A4{index}", factor, value=value))
         values[factor] = delta_el(o, "L")
     bad = [f for f, v in values.items() if v is None or v <= 0]
     observed = "; ".join(f"{f.split('.')[1]}: {fmt(v)}" for f, v in values.items())
@@ -467,13 +473,14 @@ def a14():
         credit_event("A14", FX, value=0.20),
     )
     dom, imp = delta_el(o, "DOM"), delta_el(o, "IMP")
-    flags = (result(o, "IMP") or {}).get("flags", [])
-    disclosed = any("import" in f for f in flags)
+    flags = (result(o, "DOM") or {}).get("flags", [])
+    disclosed = "fx_without_import_share" in flags
     ok = (dom is not None and imp is not None and imp > dom) or disclosed
     return Verdict(
         ok,
         f"ΔEL без импорта: {fmt(dom)}; импортёр: {fmt(imp)}; "
-        f"флаги об импорте: {'есть' if disclosed else 'нет'}",
+        f"флаг «шок курса без доли импорта» у заёмщика без импорта: "
+        f"{'есть' if disclosed else 'нет'}",
         {"domestic": dom, "importer": imp},
     )
 
@@ -481,16 +488,20 @@ def a14():
 @check(
     "A15",
     "Убыточный заёмщик под новым шоком",
-    "EBITDA < 0; выручка −10 %: потери растут (ΔEL > 0) или результат помечен как вырожденный",
+    "EBITDA < 0; выручка −10 %: потери растут (ΔEL > 0) или результат помечен как вырожденный "
+    "(pd_at_model_maximum) и уходит на проверку",
     portfolio="1 заёмщик 23.61 с EBITDA −500 (себестоимость 10000, опер. расходы 2500)",
     event="выручка 23.61: −10 %",
-    known="credit README, находка 2 (вырождение PD при EBITDA ≤ 0)",
 )
 def a15():
     o = one([loan("L", CONCRETE, cogs=10000.0, opex=2500.0)], credit_event("A15", value=-0.10))
     d, pb, ps = delta_el(o, "L"), pd_base(o, "L"), pd_stress(o, "L")
     item = result(o, "L") or {}
-    ok = (d is not None and d > 0) or item.get("status") in ("invalid",)
+    marked = "pd_at_model_maximum" in item.get("flags", []) and item.get("status") in (
+        "needs_review",
+        "invalid",
+    )
+    ok = (d is not None and d > 0) or marked
     return Verdict(
         ok,
         f"PD база {fmt(pb)}, PD стресс {fmt(ps)}, ΔEL {fmt(d)}, статус {item.get('status')}; "
@@ -688,9 +699,9 @@ def b5():
 @check(
     "B6",
     "Два способа записать «продажи упадут на 35 %»",
-    "Канал «продажи» −35 % со знаком +1 и канал «падение продаж» +35 % со знаком −1 "
-    "(так велит промпт каузального агента: канал формулируется как растущий) дают одно и то "
-    "же падение выручки 35 %",
+    "Канал «продажи» −35 % со знаком +1 даёт падение выручки на 35 %. Запись «падение продаж» "
+    "+35 % со знаком −1 означает обратную зависимость (1/1,35 − 1): предпросмотр аналитика "
+    "показывает то же число, что расчёт, а промпт каузального агента требует первой записи",
     portfolio="1 заёмщик 23.61",
     event="(а) −0,35, знак +1; (б) +0,35, знак −1",
 )
@@ -700,11 +711,20 @@ def b6():
     a, b = one([loan("L", CONCRETE)], ea), one([loan("L", CONCRETE)], eb)
     ra, rb = revenue_change(a, "L"), revenue_change(b, "L")
     da, db = delta_el(a, "L"), delta_el(b, "L")
-    ok = ra is not None and rb is not None and abs(ra - rb) < 0.005
+    pa, pb = preview(ea), preview(eb)
+    asks_for_a = "Never use sign -1 to express a fall" in get("causal")
+    ok = (
+        ra is not None
+        and abs(ra + 0.35) < 0.005
+        and close(pa, ra, rel=1e-6)
+        and close(pb, rb, rel=1e-6)
+        and asks_for_a
+    )
     return Verdict(
         ok,
         f"выручка (а) {fmt(ra, 4)}, (б) {fmt(rb, 4)}; ΔEL (а) {fmt(da, 4)}, (б) {fmt(db, 4)}; "
-        f"предпросмотр аналитика: (а) {fmt(preview(ea), 4)}, (б) {fmt(preview(eb), 4)}",
+        f"предпросмотр аналитика: (а) {fmt(pa, 4)}, (б) {fmt(pb, 4)}; промпт "
+        f"{current_version('causal')} требует записи (а): {'да' if asks_for_a else 'нет'}",
         {"revenue_a": ra, "revenue_b": rb, "delta_el_a": da, "delta_el_b": db},
     )
 
@@ -919,21 +939,23 @@ def c3():
 @check(
     "C4",
     "Концентрация и охват по всему портфелю",
-    "В портфеле 5 равных заёмщиков, событие задевает одного: HHI и охват описывают портфель "
-    "(HHI 0,2) или явно сказано, что они по затронутым позициям",
+    "В портфеле 5 равных заёмщиков, событие задевает одного: HHI описывает портфель (0,2), "
+    "а срез говорит, что событие затронуло 20 % портфеля",
     portfolio="5 равных заёмщиков: 23.61, 41.20, 62.01, 10.11, 46.71",
     event="выручка 23.61: −10 %",
-    known="credit README, находка 1 (F07: охват и HHI по затронутым позициям)",
 )
 def c4():
     rows = [loan(f"L{i}", code) for i, code in enumerate((CONCRETE, BUILDER, IT, MEAT, "46.71"))]
     o = one(rows, credit_event("C4", value=-0.10))
     item = slice_item(o, "credit.loss") or {}
-    hhi, covered = item.get("herfindahl"), (item.get("coverage") or {}).get("covered_share")
+    coverage = item.get("coverage") or {}
+    hhi, covered = item.get("herfindahl"), coverage.get("covered_share")
+    share = coverage.get("portfolio_share")
     return Verdict(
-        hhi is not None and hhi < 0.5,
-        f"HHI {fmt(hhi)}; охват {fmt(covered)}; достигнуты {o.reached}",
-        {"herfindahl": hhi, "covered_share": covered},
+        close(hhi, 0.2) and close(share, 0.2),
+        f"HHI {fmt(hhi)}; охват расчётом {fmt(covered)}; доля затронутого портфеля {fmt(share)}; "
+        f"достигнуты {o.reached}",
+        {"herfindahl": hhi, "covered_share": covered, "portfolio_share": share},
     )
 
 
@@ -1411,7 +1433,6 @@ def e1():
     "Рост ставок на 3 п.п.: облигация с фиксированным купоном дешевеет сильнее флоатера",
     portfolio="фикс. купон и флоатер одного эмитента, те же условия",
     event="ставка по долгу 23.61: +3 п.п. (credit.interest; другого фактора ставки нет)",
-    known="credit README, находка 4 (флоатер как фикс; безрисковая ставка не переоценивает)",
 )
 def e2():
     rows = [
@@ -1514,7 +1535,7 @@ LESSOR = {
     "лизингополучателей входит в срез по правилу включения",
     portfolio="лизинговая компания 64.91 (портфель 40000, долг 33000, капитал 8000)",
     event="ставка 64.91: +3 п.п.",
-    known="credit README, находка 5 (ECL лизингополучателей не моделируется)",
+    known="credit README, находка 3 (ECL лизингополучателей не моделируется)",
 )
 def g1():
     o = one(
@@ -2060,3 +2081,81 @@ def s5():
         + ", ".join(f"{k} {fmt(100 * v, 3)} %" for k, v in central.items())
     )
     return Verdict(ok, observed, {**rows, "central": central})
+
+
+# M. The demo catalog ------------------------------------------------------------------------
+#
+# Each library event runs on the portfolio it was prepared for, through the demo stand's own
+# mock profile: the causal step answers with the event's prepared graph and scenario
+# (``mock_answer``), held to the portfolio's factors as an LLM's answer is. What must follow
+# is written in the event's ``expect``: who loses, who gains, who is reached with a sign
+# common sense cannot tell, who is not reached at all.
+
+EXPECTED = {
+    "loses": "теряют",
+    "gains": "выигрывают",
+    "reached": "затронуты",
+    "unaffected": "не затронуты",
+}
+
+
+def position_loss(outcome, position_id):
+    """The median loss of a position over the run's realisations; positive is a loss."""
+    draws = outcome.draws.get(position_id) or {}
+    return float(sum(np.median(series) for series in draws.values())) if draws else None
+
+
+def library_check(event):
+    expect, portfolio_id = event["expect"], event["metadata"]["portfolio_id"]
+
+    def fn():
+        bundle = catalog.bundle(portfolio_id)
+        o = run(
+            bundle,
+            catalog.snapshot(bundle.portfolio.snapshot_id),
+            Event(event["event_id"], event["text"]),
+            ingest=LibraryIngest(),
+            causal=CausalAgent(mock=True),
+        )
+        if o.error or o.blocked:
+            return Verdict(None, why_not_calculated(o, ""))
+        losses = {pid: position_loss(o, pid) for pid in o.reached}
+        problems = []
+        for pid in expect.get("loses", []):
+            if not (losses.get(pid) is not None and losses[pid] > 0):
+                problems.append(f"{pid} не теряет ({why(o, pid, losses)})")
+        for pid in expect.get("gains", []):
+            if not (losses.get(pid) is not None and losses[pid] < 0):
+                problems.append(f"{pid} не выигрывает ({why(o, pid, losses)})")
+        for pid in expect.get("reached", []):
+            if losses.get(pid) is None:
+                problems.append(f"{pid} не рассчитана ({why(o, pid, losses)})")
+        for pid in expect.get("unaffected", []):
+            if pid in o.reached:
+                problems.append(f"{pid} затронута")
+        shown = ", ".join(f"{pid} {fmt(value)}" for pid, value in sorted(losses.items()))
+        observed = ("; ".join(problems) + ". " if problems else "") + "Медиана потерь: " + shown
+        return Verdict(not problems, observed, {"losses": losses})
+
+    return fn
+
+
+def why(outcome, position_id, losses):
+    if losses.get(position_id) is not None:
+        return fmt(losses[position_id])
+    return why_not_calculated(outcome, position_id)
+
+
+for index, path in enumerate(sorted((catalog.CATALOG / "events").glob("*.json")), 1):
+    library_event = json.loads(path.read_text("utf-8"))
+    check(
+        f"M{index}",
+        library_event["title"],
+        "; ".join(
+            f"{EXPECTED[key]}: {', '.join(ids)}"
+            for key, ids in library_event["expect"].items()
+            if ids
+        ),
+        portfolio=library_event["metadata"]["portfolio_id"],
+        event=library_event["event_id"],
+    )(library_check(library_event))

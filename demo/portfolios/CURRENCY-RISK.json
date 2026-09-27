@@ -1,0 +1,15 @@
+{
+  "portfolio": {
+    "portfolio_id": "CURRENCY-RISK",
+    "name": "Валютный риск",
+    "base_currency": "RUB",
+    "as_of": "2026-09-11",
+    "snapshot_id": "SYNTHETIC-THEMES-2026-09-11",
+    "builtin": true,
+    "metadata": {
+      "synthetic": true,
+      "description": "Импортёры и экспортёры, долларовая акция и акция экспортёра: курс рубля действует на них в разные стороны.",
+      "generated_by": "demo/build_catalog.py"
+    }
+  }
+}

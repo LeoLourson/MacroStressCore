@@ -1,0 +1,386 @@
+{
+  "parties": [
+    {
+      "party_id": "COMMERCIAL-BANK",
+      "name": "Коммерческий банк",
+      "kind": "company",
+      "okved": "64.19",
+      "country": "RU",
+      "description": "Кредитование и расчётные услуги",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "demo:companies",
+          "locator": "COMMERCIAL-BANK",
+          "fragment_sha256": "6455cd1b0e36b6ac99cfbe049a54df9bfd1ac9111ff68d0becccdf611441330b",
+          "author": "demo:catalog",
+          "as_of": "2026-09-11"
+        }
+      ]
+    },
+    {
+      "party_id": "OIL-MAJOR",
+      "name": "Нефтяная компания",
+      "kind": "company",
+      "okved": "06.10",
+      "country": "RU",
+      "description": "Добыча нефти",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "demo:companies",
+          "locator": "OIL-MAJOR",
+          "fragment_sha256": "61d6f648d6f8af31186253c136206dc1816bd246eec6363a1f3322537b49f0d3",
+          "author": "demo:catalog",
+          "as_of": "2026-09-11"
+        }
+      ]
+    },
+    {
+      "party_id": "STEEL-EXPORTER",
+      "name": "Металлургический комбинат",
+      "kind": "company",
+      "okved": "24.10",
+      "country": "RU",
+      "description": "Производство стали; большая часть выручки — экспорт",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "demo:companies",
+          "locator": "STEEL-EXPORTER",
+          "fragment_sha256": "61044e0df88fcb0145dac798334e4bb2df2e6253cc0be5ce535d53f8a7059f8c",
+          "author": "demo:catalog",
+          "as_of": "2026-09-11"
+        }
+      ]
+    },
+    {
+      "party_id": "SUPERMARKET-CHAIN",
+      "name": "Сеть супермаркетов",
+      "kind": "company",
+      "okved": "47.11",
+      "country": "RU",
+      "description": "Продуктовые супермаркеты",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "demo:companies",
+          "locator": "SUPERMARKET-CHAIN",
+          "fragment_sha256": "9b405867c413bbea4608259c87316a86e7631cabd64582d6b0d541f921039ed5",
+          "author": "demo:catalog",
+          "as_of": "2026-09-11"
+        }
+      ]
+    },
+    {
+      "party_id": "IT-DEVELOPER",
+      "name": "Разработчик программного обеспечения",
+      "kind": "company",
+      "okved": "62.01",
+      "country": "RU",
+      "description": "Разработка корпоративных программ",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "demo:companies",
+          "locator": "IT-DEVELOPER",
+          "fragment_sha256": "4684a990cc5265f77b81cbe12eeb571376cc8ef184370d166d8be73075764de4",
+          "author": "demo:catalog",
+          "as_of": "2026-09-11"
+        }
+      ]
+    },
+    {
+      "party_id": "TELECOM-OPERATOR",
+      "name": "Оператор связи",
+      "kind": "company",
+      "okved": "61.10",
+      "country": "RU",
+      "description": "Проводная связь и интернет",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "demo:companies",
+          "locator": "TELECOM-OPERATOR",
+          "fragment_sha256": "62b019b563f61a5af5371ba27b5b602cc2a16ea1c2ec9f4bd4dea7e53eefcc8a",
+          "author": "demo:catalog",
+          "as_of": "2026-09-11"
+        }
+      ]
+    },
+    {
+      "party_id": "US-PHARMA",
+      "name": "Фармацевтическая компания (США)",
+      "kind": "company",
+      "okved": "21.20",
+      "country": "US",
+      "description": "Производство лекарств; акции обращаются на NYSE",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "demo:companies",
+          "locator": "US-PHARMA",
+          "fragment_sha256": "836f86fc5ef8352f76c58af37c9951721c870ae56e536cf4e0f155b9b7cc2710",
+          "author": "demo:catalog",
+          "as_of": "2026-09-11"
+        }
+      ]
+    }
+  ],
+  "instruments": [
+    {
+      "instrument_id": "SHARE-COMMERCIAL-BANK",
+      "instrument_type": "common_stock",
+      "name": "Обыкновенная акция: Коммерческий банк",
+      "currency": "RUB",
+      "issuer_id": "COMMERCIAL-BANK",
+      "terms": {
+        "ticker": "CBNK",
+        "market_index": "MOEX",
+        "sector": "financials"
+      },
+      "schema_version": "1"
+    },
+    {
+      "instrument_id": "SHARE-OIL-MAJOR",
+      "instrument_type": "common_stock",
+      "name": "Обыкновенная акция: Нефтяная компания",
+      "currency": "RUB",
+      "issuer_id": "OIL-MAJOR",
+      "terms": {
+        "ticker": "OILM",
+        "market_index": "MOEX",
+        "sector": "oil_gas"
+      },
+      "schema_version": "1"
+    },
+    {
+      "instrument_id": "SHARE-STEEL-EXPORTER",
+      "instrument_type": "common_stock",
+      "name": "Обыкновенная акция: Металлургический комбинат",
+      "currency": "RUB",
+      "issuer_id": "STEEL-EXPORTER",
+      "terms": {
+        "ticker": "STLX",
+        "market_index": "MOEX",
+        "sector": "materials"
+      },
+      "schema_version": "1"
+    },
+    {
+      "instrument_id": "SHARE-SUPERMARKET-CHAIN",
+      "instrument_type": "common_stock",
+      "name": "Обыкновенная акция: Сеть супермаркетов",
+      "currency": "RUB",
+      "issuer_id": "SUPERMARKET-CHAIN",
+      "terms": {
+        "ticker": "SMKT",
+        "market_index": "MOEX",
+        "sector": "trade"
+      },
+      "schema_version": "1"
+    },
+    {
+      "instrument_id": "SHARE-IT-DEVELOPER",
+      "instrument_type": "common_stock",
+      "name": "Обыкновенная акция: Разработчик программного обеспечения",
+      "currency": "RUB",
+      "issuer_id": "IT-DEVELOPER",
+      "terms": {
+        "ticker": "ITDV",
+        "market_index": "MOEX",
+        "sector": "technology"
+      },
+      "schema_version": "1"
+    },
+    {
+      "instrument_id": "SHARE-TELECOM-OPERATOR",
+      "instrument_type": "common_stock",
+      "name": "Обыкновенная акция: Оператор связи",
+      "currency": "RUB",
+      "issuer_id": "TELECOM-OPERATOR",
+      "terms": {
+        "ticker": "TLCM",
+        "market_index": "MOEX",
+        "sector": "telecom"
+      },
+      "schema_version": "1"
+    },
+    {
+      "instrument_id": "SHARE-US-PHARMA",
+      "instrument_type": "common_stock",
+      "name": "Обыкновенная акция: Фармацевтическая компания (США)",
+      "currency": "USD",
+      "issuer_id": "US-PHARMA",
+      "terms": {
+        "ticker": "USPH",
+        "market_index": "SPX",
+        "sector": "healthcare"
+      },
+      "schema_version": "1"
+    }
+  ],
+  "positions": [
+    {
+      "position_id": "SHARE-COMMERCIAL-BANK",
+      "instrument_id": "SHARE-COMMERCIAL-BANK",
+      "params": {
+        "quantity": {
+          "value": 1000000,
+          "unit": "shares",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "COMMERCIAL-BANK/quantity",
+              "fragment_sha256": "b9618df9cd341fde9826809106769e7bd71a15de7e2ab9196514e8a7676c40ba",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "direction": "long"
+      },
+      "schema_version": "1",
+      "model_id": null
+    },
+    {
+      "position_id": "SHARE-OIL-MAJOR",
+      "instrument_id": "SHARE-OIL-MAJOR",
+      "params": {
+        "quantity": {
+          "value": 500000,
+          "unit": "shares",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "OIL-MAJOR/quantity",
+              "fragment_sha256": "2d52ff0dd1e90ac3dfb9625f8bce0b0e5bd8d71e4c180733c8618cd53deae462",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "direction": "long"
+      },
+      "schema_version": "1",
+      "model_id": null
+    },
+    {
+      "position_id": "SHARE-STEEL-EXPORTER",
+      "instrument_id": "SHARE-STEEL-EXPORTER",
+      "params": {
+        "quantity": {
+          "value": 2000000,
+          "unit": "shares",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "STEEL-EXPORTER/quantity",
+              "fragment_sha256": "5ffa14e7da0cb65fd87e638ddceb0413e77c5c665d63962e92f428bfa591fae3",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "direction": "long"
+      },
+      "schema_version": "1",
+      "model_id": null
+    },
+    {
+      "position_id": "SHARE-SUPERMARKET-CHAIN",
+      "instrument_id": "SHARE-SUPERMARKET-CHAIN",
+      "params": {
+        "quantity": {
+          "value": 1000000,
+          "unit": "shares",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "SUPERMARKET-CHAIN/quantity",
+              "fragment_sha256": "6b64dfd61ad35516ef066fbb8461959bb0119578560e3c012ac599c1bb6dc7ec",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "direction": "long"
+      },
+      "schema_version": "1",
+      "model_id": null
+    },
+    {
+      "position_id": "SHARE-IT-DEVELOPER",
+      "instrument_id": "SHARE-IT-DEVELOPER",
+      "params": {
+        "quantity": {
+          "value": 300000,
+          "unit": "shares",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "IT-DEVELOPER/quantity",
+              "fragment_sha256": "0e6fc0040ecf0e855d0e207f2c2b89faa93d6be59926841a95baa5114631e7f9",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "direction": "long"
+      },
+      "schema_version": "1",
+      "model_id": null
+    },
+    {
+      "position_id": "SHARE-TELECOM-OPERATOR",
+      "instrument_id": "SHARE-TELECOM-OPERATOR",
+      "params": {
+        "quantity": {
+          "value": 1000000,
+          "unit": "shares",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "TELECOM-OPERATOR/quantity",
+              "fragment_sha256": "c8d0ee151b6d6ca2d66e59485a1a71400d4f219a3d3897f56c05f4ca902f6124",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "direction": "long"
+      },
+      "schema_version": "1",
+      "model_id": null
+    },
+    {
+      "position_id": "SHARE-US-PHARMA",
+      "instrument_id": "SHARE-US-PHARMA",
+      "params": {
+        "quantity": {
+          "value": 50000,
+          "unit": "shares",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "US-PHARMA/quantity",
+              "fragment_sha256": "5924a97349203ab6d88299a252c297bd9f4197d50950ac78b0adadcd08b0b0c9",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "direction": "long"
+      },
+      "schema_version": "1",
+      "model_id": null
+    }
+  ]
+}

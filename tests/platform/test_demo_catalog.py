@@ -4,6 +4,7 @@ import json
 
 import pytest
 
+from demo import build_catalog
 from demo.catalog import (
     CatalogError,
     bundle,
@@ -310,3 +311,27 @@ def test_reseeding_retires_stale_builtin_portfolios_and_events_but_keeps_the_pil
     assert "STALE-PORTFOLIO" not in portfolio_ids_after
     assert {"RECYCLING-FEE", "MORTGAGE-DOWN-PAYMENT", PILOT_EVENT_ID} <= event_ids_after
     assert "STALE-EVENT" not in event_ids_after
+
+
+# -- the generated part of the catalog --------------------------------------------------------
+
+
+def test_the_generated_catalog_files_match_the_generator():
+    stale = [
+        str(path)
+        for path, text in build_catalog.outputs().items()
+        if not path.exists() or path.read_text("utf-8") != text
+    ]
+    assert stale == [], "run: uv run --frozen python -m demo.build_catalog"
+
+
+def test_every_library_event_names_a_catalog_portfolio_and_what_must_follow():
+    events = sorted((build_catalog.CATALOG / "events").glob("*.json"))
+    assert events
+    for path in events:
+        event = json.loads(path.read_text("utf-8"))
+        assert event["event_id"] == path.stem
+        assert event["metadata"]["portfolio_id"] in portfolio_ids()
+        positions = {p.position_id for p in bundle(event["metadata"]["portfolio_id"]).positions}
+        named = {pid for ids in event["expect"].values() for pid in ids}
+        assert named <= positions, path.stem
