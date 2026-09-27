@@ -21,6 +21,8 @@ class AggregateInput(BaseModel):
     draws: dict[str, dict[str, list[float]]] = {}
     #: position id -> slice id -> exposure, for every position of the run.
     exposures: dict[str, dict[str, float | None]] = {}
+    #: The same for every position of the portfolio, reached by the event or not.
+    portfolio_exposures: dict[str, dict[str, float | None]] | None = None
     base_currency: str = "RUB"
     as_of: date
     horizon: int
@@ -50,4 +52,5 @@ class AggregateAgent:
             seed=payload.seed,
             scenario_id=payload.scenario_id,
             macro_draws_sha256=payload.macro_draws_sha256,
+            portfolio_exposures=payload.portfolio_exposures,
         )

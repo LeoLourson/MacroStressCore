@@ -3,8 +3,10 @@
 For each position of the portfolio the agent asks its model what it is sensitive to and
 what it needs (``requirements``). A position the scenario reaches gets its data resolved
 against the run's snapshot — through ``mcp-portfolio`` in a run, so each read is an audited
-tool call — and its model's verdict on them (``validate``). What an asset family counts as
-data quality, and what it does without data, is its plugin's business.
+tool call — and its model's verdict on them (``validate``). A position the scenario does not
+reach is not calculated, but its exposure is measured the same way: the portfolio's
+concentration and the share the event reached describe the whole portfolio. What an asset
+family counts as data quality, and what it does without data, is its plugin's business.
 """
 
 from datetime import date
@@ -54,7 +56,7 @@ class ExposureAgent:
             base_currency=payload.get("base_currency", "RUB"),
             options=payload.get("options") or {},
         )
-        reached, reach, prepared, diagnostics = [], {}, {}, {}
+        reached, reach, prepared, diagnostics, unreached = [], {}, {}, {}, {}
         for raw in payload["positions"]:
             context = PositionContext.model_validate(raw)
             try:
@@ -83,10 +85,6 @@ class ExposureAgent:
             missing_scenario = exposure.missing_direct_scenario(
                 context, needs, graph, parameters, self.registry
             )
-            if not why and not missing_scenario:
-                continue
-            reached.append(context)
-            reach[context.position_id] = why or ["unmapped_model_factors"]
             data, missing = self.resolver.resolve(
                 context, needs, as_of=as_of, snapshot_id=payload["snapshot_id"]
             )
@@ -102,6 +100,11 @@ class ExposureAgent:
                 options=options.options,
             )
             found = model.validate(item)
+            if not why and not missing_scenario:
+                unreached[context.position_id] = dict(found.exposures)
+                continue
+            reached.append(context)
+            reach[context.position_id] = why or ["unmapped_model_factors"]
             found = with_required_data(found, needs, missing)
             if missing_scenario:
                 found = found.model_copy(
@@ -131,4 +134,5 @@ class ExposureAgent:
                 k: None if v is None else v.model_dump(mode="json") for k, v in prepared.items()
             },
             "diagnostics": {k: v.model_dump(mode="json") for k, v in diagnostics.items()},
+            "unreached_exposures": unreached,
         }

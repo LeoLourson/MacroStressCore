@@ -35,6 +35,7 @@ def run(state, *, context):
         position_id: dict(Diagnostics.model_validate(raw).exposures)
         for position_id, raw in (state.get("diagnostics") or {}).items()
     }
+    unreached = state.get("unreached_exposures")
     portfolio = context.call(
         "aggregate",
         AggregateInput(
@@ -44,6 +45,7 @@ def run(state, *, context):
                 item["position_id"]: item["draws"] for item in state.get("position_draws") or []
             },
             exposures=exposures,
+            portfolio_exposures=None if unreached is None else {**unreached, **exposures},
             base_currency=state.get("base_currency", "RUB"),
             as_of=date.fromisoformat(state["as_of"]),
             horizon=state.get("horizon", 12),

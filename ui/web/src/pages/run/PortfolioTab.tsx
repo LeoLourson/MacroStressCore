@@ -107,8 +107,20 @@ function Slice({ item, artifacts, entries }: { item: SliceResult; artifacts: Art
                 неполный.
               </Text>
             )}
+            {item.coverage.portfolio_share != null && (
+              <Text size="sm">
+                Событие затронуло{' '}
+                <b>
+                  <TracedNumber entry={entries.get(slicePath(item.slice_id, 'portfolio_percent'))}>
+                    {percent(item.coverage.portfolio_share)}
+                  </TracedNumber>
+                </b>{' '}
+                {(spec?.exposure_label ?? 'размера позиций').toLowerCase()} портфеля.
+              </Text>
+            )}
             <Text size="sm">
-              Концентрация — индекс Херфиндаля <b>{number(item.herfindahl, 3)}</b>.
+              Концентрация — индекс Херфиндаля <b>{number(item.herfindahl, 3)}</b>
+              {item.coverage.portfolio_share != null ? ' по всему портфелю' : ' по затронутым позициям'}.
             </Text>
             {sum95 != null && q && item.included.length > 1 && sum95 > q.p95 * 1.005 && (
               <Text size="sm">

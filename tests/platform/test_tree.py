@@ -190,3 +190,19 @@ def test_metric_tree_accepts_a_portfolio_dict_too():
     dumped = portfolio_result().model_dump(mode="json")
     tree = metric_tree([result("POS1")], dumped, registry=reg)
     assert tree["portfolio"]["status"] == "ok"
+
+
+def test_metric_tree_reports_the_portfolio_percent_the_event_reached():
+    reg = registry_with_tree_hook()
+    portfolio = portfolio_result()
+    item = portfolio.slices["test.slice"]
+    coverage = item.coverage.model_copy(update={"portfolio_share": 0.2})
+    portfolio.slices["test.slice"] = item.model_copy(update={"coverage": coverage})
+    tree = metric_tree([result("POS1")], portfolio, registry=reg)
+    assert tree["portfolio"]["slices"]["test.slice"]["portfolio_percent"] == 20.0
+
+
+def test_metric_tree_has_no_portfolio_percent_when_the_whole_portfolio_was_not_measured():
+    reg = registry_with_tree_hook()
+    tree = metric_tree([result("POS1")], portfolio_result(), registry=reg)
+    assert "portfolio_percent" not in tree["portfolio"]["slices"]["test.slice"]

@@ -280,6 +280,8 @@ export interface Coverage {
   covered_share: number;
   limit: number;
   unknown_exposure: string[];
+  /** Share of the portfolio's exposure on this slice that the event reached. */
+  portfolio_share?: number | null;
 }
 
 /** One portfolio slice: one measure, summed by realisation, never added to another slice. */

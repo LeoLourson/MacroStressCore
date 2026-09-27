@@ -1,4 +1,4 @@
-"""One credit position through the editor and the platform (A13, A14, A16, A17).
+"""One credit position through the editor and the platform (A13–A17, E2).
 
 A row is typed as an analyst would type it (``msa.api.portfolio_draft.build``, the editor's
 own path, turns it into a sourced instrument, position and financial-statement snapshot
@@ -281,3 +281,82 @@ def test_point_channel_sector_elasticity_keeps_delta_expected_loss_quantiles_equ
     )
     quantiles = result.metrics["credit.delta_expected_loss"].quantiles
     assert quantiles.p05 == pytest.approx(quantiles.p95, abs=1e-12)
+
+
+# -- A15: EBITDA not positive in the base keeps PD at the model maximum ---------------------
+
+
+def test_nonpositive_base_ebitda_flags_pd_at_model_maximum_and_leaves_the_slice():
+    result = run_position(
+        loan_row(opex=4000.0),
+        graph=graph_to("credit.revenue"),
+        parameters={"rev": shock("credit.revenue", -0.1)},
+    )
+    assert "pd_at_model_maximum" in result.flags
+    assert result.status == "needs_review"
+    assert [c.admission for c in result.contributions] == ["excluded:needs_review"]
+
+
+def test_healthy_borrower_is_not_flagged_at_the_model_maximum():
+    result = run_position(
+        loan_row(),
+        graph=graph_to("credit.revenue"),
+        parameters={"rev": shock("credit.revenue", -0.1)},
+    )
+    assert "pd_at_model_maximum" not in result.flags
+
+
+def test_project_without_an_ebitda_feature_is_calculated():
+    project = {
+        "credit_limit": 6000.0,
+        "equity": 0.0,
+        "capex_month_1_12": 100.0,
+        "monthly_sales": 330.0,
+        "base_rate": 0.2,
+        "commissioning_month": 12.0,
+        "debt": 3980.3715,
+        "escrow": 1980.0,
+        "sales_start_month": 1.0,
+        "ead": 6000.0,
+        "lgd": 0.35,
+    }
+    row = {**loan_row("PF"), "instrument_type": "pf_escrow", "values": project}
+    result = run_position(
+        row, graph=graph_to("credit.revenue"), parameters={"rev": shock("credit.revenue", -0.1)}
+    )
+    assert result.execution == "completed"
+    assert "pd_at_model_maximum" not in result.flags
+
+
+# -- E2: a rate rise reprices a fixed coupon, a floater's coupon follows the rate ----------
+
+BOND = {"face_value": 1000.0, "coupon_rate": 0.16, "maturity_months": 36.0, "risk_free_rate": 0.14}
+
+
+def bond_row(kind):
+    return {**loan_row(**BOND), "instrument_type": kind}
+
+
+def price_change(result):
+    return result.metrics["credit.position_price_change"].quantiles.p50
+
+
+def test_rate_rise_makes_a_fixed_coupon_bond_fall_more_than_a_floater():
+    rate = {"rate": shock("credit.interest", 0.03)}
+    fixed = run_position(bond_row("bond_fixed"), graph=graph_to("credit.interest"), parameters=rate)
+    floater = run_position(
+        bond_row("bond_floater"), graph=graph_to("credit.interest"), parameters=rate
+    )
+    assert price_change(fixed) < price_change(floater) < 0
+    assert "rate_repricing" in fixed.flags
+    assert "rate_repricing" in floater.flags
+
+
+def test_revenue_shock_alone_does_not_reprice_a_bond_by_the_rate():
+    result = run_position(
+        bond_row("bond_fixed"),
+        graph=graph_to("credit.revenue"),
+        parameters={"rev": shock("credit.revenue", -0.1)},
+    )
+    assert price_change(result) < 0
+    assert "rate_repricing" not in result.flags

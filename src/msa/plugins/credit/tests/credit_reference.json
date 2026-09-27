@@ -1742,7 +1742,7 @@
        }
       },
       "versions": {
-       "code_sha256": "c186f680d38a2aaefae33e3c6e518bb3e86a21909dedd5193d159f8bd81764e7",
+       "code_sha256": "32337b3a39aa04ee1c7631a8e965607d8034528262d28e9638ce29ed18296bc4",
        "macro_draws_sha256": "a12913d3acbff686f507aa18af62715e76d980530a335ccf540705d627345a39",
        "model_version": "3.3.0",
        "prompt_version": "not_applicable"
@@ -2831,7 +2831,7 @@
        }
       },
       "versions": {
-       "code_sha256": "c186f680d38a2aaefae33e3c6e518bb3e86a21909dedd5193d159f8bd81764e7",
+       "code_sha256": "32337b3a39aa04ee1c7631a8e965607d8034528262d28e9638ce29ed18296bc4",
        "macro_draws_sha256": "a12913d3acbff686f507aa18af62715e76d980530a335ccf540705d627345a39",
        "model_version": "3.3.0",
        "prompt_version": "not_applicable"
@@ -3312,6 +3312,7 @@
        "missing_pre_horizon_history",
        "missing_pre_horizon_history",
        "missing_pre_horizon_history",
+       "pd_at_model_maximum",
        "annual_financials_spread_evenly",
        "simplified_tax",
        "ltm_annualised",
@@ -3882,7 +3883,7 @@
        }
       },
       "versions": {
-       "code_sha256": "c186f680d38a2aaefae33e3c6e518bb3e86a21909dedd5193d159f8bd81764e7",
+       "code_sha256": "32337b3a39aa04ee1c7631a8e965607d8034528262d28e9638ce29ed18296bc4",
        "macro_draws_sha256": "a12913d3acbff686f507aa18af62715e76d980530a335ccf540705d627345a39",
        "model_version": "3.3.0",
        "prompt_version": "not_applicable"
@@ -4923,7 +4924,7 @@
        }
       },
       "versions": {
-       "code_sha256": "c186f680d38a2aaefae33e3c6e518bb3e86a21909dedd5193d159f8bd81764e7",
+       "code_sha256": "32337b3a39aa04ee1c7631a8e965607d8034528262d28e9638ce29ed18296bc4",
        "macro_draws_sha256": "a12913d3acbff686f507aa18af62715e76d980530a335ccf540705d627345a39",
        "model_version": "3.3.0",
        "prompt_version": "not_applicable"
@@ -6023,7 +6024,7 @@
        }
       },
       "versions": {
-       "code_sha256": "c186f680d38a2aaefae33e3c6e518bb3e86a21909dedd5193d159f8bd81764e7",
+       "code_sha256": "32337b3a39aa04ee1c7631a8e965607d8034528262d28e9638ce29ed18296bc4",
        "macro_draws_sha256": "a12913d3acbff686f507aa18af62715e76d980530a335ccf540705d627345a39",
        "model_version": "3.3.0",
        "prompt_version": "not_applicable"
@@ -7117,7 +7118,7 @@
        }
       },
       "versions": {
-       "code_sha256": "c186f680d38a2aaefae33e3c6e518bb3e86a21909dedd5193d159f8bd81764e7",
+       "code_sha256": "32337b3a39aa04ee1c7631a8e965607d8034528262d28e9638ce29ed18296bc4",
        "macro_draws_sha256": "a12913d3acbff686f507aa18af62715e76d980530a335ccf540705d627345a39",
        "model_version": "3.3.0",
        "prompt_version": "not_applicable"
@@ -7164,6 +7165,7 @@
      "basis": "ead",
      "covered_share": 0.6923076923076923,
      "limit": 0.05,
+     "portfolio_share": null,
      "unknown_exposure": []
     },
     "excluded": [
@@ -8466,8 +8468,8 @@
         "measures": {
          "convexity": 7.3260004184128675,
          "duration": 2.610820652053832,
-         "price": 95.89775464474172,
-         "price_change": -3.5542378392466247
+         "price": 88.71316062331316,
+         "price_change": -10.738831860675191
         },
         "reason": "",
         "recommendation": ""
@@ -8905,6 +8907,7 @@
        "simplified_tax",
        "ltm_annualised",
        "funding_gap",
+       "rate_repricing",
        "market_inputs_from_profile",
        "spread_scaled_by_pd_ratio",
        "duration_approximation_gap",
@@ -9006,12 +9009,12 @@
       },
       "macro_draws_sha256": "a12913d3acbff686f507aa18af62715e76d980530a335ccf540705d627345a39",
       "market": {
-       "approximation_gap": -0.0009474910945215242,
+       "approximation_gap": -0.028957721180262297,
        "base_price": 99.45199248398835,
        "convexity": 7.3260004184128675,
        "duration": 2.610820652053832,
-       "price_change": -3.5542378392466247,
-       "stress_price": 95.89775464474172
+       "price_change": -10.738831860675191,
+       "stress_price": 88.71316062331316
       },
       "model_id": "credit.bond.v3",
       "model_versions": {
@@ -9060,9 +9063,9 @@
        "position_price_change": {
         "es95": null,
         "name": "position_price_change",
-        "p05": -85.51597761306148,
-        "p50": -37.3427359409893,
-        "p95": -16.21649685529622,
+        "p05": -169.9806859014692,
+        "p50": -112.37314314321758,
+        "p95": -62.86899336397315,
         "unit": "RUB_million"
        }
       },
@@ -9459,7 +9462,7 @@
        }
       },
       "versions": {
-       "code_sha256": "c186f680d38a2aaefae33e3c6e518bb3e86a21909dedd5193d159f8bd81764e7",
+       "code_sha256": "32337b3a39aa04ee1c7631a8e965607d8034528262d28e9638ce29ed18296bc4",
        "macro_draws_sha256": "a12913d3acbff686f507aa18af62715e76d980530a335ccf540705d627345a39",
        "model_version": "3.3.0",
        "prompt_version": "not_applicable"
@@ -10500,7 +10503,7 @@
        }
       },
       "versions": {
-       "code_sha256": "c186f680d38a2aaefae33e3c6e518bb3e86a21909dedd5193d159f8bd81764e7",
+       "code_sha256": "32337b3a39aa04ee1c7631a8e965607d8034528262d28e9638ce29ed18296bc4",
        "macro_draws_sha256": "a12913d3acbff686f507aa18af62715e76d980530a335ccf540705d627345a39",
        "model_version": "3.3.0",
        "prompt_version": "not_applicable"
@@ -11268,7 +11271,7 @@
        }
       },
       "versions": {
-       "code_sha256": "c186f680d38a2aaefae33e3c6e518bb3e86a21909dedd5193d159f8bd81764e7",
+       "code_sha256": "32337b3a39aa04ee1c7631a8e965607d8034528262d28e9638ce29ed18296bc4",
        "macro_draws_sha256": "a12913d3acbff686f507aa18af62715e76d980530a335ccf540705d627345a39",
        "model_version": "3.3.0",
        "prompt_version": "not_applicable"
@@ -12357,7 +12360,7 @@
        }
       },
       "versions": {
-       "code_sha256": "c186f680d38a2aaefae33e3c6e518bb3e86a21909dedd5193d159f8bd81764e7",
+       "code_sha256": "32337b3a39aa04ee1c7631a8e965607d8034528262d28e9638ce29ed18296bc4",
        "macro_draws_sha256": "a12913d3acbff686f507aa18af62715e76d980530a335ccf540705d627345a39",
        "model_version": "3.3.0",
        "prompt_version": "not_applicable"
@@ -13052,7 +13055,7 @@
        }
       },
       "versions": {
-       "code_sha256": "c186f680d38a2aaefae33e3c6e518bb3e86a21909dedd5193d159f8bd81764e7",
+       "code_sha256": "32337b3a39aa04ee1c7631a8e965607d8034528262d28e9638ce29ed18296bc4",
        "macro_draws_sha256": "a12913d3acbff686f507aa18af62715e76d980530a335ccf540705d627345a39",
        "model_version": "3.3.0",
        "prompt_version": "not_applicable"
@@ -13099,6 +13102,7 @@
      "basis": "ead",
      "covered_share": 1.0,
      "limit": 0.05,
+     "portfolio_share": null,
      "unknown_exposure": []
     },
     "excluded": [],

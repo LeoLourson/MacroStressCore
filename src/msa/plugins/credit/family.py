@@ -213,10 +213,12 @@ class CreditFamily(ABC):
     def evaluate(self, inputs: Inputs, calendar, drivers: dict[str, np.ndarray]) -> Evaluation:
         """The monthly model under the given driver shocks (zero shocks give the base)."""
 
-    def market(self, profile, inputs, registry, flags, pd):
+    def market(self, profile, inputs, registry, flags, pd, rate=None):
         """Central market repricing and the position change per realisation, if any.
 
-        ``pd`` is ``(base, stress, realised)`` at the horizon end when the PD is calibrated.
+        ``pd`` is ``(base, stress, realised)`` at the horizon end when the PD is calibrated;
+        ``rate`` is the ``(central, realised)`` change of the borrower's rate at the horizon
+        end, in annual rate points.
         """
         return None, None
 

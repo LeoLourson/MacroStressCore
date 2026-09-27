@@ -92,7 +92,9 @@ def calc_result(
     )
 
 
-def aggregate(results, *, draws=None, exposures=None, reg=None, base_currency="RUB"):
+def aggregate(
+    results, *, draws=None, exposures=None, reg=None, base_currency="RUB", portfolio_exposures=None
+):
     return aggregate_slices(
         "RUN1",
         results,
@@ -105,6 +107,7 @@ def aggregate(results, *, draws=None, exposures=None, reg=None, base_currency="R
         seed=1,
         scenario_id=SHA,
         macro_draws_sha256=SHA,
+        portfolio_exposures=portfolio_exposures,
     )
 
 
@@ -316,3 +319,35 @@ def registry_two_slices():
         ),
     )
     return build([plugin])
+
+
+# -- concentration and the share the event reached, over the whole portfolio ---------------
+
+
+def one_reached_of_five(portfolio_exposures):
+    results = [calc_result("POS1", contributions=[contribution(exposure=10.0)])]
+    return aggregate(
+        results,
+        draws={("POS1", SLICE): [1.0, 2.0]},
+        exposures={"POS1": {SLICE: 10.0}},
+        portfolio_exposures=portfolio_exposures,
+    ).slices[SLICE]
+
+
+def test_whole_portfolio_gives_the_concentration_and_the_share_the_event_reached():
+    item = one_reached_of_five({f"POS{i}": {SLICE: 10.0} for i in range(1, 6)})
+    assert item.herfindahl == pytest.approx(0.2)
+    assert item.coverage.portfolio_share == pytest.approx(0.2)
+    assert item.coverage.covered_share == pytest.approx(1.0)
+
+
+def test_without_the_whole_portfolio_concentration_is_over_the_reached_positions():
+    item = one_reached_of_five(None)
+    assert item.herfindahl == pytest.approx(1.0)
+    assert item.coverage.portfolio_share is None
+
+
+def test_positions_of_another_slice_do_not_enter_the_whole_portfolio():
+    item = one_reached_of_five({"POS1": {SLICE: 10.0}, "POS2": {"other.slice": 90.0}})
+    assert item.herfindahl == pytest.approx(1.0)
+    assert item.coverage.portfolio_share == pytest.approx(1.0)

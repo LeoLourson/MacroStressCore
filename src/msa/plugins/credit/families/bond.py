@@ -3,6 +3,9 @@
 The issuer's credit path comes from the operating model. The position is repriced on an
 approved risk-neutral calibration when the registry has one (spec 10); otherwise on the
 bond's own terms, with both readings flagged (``models.market_inputs``).
+
+A change of rates moves the discount of a fixed coupon; a floating coupon is reset with the
+rate, so only the spread moves its price (``rate_repricing``).
 """
 
 import numpy as np
@@ -14,6 +17,9 @@ from ..schemas import RATE
 from .corporate import OPERATING_FIELDS, OperatingCompany
 
 MARKET_CALIBRATION_MISSING = "market_calibration_missing"
+RATE_REPRICING_FLAG = "rate_repricing"
+#: Types whose coupon follows the rate: a rate change leaves their price alone.
+FLOATING = frozenset({"bond_floater"})
 
 BOND_FIELDS: tuple[F, ...] = (
     F("face_value", "RUB_million", "Номинал позиции", required=True, source="terms"),
@@ -55,8 +61,13 @@ class Bond(OperatingCompany):
         market_inputs.PD_RATIO_FLAG,
     }
 
-    def market(self, profile, inputs, registry, flags, pd):
+    def market(self, profile, inputs, registry, flags, pd, rate=None):
         """Central repricing and the position value change in every realisation."""
+        central_rate, realised_rate = rate if rate is not None else (0.0, 0.0)
+        if np.any(np.asarray(realised_rate) != 0) or central_rate != 0:
+            _add(flags, RATE_REPRICING_FLAG)
+        if profile.asset_type in FLOATING:
+            central_rate, realised_rate = 0.0, 0.0
         calibration = registry.bond_market.get(profile.asset_id)
         if calibration is not None:
             priced = bonds.reprice(
@@ -64,7 +75,7 @@ class Bond(OperatingCompany):
                 calibration.hazard,
                 calibration.risk_free,
                 calibration.basis,
-                calibration.spread_change,
+                np.asarray(calibration.spread_change, dtype=float) + central_rate,
                 flags,
             )
             return _result(priced), None
@@ -90,11 +101,12 @@ class Bond(OperatingCompany):
             _add(flags, market_inputs.PD_RATIO_FLAG)
             change = market_inputs.spread_changes(market, base_pd, stress_pd)
             realised = market_inputs.spread_changes(market, base_pd, realised_pd)
-            draws = market_inputs.position_changes(market, realised)
+            draws = market_inputs.position_changes(market, realised + realised_rate)
         else:
             _add(flags, market_inputs.NO_CHANGE_FLAG)
             change = 0.0
-        priced = market_inputs.central(market, float(np.asarray(change, dtype=float)), flags)
+        shift = float(np.asarray(change, dtype=float)) + central_rate
+        priced = market_inputs.central(market, shift, flags)
         return _result(priced), draws
 
 

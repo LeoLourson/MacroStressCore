@@ -70,9 +70,14 @@ COVENANT_OUTSIDE_PREFIX = "covenant_outside_horizon:"
 COVENANT_UNDEFINED_PREFIX = "covenant_metric_undefined:"
 REVERSE_UNDEFINED_PREFIX = "reverse_stress_undefined:"
 REVERSE_DIRECTION_UNDEFINED_FLAG = "reverse_stress_direction_undefined"
+#: EBITDA is not positive already in the base: every PD feature sits at its cap, so no
+#: scenario can move the PD and the change of losses is not measurable.
+PD_AT_MAXIMUM_FLAG = "pd_at_model_maximum"
 
 #: Gaps of any model that send a result to review (spec 19); models add their own.
-GENERIC_REVIEW_FLAGS = frozenset({"numerical_tolerance_not_met", SYNTHETIC_CALIBRATION_FLAG})
+GENERIC_REVIEW_FLAGS = frozenset(
+    {"numerical_tolerance_not_met", SYNTHETIC_CALIBRATION_FLAG, PD_AT_MAXIMUM_FLAG}
+)
 REVIEW_PREFIXES = (
     COVENANT_OUTSIDE_PREFIX,
     "covenant_metric_unavailable:",
@@ -162,6 +167,7 @@ class _Evaluation:
     metrics: dict[str, np.ndarray]
     credit_score: CreditScore
     flags: list[str]
+    features: dict[str, np.ndarray] = field(default_factory=dict)
 
 
 @dataclass
@@ -185,7 +191,7 @@ class _Asset:
             flags=flags,
         )
         series = {**evaluation.series, "risk_score": credit.value}
-        return _Evaluation(series, evaluation.metrics, credit, flags)
+        return _Evaluation(series, evaluation.metrics, credit, flags, evaluation.features)
 
     def expected_loss(self, evaluation: _Evaluation):
         pd_path = np.asarray(evaluation.credit_score.pd, dtype=float)
@@ -230,10 +236,14 @@ def run_asset(
     )
 
     base = asset.evaluate(_zero_drivers((), input.horizon))
-    stress = asset.evaluate(_driver_shocks(input, scenario_set, central, flags=flags))
-    random = asset.evaluate(
-        _driver_shocks(input, scenario_set, random_values, flags=flags, elasticities=elasticities)
+    stress_drivers = _driver_shocks(input, scenario_set, central, flags=flags)
+    random_drivers = _driver_shocks(
+        input, scenario_set, random_values, flags=flags, elasticities=elasticities
     )
+    stress, random = asset.evaluate(stress_drivers), asset.evaluate(random_drivers)
+    nonpositive = base.features.get("ebitda_nonpositive")
+    if nonpositive is not None and np.any(np.asarray(nonpositive)[..., -1] > 0):
+        _add(flags, PD_AT_MAXIMUM_FLAG)
     for item in (*base.flags, *stress.flags, *random.flags):
         _add(flags, item)
 
@@ -288,7 +298,14 @@ def run_asset(
             if calibrated
             else None
         )
-        market, position_draws = model.market(profile, asset.inputs, registry, flags, realised)
+        # The borrower's rate change at the horizon end, central and in each realisation.
+        rate = (
+            float(np.asarray(stress_drivers["interest"])[..., -1]),
+            np.asarray(random_drivers["interest"], dtype=float)[..., -1],
+        )
+        market, position_draws = model.market(
+            profile, asset.inputs, registry, flags, realised, rate
+        )
     if calibrated and registry.synthetic_calibration:
         _add(flags, SYNTHETIC_CALIBRATION_FLAG)
 

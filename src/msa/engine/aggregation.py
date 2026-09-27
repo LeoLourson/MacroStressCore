@@ -9,6 +9,11 @@ the slice incomplete rather than disappearing from it.
 
 Within a slice only compatible contributions are combined: the slice unit (money in the
 base currency), the run horizon and the run's scenario set.
+
+Concentration describes the whole portfolio on the slice's basis: with the exposures of the
+positions the event did not reach (``portfolio_exposures``), the Herfindahl index is taken
+over every position of the slice, and the coverage states the share of the portfolio the
+event reached.
 """
 
 from msa.contracts.result import (
@@ -23,7 +28,7 @@ from msa.contracts.result import (
 from msa.platform.registry import Registry
 
 from .dispatch import resolved_unit
-from .portfolio import AssetLoss, aggregate
+from .portfolio import AssetLoss, aggregate, herfindahl
 
 INCOMPATIBLE_PREFIX = "incompatible:"
 UNKNOWN_EXPOSURE_FLAG = "exposure_unknown"
@@ -43,9 +48,11 @@ def aggregate_slices(
     seed: int,
     scenario_id: str,
     macro_draws_sha256: str,
+    portfolio_exposures: dict[str, dict[str, float | None]] | None = None,
 ) -> PortfolioResult:
     """``draws`` maps (position, slice) to its loss realisations in the shared order;
-    ``exposures`` maps a position to its exposure on each slice it belongs to."""
+    ``exposures`` maps a position to its exposure on each slice it belongs to;
+    ``portfolio_exposures`` does the same for every position of the portfolio."""
     ids = [result.position_id for result in results]
     if len(set(ids)) != len(ids):
         raise ValueError("duplicate position result")
@@ -70,6 +77,7 @@ def aggregate_slices(
             base_currency=base_currency,
             horizon=horizon,
             scenario_id=scenario_id,
+            portfolio_exposures=portfolio_exposures,
         )
     in_slices = {p for ids in members.values() for p in ids}
     not_aggregated = [
@@ -108,7 +116,18 @@ def aggregate_slices(
     )
 
 
-def _slice(slice_id, results, *, draws, exposures, registry, base_currency, horizon, scenario_id):
+def _slice(
+    slice_id,
+    results,
+    *,
+    draws,
+    exposures,
+    registry,
+    base_currency,
+    horizon,
+    scenario_id,
+    portfolio_exposures=None,
+):
     spec = registry.slices[slice_id]
     unit = resolved_unit(spec.unit, base_currency)
     losses, approved, rules, unknown, flags = [], set(), {}, [], []
@@ -148,6 +167,18 @@ def _slice(slice_id, results, *, draws, exposures, registry, base_currency, hori
         losses, coverage_limit=spec.coverage_limit, approved_needs_review=frozenset(approved)
     )
     status, flags = aggregated.status, list(aggregated.flags)
+    concentration, portfolio_share = aggregated.herfindahl, None
+    if portfolio_exposures is not None:
+        whole = {
+            position_id: float(values.get(slice_id) or 0.0)
+            for position_id, values in portfolio_exposures.items()
+            if slice_id in values
+        }
+        whole.update({item.asset_id: item.ead for item in losses})
+        concentration = herfindahl(whole)
+        total = sum(whole.values())
+        reached = sum(item.ead for item in losses)
+        portfolio_share = reached / total if total > 0 else None
     if unknown:
         status = "incomplete"
         flags.append(UNKNOWN_EXPOSURE_FLAG)
@@ -181,8 +212,9 @@ def _slice(slice_id, results, *, draws, exposures, registry, base_currency, hori
             covered_share=aggregated.covered_ead_share,
             limit=spec.coverage_limit,
             unknown_exposure=sorted(unknown),
+            portfolio_share=portfolio_share,
         ),
-        herfindahl=aggregated.herfindahl,
+        herfindahl=concentration,
         included=aggregated.included,
         excluded=[
             ExcludedPosition(position_id=e["asset_id"], status=e["status"], reason=e["reason"])

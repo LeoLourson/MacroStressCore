@@ -49,6 +49,11 @@ FLAGS = {
     "shapley_not_efficient": "сумма вкладов каналов не равна итогу",
     "simplified_tax": "налог рассчитан упрощённо",
     "fx_without_import_share": "валютный шок не затрагивает затраты: доля импорта не задана",
+    "pd_at_model_maximum": "PD на максимуме модели, изменение потерь не измеримо",
+    "rate_repricing": (
+        "цена облигации учитывает изменение ставки: фиксированный купон дисконтируется "
+        "по новой ставке, плавающий пересматривается вслед за ней"
+    ),
     "volume_floor_binding": "объём упёрся в нижнюю границу",
     "calibration_synthetic": "PD по синтетической демо-калибровке, не эмпирической",
     "market_inputs_from_profile": "рыночные входы облигации взяты из условий выпуска",
@@ -92,6 +97,7 @@ INFORMATIONAL = frozenset(
         "project_funding_gap",
         "fx_without_import_share",
         "reverse_stress_direction_undefined",
+        "rate_repricing",
     }
 )
 
