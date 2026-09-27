@@ -29,6 +29,8 @@ class Provider:
     external: bool
     #: Whether the endpoint answers with ``tool_calls`` (OpenAI function calling).
     tool_calling: bool = False
+    #: A slower model of the same endpoint that a run may choose for a hard event.
+    strong_model: str | None = None
 
     def describe(self) -> dict:
         """What the screens show: never the key."""
@@ -38,6 +40,7 @@ class Provider:
             "base_url": self.base_url,
             "external": self.external,
             "tool_calling": self.tool_calling,
+            "strong_model": self.strong_model,
         }
 
 
@@ -60,11 +63,13 @@ _PROFILES = {
         "keys": ("DEEPSEEK_API_KEY",),
         # No strict json_schema: the schema goes into the prompt (DeepSeek JSON mode).
         "json_mode": "json_object",
-        "timeout": 180.0,
+        # deepseek-v4-pro answers a causal prompt in two to four minutes.
+        "timeout": 420.0,
         # deepseek-flash reasons for 7-8k tokens before an ~4k-token causal answer.
         "max_tokens": 32768,
         "external": True,
         "tool_calling": True,
+        "strong_model": "deepseek-v4-pro",
     },
     "mock": {
         "base_url": None,
@@ -104,6 +109,7 @@ def active(config=None) -> Provider:
         max_tokens=config.llm_max_tokens or profile["max_tokens"],
         external=profile["external"],
         tool_calling=_tool_calling(profile),
+        strong_model=profile.get("strong_model"),
     )
 
 

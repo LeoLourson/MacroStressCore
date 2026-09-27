@@ -26,9 +26,10 @@ export function statusText(state: RunState): string {
 }
 
 export function StatusBadge({ state, size = 'md' }: { state: RunState; size?: 'sm' | 'md' | 'lg' }) {
-  const { text, color, Icon } = STATES[state] ?? STATES.failed;
+  const { color, Icon } = STATES[state] ?? STATES.failed;
   return (
     <Badge
+      className="status-badge"
       variant="light"
       color={color}
       c={color === 'yellow' ? 'dark.7' : `${color}.9`}
@@ -38,7 +39,13 @@ export function StatusBadge({ state, size = 'md' }: { state: RunState; size?: 's
       fw={500}
       leftSection={<Icon size={14} stroke={2} />}
     >
-      {text}
+      <span className="status-badge-text">
+        {(Object.keys(STATES) as RunState[]).map((key) => (
+          <span key={key} aria-hidden={key === state ? undefined : true}>
+            {STATES[key].text}
+          </span>
+        ))}
+      </span>
     </Badge>
   );
 }

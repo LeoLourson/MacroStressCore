@@ -162,11 +162,13 @@ export class ApiClient {
     scenario: string | null,
     requestGraphReview: boolean,
     agents: string[] = [],
+    strongModel = false,
   ) {
     return this.call<RunStatus>('POST', this.runs_, {
       portfolio_id: portfolioId,
       event,
       request_graph_review: requestGraphReview,
+      ...(strongModel ? { strong_model: true } : {}),
       ...(agents.length ? { agents } : {}),
       ...(scenario ? { scenario } : {}),
     });

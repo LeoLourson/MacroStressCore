@@ -1,4 +1,4 @@
-"""msa.validators: the dispatcher (V1 + registered rules) and V2/V7/V8/V9/V11 individually."""
+"""msa.validators: the dispatcher (V1 + registered rules) and V2/V3/V7/V8/V9/V11 individually."""
 
 import pytest
 
@@ -64,10 +64,18 @@ def test_validate_contract_violation_reports_v1_path_with_json_pointer_escaping(
     assert any(v.rule_id == "V1" and not v.ok for v in verdicts)
 
 
-def test_validate_a_valid_transmission_graph_runs_v2_v7_v8():
-    verdicts = validate("TransmissionGraph", graph_payload())
+def test_validate_a_valid_transmission_graph_runs_v2_v3_v7_v8():
+    payload = graph_payload(
+        nodes=[
+            node("event", "event"),
+            node("channel", "channel"),
+            node("fx", "factor", factor="market.fx", key="USD/RUB"),
+        ],
+        edges=[edge("event", "channel"), edge("channel", "fx")],
+    )
+    verdicts = validate("TransmissionGraph", payload)
     rule_ids = {v.rule_id for v in verdicts}
-    assert {"V1", "V2", "V7", "V8"} <= rule_ids
+    assert {"V1", "V2", "V3", "V7", "V8"} <= rule_ids
     assert all(v.ok for v in verdicts)
 
 

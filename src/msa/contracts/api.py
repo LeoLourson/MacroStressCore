@@ -57,6 +57,8 @@ class RunRequest(Contract):
     agents: list[Identifier] = Field(default_factory=list)
     #: Stop at the graph even when the causal agent's answer passes every check.
     request_graph_review: bool = Field(default=False, strict=True)
+    #: The provider's slower, stronger model answers every call of this run (``GET /v1/me``).
+    strong_model: bool = Field(default=False, strict=True)
     #: Demo namespace only: automatic approval for rehearsals.
     auto_approve: bool = Field(default=False, strict=True)
 

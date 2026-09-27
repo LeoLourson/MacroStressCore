@@ -36,7 +36,7 @@ class LeasingCompany(CreditFamily):
             "Ставка налога на прибыль",
             default=0.20,
             assumption="assumed_tax_rate",
-            hint="без неё — 20 % по допущению",
+            hint="Доля прибыли, уходящая государству в виде налога",
         ),
     )
     disclosure = (

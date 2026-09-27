@@ -33,7 +33,7 @@ class CausalOutput(Contract):
     inferred_okved: list[Identifier]
     graph: TransmissionGraph
     scenario: dict[Identifier, ScenarioParameter] = {}
-    prompt_version: Identifier = "v4"
+    prompt_version: Identifier = "v5"
 
     @property
     def all_okved(self):

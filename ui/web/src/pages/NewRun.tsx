@@ -40,6 +40,8 @@ export interface RerunState {
   portfolioId?: string;
   eventText?: string;
   scenario?: string;
+  /** Start with the provider's stronger model: the earlier run's model could not build the graph. */
+  strongModel?: boolean;
 }
 
 function Section({ step, title, children }: { step: number; title: string; children: React.ReactNode }) {
@@ -143,21 +145,49 @@ function OptionalAgents({ chosen, onChange }: { chosen: string[]; onChange: (ids
   const agents = (workflows.data?.find((w) => w.workflow_id === 'stress_test')?.agents ?? []).filter(
     (a) => !a.enabled && a.extends.stress_test,
   );
+  const [opened, { toggle }] = useDisclosure(chosen.length > 0);
   if (!agents.length) return null;
   return (
     <Section step={4} title="Дополнительные агенты">
-      <Text size="sm" c="dimmed">
-        Агенты плагинов, выключенные по умолчанию. Они пишут только в своё пространство и не меняют сценарий, расчёты
-        и отчёт; решение по отчёту всё равно принимает человек.
-      </Text>
-      <Checkbox.Group value={chosen} onChange={onChange}>
+      <Anchor component="button" type="button" size="sm" w="fit-content" onClick={toggle}>
+        {opened ? 'Скрыть' : `Добавить к стресс-тесту (${agents.length} на выбор)`}
+      </Anchor>
+      <Collapse in={opened}>
         <Stack gap="xs">
-          {agents.map((a) => (
-            <Checkbox key={a.agent_id} value={a.agent_id} label={a.label} description={a.description || a.agent_id} />
+          <Text size="sm" c="dimmed">
+            Они пишут только в своё пространство и не меняют сценарий, расчёты и отчёт.
+          </Text>
+          <Checkbox.Group value={chosen} onChange={onChange}>
+            <Stack gap="xs">
+              {agents.map((a) => (
+                <Checkbox key={a.agent_id} value={a.agent_id} label={a.label} description={a.description || undefined} />
+              ))}
+            </Stack>
+          </Checkbox.Group>
+        </Stack>
+      </Collapse>
+    </Section>
+  );
+}
+
+/** Where the library event comes from: links to check it, folded until asked for. */
+function EventSources({ sources }: { sources: { source_id: string; title: string; url?: string | null }[] }) {
+  const [opened, { toggle }] = useDisclosure(false);
+  return (
+    <Stack gap={4}>
+      <Anchor component="button" type="button" size="sm" w="fit-content" onClick={toggle}>
+        {opened ? 'Скрыть источники' : `Источники события (${sources.length})`}
+      </Anchor>
+      <Collapse in={opened}>
+        <Stack gap={4}>
+          {sources.map((s) => (
+            <Anchor key={s.source_id} href={s.url ?? undefined} target="_blank" rel="noreferrer" size="sm">
+              {s.source_id} · {s.title}
+            </Anchor>
           ))}
         </Stack>
-      </Checkbox.Group>
-    </Section>
+      </Collapse>
+    </Stack>
   );
 }
 
@@ -183,6 +213,7 @@ export function NewRun() {
   const [file, setFile] = useState<File | null>(null);
   const [scenario, setScenario] = useState(rerun.scenario ?? '');
   const [review, setReview] = useState(false);
+  const [strong, setStrong] = useState(!!rerun.strongModel);
   const [agents, setAgents] = useState<string[]>([]);
   const [missing, setMissing] = useState(false);
   const [presetLoaded, setPresetLoaded] = useState(false);
@@ -239,7 +270,7 @@ export function NewRun() {
       return;
     }
     start.mutate(
-      { portfolioId: portfolioId.trim(), event: input, scenario: scenario.trim() || null, review, agents },
+      { portfolioId: portfolioId.trim(), event: input, scenario: scenario.trim() || null, review, agents, strongModel: strong },
       { onSuccess: (status) => navigate(`/runs/${status.run_id}`) },
     );
   };
@@ -317,16 +348,7 @@ export function NewRun() {
                   )}
                 </Blockquote>
               )}
-              {!!chosen?.metadata?.sources?.length && (
-                <Stack gap={4}>
-                  <Text size="sm" fw={500}>Источники события</Text>
-                  {chosen.metadata.sources.map((s) => (
-                    <Anchor key={s.source_id} href={s.url} target="_blank" rel="noreferrer" size="sm">
-                      {s.source_id} · {s.title}
-                    </Anchor>
-                  ))}
-                </Stack>
-              )}
+              {!!chosen?.metadata?.sources?.length && <EventSources sources={chosen.metadata.sources} />}
             </>
           )}
           {source === 'text' && (
@@ -375,6 +397,13 @@ export function NewRun() {
             checked={review}
             onChange={(e) => setReview(e.currentTarget.checked)}
           />
+          {me?.llm?.strong_model && (
+            <Checkbox
+              label={<FieldHelp label={`Строить граф более сильной моделью (${me.llm.strong_model})`} help="Надёжнее строит граф влияния для сложных событий и портфелей, но отвечает дольше: около двух минут на граф. Эта модель отвечает на все вызовы стресс-теста, включая отчёт." />}
+              checked={strong}
+              onChange={(e) => setStrong(e.currentTarget.checked)}
+            />
+          )}
         </Section>
 
         <OptionalAgents chosen={agents} onChange={setAgents} />

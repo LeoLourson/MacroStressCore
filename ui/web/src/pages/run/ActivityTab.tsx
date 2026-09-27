@@ -3,6 +3,7 @@ import { IconCheck, IconX } from '@tabler/icons-react';
 import { useActivity } from '../../api/queries';
 import type { ActivityItem, WorkflowView } from '../../api/types';
 import { useSession } from '../../auth/session';
+import { Elapsed } from '../../components/Elapsed';
 import { ErrorAlert } from '../../components/ErrorAlert';
 import { number, timestamp } from '../../lib/format';
 import { PROVIDERS, label } from '../../lib/labels';
@@ -38,6 +39,14 @@ function seconds(ms: number | null | undefined): string {
 }
 
 function Outcome({ item }: { item: ActivityItem }) {
+  if (item.status === 'waiting') {
+    return (
+      <Group gap={6} wrap="nowrap" c="steel.8">
+        <Loader size={12} color="steel" />
+        <Text size="sm">ждёт ответа</Text>
+      </Group>
+    );
+  }
   const ok = item.status === 'completed';
   return (
     <Group gap={4} wrap="nowrap" c={ok ? 'dimmed' : 'dark.7'}>
@@ -75,12 +84,6 @@ export function ActivityTab({ status, artifacts }: RunTabProps) {
   const provider = me?.llm;
   return (
     <Stack gap="lg">
-      <Text size="sm" c="dimmed" maw="80ch">
-        Языковая модель строит граф влияния со сценарием, может переписать резюме отчёта и отвечает на вопросы по
-        результатам, читая их через инструменты. Числа считают детерминированные модели плагинов; агенты вызывают их и
-        данные портфеля через MCP-инструменты. Каждый вызов записан в журнал аудита с узлом, попыткой и тем, кто его
-        запросил: процесс или языковая модель.
-      </Text>
       <SimpleGrid cols={{ base: 1, sm: 2 }}>
         <Paper p="md">
           <Stack gap={4}>
@@ -111,10 +114,6 @@ export function ActivityTab({ status, artifacts }: RunTabProps) {
                 По выбору языковой модели: <b>{tools.by_llm}</b>
               </Text>
             )}
-            <Text size="sm" c="dimmed">
-              mcp-portfolio — данные позиций из снимка, mcp-models — расчёт позиции, mcp-runs — чтение результатов для
-              объяснения.
-            </Text>
           </Stack>
         </Paper>
       </SimpleGrid>
@@ -181,7 +180,9 @@ export function ActivityTab({ status, artifacts }: RunTabProps) {
                           </Text>
                         )}
                       </Table.Td>
-                      <Table.Td className="num-right">{seconds(d.duration_ms)}</Table.Td>
+                      <Table.Td className="num-right">
+                        {item.status === 'waiting' ? <Elapsed since={item.at} /> : seconds(d.duration_ms)}
+                      </Table.Td>
                       <Table.Td className="num-right">
                         {llmCall && d.prompt_tokens != null
                           ? `${number(d.prompt_tokens, 0)} → ${number(d.completion_tokens, 0)}`

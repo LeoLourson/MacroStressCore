@@ -43,14 +43,6 @@ export const EVIDENCE_KINDS: Record<string, string> = {
   expert_assumption: 'Допущение эксперта',
 };
 
-export const PASSPORT: Record<string, string> = {
-  event_type: 'Тип события',
-  authority: 'Орган',
-  act_reference: 'Акт',
-  effective_date: 'Вступает в силу',
-  territory: 'Территория',
-};
-
 export const SCENARIO_KINDS: Record<string, string> = {
   point: 'Одно значение',
   triangular: 'Диапазон с наиболее вероятным значением',
@@ -68,6 +60,7 @@ export const DISTRIBUTIONS: Record<string, string> = {
 export const RULE_CHECKS: Record<string, string> = {
   V1: 'не соответствует формату',
   V2: 'неизвестный фактор или единица',
+  V3: 'цепочка обрывается и не доходит ни до одного показателя позиций',
   V7: 'в графе есть цикл',
   V8: 'у связи нет источника',
 };

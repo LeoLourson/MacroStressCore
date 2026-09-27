@@ -73,7 +73,7 @@ export function useTrace(status: RunStatus, enabled: boolean) {
 export function useActivity(status: RunStatus) {
   const client = useClient();
   return useQuery({
-    queryKey: ['activity', client.mode, status.run_id, status.status, status.node],
+    queryKey: ['activity', client.mode, status.run_id, status.status, status.node, status.llm_waiting?.started_at],
     queryFn: () => client.activity(status.run_id),
     placeholderData: keepPreviousData,
   });
@@ -186,13 +186,15 @@ export interface StartInput {
   review: boolean;
   /** Agent plugins, off by default, that join this run. */
   agents?: string[];
+  /** The provider's stronger model answers every call of this run. */
+  strongModel?: boolean;
 }
 
 export function useStartRun() {
   const client = useClient();
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: async ({ portfolioId, event, scenario, review, agents = [] }: StartInput) => {
+    mutationFn: async ({ portfolioId, event, scenario, review, agents = [], strongModel = false }: StartInput) => {
       let input: EventInput;
       if (event.kind === 'file') {
         const document = await client.ingestFile(event.file);
@@ -207,7 +209,7 @@ export function useStartRun() {
       } else {
         input = event;
       }
-      return client.start(portfolioId, input, scenario, review, agents);
+      return client.start(portfolioId, input, scenario, review, agents, strongModel);
     },
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['runs'] }),
   });

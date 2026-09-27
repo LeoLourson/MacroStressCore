@@ -299,13 +299,16 @@ export function PortfolioTab({ status, artifacts }: RunTabProps) {
 
   return (
     <Stack gap="xl">
-      <Group gap="xs" c="dark.3">
-        <IconInfoCircle size={16} />
-        <Text size="sm" maw="80ch">
-          <Term name="Срез портфеля">Срезы</Term> считаются отдельно: у каждого своя мера, своя база покрытия, и они не
-          складываются между собой. {slices.length > 1 ? 'Все срезы рассчитаны на одних и тех же сценариях.' : ''}
-        </Text>
-      </Group>
+      {/* Only several slices raise the question whether they add up. */}
+      {slices.length > 1 && (
+        <Group gap="xs" c="dark.3">
+          <IconInfoCircle size={16} />
+          <Text size="sm" maw="80ch">
+            <Term name="Срез портфеля">Срезы</Term> считаются отдельно на одних и тех же сценариях: у каждого своя мера и
+            база покрытия, между собой они не складываются.
+          </Text>
+        </Group>
+      )}
       {slices.map((item) => (
         <Slice key={item.slice_id} item={item} artifacts={artifacts} entries={entries} />
       ))}

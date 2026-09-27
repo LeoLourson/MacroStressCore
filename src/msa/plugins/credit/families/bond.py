@@ -32,14 +32,15 @@ BOND_FIELDS: tuple[F, ...] = (
         required=True,
         source="market",
         market=(RATE, "risk_free:{currency}", "rate"),
-        hint="из рыночных данных снимка на дату оценки",
+        hint="Доходность вложений без кредитного риска",
     ),
     F("coupon_frequency", "count", "Купонов в год", default=1.0, source="terms"),
     F(
         "credit_spread",
         "fraction",
         "Кредитный спред",
-        hint="без него — купон минус безрисковая ставка",
+        hint="Надбавка к безрисковой ставке за риск заёмщика. "
+        "Если пусто — купон минус безрисковая ставка",
         source="terms",
     ),
 )

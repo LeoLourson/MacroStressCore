@@ -180,7 +180,7 @@ def test_only_selected_model_factors_and_their_units_reach_the_llm():
     )
     llm = CapturingLLM(response)
     output = CausalAgent(llm=llm).run_structured(payload)
-    assert output.prompt_version == current_version("causal") == "v4"
+    assert output.prompt_version == current_version("causal") == "v5"
     assert "portfolio_context" in llm.messages[1]["content"]
     assert "bank portfolio" not in llm.messages[0]["content"]
     assert all(n.key for n in output.graph.nodes if n.kind == "factor")

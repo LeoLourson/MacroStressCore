@@ -72,13 +72,13 @@ class AgentService:
         """The plugins' run options of a namespace (the credit calibration in force)."""
         return registry().run_options(scope)
 
-    def agents(self, scope, *, portfolio_id=None):
+    def agents(self, scope, *, portfolio_id=None, model=None):
         if self.factory:
             return self.factory(scope=scope, mock_llm=self.mock_llm, portfolio_id=portfolio_id)
         tools = self.tools(scope)
         mock = self.mock_llm
         return build_agents(
-            llm=None if mock else LLMClient(observer=self.llm_recorder(scope)),
+            llm=None if mock else self.llm_client(scope, model),
             mock_llm=mock,
             registry=registry(),
             # Snapshot items come through mcp-portfolio, audited per call.
@@ -90,11 +90,14 @@ class AgentService:
             estimate_scenario=scope == "demo" and settings().demo_estimate_scenario and not mock,
         )
 
-    def llm_client(self, scope):
-        """The model agents call, recorded per node; with fixtures (``mock``) there is none."""
+    def llm_client(self, scope, model=None):
+        """The model agents call, recorded per node; with fixtures (``mock``) there is none.
+
+        ``model`` is the provider's strong model when the run chose it, else its default.
+        """
         if self.mock_llm:
             return None
-        return LLMClient(observer=self.llm_recorder(scope))
+        return LLMClient(model=model, observer=self.llm_recorder(scope))
 
     def explain_llm(self, scope):
         """The model that explains results; with fixtures (``mock``) there is none."""
@@ -159,7 +162,13 @@ class AgentService:
     def llm(self):
         """The model that answers, and whether it lies outside the bank perimeter."""
         if self.mock_llm:
-            return {"provider": "mock", "model": "mock", "base_url": None, "external": False}
+            return {
+                "provider": "mock",
+                "model": "mock",
+                "base_url": None,
+                "external": False,
+                "strong_model": None,
+            }
         return active_llm().describe()
 
     def llm_recorder(self, scope):
@@ -184,10 +193,10 @@ class AgentService:
         with self.db.session(scope) as session:
             return DemoRepository(session).events()
 
-    def stamp(self):
+    def stamp(self, model=None):
         """The versions a run records: the answering model, the prompt and the code."""
         return {
-            "model_version": self.llm()["model"],
+            "model_version": model or self.llm()["model"],
             "prompt_version": current_version("causal"),
             "code_sha256": self.code_hash,
             "macro_draws_sha256": None,
