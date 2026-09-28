@@ -58,8 +58,32 @@ import { channelsOf, newParameter, ParameterModal } from './ParameterModal';
 import { edgeFlagged, edgeIndex, failing, gateWords, parameterProblem, problemText, split } from './problems';
 import { useDraft, type Draft } from './useDraft';
 
-function quote(evidence: ScenarioParameter['evidence'] | undefined, document: SourceDocument | null | undefined) {
-  const assumption = evidence?.find((e) => e.kind === 'expert_assumption');
+/** The fields that size a parameter, as opposed to where it applies (run_service.MAGNITUDE). */
+const MAGNITUDE = ['kind', 'value', 'low', 'mode', 'high', 'mean', 'sigma', 'unit'] as const;
+
+/** The analyst changed how large the parameter is, or added it: confirmed, it is their assumption. */
+function resized(parameter: ScenarioParameter, proposed: ScenarioParameter | undefined): boolean {
+  return MAGNITUDE.some((field) => (parameter[field] ?? null) !== (proposed?.[field] ?? null));
+}
+
+/** Whose assumption the magnitude is while `editor` edits the scenario, as the server will record it. */
+function assumptionOf(
+  parameter: ScenarioParameter,
+  proposed: ScenarioParameter | undefined,
+  editor: string | null,
+): { author?: string | null; as_of?: string | null } | undefined {
+  if (editor && resized(parameter, proposed)) return { author: editor, as_of: new Date().toISOString().slice(0, 10) };
+  return parameter.evidence?.find((e) => e.kind === 'expert_assumption');
+}
+
+function quote(
+  parameter: ScenarioParameter,
+  proposed: ScenarioParameter | undefined,
+  editor: string | null,
+  document: SourceDocument | null | undefined,
+) {
+  const evidence = parameter.evidence;
+  const assumption = assumptionOf(parameter, proposed, editor);
   if (assumption) return `Допущение · ${assumption.author ?? 'автор не указан'}${assumption.as_of ? ` · ${day(assumption.as_of)}` : ''}`;
   // An older run cites the scenario whole: it is quoted once above the table.
   if (evidence?.some((e) => e.locator === 'scenario')) return 'из описания силы события';
@@ -71,8 +95,12 @@ function quote(evidence: ScenarioParameter['evidence'] | undefined, document: So
 }
 
 /** Parameters whose magnitude no text states: an assumption with its author, such as the model's estimate. */
-function assumptions(parameters: Record<string, ScenarioParameter>): number {
-  return Object.values(parameters).filter((p) => p.evidence?.some((e) => e.kind === 'expert_assumption')).length;
+function assumptions(
+  parameters: Record<string, ScenarioParameter>,
+  proposed: Record<string, ScenarioParameter> = {},
+  editor: string | null = null,
+): number {
+  return Object.entries(parameters).filter(([name, p]) => assumptionOf(p, proposed[name], editor)).length;
 }
 
 /** A graph the screens can draw; an answer that failed every check leaves an empty object. */
@@ -144,6 +172,8 @@ function Gate({
 function ScenarioTable({
   plan,
   parameters,
+  proposed,
+  editor,
   graph,
   document,
   editing,
@@ -153,6 +183,10 @@ function ScenarioTable({
 }: {
   plan: ScenarioPlan;
   parameters: Record<string, ScenarioParameter>;
+  /** The scenario as the model proposed it, before the analyst's edits. */
+  proposed: Record<string, ScenarioParameter>;
+  /** The analyst editing the draft: the author of the magnitudes they change. */
+  editor: string | null;
   graph: Graph | null;
   document: SourceDocument | null | undefined;
   editing: boolean;
@@ -218,7 +252,7 @@ function ScenarioTable({
                         : '— (заменяет входное значение модели)'}
                   </Table.Td>
                   <Table.Td>{p.factor ? factorLabel(p.factor) : '—'}</Table.Td>
-                  <Table.Td c="dimmed">{quote(p.evidence, document)}</Table.Td>
+                  <Table.Td c="dimmed">{quote(p, proposed[name], editor, document)}</Table.Td>
                   {editing && (
                     <Table.Td>
                       <Tooltip label="Изменить">
@@ -398,6 +432,8 @@ function Body({
   const document = artifacts.document;
   const graph = draft ? draft.graph : (drawable(artifacts.graph) ?? drawable(stop?.graph));
   const parameters = draft ? draft.parameters : (plan.parameters ?? {});
+  const proposed = stop?.macro_parameters ?? {};
+  const editor = draft && me ? me.actor : null;
   const hasGraph = !!graph?.nodes?.length;
   const check = useScenarioCheck(
     hasGraph && (draft || Object.keys(parameters).length)
@@ -471,7 +507,7 @@ function Body({
   const blocking = violations.length > 0;
   const pending = !hasGraph && ACTIVE.includes(status.status);
   const count = Object.keys(parameters).length;
-  const assumed = assumptions(parameters);
+  const assumed = assumptions(parameters, proposed, editor);
   const scenarioSummary = count
     ? `${plural(count, 'параметр', 'параметра', 'параметров')}${assumed ? `, из них ${plural(assumed, 'допущение', 'допущения', 'допущений')}` : ''}${!draft && plan.confirmed ? ', подтверждён аналитиком' : ''}`
     : pending
@@ -518,6 +554,8 @@ function Body({
               <ScenarioTable
                 plan={plan}
                 parameters={parameters}
+                proposed={proposed}
+                editor={editor}
                 graph={graph}
                 document={document}
                 editing={!!draft}
