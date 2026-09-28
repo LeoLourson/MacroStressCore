@@ -83,13 +83,13 @@ def test_share_with_only_operating_shock_waits_for_market_scenario(graph_factory
     assert payload["kind"] == "human_fix_graph"
     parameters = {
         **payload["macro_parameters"],
-        "sector_change": {
-            "label": "Изменение отрасли",
+        "market_change": {
+            "label": "Изменение рынка акций",
             "kind": "point",
             "value": -0.1,
             "unit": "log_return",
-            "factor": "equity.sector",
-            "key": share["instrument"]["terms"]["sector"],
+            "factor": "equity.market",
+            "key": share["instrument"]["terms"]["market_index"],
         },
     }
     state = resume_run(

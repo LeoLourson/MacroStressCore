@@ -9,7 +9,7 @@ from sqlalchemy import select, update
 from msa import activity
 from msa.agents.advisory import channel_factors
 from msa.agents.causal_output import scenario_violations
-from msa.agents.ingest import fragment
+from msa.agents.ingest import SCENARIO, document_text, sentence_fragments
 from msa.contracts import Report
 from msa.contracts.domain import contexts
 from msa.db.models import tables_for
@@ -142,12 +142,13 @@ class RunService:
                 raise Problem(422, f"Снимок данных {snapshot_id} не найден")
         as_of = request.as_of or bundle.portfolio.as_of or date.today()
         document = self.agents.document(scope, request.event)
-        text = "\n\n".join(f.text for f in document.fragments) or "Unparsed document"
+        text = document_text(document) or "Unparsed document"
         scenario = request.scenario
         if scenario:
-            # The causal agent cites the scenario words like any other fragment of the event.
+            # The causal agent cites the scenario words like any other fragment of the event,
+            # sentence by sentence.
             document = document.model_copy(
-                update={"fragments": [*document.fragments, fragment(scenario, "scenario")]}
+                update={"fragments": [*document.fragments, *sentence_fragments(scenario, SCENARIO)]}
             )
         run_id = run_id or str(uuid4())
         names = self.agents.names(scope, request.portfolio_id)

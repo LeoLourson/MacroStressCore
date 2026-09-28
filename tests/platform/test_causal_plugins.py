@@ -174,16 +174,26 @@ def test_only_selected_model_factors_and_their_units_reach_the_llm():
     context = payload["portfolio_context"]
     assert context["horizon_months"] == 6
     assert not any(f["factor_id"].startswith("credit.") for f in context["factors"])
-    assert all(f["unit"] == "log_return" for f in context["factors"])
+    assert {f["factor_id"]: f["unit"] for f in context["factors"]} == {
+        "equity.market": "log_return",
+        "equity.sector": "fraction",
+        "market.fx": "log_return",
+    }
     response = CausalAgent._mock_response(
         SourceDocument.model_validate(payload["document"]), set(), context
     )
     llm = CapturingLLM(response)
     output = CausalAgent(llm=llm).run_structured(payload)
-    assert output.prompt_version == current_version("causal") == "v5"
+    assert output.prompt_version == current_version("causal") == "v6"
     assert "portfolio_context" in llm.messages[1]["content"]
     assert "bank portfolio" not in llm.messages[0]["content"]
-    assert all(n.key for n in output.graph.nodes if n.kind == "factor")
+    # Direct factors name their key; the sector factor comes through the graph without one.
+    scopes = {f["factor_id"]: f["scope"] for f in context["factors"]}
+    assert all(
+        bool(n.key) == (scopes[n.factor] != "graph")
+        for n in output.graph.nodes
+        if n.kind == "factor"
+    )
 
 
 @pytest.mark.parametrize("corruption", ["foreign_factor", "wrong_key", "wrong_unit"])
@@ -256,12 +266,18 @@ def test_unquantified_direct_factor_keeps_an_issuerless_position_for_review():
 
 
 def test_one_provided_factor_does_not_hide_another_missing_factor():
-    raw = next(p for p in positions() if p["instrument"]["instrument_type"] == "common_stock")
+    # A dollar share reads two direct factors: its market index and its exchange rate.
+    raw = next(
+        p
+        for p in positions()
+        if p["instrument"]["instrument_type"] == "common_stock"
+        and p["instrument"]["currency"] != "RUB"
+    )
     payload = payload_for([raw], registry())
     output = CausalAgent(mock=True).run_structured(payload)
     position = PositionContext.model_validate(raw)
     needs = registry().model_for(position).requirements(position, OPTIONS)
-    one = next(iter(output.scenario.items()))
+    one = next((name, p) for name, p in output.scenario.items() if p.key is not None)
     assert reasons(position, needs, output.graph, {one[0]: one[1]}, registry())
     assert missing_direct_scenario(position, needs, output.graph, {one[0]: one[1]}, registry())
 

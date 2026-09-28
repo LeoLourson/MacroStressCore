@@ -23,7 +23,8 @@ class ShareTerms(Contract):
     exchange: Identifier | None = None
     #: The market index whose factor (``equity.market``) the share is sensitive to.
     market_index: Identifier
-    #: The sector factor (``equity.sector``) key the share is sensitive to.
+    #: The sector whose factor ``beta_sector`` is estimated against; the scenario's sector
+    #: shock itself reaches the share through the graph by the issuer's OKVED.
     sector: Identifier
 
 

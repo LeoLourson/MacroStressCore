@@ -1,15 +1,15 @@
 // The standard blocks of a position's result, and the standard view built from the blocks
 // a plugin declares (ResultView.blocks). A UI plugin may use them in its own view.
-import { Box, Group, List, Stack, Table, Text, Title } from '@mantine/core';
+import { Box, Group, Stack, Table, Text, Title } from '@mantine/core';
 import type { ReactNode } from 'react';
 import { metricLabel, metricSpec, type ViewBlock } from '../api/catalog';
-import type { CalculationResult, Evidence, MetricValue } from '../api/types';
+import type { CalculationResult, MetricValue, PositionContext } from '../api/types';
 import { compact, day, formatter, metricValue, number, percent, positionPath, resolvePath } from '../lib/format';
-import { basisText } from '../lib/origin';
 import type { Entries } from '../lib/provenance';
+import { bySource, positionInputs } from '../lib/sources';
 import type { PositionViewProps } from '../plugins/sdk';
-import { IntervalText } from './Interval';
-import { TracedNumber } from './Provenance';
+import { IntervalText, ShiftText } from './Interval';
+import { SourceInputs, TracedNumber } from './Provenance';
 import { Term } from './Term';
 
 export function Section({ title, hint, children }: { title: ReactNode; hint?: string; children: ReactNode }) {
@@ -43,19 +43,31 @@ export function Fact({ name, value }: { name: ReactNode; value: ReactNode }) {
   );
 }
 
-/** A metric as the screens show it: P50 with P5 … P95 beside it, or the value itself. */
+/**
+ * A metric as the screens show it: P50 with P5 … P95 beside it, or the value itself. A change
+ * with the level it starts from (`base`) reads «before → after» with the change below.
+ */
 export function MetricCell({
   metric,
   positionId,
   entries,
+  base,
 }: {
   metric: MetricValue;
   positionId: string;
   entries: Entries;
+  base?: number | null;
 }) {
   const digits = metricSpec(metric.metric_id)?.decimals;
   const format = formatter(metric.unit, digits);
   const q = metric.quantiles;
+  if (q && base != null) {
+    return (
+      <TracedNumber entry={entries.get(positionPath(positionId, 'metrics', metric.metric_id, 'p50'))}>
+        <ShiftText base={base} p05={q.p05} p50={q.p50} p95={q.p95} unit={metric.unit} />
+      </TracedNumber>
+    );
+  }
   if (q) {
     return (
       <TracedNumber entry={entries.get(positionPath(positionId, 'metrics', metric.metric_id, 'p50'))}>
@@ -78,12 +90,15 @@ export function MetricsBlock({
   entries,
   title,
   hint,
+  baseline,
 }: {
   result: CalculationResult;
   metricIds: string[];
   entries: Entries;
   title: string;
   hint?: string;
+  /** The level before the event a change metric starts from (UiPlugin.baseline). */
+  baseline?: (metricId: string) => number | null;
 }) {
   const shown = (metricIds.length ? metricIds : Object.keys(result.metrics)).filter((id) => result.metrics[id]);
   if (!shown.length) return null;
@@ -113,7 +128,7 @@ export function MetricsBlock({
                 )}
               </Table.Td>
               <Table.Td className="num-right">
-                <MetricCell metric={result.metrics[id]} positionId={result.position_id} entries={entries} />
+                <MetricCell metric={result.metrics[id]} positionId={result.position_id} entries={entries} base={baseline?.(id)} />
               </Table.Td>
             </Table.Tr>
           ))}
@@ -253,32 +268,36 @@ export function SeriesBlock({
   );
 }
 
-/** Who stands behind the position's data, grouped by basis. */
-export function SourcesBlock({ result, title = 'Источники данных' }: { result: CalculationResult; title?: string }) {
-  const grouped = new Map<string, Evidence[]>();
-  for (const e of result.sources) grouped.set(basisText(e), [...(grouped.get(basisText(e)) ?? []), e]);
-  const inputs = Object.entries(result.input_sources ?? {});
-  if (!grouped.size && !inputs.length) return null;
+/** Where the position's data came from: each source, whose and on what date, and what it gave. */
+export function SourcesBlock({
+  result,
+  context,
+  title = 'Источники данных',
+}: {
+  result: CalculationResult;
+  context?: PositionContext;
+  title?: string;
+}) {
+  const sources = bySource(positionInputs(context, result));
+  if (!sources.length) return null;
   return (
     <Section title={title}>
-      <List size="sm" spacing={2}>
-        {[...grouped.entries()].map(([basis, items]) => (
-          <List.Item key={basis}>
-            {basis} — {items.length} {items.length === 1 ? 'значение' : 'значений'}
-          </List.Item>
+      <Stack gap="sm">
+        {sources.map((source) => (
+          <Stack key={source.key} gap={2}>
+            <Text size="sm" fw={600}>
+              {source.name}
+            </Text>
+            <SourceInputs source={source} />
+          </Stack>
         ))}
-      </List>
-      {inputs.length > 0 && (
-        <Text size="xs" c="dark.3">
-          Данные снимка: {inputs.map(([key, ids]) => `${key} (${ids.join(', ') || 'без источника'})`).join('; ')}.
-        </Text>
-      )}
+      </Stack>
     </Section>
   );
 }
 
 /** The result rendered from the blocks its plugin declares: the view of any new plugin. */
-export function StandardView({ result, view, entries }: PositionViewProps) {
+export function StandardView({ result, context, view, entries }: PositionViewProps) {
   return (
     <Stack gap="lg">
       {view.blocks.map((block, i) => {
@@ -300,7 +319,7 @@ export function StandardView({ result, view, entries }: PositionViewProps) {
           case 'series':
             return <SeriesBlock key={i} series={data} labels={view.labels} title={block.title} hint={block.hint} />;
           case 'sources':
-            return <SourcesBlock key={i} result={result} title={block.title} />;
+            return <SourcesBlock key={i} result={result} context={context} title={block.title} />;
           default:
             return null;
         }

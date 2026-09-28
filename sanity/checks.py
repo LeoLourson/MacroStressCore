@@ -1156,11 +1156,17 @@ def d3():
     "Изоляция отраслевого фактора",
     "Шок отрасли «нефть и газ» задевает нефтяную акцию и не задевает ИТ-акцию",
     portfolio="акция 06.10 (oil_gas, β отрасли 1) и акция 62.01 (technology)",
-    event="отрасль oil_gas: −15 %",
+    event="канал «акции нефтегаза» → отрасль 06.10 → фактор отрасли: −15 %",
 )
 def d4():
     rows = [share("OIL", "06.10", beta_sector=1.0), share("TECH", IT, beta_sector=1.0)]
-    o = one(rows, market_event("D4", ("equity.sector", "oil_gas", math.log(0.85))))
+    event = Event(
+        "D4",
+        "Синтетическое событие D4: акции нефтегазовых компаний дешевеют сильнее рынка.",
+        links=[Link("oil_shares", "06.10", "equity.sector")],
+        scenario={"oil": shock("oil_shares", "equity.sector", value=-0.15)},
+    )
+    o = one(rows, event)
     oil = equity_loss(o, "OIL")
     ok = close(oil, 15.0, rel=1e-9) and "TECH" not in o.reached
     return Verdict(
@@ -1948,8 +1954,8 @@ def s2():
     "0,3, долг 2,5×) теряет на единицу EAD больше цемента (0,15, долг 1×); акция девелопера "
     "падает; ИТ, дистрибьютор, экспортёр, лизинг не затронуты",
     portfolio="та же книга",
-    event="канал «ипотека» −35 %: 41.20 эластичность 1, 23.61 — 0,3, 23.51 — 0,15; отрасль "
-    "real_estate −20 %",
+    event="канал «ипотека» −35 %: 41.20 эластичность 1, 23.61 — 0,3, 23.51 — 0,15; канал "
+    "«акции девелоперов» → 41.20: −20 %",
 )
 def s3():
     event = story(
@@ -1959,17 +1965,12 @@ def s3():
             Link("mortgage", BUILDER, REV),
             Link("mortgage", CONCRETE, REV, elasticity=0.3),
             Link("mortgage", CEMENT, REV, elasticity=0.15),
+            Link("developer_shares", BUILDER, "equity.sector"),
         ],
-        [Direct("mortgage", "equity.sector", "real_estate")],
+        [],
         {
             "housing": shock("mortgage", REV, value=-0.35),
-            "developers": shock(
-                "mortgage",
-                "equity.sector",
-                value=math.log(0.8),
-                unit="log_return",
-                key="real_estate",
-            ),
+            "developers": shock("developer_shares", "equity.sector", value=-0.2),
         },
     )
     o = one(book(), event, "S3")
@@ -2011,11 +2012,9 @@ def s4():
     )
     first = one(book(), event, "S4")
     # The analyst answers the stop the only way the platform accepts: an explicit zero for
-    # the factors of the position the graph points at.
-    event.direct.append(Direct("leasing", "equity.sector", "financials"))
-    event.scenario["banks"] = shock(
-        "leasing", "equity.sector", value=0.0, unit="log_return", key="financials"
-    )
+    # the factors of the position the graph points at, here the bank's sector.
+    event.links.append(Link("leasing", "64.19", "equity.sector"))
+    event.scenario["banks"] = shock("leasing", "equity.sector", value=0.0)
     o = one(book(), event, "S4")
     rows = table(o)
     untouched = ("CONC", "CEM", "DEV", "FERT", "ITC", "BOND", "S_OIL", "S_DEVS", "S_US")
@@ -2023,7 +2022,7 @@ def s4():
     ok = (rows["DIST"].get("delta_el_p50") or 0) > 0 and not reached_extra and not first.blocked
     observed = (
         "первый прогон остановлен: " + why_not_calculated(first, "S_BANK") + " После нуля для "
-        "financials: "
+        "отрасли банка: "
         if first.blocked
         else ""
     ) + describe(rows)

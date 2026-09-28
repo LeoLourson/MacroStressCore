@@ -3,16 +3,17 @@ import { IconAlertTriangle, IconInfoCircle } from '@tabler/icons-react';
 import { sliceSpec } from '../../api/catalog';
 import { useReport } from '../../api/queries';
 import type { Artifacts, Report, SliceResult } from '../../api/types';
-import { IntervalBar, scaleOf } from '../../components/Interval';
+import { IntervalBar, IntervalLegend, scaleOf } from '../../components/Interval';
 import { TracedNumber } from '../../components/Provenance';
 import { ResultStatus } from '../../components/RiskModel';
 import { Term } from '../../components/Term';
-import { capitalize, describePath, formatter, number, pathValue, percent, positionTitle, slicePath } from '../../lib/format';
+import { bareValue, capitalize, describePath, formatter, number, pathValue, percent, positionTitle, slicePath } from '../../lib/format';
 import { ACTIONS, RESULT_STATUS, RULES, flagList, label, translateFlags } from '../../lib/labels';
 import type { Entries } from '../../lib/provenance';
 import { hasReport } from '../../lib/stages';
-import { agentComponent, pluginNotes } from '../../plugins';
+import { agentComponent, baselineOf, pluginNotes } from '../../plugins';
 import type { RunTabProps } from './RunPage';
+import { glossary } from './ReportText';
 import { useOrigins } from './useOrigins';
 
 function Slice({ item, artifacts, entries }: { item: SliceResult; artifacts: Artifacts; entries: Entries }) {
@@ -26,6 +27,14 @@ function Slice({ item, artifacts, entries }: { item: SliceResult; artifacts: Art
     (a, b) => b.expected_shortfall_contribution - a.expected_shortfall_contribution,
   );
   const notes = flagList(item.flags.filter((f) => !f.startsWith('included_by_rule:') && !f.startsWith('inclusion_rule:')));
+  // The level before the event: the sum of the included positions' levels, when each is known.
+  const levels = item.included.map((id) => {
+    const result = artifacts.results?.find((r) => r.position_id === id);
+    return result ? baselineOf(result, item.measure) : null;
+  });
+  const base = levels.length && levels.every((v) => v != null) ? levels.reduce((a: number, v) => a + v!, 0) : null;
+  const shift = base ?? 0;
+  const scale = q ? scaleOf([q.p05, q.p95, sum95, es].map((v) => (v == null ? v : v + shift)).concat(base)) : null;
   return (
     <Paper p="lg">
       <Stack gap="md">
@@ -79,10 +88,36 @@ function Slice({ item, artifacts, entries }: { item: SliceResult; artifacts: Art
                 </Stack>
               )}
             </Group>
-            <IntervalBar p05={q.p05} p50={q.p50} p95={q.p95} scale={scaleOf([q.p05, q.p95, sum95, es])} width="100%" />
-            <Text size="xs" c="dark.3">
-              Отрицательные значения — прирост, положительные — потери.
-            </Text>
+            {base != null && (
+              <Text size="sm">
+                До события — <b>{format(base)}</b>, после события по медиане — <b>{format(base + q.p50)}</b> (P5–P95:{' '}
+                {bareValue(base + q.p05, item.unit)} … {format(base + q.p95)}).
+              </Text>
+            )}
+            <Stack gap={2} mt={4}>
+              <IntervalBar
+                p05={q.p05 + shift}
+                p50={q.p50 + shift}
+                p95={q.p95 + shift}
+                base={base}
+                tail={es == null ? null : es + shift}
+                scale={scale!}
+                width="100%"
+              />
+              <Group justify="space-between">
+                <Text size="xs" c="dark.3" className="num">
+                  {format(scale!.lo)}
+                </Text>
+                <Text size="xs" c="dark.3" className="num">
+                  {format(scale!.hi)}
+                </Text>
+              </Group>
+            </Stack>
+            <IntervalLegend
+              base={base != null}
+              tail={es != null}
+              note={base == null ? 'Отрицательные значения — прирост, положительные — потери.' : undefined}
+            />
           </Stack>
         ) : (
           <Alert color="orange" variant="light" icon={<IconAlertTriangle />}>
@@ -180,6 +215,7 @@ function Slice({ item, artifacts, entries }: { item: SliceResult; artifacts: Art
 function Recommendations({ report, artifacts }: { report: Report; artifacts: Artifacts }) {
   const names = artifacts.position_names;
   const types = Object.fromEntries((artifacts.results ?? []).map((r) => [r.position_id, r.instrument_type]));
+  const words = glossary(artifacts);
   const grouped = new Map<string, Report['recommendations']>();
   for (const rec of report.recommendations ?? []) {
     grouped.set(rec.position_id, [...(grouped.get(rec.position_id) ?? []), rec]);
@@ -205,7 +241,7 @@ function Recommendations({ report, artifacts }: { report: Report; artifacts: Art
                   {[...byRule.entries()].map(([rule, recs]) => {
                     const refs = [...new Set(recs.flatMap((r) => r.metric_refs))];
                     const grounds = refs
-                      .map((ref) => `${describePath(ref, { names, types, owner: false })} = ${pathValue(artifacts.metric_tree, ref)}`)
+                      .map((ref) => `${describePath(ref, { names, types, owner: false, words })} = ${pathValue(artifacts.metric_tree, ref)}`)
                       .join('; ');
                     return (
                       <Stack key={rule} gap={2}>
@@ -213,7 +249,7 @@ function Recommendations({ report, artifacts }: { report: Report; artifacts: Art
                           {capitalize(recs.map((r) => label(ACTIONS, r.action)).join(' и '))}
                         </Text>
                         <Text size="xs" c="dimmed">
-                          Почему: {label(RULES, rule)}.{grounds ? ` Основание: ${grounds}.` : ''}
+                          Почему: {label(RULES, rule)}.{grounds ? ` Основание: ${grounds}${grounds.endsWith('.') ? '' : '.'}` : ''}
                         </Text>
                       </Stack>
                     );

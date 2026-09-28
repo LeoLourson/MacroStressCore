@@ -25,8 +25,9 @@ import { bytesToHex, utf8ToBytes } from '@noble/hashes/utils.js';
 import { IconAlertTriangle, IconPlus, IconTrash } from '@tabler/icons-react';
 import { useState } from 'react';
 import type { Distribution, Evidence, Graph, GraphEdge, SourceDocument, Violation } from '../../../api/types';
-import { day, elasticityText, nodeLabels } from '../../../lib/format';
+import { day, elasticityText, NBSP, nodeLabels } from '../../../lib/format';
 import { DISTRIBUTIONS, EVIDENCE_KINDS, label } from '../../../lib/labels';
+import { fragmentPlace } from '../../../lib/origin';
 import { problemText } from './problems';
 import { descriptiveEdge } from '../../../lib/graph';
 
@@ -53,6 +54,29 @@ export function fragmentText(evidence: Evidence, document: SourceDocument | null
   return fragment ? fragment.text.split(/\s+/).join(' ') : null;
 }
 
+/** What an evidence rests on, in words: the place of a fragment, or the kind of the source. */
+export function evidencePlace(evidence: Evidence, document: SourceDocument | null | undefined): string {
+  return evidence.kind === 'document' && document && evidence.source_id === document.doc_id
+    ? fragmentPlace(evidence.locator, document.fragments)
+    : label(EVIDENCE_KINDS, evidence.kind);
+}
+
+/** The places of several evidences, sentences of one text together: «Сценарий, предложения 5, 6». */
+export function evidencePlaces(evidence: Evidence[], document: SourceDocument | null | undefined): string {
+  const sentences = new Map<string, string[]>();
+  for (const place of new Set(evidence.map((e) => evidencePlace(e, document)))) {
+    const [head, number] = place.split(', предложение ');
+    sentences.set(head, [...(sentences.get(head) ?? []), ...(number ? [number] : [])]);
+  }
+  return [...sentences]
+    .map(([head, numbers]) =>
+      numbers.length === 0
+        ? head
+        : `${head}, ${numbers.length > 1 ? 'предложения' : 'предложение'}${NBSP}${numbers.join(`,${NBSP}`)}`,
+    )
+    .join('; ');
+}
+
 export function EvidenceCard({
   evidence,
   document,
@@ -65,7 +89,9 @@ export function EvidenceCard({
   const quote = fragmentText(evidence, document);
   const details =
     evidence.kind === 'document'
-      ? [`место в документе: ${evidence.locator}`]
+      ? quote
+        ? []
+        : [`место в документе: ${evidence.locator}`]
       : [
           `источник: ${evidence.source_id}`,
           `где: ${evidence.locator}`,
@@ -77,16 +103,18 @@ export function EvidenceCard({
       <Group justify="space-between" align="flex-start" wrap="nowrap">
         <Stack gap={4} miw={0}>
           <Text size="sm" fw={600}>
-            {label(EVIDENCE_KINDS, evidence.kind)}
+            {evidencePlace(evidence, document)}
           </Text>
           {quote && (
             <Blockquote p="xs" fz="sm" color="gray" style={{ margin: 0 }}>
               {quote}
             </Blockquote>
           )}
-          <Text size="xs" c="dimmed">
-            {details.join(' · ')}
-          </Text>
+          {details.length > 0 && (
+            <Text size="xs" c="dimmed">
+              {details.join(' · ')}
+            </Text>
+          )}
         </Stack>
         {onRemove && (
           <Tooltip label="Удалить источник">
@@ -164,7 +192,7 @@ function NewEvidence({
           label={<FieldHelp label="Фрагмент текста события" help="Фрагмент исходного документа, подтверждающий эту связь графа." />}
           data={fragments.map((f) => ({
             value: f.locator,
-            label: `${f.locator}: ${f.text.split(/\s+/).join(' ').slice(0, 90)}`,
+            label: `${fragmentPlace(f.locator, fragments)}: ${f.text.split(/\s+/).join(' ').slice(0, 90)}`,
           }))}
           value={locator}
           onChange={setLocator}

@@ -126,15 +126,15 @@ def test_operating_shock_does_not_silently_drop_a_share_in_the_reached_sector(ca
 
 def test_an_explicit_sector_shock_including_zero_unlocks_the_share(case):
     position = contexts(case.bundle)[0]
-    graph = graph_reaching(position.okved, "credit.cogs")
+    graph = graph_reaching(position.okved, "equity.sector")
     for shock in (0.0, -0.1):
         scenario = {
             "sector": {
                 "kind": "point",
                 "value": shock,
-                "unit": "log_return",
+                "unit": "fraction",
                 "factor": "equity.sector",
-                "key": position.instrument.terms["sector"],
+                "channel": "channel",
             }
         }
         problems = scenario_coverage(
@@ -149,6 +149,10 @@ def test_an_explicit_sector_shock_including_zero_unlocks_the_share(case):
         share = result(batch, position.position_id)
         assert share.execution == "completed"
         assert share.metrics["equity.pnl"].quantiles is not None
+        # The sector's change arrives through the issuer's OKVED and moves the price by β_s.
+        assert share.details["central"]["log_return"] == pytest.approx(
+            share.details["beta_sector"] * math.log1p(shock)
+        )
 
 
 def test_unrelated_sector_is_not_marked_as_missing_scenario(case):
@@ -216,7 +220,7 @@ def test_an_fx_shock_moves_the_base_currency_value_by_the_rate(case):
         rouble.metrics["equity.value_current"].value
     )
     # The case moves no sector factor: the result says so rather than treating it silently.
-    assert "factor_not_in_scenario:equity.sector:oil_gas" in rouble.flags
+    assert "factor_not_in_scenario:equity.sector" in rouble.flags
     fx_part = next(
         c for c in dollar.details["factor_contributions"] if c["factor_id"] == "market.fx"
     )

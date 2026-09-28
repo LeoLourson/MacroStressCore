@@ -41,4 +41,7 @@ plugin = Plugin(
             description="Чтение результатов рассчитанного прогона для объяснения.",
         ),
     ),
+    # The generated demo catalog (demo/build_catalog.py) belongs to no single plugin.
+    sources={"demo:companies": "синтетические данные компаний демо-каталога"},
+    authors={"demo:catalog": "генератор демо-каталога"},
 )

@@ -4,7 +4,7 @@ import type { Distribution, Graph, PositionContext, ScenarioParameter } from '..
 import { INSTRUMENT_TYPES, label } from './labels';
 
 // A no-break space keeps «1 234,5 млн ₽» on one line.
-const NBSP = ' ';
+export const NBSP = ' ';
 
 export function number(value: number | null | undefined, digits = 2): string {
   if (value == null || Number.isNaN(value)) return '—';
@@ -92,6 +92,33 @@ export function metricValue(value: number | null | undefined, unit: string | nul
 /** The formatter of one unit, for the three quantiles shown together. */
 export function formatter(unit: string | null | undefined, digits?: number) {
   return (value: number | null | undefined) => metricValue(value, unit, digits);
+}
+
+/** A number as metricValue writes it, without its unit: «1 105,01» of «1 105,01 млн ₽», «5,02» of «5,02 %». */
+export function bareValue(value: number | null | undefined, unit: string | null | undefined): string {
+  const words = unitWords(unit).replaceAll(' ', NBSP);
+  const text = metricValue(value, unit);
+  return words && text.endsWith(`${NBSP}${words}`) ? text.slice(0, -words.length - 1) : text;
+}
+
+/**
+ * A change of a quantity, signed: «+8 053,86 млн ₽». A change of a fraction is in percentage
+ * points, «+63,96 п.п.»: «+63,96 %» would read as a relative change.
+ */
+export function change(value: number | null | undefined, unit: string | null | undefined): string {
+  if (value == null) return '—';
+  return signed(unit === 'fraction' ? metricValue(value * 100, 'percentage_point') : metricValue(value, unit), value);
+}
+
+/** The same change without its unit, for the lower end of a range: «+4 005,29 … +16 385,62 млн ₽». */
+export function bareChange(value: number | null | undefined, unit: string | null | undefined): string {
+  if (value == null) return '—';
+  return signed(unit === 'fraction' ? bareValue(value * 100, 'percentage_point') : bareValue(value, unit), value);
+}
+
+// A plus only before a growth that shows in the digits: «+0,55», never «+0,00».
+function signed(text: string, value: number): string {
+  return value > 0 && /[1-9]/.test(text) ? `+${text}` : text;
 }
 
 /** «1 актив», «2 актива», «5 активов». */
@@ -260,9 +287,15 @@ const SLICE_FIELDS: Record<string, string> = {
 /** A report number's metric path in words: whose number and which quantity. */
 export function describePath(
   path: string,
-  options: { names?: Record<string, string> | null; types?: Record<string, string>; owner?: boolean } = {},
+  options: {
+    names?: Record<string, string> | null;
+    types?: Record<string, string>;
+    owner?: boolean;
+    /** Plain words for the run's identifiers a path may hold: channels, covenants. */
+    words?: Map<string, string>;
+  } = {},
 ): string {
-  const { names, types, owner = true } = options;
+  const { names, types, owner = true, words } = options;
   const parts = path.replace(/^\/+|\/+$/g, '').split('/').map(unescapeToken);
   if (parts[0] === 'portfolio' && parts[1] === 'slices' && parts.length >= 4) {
     const slice = sliceSpec(parts[2]);
@@ -285,9 +318,16 @@ export function describePath(
   if (rest[0] === 'metrics' && rest.length === 3) {
     what = `${metricLabel(rest[1])}, ${QUANTILE[rest[2]] ?? rest[2]}`;
   } else {
-    // A plugin's projection of its details: its view names the keys it carries.
+    // A plugin's projection of its details: its view names the keys it carries, and a key
+    // it names with "" only groups others. A quantile at the end reads after a comma.
     const view = types?.[positionId] ? viewFor(types[positionId]) : null;
-    what = rest.map((token) => view?.labels[token] ?? token).join(' / ');
+    const last = rest[rest.length - 1];
+    const quantile = rest.length > 1 && last !== 'value' ? QUANTILE[last] : undefined;
+    what = (quantile ? rest.slice(0, -1) : rest)
+      .map((token) => view?.labels[token] ?? words?.get(token) ?? token)
+      .filter(Boolean)
+      .join(' / ');
+    if (quantile) what = `${what}, ${quantile}`;
   }
   if (owner) return `${positionTitle(positionId, names)}: ${what}`;
   // Mid-sentence, except abbreviations such as ICR.

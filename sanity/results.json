@@ -13,7 +13,7 @@
    "delta_el": 0.0,
    "delta_pd": 0.0
   },
-  "seconds": 0.36
+  "seconds": 0.83
  },
  {
   "check_id": "A2",
@@ -29,7 +29,7 @@
    "down": 4.272986152944698,
    "up": -2.5391501057272468
   },
-  "seconds": 0.33
+  "seconds": 1.71
  },
  {
   "check_id": "A3",
@@ -48,7 +48,7 @@
    "-0.3": 33.95351683953092,
    "-0.45": 288.3211209515639
   },
-  "seconds": 0.84
+  "seconds": 3.9
  },
  {
   "check_id": "A4",
@@ -69,7 +69,7 @@
    "credit.capex": 0.12282532627843246,
    "credit.fx": 19.85996350227581
   },
-  "seconds": 1.15
+  "seconds": 4.79
  },
  {
   "check_id": "A5",
@@ -85,7 +85,7 @@
    "low": 0.1983517127766481,
    "high": 5.424886196857575
   },
-  "seconds": 0.3
+  "seconds": 1.19
  },
  {
   "check_id": "A6",
@@ -120,7 +120,7 @@
     11.251475344280006
    ]
   },
-  "seconds": 0.79
+  "seconds": 3.19
  },
  {
   "check_id": "A7",
@@ -152,7 +152,7 @@
     2.722247913810575
    ]
   },
-  "seconds": 0.62
+  "seconds": 3.2
  },
  {
   "check_id": "A8",
@@ -169,7 +169,7 @@
    "0.5": 8.062685099266409,
    "1.0": 2.730121936564947
   },
-  "seconds": 0.43
+  "seconds": 2.19
  },
  {
   "check_id": "A9",
@@ -186,7 +186,7 @@
    "-1.0": 2.730121936564947,
    "-2.0": 6.187391098412222
   },
-  "seconds": 0.48
+  "seconds": 1.79
  },
  {
   "check_id": "A10",
@@ -203,7 +203,7 @@
    "1000.0": 4.272986152944698,
    "2000.0": 8.545972305889396
   },
-  "seconds": 0.42
+  "seconds": 1.95
  },
  {
   "check_id": "A11",
@@ -220,7 +220,7 @@
    "0.4": 3.7982099137286234,
    "0.8": 7.596419827457247
   },
-  "seconds": 0.42
+  "seconds": 2.04
  },
  {
   "check_id": "A12",
@@ -242,7 +242,7 @@
     4.272986152944698
    ]
   },
-  "seconds": 0.34
+  "seconds": 1.22
  },
  {
   "check_id": "A13",
@@ -258,7 +258,7 @@
    "ccf1": 4.272986152944698,
    "ccf05": 2.136493076472349
   },
-  "seconds": 0.29
+  "seconds": 1.43
  },
  {
   "check_id": "A14",
@@ -274,7 +274,7 @@
    "domestic": 0.0,
    "importer": 89.83900778555015
   },
-  "seconds": 0.28
+  "seconds": 0.87
  },
  {
   "check_id": "A15",
@@ -291,7 +291,7 @@
    "pd_stress": 0.9801596942659225,
    "delta_el": 0.0
   },
-  "seconds": 0.15
+  "seconds": 0.44
  },
  {
   "check_id": "A16",
@@ -307,7 +307,7 @@
    "no_debt": 0.0066928509242848554,
    "small_debt": 0.007766048943619768
   },
-  "seconds": 0.3
+  "seconds": 0.8
  },
  {
   "check_id": "A17",
@@ -331,7 +331,7 @@
     ]
    }
   },
-  "seconds": 0.3
+  "seconds": 0.99
  },
  {
   "check_id": "A18",
@@ -349,7 +349,7 @@
    "base_el": 14.69509470975612,
    "cap": 435.3049052902439
   },
-  "seconds": 0.23
+  "seconds": 0.44
  },
  {
   "check_id": "B1",
@@ -366,7 +366,7 @@
     "CONC"
    ]
   },
-  "seconds": 0.16
+  "seconds": 0.44
  },
  {
   "check_id": "B2",
@@ -386,7 +386,7 @@
     "C2361": -0.09999999999999998
    }
   },
-  "seconds": 0.17
+  "seconds": 0.53
  },
  {
   "check_id": "B3",
@@ -404,7 +404,7 @@
     "C2361"
    ]
   },
-  "seconds": 0.29
+  "seconds": 1.02
  },
  {
   "check_id": "B4",
@@ -433,7 +433,7 @@
     4.272986152944698
    ]
   },
-  "seconds": 0.51
+  "seconds": 2.5
  },
  {
   "check_id": "B5",
@@ -452,7 +452,7 @@
    "9": 0.1916844686608723,
    "12": 0.0
   },
-  "seconds": 0.79
+  "seconds": 5.02
  },
  {
   "check_id": "B6",
@@ -463,14 +463,14 @@
   "event": "(а) −0,35, знак +1; (б) +0,35, знак −1",
   "known": null,
   "ok": true,
-  "observed": "выручка (а) -0.35, (б) -0.2593; ΔEL (а) 60.58, (б) 22.4; предпросмотр аналитика: (а) -0.35, (б) -0.2593; промпт v4 требует записи (а): да",
+  "observed": "выручка (а) -0.35, (б) -0.2593; ΔEL (а) 60.58, (б) 22.4; предпросмотр аналитика: (а) -0.35, (б) -0.2593; промпт v6 требует записи (а): да",
   "numbers": {
    "revenue_a": -0.34999999999999987,
    "revenue_b": -0.2592592592592593,
    "delta_el_a": 60.583204857915156,
    "delta_el_b": 22.40060879224088
   },
-  "seconds": 0.37
+  "seconds": 1.96
  },
  {
   "check_id": "B7",
@@ -492,7 +492,7 @@
     4.131829157312916
    ]
   },
-  "seconds": 0.32
+  "seconds": 2.09
  },
  {
   "check_id": "B8",
@@ -508,7 +508,7 @@
    "separate": -0.09999999999999998,
    "shared": -0.09999999999999998
   },
-  "seconds": 0.34
+  "seconds": 2.08
  },
  {
   "check_id": "B9",
@@ -523,7 +523,7 @@
   "numbers": {
    "reached": []
   },
-  "seconds": 0.02
+  "seconds": 0.16
  },
  {
   "check_id": "B10",
@@ -539,7 +539,7 @@
    "point": 0.0,
    "triangular": 3.714478792087669
   },
-  "seconds": 0.34
+  "seconds": 2.07
  },
  {
   "check_id": "B11",
@@ -552,7 +552,7 @@
   "ok": true,
   "observed": "-100%: сценарий отклонён на остановке; сценарий не принят: Шок фактора «Выручка» выходит из его области: значение должно быть больше -1. (); -150%: сценарий отклонён на остановке; сценарий не принят: Шок фактора «Выручка» выходит из его области: значение должно быть больше -1. ()",
   "numbers": {},
-  "seconds": 0.04
+  "seconds": 0.23
  },
  {
   "check_id": "B12",
@@ -565,7 +565,7 @@
   "ok": true,
   "observed": "сценарий не принят: Для фактора «Выручка» нужна единица «fraction».",
   "numbers": {},
-  "seconds": 0.02
+  "seconds": 0.11
  },
  {
   "check_id": "C1",
@@ -581,7 +581,7 @@
    "slice_p95": 19.385250084070453,
    "sum_p95": 19.385250084070456
   },
-  "seconds": 0.43
+  "seconds": 2.48
  },
  {
   "check_id": "C2",
@@ -605,7 +605,7 @@
     6.4617500280234825
    ]
   },
-  "seconds": 0.5
+  "seconds": 2.43
  },
  {
   "check_id": "C3",
@@ -623,7 +623,7 @@
     6.461750028023485
    ]
   },
-  "seconds": 0.32
+  "seconds": 2.18
  },
  {
   "check_id": "C4",
@@ -640,7 +640,7 @@
    "covered_share": 1.0,
    "portfolio_share": 0.2
   },
-  "seconds": 0.17
+  "seconds": 1.03
  },
  {
   "check_id": "C5",
@@ -674,7 +674,7 @@
     ]
    ]
   },
-  "seconds": 1.35
+  "seconds": 6.68
  },
  {
   "check_id": "C6",
@@ -694,7 +694,7 @@
    ],
    "spread": 0.0018159317192200399
   },
-  "seconds": 0.5
+  "seconds": 3.05
  },
  {
   "check_id": "C7",
@@ -711,7 +711,7 @@
    "meat": -2.5391501057272468,
    "slice": 1.7338360472174514
   },
-  "seconds": 0.31
+  "seconds": 1.54
  },
  {
   "check_id": "C8",
@@ -730,7 +730,7 @@
     19.538497992291656
    ]
   },
-  "seconds": 0.41
+  "seconds": 1.45
  },
  {
   "check_id": "C9",
@@ -741,9 +741,9 @@
   "event": "выручка 23.61: −10 % (шока рынка и отрасли для акций нет)",
   "known": null,
   "ok": true,
-  "observed": "сценарий не принят: S: граф указывает влияние на позицию, но для модели позиции не задано изменение факторов. Добавьте параметр сценария: Рынок акций: MOEX; Отрасль (акции): materials. Нулевое влияние также нужно задать явно. Потери пока не оценены.",
+  "observed": "сценарий не принят: S: граф указывает влияние на позицию, но для модели позиции не задано изменение факторов. Добавьте параметр сценария: Рынок акций: MOEX. Нулевое влияние также нужно задать явно. Потери пока не оценены.",
   "numbers": {},
-  "seconds": 0.01
+  "seconds": 0.04
  },
  {
   "check_id": "D1",
@@ -756,7 +756,7 @@
   "ok": true,
   "observed": "потеря P5/P50/P95: -0/-0/0",
   "numbers": {},
-  "seconds": 0.1
+  "seconds": 0.16
  },
  {
   "check_id": "D2",
@@ -774,7 +774,7 @@
    "1.0": 10.0,
    "2.0": 19.0
   },
-  "seconds": 0.3
+  "seconds": 0.61
  },
  {
   "check_id": "D3",
@@ -791,7 +791,7 @@
     "US"
    ]
   },
-  "seconds": 0.1
+  "seconds": 0.2
  },
  {
   "check_id": "D4",
@@ -799,7 +799,7 @@
   "title": "Изоляция отраслевого фактора",
   "expectation": "Шок отрасли «нефть и газ» задевает нефтяную акцию и не задевает ИТ-акцию",
   "portfolio": "акция 06.10 (oil_gas, β отрасли 1) и акция 62.01 (technology)",
-  "event": "отрасль oil_gas: −15 %",
+  "event": "канал «акции нефтегаза» → отрасль 06.10 → фактор отрасли: −15 %",
   "known": null,
   "ok": true,
   "observed": "достигнуты ['OIL']; потеря OIL 15 млн ₽ (ожидалось 15)",
@@ -809,7 +809,7 @@
    ],
    "oil": 15.0
   },
-  "seconds": 0.09
+  "seconds": 0.19
  },
  {
   "check_id": "D5",
@@ -825,7 +825,7 @@
    "one": 10.0,
    "two": 20.0
   },
-  "seconds": 0.15
+  "seconds": 0.31
  },
  {
   "check_id": "D6",
@@ -841,7 +841,7 @@
    "value": 92.5,
    "loss": -9.250000000000014
   },
-  "seconds": 0.1
+  "seconds": 0.17
  },
  {
   "check_id": "D7",
@@ -856,7 +856,7 @@
   "numbers": {
    "loss": 0.924999999999983
   },
-  "seconds": 0.1
+  "seconds": 0.19
  },
  {
   "check_id": "D8",
@@ -872,7 +872,7 @@
    "p95": 38.93511096311959,
    "expected": 38.94872371007374
   },
-  "seconds": 0.1
+  "seconds": 0.22
  },
  {
   "check_id": "D9",
@@ -887,7 +887,7 @@
   "numbers": {
    "ratio": 0.7170201730487741
   },
-  "seconds": 0.18
+  "seconds": 0.85
  },
  {
   "check_id": "D10",
@@ -902,7 +902,7 @@
   "numbers": {
    "ratio": 1.0
   },
-  "seconds": 0.17
+  "seconds": 0.74
  },
  {
   "check_id": "D11",
@@ -917,7 +917,7 @@
   "numbers": {
    "loss": -5.0
   },
-  "seconds": 0.08
+  "seconds": 0.4
  },
  {
   "check_id": "D12",
@@ -942,7 +942,7 @@
    ],
    "pooled": -0.007394416203290875
   },
-  "seconds": 0.19
+  "seconds": 0.85
  },
  {
   "check_id": "D13",
@@ -967,7 +967,7 @@
    ],
    "pooled": 0.004970216289880685
   },
-  "seconds": 0.1
+  "seconds": 0.48
  },
  {
   "check_id": "E1",
@@ -983,7 +983,7 @@
    "price_change": -45.346007423471235,
    "delta_el": 12.646069173431142
   },
-  "seconds": 0.15
+  "seconds": 0.75
  },
  {
   "check_id": "E2",
@@ -999,7 +999,7 @@
    "fixed": -78.98370221653394,
    "floater": -7.131922352037634
   },
-  "seconds": 0.35
+  "seconds": 1.31
  },
  {
   "check_id": "F1",
@@ -1023,7 +1023,7 @@
     0.7792104815642514
    ]
   },
-  "seconds": 0.46
+  "seconds": 2.32
  },
  {
   "check_id": "F2",
@@ -1039,7 +1039,7 @@
    "capex": 0.26101115492873106,
    "rate": 0.16757302690827913
   },
-  "seconds": 0.3
+  "seconds": 1.5
  },
  {
   "check_id": "G1",
@@ -1054,7 +1054,7 @@
   "numbers": {
    "delta_el": 1.4439451849033915
   },
-  "seconds": 0.15
+  "seconds": 0.66
  },
  {
   "check_id": "G2",
@@ -1069,7 +1069,7 @@
   "numbers": {
    "delta_el": 0.2665806800048607
   },
-  "seconds": 0.15
+  "seconds": 0.64
  },
  {
   "check_id": "H1",
@@ -1082,7 +1082,7 @@
   "ok": true,
   "observed": "рекомендации: нет",
   "numbers": {},
-  "seconds": 0.15
+  "seconds": 0.74
  },
  {
   "check_id": "H2",
@@ -1095,7 +1095,7 @@
   "ok": true,
   "observed": "рекомендации: ['credit.R5:watchlist']",
   "numbers": {},
-  "seconds": 0.16
+  "seconds": 0.82
  },
  {
   "check_id": "H3",
@@ -1111,7 +1111,7 @@
    "icr": 0.2990033222591362,
    "delta_pd": 0.5543763362096797
   },
-  "seconds": 0.17
+  "seconds": 0.75
  },
  {
   "check_id": "H4",
@@ -1124,7 +1124,7 @@
   "ok": true,
   "observed": "рекомендации: нет",
   "numbers": {},
-  "seconds": 0.17
+  "seconds": 0.72
  },
  {
   "check_id": "H5",
@@ -1140,7 +1140,7 @@
    "calm": 0.0,
    "hit": 1.0
   },
-  "seconds": 0.43
+  "seconds": 1.95
  },
  {
   "check_id": "I1",
@@ -1283,7 +1283,7 @@
     "market.pnl": 13.359719088754215
    }
   },
-  "seconds": 1.82
+  "seconds": 7.12
  },
  {
   "check_id": "S2",
@@ -1343,7 +1343,7 @@
     "market.pnl": -23.113023262137553
    }
   },
-  "seconds": 0.39
+  "seconds": 1.74
  },
  {
   "check_id": "S3",
@@ -1351,7 +1351,7 @@
   "title": "Ужесточение ипотеки",
   "expectation": "Застройщик (продажи −35 %) и производители стройматериалов теряют; бетон (эластичность 0,3, долг 2,5×) теряет на единицу EAD больше цемента (0,15, долг 1×); акция девелопера падает; ИТ, дистрибьютор, экспортёр, лизинг не затронуты",
   "portfolio": "та же книга",
-  "event": "канал «ипотека» −35 %: 41.20 эластичность 1, 23.61 — 0,3, 23.51 — 0,15; отрасль real_estate −20 %",
+  "event": "канал «ипотека» −35 %: 41.20 эластичность 1, 23.61 — 0,3, 23.51 — 0,15; канал «акции девелоперов» → 41.20: −20 %",
   "known": null,
   "ok": true,
   "observed": "CONC ΔEL 5.57 (0.557 % EAD); CEM ΔEL 0.464 (0.0581 % EAD); DEV ΔEL 2.39 (0.0399 % EAD); BOND ΔEL 7.43 (0.743 % EAD); S_DEVS потеря 20 %. Не достигнуты: DIST, FERT, LEASE, ITC, S_BANK, S_OIL, S_US",
@@ -1407,7 +1407,7 @@
     "market.pnl": 19.99889935818181
    }
   },
-  "seconds": 0.75
+  "seconds": 3.37
  },
  {
   "check_id": "S4",
@@ -1467,7 +1467,7 @@
     "market.pnl": 0.00032801493612311106
    }
   },
-  "seconds": 0.87
+  "seconds": 4.7
  },
  {
   "check_id": "S5",
@@ -1534,7 +1534,7 @@
     "S_US": 0.15840980018476739
    }
   },
-  "seconds": 0.35
+  "seconds": 1.94
  },
  {
   "check_id": "M1",
@@ -1545,18 +1545,18 @@
   "event": "EQUITY-SELLOFF",
   "known": null,
   "ok": true,
-  "observed": "Медиана потерь: SHARE-COMMERCIAL-BANK 57.33, SHARE-IT-DEVELOPER 34.92, SHARE-OIL-MAJOR 23.54, SHARE-STEEL-EXPORTER 33.97, SHARE-SUPERMARKET-CHAIN 33.32, SHARE-TELECOM-OPERATOR 14.34",
+  "observed": "Медиана потерь: SHARE-COMMERCIAL-BANK 57.27, SHARE-IT-DEVELOPER 34.88, SHARE-OIL-MAJOR 23.54, SHARE-STEEL-EXPORTER 33.97, SHARE-SUPERMARKET-CHAIN 33.32, SHARE-TELECOM-OPERATOR 14.34",
   "numbers": {
    "losses": {
-    "SHARE-COMMERCIAL-BANK": 57.32670316897587,
-    "SHARE-IT-DEVELOPER": 34.91889502162172,
+    "SHARE-COMMERCIAL-BANK": 57.270594505387876,
+    "SHARE-IT-DEVELOPER": 34.8756117632757,
     "SHARE-OIL-MAJOR": 23.53594745301959,
     "SHARE-STEEL-EXPORTER": 33.97322775453577,
     "SHARE-SUPERMARKET-CHAIN": 33.31930974509818,
     "SHARE-TELECOM-OPERATOR": 14.335555895762454
    }
   },
-  "seconds": 0.56
+  "seconds": 3.3
  },
  {
   "check_id": "M2",
@@ -1577,7 +1577,7 @@
     "LOAN-WAREHOUSE-OPERATOR": 6.4315828225217615
    }
   },
-  "seconds": 0.84
+  "seconds": 9.02
  },
  {
   "check_id": "M3",
@@ -1595,10 +1595,44 @@
     "PROJECT-HOUSING": 2.146902519566069
    }
   },
-  "seconds": 0.38
+  "seconds": 2.04
  },
  {
   "check_id": "M4",
+  "group": "M",
+  "title": "Сокращение запасов нефти и угроза платформам",
+  "expectation": "теряют: LOAN-OIL-MAJOR",
+  "portfolio": "OIL-CREDIT",
+  "event": "OIL-SUPPLY-DRONE-RISK",
+  "known": null,
+  "ok": true,
+  "observed": "Медиана потерь: LOAN-OIL-MAJOR 7.378",
+  "numbers": {
+   "losses": {
+    "LOAN-OIL-MAJOR": 7.377501080310893
+   }
+  },
+  "seconds": 1.6
+ },
+ {
+  "check_id": "M5",
+  "group": "M",
+  "title": "Удорожание перевозок и химии, заторы в портах и рост ставки",
+  "expectation": "теряют: LOAN-SGZH",
+  "portfolio": "SGZH-CREDIT",
+  "event": "PULP-MILL-SQUEEZE",
+  "known": null,
+  "ok": true,
+  "observed": "Медиана потерь: LOAN-SGZH 848.8",
+  "numbers": {
+   "losses": {
+    "LOAN-SGZH": 848.8039079843833
+   }
+  },
+  "seconds": 4.26
+ },
+ {
+  "check_id": "M6",
   "group": "M",
   "title": "Падение реальных доходов населения",
   "expectation": "теряют: LOAN-SUPERMARKET-CHAIN, LOAN-MEAT-PROCESSOR, LOAN-DAIRY-PRODUCER, LOAN-RESTAURANT-CHAIN, LOAN-APPAREL-RETAILER, SHARE-SUPERMARKET-CHAIN",
@@ -1617,10 +1651,10 @@
     "SHARE-SUPERMARKET-CHAIN": 6.310851118802191
    }
   },
-  "seconds": 1.0
+  "seconds": 5.84
  },
  {
-  "check_id": "M5",
+  "check_id": "M7",
   "group": "M",
   "title": "Утилизационный сбор на спецтехнику и задержки расчётов",
   "expectation": "теряют: LOAN-MACHINERY, LOAN-FERTILIZER; затронуты: LOAN-LEASING; не затронуты: BOND-CONCRETE, PROJECT-HOUSING, SHARE-OIL, SHARE-US-TECH",
@@ -1636,10 +1670,10 @@
     "LOAN-MACHINERY": 88.10995256350078
    }
   },
-  "seconds": 1.01
+  "seconds": 5.41
  },
  {
-  "check_id": "M6",
+  "check_id": "M8",
   "group": "M",
   "title": "Укрепление рубля на 15 %",
   "expectation": "выигрывают: LOAN-CAR-IMPORTER, LOAN-DRUG-DISTRIBUTOR, LOAN-ELECTRONICS-RETAILER; теряют: LOAN-STEEL-EXPORTER, LOAN-POTASH-EXPORTER, SHARE-US-PHARMA, SHARE-STEEL-EXPORTER",
@@ -1647,7 +1681,7 @@
   "event": "RUB-APPRECIATION",
   "known": null,
   "ok": true,
-  "observed": "Медиана потерь: LOAN-CAR-IMPORTER -27, LOAN-DRUG-DISTRIBUTOR -7.464, LOAN-ELECTRONICS-RETAILER -18.92, LOAN-POTASH-EXPORTER 3.904, LOAN-STEEL-EXPORTER 3.108, SHARE-STEEL-EXPORTER 8.222, SHARE-US-PHARMA 92.01",
+  "observed": "Медиана потерь: LOAN-CAR-IMPORTER -27, LOAN-DRUG-DISTRIBUTOR -7.464, LOAN-ELECTRONICS-RETAILER -18.92, LOAN-POTASH-EXPORTER 3.904, LOAN-STEEL-EXPORTER 3.108, SHARE-STEEL-EXPORTER 8.196, SHARE-US-PHARMA 92.01",
   "numbers": {
    "losses": {
     "LOAN-CAR-IMPORTER": -27.004793943398553,
@@ -1655,14 +1689,14 @@
     "LOAN-ELECTRONICS-RETAILER": -18.91800312550844,
     "LOAN-POTASH-EXPORTER": 3.9040511803975395,
     "LOAN-STEEL-EXPORTER": 3.108144608503494,
-    "SHARE-STEEL-EXPORTER": 8.22237651417528,
+    "SHARE-STEEL-EXPORTER": 8.196306080901394,
     "SHARE-US-PHARMA": 92.00606531052381
    }
   },
-  "seconds": 1.15
+  "seconds": 5.31
  },
  {
-  "check_id": "M7",
+  "check_id": "M9",
   "group": "M",
   "title": "Ослабление рубля на 20 %",
   "expectation": "теряют: LOAN-CAR-IMPORTER, LOAN-DRUG-DISTRIBUTOR, LOAN-ELECTRONICS-RETAILER; выигрывают: LOAN-STEEL-EXPORTER, LOAN-POTASH-EXPORTER, SHARE-US-PHARMA, SHARE-STEEL-EXPORTER",
@@ -1670,7 +1704,7 @@
   "event": "RUB-DEPRECIATION",
   "known": null,
   "ok": true,
-  "observed": "Медиана потерь: LOAN-CAR-IMPORTER 834.9, LOAN-DRUG-DISTRIBUTOR 50.2, LOAN-ELECTRONICS-RETAILER 703.8, LOAN-POTASH-EXPORTER -3.069, LOAN-STEEL-EXPORTER -2.667, SHARE-STEEL-EXPORTER -28.71, SHARE-US-PHARMA -155.9",
+  "observed": "Медиана потерь: LOAN-CAR-IMPORTER 834.9, LOAN-DRUG-DISTRIBUTOR 50.2, LOAN-ELECTRONICS-RETAILER 703.8, LOAN-POTASH-EXPORTER -3.069, LOAN-STEEL-EXPORTER -2.667, SHARE-STEEL-EXPORTER -28.74, SHARE-US-PHARMA -155.9",
   "numbers": {
    "losses": {
     "LOAN-CAR-IMPORTER": 834.8614443440846,
@@ -1678,10 +1712,10 @@
     "LOAN-ELECTRONICS-RETAILER": 703.7520229802221,
     "LOAN-POTASH-EXPORTER": -3.068814741608767,
     "LOAN-STEEL-EXPORTER": -2.6666290767993335,
-    "SHARE-STEEL-EXPORTER": -28.70562335218287,
+    "SHARE-STEEL-EXPORTER": -28.73875828643014,
     "SHARE-US-PHARMA": -155.886826034828
    }
   },
-  "seconds": 1.13
+  "seconds": 5.42
  }
 ]

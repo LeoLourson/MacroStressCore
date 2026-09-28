@@ -15,6 +15,50 @@ def fragment(text: str, locator: str) -> Fragment:
     return Fragment(locator=locator, text=text, sha256=sha256(text.encode("utf-8")).hexdigest())
 
 
+#: The analyst's words about the strength of the event, cited like the event's own text.
+SCENARIO = "scenario"
+
+# A sentence ends at . ! ? or … before a space and a capital, a digit or an opening quote;
+# an abbreviation («в 2023 г. Минфин», «п. 3») or an initial does not end it, a compound
+# one («на 7 п.п. Ставка», «и т.д. Затем») does.
+_END = re.compile(r"(?:(?<=[.!?…])|(?<=[.!?…][»\")]))\s+(?=[«\"(A-ZА-ЯЁ0-9])")
+_WORD = re.compile(r"(?<![.\w])(\w+)\.$")
+_ABBREVIATIONS = {"г", "гг", "ст", "п", "пп", "ч", "руб", "тыс", "млн", "млрд", "трлн", "др", "см"}
+
+
+def sentences(text: str) -> list[str]:
+    """The sentences of a text, so that a citation points to the words it rests on."""
+    parts = []
+    for paragraph in re.split(r"\n\s*\n", text):
+        start = 0
+        for match in _END.finditer(paragraph):
+            word = _WORD.search(paragraph[start : match.start()])
+            if word and (word[1].isupper() and len(word[1]) == 1 or word[1] in _ABBREVIATIONS):
+                continue
+            parts.append(paragraph[start : match.start()])
+            start = match.end()
+        parts.append(paragraph[start:])
+    return [part.strip() for part in parts if part.strip()]
+
+
+def sentence_fragments(text: str, prefix: str) -> list[Fragment]:
+    """``text`` as fragments of one sentence each, addressed ``<prefix>/s1``, ``/s2``…"""
+    return [fragment(part, f"{prefix}/s{i}") for i, part in enumerate(sentences(text), 1)]
+
+
+def is_scenario(locator: str) -> bool:
+    """A fragment of the analyst's scenario: ``scenario/s2``, or ``scenario`` of older runs."""
+    return locator == SCENARIO or locator.startswith(SCENARIO + "/")
+
+
+def document_text(document: SourceDocument) -> str:
+    """The text of the document's fragments, its sentences joined back into paragraphs."""
+    paragraphs: dict[str, list[str]] = {}
+    for part in document.fragments:
+        paragraphs.setdefault(re.sub(r"/s\d+$", "", part.locator), []).append(part.text)
+    return "\n\n".join(" ".join(texts) for texts in paragraphs.values())
+
+
 class IngestAgent:
     def __init__(self, store=None, *, downloader=None, converter=None):
         self.store = store or OriginalStore()
@@ -86,7 +130,11 @@ class IngestAgent:
             mime = "text/plain"
             text = data.decode("utf-8")
             parts = [part for part in re.split(r"\n\s*\n", text) if part.strip()]
-            fragments = [fragment(part, f"p1/para{i}") for i, part in enumerate(parts, 1)]
+            fragments = [
+                sentence
+                for i, part in enumerate(parts, 1)
+                for sentence in sentence_fragments(part, f"p1/para{i}")
+            ]
             tables = []
         return SourceDocument(
             doc_id=digest,

@@ -159,14 +159,14 @@ function doneNote(stageId: string, artifacts: Artifacts | undefined): string {
   }
 }
 
-export type Tab = 'scenario' | 'positions' | 'portfolio' | 'report' | 'provenance' | 'explain' | 'activity';
+export type Tab = 'scenario' | 'positions' | 'portfolio' | 'report' | 'sources' | 'explain' | 'activity';
 
 export const TABS: { value: Tab; title: string; empty: string }[] = [
   { value: 'scenario', title: 'Сценарий и граф', empty: '' },
   { value: 'positions', title: 'Позиции', empty: 'Появится после расчёта по позициям' },
   { value: 'portfolio', title: 'Портфель', empty: 'Появится после сведения итогов по срезам портфеля' },
   { value: 'report', title: 'Отчёт', empty: 'Появится, когда отчёт будет написан' },
-  { value: 'provenance', title: 'Происхождение чисел', empty: 'Появится вместе с отчётом' },
+  { value: 'sources', title: 'Источники данных', empty: 'Появится после расчёта по позициям' },
   { value: 'explain', title: 'Вопрос по результатам', empty: 'Появится после расчёта по позициям' },
   { value: 'activity', title: 'Вызовы LLM и MCP', empty: '' },
 ];
@@ -181,6 +181,7 @@ export function available(tab: Tab, status: RunStatus, artifacts: Artifacts | un
     case 'activity':
       return true;
     case 'positions':
+    case 'sources':
     case 'explain':
       return (artifacts?.results?.length ?? 0) > 0;
     case 'portfolio':

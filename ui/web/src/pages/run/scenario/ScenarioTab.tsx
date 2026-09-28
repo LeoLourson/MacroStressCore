@@ -52,7 +52,7 @@ import { factorLabel } from '../../../api/catalog';
 import { ACTIVE, stopOf } from '../../../lib/stages';
 import type { RerunState } from '../../NewRun';
 import type { RunTabProps } from '../RunPage';
-import { EdgeDrawer, fragmentText } from './EdgeDrawer';
+import { EdgeDrawer, evidencePlaces, fragmentText } from './EdgeDrawer';
 import { edgeCaption, GraphCanvas } from './GraphCanvas';
 import { channelsOf, newParameter, ParameterModal } from './ParameterModal';
 import { edgeFlagged, edgeIndex, failing, gateWords, parameterProblem, problemText, split } from './problems';
@@ -61,7 +61,7 @@ import { useDraft, type Draft } from './useDraft';
 function quote(evidence: ScenarioParameter['evidence'] | undefined, document: SourceDocument | null | undefined) {
   const assumption = evidence?.find((e) => e.kind === 'expert_assumption');
   if (assumption) return `Допущение · ${assumption.author ?? 'автор не указан'}${assumption.as_of ? ` · ${day(assumption.as_of)}` : ''}`;
-  // The words about strength are quoted once above the table; each row only points to them.
+  // An older run cites the scenario whole: it is quoted once above the table.
   if (evidence?.some((e) => e.locator === 'scenario')) return 'из описания силы события';
   for (const item of evidence ?? []) {
     const text = fragmentText(item, document);
@@ -263,7 +263,17 @@ function Effects({ effects }: { effects: { label: string; sector: string; okved:
   );
 }
 
-function EdgesTable({ graph, flagged, onSelect }: { graph: Graph; flagged: Set<number>; onSelect: (i: number) => void }) {
+function EdgesTable({
+  graph,
+  document,
+  flagged,
+  onSelect,
+}: {
+  graph: Graph;
+  document: SourceDocument | null | undefined;
+  flagged: Set<number>;
+  onSelect: (i: number) => void;
+}) {
   const names = nodeLabels(graph);
   // The graph above shows the same links; the list is for checking them one by one.
   const [opened, setOpened] = useState(flagged.size > 0);
@@ -279,7 +289,7 @@ function EdgesTable({ graph, flagged, onSelect }: { graph: Graph; flagged: Set<n
             <Table.Tr>
               <Table.Th>Связь</Table.Th>
               <Table.Th>Знак, сила, задержка</Table.Th>
-              <Table.Th className="num-right">Источников</Table.Th>
+              <Table.Th>Основание</Table.Th>
               <Table.Th w={130}>Проверка</Table.Th>
             </Table.Tr>
           </Table.Thead>
@@ -290,7 +300,15 @@ function EdgesTable({ graph, flagged, onSelect }: { graph: Graph; flagged: Set<n
                   {names[edge.src] ?? edge.src} → {names[edge.dst] ?? edge.dst}
                 </Table.Td>
                 <Table.Td className="num">{edgeCaption(edge.sign, elasticityText(edge.elasticity), edge.lag_months)}</Table.Td>
-                <Table.Td className="num-right">{edge.evidence.length}</Table.Td>
+                <Table.Td>
+                  {edge.evidence.length ? (
+                    evidencePlaces(edge.evidence, document)
+                  ) : (
+                    <Text span size="sm" c="orange.9">
+                      нет
+                    </Text>
+                  )}
+                </Table.Td>
                 <Table.Td>
                   {flagged.has(i) ? (
                     <Badge color="orange" c="orange.9" variant="light" tt="none" leftSection={<IconAlertTriangle size={12} />}>
@@ -473,7 +491,7 @@ function Body({
                 aria-expanded={scenarioOpen}
                 onClick={() => setScenarioOpen(!scenarioOpen)}
               >
-                {scenarioOpen ? '▾' : '▸'} Сценарий: насколько сильным может быть событие
+                {scenarioOpen ? '▾' : '▸'} Сценарий
               </Anchor>
             </Title>
             {!scenarioOpen && (
@@ -531,7 +549,7 @@ function Body({
           {hasGraph ? (
             <>
               <GraphCanvas graph={graph!} flagged={flagged} selected={selected} onSelect={setSelected} />
-              <EdgesTable graph={graph!} flagged={flagged} onSelect={setSelected} />
+              <EdgesTable graph={graph!} document={document} flagged={flagged} onSelect={setSelected} />
             </>
           ) : draft ? (
             <Alert color="orange" variant="light" title="Модель не смогла построить граф">

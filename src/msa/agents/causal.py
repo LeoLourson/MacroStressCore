@@ -1,4 +1,5 @@
 import json
+import re
 from datetime import UTC, datetime
 from functools import cache
 from importlib.resources import files
@@ -10,6 +11,7 @@ from msa.prompts.registry import current_version, messages_for
 
 from .base import AgentError
 from .causal_output import CausalOutput
+from .ingest import is_scenario
 
 
 @cache
@@ -21,22 +23,34 @@ def _MOCK_EVENTS() -> dict:
     return json.loads(files(__package__).joinpath("mock_events.json").read_text("utf-8"))
 
 
+def _stems(text: str) -> set[str]:
+    return {word[:5] for word in re.findall(r"\w{4,}", text.lower())}
+
+
+def _cite(document, fragments, words: str) -> list[dict]:
+    """The fragment sharing most word stems with ``words`` (the first on a tie), as evidence."""
+    best = max(fragments, key=lambda f: len(_stems(f.text) & _stems(words)))
+    return [
+        {
+            "kind": "document",
+            "source_id": document.doc_id,
+            "locator": best.locator,
+            "fragment_sha256": best.sha256,
+        }
+    ]
+
+
 def _prepared_response(document, answer, context) -> dict:
     """A library event's prepared answer as the causal step returns it.
 
     One sector node per (channel, OKVED), one factor node per (OKVED, factor) and one direct
     factor node per (factor, key). Only the factors the portfolio's models read enter the
-    graph and the scenario, as an LLM's answer is held to them.
+    graph and the scenario, as an LLM's answer is held to them. An edge cites the sentence of
+    the event nearest to its channel's words, a scenario parameter the sentence of the
+    scenario nearest to its label.
     """
-    source = document.fragments[0]
-    evidence = {
-        "kind": "document",
-        "source_id": document.doc_id,
-        "locator": source.locator,
-        "fragment_sha256": source.sha256,
-    }
-    words = next((f for f in document.fragments if f.locator == "scenario"), source)
-    cited = [{**evidence, "locator": words.locator, "fragment_sha256": words.sha256}]
+    event = [f for f in document.fragments if not is_scenario(f.locator)]
+    scenario_words = [f for f in document.fragments if is_scenario(f.locator)] or event
     used = {
         (item["factor_id"], item["key"])
         for position in context.get("positions", [])
@@ -46,7 +60,7 @@ def _prepared_response(document, answer, context) -> dict:
     nodes = {"event": {"id": "event", "kind": "event", "label": answer["event_type"]}}
     edges = []
 
-    def edge(src, dst, *, sign=1, elasticity=1.0, lag=0):
+    def edge(src, dst, channel, *, sign=1, elasticity=1.0, lag=0):
         if isinstance(elasticity, list):
             low, mode, high = elasticity
             spec = {"family": "triangular", "low": low, "mode": mode, "high": high}
@@ -59,7 +73,7 @@ def _prepared_response(document, answer, context) -> dict:
                 "sign": sign,
                 "elasticity": spec,
                 "lag_months": lag,
-                "evidence": [evidence],
+                "evidence": _cite(document, event, nodes[channel]["label"]),
             }
         )
 
@@ -67,7 +81,7 @@ def _prepared_response(document, answer, context) -> dict:
         if name not in nodes:
             label = answer.get("channels", {}).get(name, name)
             nodes[name] = {"id": name, "kind": "channel", "label": label}
-            edge("event", name)
+            edge("event", name, name)
 
     def factor_node(node_id, factor, key=None):
         nodes.setdefault(
@@ -90,12 +104,13 @@ def _prepared_response(document, answer, context) -> dict:
                 "label": link["okved"],
                 "okved": link["okved"],
             }
-            edge(link["channel"], sector, elasticity=link.get("exposure", 1.0))
+            edge(link["channel"], sector, link["channel"], elasticity=link.get("exposure", 1.0))
         target = f"{link['factor'].replace('.', '_')}__{code}"
         factor_node(target, link["factor"])
         edge(
             sector,
             target,
+            link["channel"],
             sign=link.get("sign", 1),
             elasticity=link.get("elasticity", 1.0),
             lag=link.get("lag", 0),
@@ -107,9 +122,9 @@ def _prepared_response(document, answer, context) -> dict:
         channel(item["channel"])
         target = f"{item['factor']}__{item['key']}".replace(".", "_").replace("/", "_")
         factor_node(target, item["factor"], item["key"])
-        edge(item["channel"], target)
+        edge(item["channel"], target, item["channel"])
     scenario = {
-        name: {**spec, "evidence": cited}
+        name: {**spec, "evidence": _cite(document, scenario_words, spec["label"])}
         for name, spec in answer.get("scenario", {}).items()
         if (spec["factor"], spec.get("key")) in used and spec.get("channel") in nodes
     }
@@ -179,7 +194,7 @@ class CausalAgent:
             ],
             "factor_elasticity": {},
         }
-        words = next((f for f in document.fragments if f.locator == "scenario"), source)
+        words = next((f for f in document.fragments if is_scenario(f.locator)), source)
         # A fixed central shock with a spread around it: 45 days of delay, costs up or revenue
         # down by 10 %, from half to one and a half times that.
         days = selected is not None and selected["unit"] == "days"
@@ -272,7 +287,7 @@ class CausalAgent:
             MockLLM(self._mock_response(document, scope, context)) if self.mock else LLMClient()
         )
         estimate = self.estimate_scenario and not any(
-            f.locator == "scenario" for f in document.fragments
+            is_scenario(f.locator) for f in document.fragments
         )
         if estimate:
             messages[0]["content"] += "\n\n" + (

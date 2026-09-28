@@ -2,23 +2,27 @@
   "324b89aeccda0ab02065fa386dce2b0d4e32db7d94bd8917a2874c115c58757d": {
     "event_type": "Распродажа акций",
     "channels": {
-      "selloff": "Продажи российских акций"
+      "selloff": "Продажи российских акций",
+      "bank_shares": "Акции банков сверх рынка",
+      "it_shares": "Акции ИТ-компаний сверх рынка"
     },
+    "links": [
+      {
+        "channel": "bank_shares",
+        "okved": "64.19",
+        "factor": "equity.sector"
+      },
+      {
+        "channel": "it_shares",
+        "okved": "62.01",
+        "factor": "equity.sector"
+      }
+    ],
     "direct": [
       {
         "channel": "selloff",
         "factor": "equity.market",
         "key": "MOEX"
-      },
-      {
-        "channel": "selloff",
-        "factor": "equity.sector",
-        "key": "financials"
-      },
-      {
-        "channel": "selloff",
-        "factor": "equity.sector",
-        "key": "technology"
       }
     ],
     "scenario": {
@@ -35,25 +39,23 @@
       },
       "banks": {
         "kind": "triangular",
-        "low": -0.083382,
-        "mode": -0.051293,
-        "high": -0.020203,
+        "low": -0.08,
+        "mode": -0.05,
+        "high": -0.02,
         "label": "Акции банков сверх рынка",
-        "unit": "log_return",
+        "unit": "fraction",
         "factor": "equity.sector",
-        "key": "financials",
-        "channel": "selloff"
+        "channel": "bank_shares"
       },
       "it": {
         "kind": "triangular",
-        "low": -0.127833,
-        "mode": -0.083382,
-        "high": -0.040822,
+        "low": -0.12,
+        "mode": -0.08,
+        "high": -0.04,
         "label": "Акции ИТ-компаний сверх рынка",
-        "unit": "log_return",
+        "unit": "fraction",
         "factor": "equity.sector",
-        "key": "technology",
-        "channel": "selloff"
+        "channel": "it_shares"
       }
     }
   },
@@ -453,7 +455,8 @@
   "f21c1706cdd127826d9aec89203e0d086ee5098e7070475a4aa5d124473d9b7b": {
     "event_type": "Укрепление рубля",
     "channels": {
-      "usd_rate": "Курс доллара к рублю"
+      "usd_rate": "Курс доллара к рублю",
+      "metals_shares": "Акции металлургов сверх рынка"
     },
     "links": [
       {
@@ -482,6 +485,11 @@
         "okved": "20.15",
         "factor": "credit.revenue",
         "elasticity": 0.8
+      },
+      {
+        "channel": "metals_shares",
+        "okved": "24.10",
+        "factor": "equity.sector"
       }
     ],
     "direct": [
@@ -489,11 +497,6 @@
         "channel": "usd_rate",
         "factor": "market.fx",
         "key": "USD/RUB"
-      },
-      {
-        "channel": "usd_rate",
-        "factor": "equity.sector",
-        "key": "materials"
       }
     ],
     "scenario": {
@@ -530,21 +533,21 @@
       },
       "metals": {
         "kind": "triangular",
-        "low": -0.105361,
-        "mode": -0.083382,
-        "high": -0.051293,
+        "low": -0.1,
+        "mode": -0.08,
+        "high": -0.05,
         "label": "Акции металлургов сверх рынка",
-        "unit": "log_return",
+        "unit": "fraction",
         "factor": "equity.sector",
-        "key": "materials",
-        "channel": "usd_rate"
+        "channel": "metals_shares"
       }
     }
   },
   "6e1b406425f87633b0e9d03697925f3d869391b21a1fb419268ae161bbd4fdab": {
     "event_type": "Ослабление рубля",
     "channels": {
-      "usd_rate": "Курс доллара к рублю"
+      "usd_rate": "Курс доллара к рублю",
+      "metals_shares": "Акции металлургов сверх рынка"
     },
     "links": [
       {
@@ -573,6 +576,11 @@
         "okved": "20.15",
         "factor": "credit.revenue",
         "elasticity": 0.8
+      },
+      {
+        "channel": "metals_shares",
+        "okved": "24.10",
+        "factor": "equity.sector"
       }
     ],
     "direct": [
@@ -580,11 +588,6 @@
         "channel": "usd_rate",
         "factor": "market.fx",
         "key": "USD/RUB"
-      },
-      {
-        "channel": "usd_rate",
-        "factor": "equity.sector",
-        "key": "materials"
       }
     ],
     "scenario": {
@@ -621,14 +624,13 @@
       },
       "metals": {
         "kind": "triangular",
-        "low": 0.04879,
-        "mode": 0.076961,
-        "high": 0.09531,
+        "low": 0.05,
+        "mode": 0.08,
+        "high": 0.1,
         "label": "Акции металлургов сверх рынка",
-        "unit": "log_return",
+        "unit": "fraction",
         "factor": "equity.sector",
-        "key": "materials",
-        "channel": "usd_rate"
+        "channel": "metals_shares"
       }
     }
   }

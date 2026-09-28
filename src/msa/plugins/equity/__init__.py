@@ -2,7 +2,8 @@
 
 One instrument type (``common_stock``), one model (``equity.factor_stress.v1``), two factors
 of its own — the market (``equity.market``, keyed by index) and the sector
-(``equity.sector``) — and the shared ``market.fx``; its P&L enters the ``market.pnl`` slice.
+(``equity.sector``, through the event's graph by the issuer's OKVED) — and the shared
+``market.fx``; its P&L enters the ``market.pnl`` slice.
 Sensitivities are loaded with the data snapshot, each with its author and source; there is
 no automatic calibration yet.
 """
@@ -20,7 +21,7 @@ from msa.plugin_sdk import (
 
 from .demo import cases
 from .editor import EDITOR, from_draft
-from .model import MODEL_ID, PLUGIN_ID, PLUGIN_VERSION, ShareFactorStress
+from .model import MODEL_ID, PLUGIN_ID, PLUGIN_VERSION, SECTOR_FACTOR, ShareFactorStress
 from .report import ACTIONS, OBSERVATIONS, RULES, SECTIONS, TYPES, tree
 from .schemas import DIVIDEND, SCHEMA_VERSION, SENSITIVITY, SharePosition, ShareTerms
 
@@ -107,16 +108,7 @@ plugin = Plugin(
             key_label="индекс рынка, например MOEX",
             description="Логарифмическое изменение индекса рынка акций к концу горизонта.",
         ),
-        FactorSpec(
-            factor_id="equity.sector",
-            label="Отрасль (акции)",
-            unit="log_return",
-            scope="sector",
-            application="log",
-            quantity="log_return",
-            key_label="отраслевой фактор, например oil_gas",
-            description="Логарифмическое изменение отраслевого фактора сверх рынка.",
-        ),
+        SECTOR_FACTOR,
     ),
     snapshot_kinds=(
         SnapshotKindSpec(
@@ -172,6 +164,12 @@ plugin = Plugin(
                 "beta_sector": "Бета к отрасли",
                 "residual_sigma": "Остаточный риск на горизонте",
                 "dividend_per_share": "Дивиденды на акцию",
+                # Keys of the report tree (report.tree); "" leaves a grouping key out of a
+                # path's description.
+                "derived": "",
+                "contribution": "",
+                "factors": "вклад фактора",
+                "loss_p95_share_pct": "Потери P95 в доле стоимости позиции",
             },
         ),
     ),
@@ -193,8 +191,9 @@ plugin = Plugin(
         "price_currency_mismatch": "цена задана не в валюте акции",
         "fx_invalid": "курс валюты некорректен",
         "sensitivity_missing:": "не задана чувствительность «{}»",
+        "missing_pre_horizon_history": "нет истории до начала горизонта",
     },
-    informational_flags=frozenset({"dividends_at_horizon_fx"}),
+    informational_flags=frozenset({"dividends_at_horizon_fx", "missing_pre_horizon_history"}),
     sources={
         "demo:market": "рыночные данные демо-снимка",
         "demo:equity-sensitivities": "экспертные чувствительности акций демо-стенда",
