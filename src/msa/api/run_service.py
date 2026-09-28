@@ -1,7 +1,9 @@
+import json
 import logging
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import replace
 from datetime import date
+from hashlib import sha256
 from uuid import uuid4
 
 from sqlalchemy import select, update
@@ -34,6 +36,41 @@ from .problem import Problem
 
 ACTIVE = {"queued", "running"}
 HORIZON = 12
+#: The fields that size a scenario parameter, as opposed to where it applies.
+MAGNITUDE = ("kind", "value", "low", "mode", "high", "mean", "sigma", "unit")
+#: The source of a parameter the analyst added: no sentence of the event text states it.
+ANALYST_SCENARIO = "analyst:scenario"
+
+
+def edited_by(author, proposed, edited) -> dict:
+    """The edited scenario, each magnitude the analyst changed attributed to the analyst.
+
+    The typed number is neither the one the event text states nor the model's estimate,
+    so its evidence becomes the analyst's assumption on the same sentence. A parameter
+    the analyst added cites no sentence: its source is the analyst's scenario.
+    """
+    today = str(date.today())
+    scenario = {}
+    for name, parameter in edited.items():
+        spec = parameter.model_dump(mode="json")
+        before = proposed.get(name) or {}
+        if any(spec[field] != before.get(field) for field in MAGNITUDE):
+            magnitude = json.dumps({field: spec[field] for field in MAGNITUDE}, sort_keys=True)
+            spec["evidence"] = [
+                {**e, "kind": "expert_assumption", "author": author, "as_of": today}
+                for e in spec["evidence"]
+            ] or [
+                {
+                    "kind": "expert_assumption",
+                    "source_id": ANALYST_SCENARIO,
+                    "locator": f"/macro_parameters/{name}",
+                    "fragment_sha256": sha256(f"{name}={magnitude}".encode()).hexdigest(),
+                    "author": author,
+                    "as_of": today,
+                }
+            ]
+        scenario[name] = spec
+    return scenario
 
 
 class PluginsChanged(RuntimeError):
@@ -478,7 +515,9 @@ class RunService:
             parameters = (
                 stop.get("macro_parameters") or {}
                 if request.macro_parameters is None
-                else {k: v.model_dump(mode="json") for k, v in request.macro_parameters.items()}
+                else edited_by(
+                    principal.actor, stop.get("macro_parameters") or {}, request.macro_parameters
+                )
             )
             failures = [
                 v.model_dump(exclude={"ok"})

@@ -42,6 +42,10 @@ plugin = Plugin(
         ),
     ),
     # The generated demo catalog (demo/build_catalog.py) belongs to no single plugin.
-    sources={"demo:companies": "синтетические данные компаний демо-каталога"},
+    sources={
+        "demo:companies": "синтетические данные компаний демо-каталога",
+        # run_service.ANALYST_SCENARIO: a parameter the analyst added to the scenario.
+        "analyst:scenario": "сценарий, заданный аналитиком",
+    },
     authors={"demo:catalog": "генератор демо-каталога"},
 )
