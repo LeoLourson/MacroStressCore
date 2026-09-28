@@ -3,7 +3,7 @@ import { Fragment, useMemo, type ReactNode } from 'react';
 import type { Artifacts, NumberRef } from '../../api/types';
 import { TracedNumber } from '../../components/Provenance';
 import { lowerFirst } from '../../lib/format';
-import { ACTIONS, flagOne } from '../../lib/labels';
+import { ACTIONS, AUTHORS, SOURCES, flagOne } from '../../lib/labels';
 import { NumberMarker, type Entries } from '../../lib/provenance';
 import { pluginGlosses } from '../../plugins';
 
@@ -14,12 +14,14 @@ const HEADING_GLOSS: Record<string, string> = {};
 
 /**
  * Plain-language names for the machine identifiers a report may carry: actions, channels,
- * the plugins' own identifiers (UiPlugin.glosses), flags and the event document. They are
+ * the plugins' own identifiers (UiPlugin.glosses), flags, sources and authors of the data
+ * and the event document. They are
  * shown beside the identifier, never instead of it: the text itself is what gets signed.
  */
 export function glossary(artifacts: Artifacts): Map<string, string> {
   const map = new Map<string, string>();
   for (const [code, name] of Object.entries(ACTIONS)) map.set(code, lowerFirst(name));
+  for (const [code, name] of Object.entries({ ...SOURCES, ...AUTHORS })) map.set(code, name);
   for (const node of artifacts.graph?.nodes ?? []) {
     if (node.kind === 'channel') map.set(node.id, node.label);
   }

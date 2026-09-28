@@ -30,9 +30,9 @@ import { ExplainTab } from './ExplainTab';
 import { NextAction } from './NextAction';
 import { PortfolioTab } from './PortfolioTab';
 import { PositionsTab } from './positions/PositionsTab';
-import { ProvenanceTab } from './ProvenanceTab';
 import { ReportTab } from './ReportTab';
 import { RunSteps } from './RunSteps';
+import { SourcesTab } from './SourcesTab';
 
 // The graph canvas is the heaviest part of the page; it loads with its tab.
 const ScenarioTab = lazy(() => import('./scenario/ScenarioTab').then((m) => ({ default: m.ScenarioTab })));
@@ -113,8 +113,8 @@ function Panel({ tab, ...data }: RunTabProps & { tab: Tab }) {
       return <PortfolioTab {...data} />;
     case 'report':
       return <ReportTab {...data} />;
-    case 'provenance':
-      return <ProvenanceTab {...data} />;
+    case 'sources':
+      return <SourcesTab {...data} />;
     case 'explain':
       return <ExplainTab {...data} />;
     case 'activity':

@@ -1,8 +1,10 @@
 """``equity.factor_stress.v1``: an ordinary share under a factor stress on the horizon.
 
-The price at the horizon is ``P_T = P_0 · exp(β_m f_m + β_s f_s + ε)``: ``f_m`` and ``f_s``
-are the log changes of the share's market and sector factors in the approved scenario,
-``ε`` its residual return, drawn by the platform for the share alone. A position in another
+The price at the horizon is ``P_T = P_0 · exp(β_m f_m + β_s f_s + ε)``: ``f_m`` is the log
+change of the share's market factor in the approved scenario, ``f_s`` the log change of the
+sector factor that the event's graph brings to the issuer's OKVED (a channel the source
+sizes, through the edges' elasticities, as a credit driver arrives), ``ε`` its residual
+return, drawn by the platform for the share alone. A position in another
 currency is valued at the snapshot's spot rate and moved by the ``market.fx`` factor of its
 pair: ``FX_T = FX_0 · exp(f_fx)``. Dividends are a declared amount per share over the
 horizon, translated at the horizon's rate — a convention the result states.
@@ -28,9 +30,10 @@ from msa.plugin_sdk import (
     DataRequirements,
     Diagnostics,
     FactorRequirement,
+    FactorSpec,
     IdiosyncraticFactor,
 )
-from msa.plugin_sdk.calc import data_quality_level
+from msa.plugin_sdk.calc import data_quality_level, edge_elasticities, factor_signal
 from msa.plugin_sdk.calc import shapley_exact as shapley
 from msa.plugin_sdk.results import distribution, envelope, scalar
 from msa.plugins.market import fx
@@ -46,10 +49,27 @@ from .schemas import (
 )
 
 PLUGIN_ID = "equity"
-PLUGIN_VERSION = "1.0.0"
+PLUGIN_VERSION = "1.1.0"
 MODEL_ID = "equity.factor_stress.v1"
 SLICE = "market.pnl"
 MARKET, SECTOR = "equity.market", "equity.sector"
+#: The sector factor reaches a share through the event's graph, not by a key of its own: a
+#: macro quantity the source sizes (a rate, a price) becomes the sector's move beyond the
+#: market through the channel -> sector exposure and the sector -> factor elasticity.
+SECTOR_FACTOR = FactorSpec(
+    factor_id=SECTOR,
+    label="Отрасль (акции)",
+    unit="fraction",
+    scope="graph",
+    application="relative",
+    quantity="relative_change",
+    description="Относительное изменение отраслевого фактора акций сверх рынка. Приходит к "
+    "акции по графу события через отрасль (ОКВЭД) эмитента: параметр сценария задаёт "
+    "изменение величины канала (курса, цены, спроса), эластичность ребра отрасль → фактор "
+    "переводит его в движение акций отрасли сверх рынка. Когда источник прямо называет "
+    "движение акций отрасли сверх рынка, это движение и есть канал, эластичность 1.",
+    lower_bound=-1.0,
+)
 SENSITIVITY_VALUES = ("beta_market", "beta_sector", "residual_volatility")
 DIVIDENDS_AT_HORIZON_FX = "dividends_at_horizon_fx"
 RESIDUAL_DECLARED_ZERO = "residual_declared_zero"
@@ -68,7 +88,7 @@ METRICS = (
 
 class ShareFactorStress(CalculationModel):
     model_id = MODEL_ID
-    version = "1.0.0"
+    version = "1.1.0"
     label = "Факторный стресс акции на горизонте"
     instrument_types = ("common_stock",)
     metrics = METRICS
@@ -77,7 +97,8 @@ class ShareFactorStress(CalculationModel):
     factors = (MARKET, SECTOR, fx.FX_FACTOR)
     details_schema = ShareDetails
     description = (
-        "Цена на горизонте P_T = P_0·exp(β_m·f_m + β_s·f_s + ε); валютный фактор отдельно "
+        "Цена на горизонте P_T = P_0·exp(β_m·f_m + β_s·f_s + ε); отраслевой фактор f_s "
+        "приходит по графу события через ОКВЭД эмитента; валютный фактор отдельно "
         "переводит стоимость в базовую валюту; дивиденды — заданная сумма на горизонт."
     )
     limits = ApplicabilityLimits(
@@ -113,7 +134,7 @@ class ShareFactorStress(CalculationModel):
         ]
         factors = [
             FactorRequirement(factor_id=MARKET, key=terms.market_index),
-            FactorRequirement(factor_id=SECTOR, key=terms.sector),
+            FactorRequirement(factor_id=SECTOR),
         ]
         rate = fx.requirement(instrument.currency, options.base_currency)
         if rate is not None:
@@ -276,7 +297,7 @@ class ShareFactorStress(CalculationModel):
             return float(central), np.sum([scenario.draws(name) for name in names], axis=0)
 
         market_c, market = factor(MARKET, terms.market_index)
-        sector_c, sector = factor(SECTOR, terms.sector)
+        sector_c, sector = self.sector_shock(prepared.context.okved, context, flags)
         fx_c, fx_draws = fx.log_change(scenario, instrument.currency, base, flags)
         if residual > 0:
             noise = scenario.idiosyncratic(f"equity.residual:{instrument.instrument_id}")
@@ -361,6 +382,8 @@ class ShareFactorStress(CalculationModel):
             loss_histogram={"edges": edges.tolist(), "counts": counts.tolist()},
             conventions=[
                 "Цена на горизонте: P_T = P_0·exp(β_m·f_m + β_s·f_s + ε).",
+                "Отраслевой фактор f_s приходит по графу события через ОКВЭД эмитента; "
+                "эластичности рёбер графа — допущения, которые утверждает аналитик.",
                 "Дивиденды заданы суммой на горизонт и пересчитаны по курсу конца горизонта.",
                 "P&L — к текущей стоимости; изменение к базе — за вычетом дивидендов базы.",
             ],
@@ -422,3 +445,51 @@ class ShareFactorStress(CalculationModel):
             ],
             model_versions={"equity.factor_stress": self.version},
         )
+
+    @staticmethod
+    def sector_shock(okved, context, flags):
+        """Central and realised log change of the sector factor the graph brings to ``okved``.
+
+        Each parameter of the factor enters at its channel and reaches the share through the
+        issuer's sector; the realisations also draw the graph's uncertain elasticities, the
+        central value keeps their central ones.
+        """
+        scenario = context.scenario
+        central, draws = 0.0, np.zeros((scenario.replicates, scenario.points))
+        names = scenario.parameters_for(SECTOR)
+        graph = scenario.graph
+        reached = False
+        if names and graph is not None and okved:
+            elasticities = edge_elasticities(
+                graph, context.seed, scenario.points, scenario.replicates
+            )
+            for name in names:
+                parameter = scenario.parameters[name]
+                signal = factor_signal(
+                    graph,
+                    parameter,
+                    SECTOR_FACTOR,
+                    okved,
+                    scenario.draws(name),
+                    context.horizon,
+                    flags=flags,
+                    elasticities=elasticities,
+                )
+                if signal is None:
+                    continue
+                reached = True
+                draws = draws + signal[..., -1]
+                central += float(
+                    factor_signal(
+                        graph,
+                        parameter,
+                        SECTOR_FACTOR,
+                        okved,
+                        scenario.central(name),
+                        context.horizon,
+                        flags=flags,
+                    )[-1]
+                )
+        if not reached:
+            flags.append(f"factor_not_in_scenario:{SECTOR}")
+        return central, draws

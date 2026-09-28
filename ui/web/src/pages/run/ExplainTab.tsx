@@ -7,7 +7,7 @@ import { ErrorAlert } from '../../components/ErrorAlert';
 import { FieldHelp } from '../../components/FieldHelp';
 import { TracedNumber } from '../../components/Provenance';
 import { describePath, timestamp } from '../../lib/format';
-import { blocks, runs } from './ReportText';
+import { blocks, glossary, runs } from './ReportText';
 import type { RunTabProps } from './RunPage';
 import { useOrigins } from './useOrigins';
 
@@ -23,6 +23,7 @@ const PATH = /\[(\/(?:positions|portfolio)\/[^\]]+)\]/g;
 function AnswerText({ text, artifacts, status }: { text: string } & RunTabProps) {
   const { entries } = useOrigins(status);
   const types = Object.fromEntries((artifacts.results ?? []).map((r) => [r.position_id, r.instrument_type]));
+  const words = glossary(artifacts);
   const inline = (text: string): ReactNode => {
     const parts: ReactNode[] = [];
     const styled = (value: string) => runs(value).map((run, i) => run.bold
@@ -31,7 +32,7 @@ function AnswerText({ text, artifacts, status }: { text: string } & RunTabProps)
     for (const match of text.matchAll(PATH)) {
       parts.push(<Fragment key={`text-${at}`}>{styled(text.slice(at, match.index))}</Fragment>);
       const entry = entries.get(match[1]);
-      const label = describePath(match[1], { names: artifacts.position_names, types });
+      const label = describePath(match[1], { names: artifacts.position_names, types, words });
       parts.push(<TracedNumber key={`ref-${match.index}`} entry={entry}><span className="answer-reference">{label}{entry ? '' : ' (источник в показателях расчёта)'}</span></TracedNumber>);
       at = match.index + match[0].length;
     }

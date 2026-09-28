@@ -1,9 +1,11 @@
-import { Blockquote, Group, List, Popover, ScrollArea, Stack, Text, UnstyledButton } from '@mantine/core';
+import { Anchor, Blockquote, Group, Popover, ScrollArea, Stack, Text, UnstyledButton } from '@mantine/core';
 import { IconInfoCircle } from '@tabler/icons-react';
 import { createContext, useContext, type ReactNode } from 'react';
+import { useSearchParams } from 'react-router';
 import type { Artifacts, TraceNumber } from '../api/types';
-import { plural } from '../lib/format';
+import { describePath, nodeLabels, plural } from '../lib/format';
 import { describeOrigin } from '../lib/origin';
+import { sourceMeta, type SourceView } from '../lib/sources';
 
 /** The run whose numbers are on screen: their origins are read against its artifacts. */
 export const RunArtifacts = createContext<Artifacts | null>(null);
@@ -19,23 +21,54 @@ function Part({ title, children }: { title: string; children: ReactNode }) {
   );
 }
 
+/** One source of data: whose and on what date (unless said above), and the inputs it gave by group. */
+export function SourceInputs({ source, meta = true }: { source: SourceView; meta?: boolean }) {
+  return (
+    <Stack gap={4}>
+      {meta && (
+        <Text size="xs" c="dark.3">
+          {sourceMeta(source)}
+        </Text>
+      )}
+      {source.positions.map((position) => (
+        <Stack key={position.positionId} gap={2}>
+          {position.groups.map((group) => (
+            <Text key={group.title} size="sm">
+              <Text span c="dark.4" inherit>
+                {group.title}:
+              </Text>{' '}
+              {group.items.join(', ')}
+            </Text>
+          ))}
+          {position.unnamed > 0 && (
+            <Text size="xs" c="dark.3">
+              и ещё {plural(position.unnamed, 'показатель', 'показателя', 'показателей')} без названия
+            </Text>
+          )}
+        </Stack>
+      ))}
+    </Stack>
+  );
+}
+
 /** How the number was reached and what it rests on, in the analyst's terms. */
-export function OriginBody({ entry, withHow = true }: { entry: TraceNumber; withHow?: boolean }) {
+export function OriginBody({ entry }: { entry: TraceNumber }) {
   const artifacts = useContext(RunArtifacts);
+  const [params, setParams] = useSearchParams();
   if (!artifacts) return null;
   const view = describeOrigin(entry, artifacts);
+  const types = Object.fromEntries((artifacts.results ?? []).map((r) => [r.position_id, r.instrument_type]));
+  const positionId = view.positionId;
   return (
     <Stack gap="sm">
-      {withHow && <Text size="sm">{view.how}</Text>}
-      {view.scenario.length > 0 && (
-        <Part title="Сценарий">
-          <List size="sm" spacing={2}>
-            {view.scenario.map((line) => (
-              <List.Item key={line}>{line}</List.Item>
-            ))}
-          </List>
-        </Part>
-      )}
+      <Text size="xs" c="dark.3">
+        {describePath(entry.metric_path, {
+          names: artifacts.position_names,
+          types,
+          words: new Map(Object.entries(nodeLabels(artifacts.graph))),
+        })}
+      </Text>
+      <Text size="sm">{view.how}</Text>
       {view.quotes.map((q) => (
         <Part key={q.where} title={q.where}>
           <Blockquote p="xs" fz="sm" color="gray" iconSize={0} styles={{ root: { borderWidth: 1 } }}>
@@ -43,26 +76,11 @@ export function OriginBody({ entry, withHow = true }: { entry: TraceNumber; with
           </Blockquote>
         </Part>
       ))}
-      {view.inputs.map((group) => (
-        <Part key={group.position} title={`Данные позиции ${group.position}`}>
-          <Text size="sm">
-            {group.items.join(', ')}
-            {group.more > 0 ? ` и ещё ${plural(group.more, 'показатель', 'показателя', 'показателей')}` : ''}
-          </Text>
-          <Text size="xs" c="dark.3">
-            {group.bases.join('; ')}
-          </Text>
+      {view.data.map((source) => (
+        <Part key={source.key} title={source.name}>
+          <SourceInputs source={source} />
         </Part>
       ))}
-      {view.data.length > 0 && (
-        <Part title="Данные снимка">
-          <List size="xs" spacing={2}>
-            {view.data.map((line) => (
-              <List.Item key={line}>{line}</List.Item>
-            ))}
-          </List>
-        </Part>
-      )}
       {view.positions.length > 0 && (
         <Part title="Позиции в итоге среза">
           <Text size="sm">{view.positions.join(', ')}</Text>
@@ -70,6 +88,11 @@ export function OriginBody({ entry, withHow = true }: { entry: TraceNumber; with
             Исходные данные каждой позиции — в её разборе на вкладке «Позиции».
           </Text>
         </Part>
+      )}
+      {positionId && params.get('position') !== positionId && (
+        <Anchor component="button" size="sm" w="fit-content" onClick={() => setParams({ tab: 'positions', position: positionId })}>
+          Открыть разбор позиции
+        </Anchor>
       )}
     </Stack>
   );

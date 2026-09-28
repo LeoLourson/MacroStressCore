@@ -10,23 +10,27 @@
   "mock_answer": {
     "event_type": "Распродажа акций",
     "channels": {
-      "selloff": "Продажи российских акций"
+      "selloff": "Продажи российских акций",
+      "bank_shares": "Акции банков сверх рынка",
+      "it_shares": "Акции ИТ-компаний сверх рынка"
     },
+    "links": [
+      {
+        "channel": "bank_shares",
+        "okved": "64.19",
+        "factor": "equity.sector"
+      },
+      {
+        "channel": "it_shares",
+        "okved": "62.01",
+        "factor": "equity.sector"
+      }
+    ],
     "direct": [
       {
         "channel": "selloff",
         "factor": "equity.market",
         "key": "MOEX"
-      },
-      {
-        "channel": "selloff",
-        "factor": "equity.sector",
-        "key": "financials"
-      },
-      {
-        "channel": "selloff",
-        "factor": "equity.sector",
-        "key": "technology"
       }
     ],
     "scenario": {
@@ -43,25 +47,23 @@
       },
       "banks": {
         "kind": "triangular",
-        "low": -0.083382,
-        "mode": -0.051293,
-        "high": -0.020203,
+        "low": -0.08,
+        "mode": -0.05,
+        "high": -0.02,
         "label": "Акции банков сверх рынка",
-        "unit": "log_return",
+        "unit": "fraction",
         "factor": "equity.sector",
-        "key": "financials",
-        "channel": "selloff"
+        "channel": "bank_shares"
       },
       "it": {
         "kind": "triangular",
-        "low": -0.127833,
-        "mode": -0.083382,
-        "high": -0.040822,
+        "low": -0.12,
+        "mode": -0.08,
+        "high": -0.04,
         "label": "Акции ИТ-компаний сверх рынка",
-        "unit": "log_return",
+        "unit": "fraction",
         "factor": "equity.sector",
-        "key": "technology",
-        "channel": "selloff"
+        "channel": "it_shares"
       }
     }
   },

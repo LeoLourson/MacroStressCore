@@ -10,7 +10,8 @@
   "mock_answer": {
     "event_type": "Укрепление рубля",
     "channels": {
-      "usd_rate": "Курс доллара к рублю"
+      "usd_rate": "Курс доллара к рублю",
+      "metals_shares": "Акции металлургов сверх рынка"
     },
     "links": [
       {
@@ -39,6 +40,11 @@
         "okved": "20.15",
         "factor": "credit.revenue",
         "elasticity": 0.8
+      },
+      {
+        "channel": "metals_shares",
+        "okved": "24.10",
+        "factor": "equity.sector"
       }
     ],
     "direct": [
@@ -46,11 +52,6 @@
         "channel": "usd_rate",
         "factor": "market.fx",
         "key": "USD/RUB"
-      },
-      {
-        "channel": "usd_rate",
-        "factor": "equity.sector",
-        "key": "materials"
       }
     ],
     "scenario": {
@@ -87,14 +88,13 @@
       },
       "metals": {
         "kind": "triangular",
-        "low": -0.105361,
-        "mode": -0.083382,
-        "high": -0.051293,
+        "low": -0.1,
+        "mode": -0.08,
+        "high": -0.05,
         "label": "Акции металлургов сверх рынка",
-        "unit": "log_return",
+        "unit": "fraction",
         "factor": "equity.sector",
-        "key": "materials",
-        "channel": "usd_rate"
+        "channel": "metals_shares"
       }
     }
   },

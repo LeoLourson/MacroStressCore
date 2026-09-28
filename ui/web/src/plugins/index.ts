@@ -1,6 +1,6 @@
 // UI plugins found at build time: every src/plugins/<name>/index.tsx (see sdk.ts).
 import type { ComponentType } from 'react';
-import type { Artifacts } from '../api/types';
+import type { Artifacts, CalculationResult } from '../api/types';
 import type { AgentViewProps, PositionViewProps, UiPlugin } from './sdk';
 
 const modules = import.meta.glob<{ default: UiPlugin }>('./*/index.tsx', { eager: true });
@@ -41,4 +41,11 @@ export function pluginGlosses(artifacts: Artifacts): [string, string][] {
 /** The terms the plugins explain; the platform's own terms are in lib/labels.ts. */
 export function pluginGlossary(): Record<string, string> {
   return Object.assign({}, ...UI_PLUGINS.map((plugin) => plugin.glossary ?? {}));
+}
+
+/** The level before the event a change metric of the result starts from, if its plugin tells. */
+export function baselineOf(result: CalculationResult, metricId: string): number | null {
+  const plugin = UI_PLUGINS.find((p) => p.plugin_id === result.plugin_id);
+  const value = plugin?.baseline?.(result, metricId);
+  return value != null && Number.isFinite(value) ? value : null;
 }

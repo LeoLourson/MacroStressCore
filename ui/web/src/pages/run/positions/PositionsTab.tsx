@@ -1,13 +1,15 @@
 import { Badge, Group, Paper, Stack, Table, Text, Title, Tooltip } from '@mantine/core';
 import { IconAlertTriangle, IconCheck } from '@tabler/icons-react';
-import { useMemo, useState, type ReactNode } from 'react';
+import { useMemo, type ReactNode } from 'react';
+import { useSearchParams } from 'react-router';
 import { metricLabel, metricSpec, sliceSpec, viewFor } from '../../../api/catalog';
 import type { CalculationResult, PortfolioResult, PositionContext } from '../../../api/types';
-import { Interval, scaleOf } from '../../../components/Interval';
+import { Interval, IntervalLegend, Shift, scaleOf } from '../../../components/Interval';
 import { ExecutionBadge, ResultStatus } from '../../../components/RiskModel';
 import { Term } from '../../../components/Term';
 import { formatter, instrumentLine, positionName, positionTitle, typeName } from '../../../lib/format';
 import { shockLabels, translateFlags } from '../../../lib/labels';
+import { baselineOf } from '../../../plugins';
 import type { RunTabProps } from '../RunPage';
 import { useOrigins } from '../useOrigins';
 import { PositionDrawer } from './PositionDrawer';
@@ -81,11 +83,27 @@ function TypeTable({
   portfolio: PortfolioResult | null | undefined;
   onOpen: (id: string) => void;
 }) {
-  // One scale per column: the intervals of positions compare by eye.
+  // One scale per column: the intervals of positions compare by eye. A change the plugin gives
+  // the level before the event for is drawn as levels: before and after, from zero.
+  const bases = Object.fromEntries(
+    group.metrics.map((m) => [m, Object.fromEntries(group.results.map((r) => [r.position_id, baselineOf(r, m)]))]),
+  );
   const scales = Object.fromEntries(
     group.metrics.map((m) => [
       m,
       scaleOf(group.results.flatMap((r) => [r.metrics[m]?.quantiles?.p05, r.metrics[m]?.quantiles?.p95])),
+    ]),
+  );
+  const levelScales = Object.fromEntries(
+    group.metrics.map((m) => [
+      m,
+      scaleOf(
+        group.results.flatMap((r) => {
+          const base = bases[m][r.position_id];
+          const q = r.metrics[m]?.quantiles;
+          return base != null && q ? [base, base + q.p05, base + q.p95] : [];
+        }),
+      ),
     ]),
   );
   // The worst first, by the first metric's own direction; not calculated last.
@@ -139,9 +157,19 @@ function TypeTable({
                 {group.metrics.map((m) => {
                   const value = r.metrics[m];
                   const format = formatter(value?.unit ?? metricSpec(m)?.unit, metricSpec(m)?.decimals);
+                  const base = bases[m][r.position_id];
                   return (
                     <Table.Td key={m}>
-                      {value?.quantiles ? (
+                      {value?.quantiles && base != null ? (
+                        <Shift
+                          base={base}
+                          p05={value.quantiles.p05}
+                          p50={value.quantiles.p50}
+                          p95={value.quantiles.p95}
+                          unit={value.unit}
+                          scale={levelScales[m]}
+                        />
+                      ) : value?.quantiles ? (
                         <Interval
                           p05={value.quantiles.p05}
                           p50={value.quantiles.p50}
@@ -172,7 +200,19 @@ function TypeTable({
 }
 
 export function PositionsTab({ status, artifacts }: RunTabProps) {
-  const [chosen, setChosen] = useState<string | null>(null);
+  // The open position is in the address: a number's origin elsewhere can open it here.
+  const [params, setParams] = useSearchParams();
+  const chosen = params.get('position');
+  const setChosen = (id: string | null) =>
+    setParams(
+      (prev) => {
+        const next = new URLSearchParams(prev);
+        if (id) next.set('position', id);
+        else next.delete('position');
+        return next;
+      },
+      { replace: !id },
+    );
   const { entries } = useOrigins(status);
   const results = useMemo(() => artifacts.results ?? [], [artifacts.results]);
   const contexts = useMemo(
@@ -194,6 +234,7 @@ export function PositionsTab({ status, artifacts }: RunTabProps) {
   }, [results]);
   const untouched = Object.keys(contexts).filter((id) => !results.some((r) => r.position_id === id));
   const current = results.find((r) => r.position_id === chosen) ?? null;
+  const shifts = groups.some((g) => g.metrics.some((m) => g.results.some((r) => r.metrics[m]?.quantiles && baselineOf(r, m) != null)));
 
   if (!results.length) {
     return <Text c="dimmed">Результаты по позициям появятся после расчёта.</Text>;
@@ -201,10 +242,15 @@ export function PositionsTab({ status, artifacts }: RunTabProps) {
 
   return (
     <Stack gap="lg">
-      <Text size="sm" c="dark.3" maw={760}>
-        Медиана и диапазон <Term name="P5–P95">P5–P95</Term> по общим сценариям. Нажмите на строку, чтобы открыть
-        разбор позиции.
-      </Text>
+      <Stack gap={6}>
+        <Text size="sm" c="dark.3" maw={760}>
+          {shifts
+            ? 'Показатели роста — уровень до события → медиана после, ниже рост и его диапазон '
+            : 'Медиана и диапазон '}
+          <Term name="P5–P95">P5–P95</Term> по общим сценариям. Нажмите на строку, чтобы открыть разбор позиции.
+        </Text>
+        {shifts && <IntervalLegend base note="Шкала начинается с нуля и общая для столбца." />}
+      </Stack>
       {groups.map((group) => (
         <Stack key={group.type} gap="xs">
           <Title order={5}>

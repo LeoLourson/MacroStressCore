@@ -61,4 +61,11 @@ export interface UiPlugin extends Omit<UiPluginMeta, 'agents'> {
   glossary?: Record<string, string>;
   /** Views of the plugin's agents' outputs by agent id; without one the output is drawn as is. */
   agents?: Record<string, ComponentType<AgentViewProps>>;
+  /**
+   * The level a change metric of a result starts from: the value, before the event, of the
+   * quantity whose change the metric measures (the expected loss before the event, for its
+   * growth), or null. With it the screens show «before → after» on a scale from zero, and a
+   * slice adds the levels of its positions up; without it, the change alone.
+   */
+  baseline?: (result: CalculationResult, metricId: string) => number | null;
 }

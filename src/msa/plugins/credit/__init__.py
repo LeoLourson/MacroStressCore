@@ -67,6 +67,22 @@ plugin = Plugin(
                 **{series.name: series.label for f in FAMILIES for series in f.series},
                 **{f"covenant:{m.name}": m.label for f in FAMILIES for m in f.covenant_metrics},
                 "risk_score": "Индекс риска",
+                # Keys of the report tree (report.tree) and of the data locators; "" leaves a
+                # grouping key out of a path's description.
+                "quantiles": "",
+                "derived": "",
+                "covenants": "",
+                "contribution": "",
+                "delta_expected_loss": "Рост ожидаемых потерь",
+                "delta_pd": "Рост PD",
+                "delta_risk_score": "Рост индекса риска",
+                "impact_score": "Степень воздействия",
+                "delta_pd_p50_pp": "Рост PD по медиане",
+                "breach_probability": "вероятность нарушения",
+                "min_headroom": "минимальный запас",
+                "shapley": "вклад канала",
+                "covenant": "Ковенант",
+                "dq": "Качество данных",
             },
             summary_metrics=(
                 "credit.delta_expected_loss",

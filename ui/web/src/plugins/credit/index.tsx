@@ -2,16 +2,16 @@
 // path, the channels' contributions, covenants with the reverse stress, risk axes; and the
 // calibration note beside the money figures. Reads CalculationResult.details, which is the
 // credit model's RiskResult (plugins/credit/contracts.py).
-import { Alert, Box, Group, List, SimpleGrid, Stack, Table, Text } from '@mantine/core';
+import { Alert, Anchor, Box, Collapse, Group, List, SimpleGrid, Stack, Table, Text } from '@mantine/core';
 import { IconAlertTriangle, IconInfoCircle } from '@tabler/icons-react';
-import { IntervalText } from '../../components/Interval';
+import { useState } from 'react';
 import { TracedNumber } from '../../components/Provenance';
 import { Fact, MetricsBlock, Section, SourcesBlock } from '../../components/ResultBlocks';
 import { Term } from '../../components/Term';
-import { compact, day, metricValue, nodeLabels, number, percent, positionPath, positionTitle } from '../../lib/format';
+import { change, compact, day, metricValue, nodeLabels, number, percent, positionPath, positionTitle } from '../../lib/format';
 import { AUTHORS, label } from '../../lib/labels';
 import { viewFor } from '../../api/catalog';
-import type { Artifacts } from '../../api/types';
+import type { Artifacts, CalculationResult } from '../../api/types';
 import type { GlossContext, PositionViewProps, UiPlugin } from '../sdk';
 import meta from './plugin.json';
 
@@ -120,47 +120,46 @@ function covenantText(id: string, covenants: Covenant[], labels: Record<string, 
   return `${labels[`covenant:${covenant.metric}`] ?? labels[covenant.metric] ?? covenant.metric} ${sign} ${metricValue(covenant.threshold, covenant.unit)}`;
 }
 
-function Credit({ risk }: { risk: RiskDetails }) {
+/**
+ * The level before the event of what a credit change metric measures: the expected loss for
+ * its growth, PD (or the risk index) at the horizon end of the base path for theirs.
+ */
+function baseline(result: CalculationResult, metricId: string): number | null {
+  const risk = result.details as RiskDetails;
+  if (metricId === 'credit.delta_expected_loss') {
+    const c = risk.credit;
+    return c?.expected_loss != null && c.delta_expected_loss != null ? c.expected_loss - c.delta_expected_loss : null;
+  }
+  if (metricId === 'credit.delta_pd' || metricId === 'credit.delta_risk_score') {
+    const path = risk.base?.series.risk_score?.values;
+    return path?.[path.length - 1] ?? null;
+  }
+  return null;
+}
+
+function Credit({ risk, result }: { risk: RiskDetails; result: CalculationResult }) {
   const c = risk.credit;
   if (!c) return null;
-  // PD before the event is the base path at the horizon end; each scenario moves it by its ΔPD.
-  const basePath = risk.base?.series.risk_score?.values;
-  const basePd = basePath?.[basePath.length - 1] ?? null;
-  const change = risk.quantiles?.delta_pd;
-  const baseLoss =
-    c.expected_loss != null && c.delta_expected_loss != null ? c.expected_loss - c.delta_expected_loss : null;
+  // PD before and after the event is the row of its growth above, when the base path gives it.
+  const pdShown =
+    c.calibrated && !!result.metrics['credit.delta_pd']?.quantiles && baseline(result, 'credit.delta_pd') != null;
   return (
     <Section
       title="Кредитный риск"
       hint={
         c.calibrated
-          ? 'PD на конец горизонта — медиана и P5…P95 по сценариям; LGD и сумма под риском взяты из позиции.'
+          ? `LGD и сумма под риском взяты из позиции.${pdShown ? ' PD до и после события — в строке «Рост PD» выше.' : ''}`
           : 'Калибровки PD нет: показан сценарный индекс риска, его нельзя читать как вероятность дефолта.'
       }
     >
       <SimpleGrid cols={{ base: 2, sm: 3 }}>
-        {c.calibrated && basePd != null && change ? (
-          <Fact
-            name={<Term name="PD">PD после события</Term>}
-            value={
-              <IntervalText
-                p05={basePd + change.p05}
-                p50={basePd + change.p50}
-                p95={basePd + change.p95}
-                format={(v) => percent(v, 2)}
-                align="left"
-              />
-            }
-          />
-        ) : c.calibrated ? (
-          <Fact name={<Term name="PD">PD</Term>} value={percent(c.pd, 2)} />
-        ) : (
+        {!c.calibrated ? (
           <Fact name="Индекс риска в центральном сценарии" value={number(c.risk_score, 4)} />
+        ) : (
+          !pdShown && <Fact name={<Term name="PD">PD</Term>} value={percent(c.pd, 2)} />
         )}
-        {c.calibrated && basePd != null && <Fact name="PD до события" value={percent(basePd, 2)} />}
         <Fact name={<Term name="LGD">LGD</Term>} value={percent(c.lgd, 0)} />
         <Fact name={<Term name="EAD">Сумма под риском</Term>} value={metricValue(c.ead, 'RUB_million')} />
-        {baseLoss != null && <Fact name="Ожидаемые потери до события" value={metricValue(baseLoss, 'RUB_million')} />}
         <Fact name="Модель PD" value={label(SEGMENTS, c.segment_id)} />
       </SimpleGrid>
     </Section>
@@ -232,7 +231,7 @@ function Trajectories({ risk, labels }: { risk: RiskDetails; labels: Record<stri
                   <Table.Td className="num-right">{metricValue(b, unit)}</Table.Td>
                   <Table.Td className="num-right">{metricValue(s, unit)}</Table.Td>
                   <Table.Td className="num-right" c="dimmed">
-                    {b == null || s == null ? '—' : metricValue(s - b, unit)}
+                    {b == null || s == null ? '—' : change(s - b, unit)}
                   </Table.Td>
                 </Table.Tr>
               );
@@ -394,6 +393,7 @@ function Axes({ risk }: { risk: RiskDetails }) {
 
 function CreditPosition(props: PositionViewProps) {
   const { result, context, view, entries } = props;
+  const levels = (metricId: string) => baseline(result, metricId);
   const risk = result.details as RiskDetails;
   const covenants = ((context?.instrument.terms.covenants ?? []) as Covenant[]).filter((c) => c.covenant_id);
   const metrics = view.blocks.find((b) => b.kind === 'metrics');
@@ -405,10 +405,11 @@ function CreditPosition(props: PositionViewProps) {
           metricIds={metrics.metric_ids}
           entries={entries}
           title="Решающие показатели"
-          hint="По ним срабатывают правила кредитного плагина: медиана по всем сценариям на конец горизонта, рядом — диапазон P5–P95."
+          hint="По ним срабатывают правила кредитного плагина: медиана по всем сценариям на конец горизонта и диапазон P5–P95. Для роста — уровень до события → медиана после."
+          baseline={levels}
         />
       )}
-      <Credit risk={risk} />
+      <Credit risk={risk} result={result} />
       <Market risk={risk} />
       <Liquidity risk={risk} />
       <Trajectories risk={risk} labels={view.labels} />
@@ -416,7 +417,7 @@ function CreditPosition(props: PositionViewProps) {
       <Covenants risk={risk} covenants={covenants} labels={view.labels} />
       <Reverse risk={risk} covenants={covenants} labels={view.labels} />
       <Axes risk={risk} />
-      <SourcesBlock result={result} />
+      <SourcesBlock result={result} context={context} />
     </Stack>
   );
 }
@@ -428,43 +429,55 @@ interface CreditNote {
   inclusion_rule?: { rule_id: string; text: string; approved_by: string; approved_on: string } | null;
 }
 
-/** Which calibration the money figures rest on, and which rule let reviewed positions in. */
+/**
+ * Which calibration the money figures rest on, and which rule let reviewed positions in. A
+ * missing calibration is a problem and stands out; a calibration in force is one line.
+ */
 function CalibrationNote({ artifacts }: { artifacts: Artifacts }) {
+  const [open, setOpen] = useState(false);
   const calibration = artifacts.notes?.credit as CreditNote | undefined;
   const slice = artifacts.portfolio?.slices['credit.loss'];
   if (!calibration || !(artifacts.results ?? []).some((r) => r.plugin_id === 'credit')) return null;
   const admitted = (slice?.flags ?? [])
     .filter((f) => f.startsWith('included_by_rule:'))
     .map((f) => f.slice('included_by_rule:'.length));
-  const none = calibration.registry_id === 'none';
-  return (
-    <Alert
-      variant="light"
-      color={none ? 'orange' : 'gray'}
-      icon={none ? <IconAlertTriangle /> : <IconInfoCircle />}
-      title={
-        none
-          ? 'Калибровка PD не загружена'
-          : calibration.kind === 'synthetic_demo'
-            ? 'Синтетическая демо-калибровка PD'
-            : `Калибровка PD ${calibration.registry_id}`
-      }
-    >
-      <Stack gap={4}>
+  if (calibration.registry_id === 'none') {
+    return (
+      <Alert variant="light" color="orange" icon={<IconAlertTriangle />} title="Калибровка PD не загружена">
         <Text size="sm">
-          {none
-            ? 'Вероятностный выход модели — индекс риска, а не PD: денежные потери и итог кредитного среза не считаются.'
-            : calibration.note}
+          Вероятностный выход модели — индекс риска, а не PD: денежные потери и итог кредитного среза не считаются.
         </Text>
-        {admitted.length > 0 && calibration.inclusion_rule && (
-          <Text size="sm">
-            По правилу включения (утвердил: {label(AUTHORS, calibration.inclusion_rule.approved_by)},{' '}
-            {day(calibration.inclusion_rule.approved_on)}) в итог кредитного среза вошли:{' '}
-            {admitted.map((id) => positionTitle(id, artifacts.position_names)).join(', ')}. {calibration.inclusion_rule.text}
+      </Alert>
+    );
+  }
+  return (
+    <Stack gap={4}>
+      <Group gap={6} wrap="nowrap" align="flex-start" c="dark.3">
+        <IconInfoCircle size={14} style={{ flexShrink: 0, marginTop: 2 }} />
+        <Text size="xs">
+          {calibration.kind === 'synthetic_demo'
+            ? 'PD рассчитана по синтетической демо-калибровке: только для демонстрации, не для кредитных решений.'
+            : `PD рассчитана по калибровке ${calibration.registry_id}.`}{' '}
+          <Anchor component="button" size="xs" onClick={() => setOpen((value) => !value)} aria-expanded={open}>
+            {open ? 'Свернуть' : 'Подробнее'}
+          </Anchor>
+        </Text>
+      </Group>
+      <Collapse in={open}>
+        <Stack gap={4} pl={20} maw="90ch">
+          <Text size="xs" c="dark.3">
+            {calibration.note}
           </Text>
-        )}
-      </Stack>
-    </Alert>
+          {admitted.length > 0 && calibration.inclusion_rule && (
+            <Text size="xs" c="dark.3">
+              По правилу включения (утвердил: {label(AUTHORS, calibration.inclusion_rule.approved_by)},{' '}
+              {day(calibration.inclusion_rule.approved_on)}) в итог кредитного среза вошли:{' '}
+              {admitted.map((id) => positionTitle(id, artifacts.position_names)).join(', ')}. {calibration.inclusion_rule.text}
+            </Text>
+          )}
+        </Stack>
+      </Collapse>
+    </Stack>
   );
 }
 
@@ -503,6 +516,7 @@ const plugin: UiPlugin = {
   views: { 'credit.position': CreditPosition },
   notes: CalibrationNote,
   glosses: covenantGlosses,
+  baseline,
   glossary: GLOSSARY,
 };
 
