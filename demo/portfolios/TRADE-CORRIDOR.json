@@ -1,0 +1,15 @@
+{
+  "portfolio": {
+    "portfolio_id": "TRADE-CORRIDOR",
+    "name": "Торговый коридор — поставки и расчёты",
+    "base_currency": "RUB",
+    "as_of": "2026-09-11",
+    "snapshot_id": "SYNTHETIC-STORIES-V1-2026-09-11",
+    "builtin": true,
+    "metadata": {
+      "synthetic": true,
+      "description": "Синтетическая книга регионального корпоративного центра: импортёр, экспортёр, перевозчик, холодильные склады, лекарства и упаковка. 8 неравных позиций; кредиты и акции двух общих эмитентов. Рост выручки не исключает кассовый разрыв.",
+      "generated_by": "demo/build_catalog.py"
+    }
+  }
+}

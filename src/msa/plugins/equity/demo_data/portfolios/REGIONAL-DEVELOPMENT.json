@@ -1,0 +1,116 @@
+{
+  "parties": [
+    {
+      "party_id": "PRECAST",
+      "name": "«ВолгаСбор»: завод ЖБИ",
+      "kind": "company",
+      "okved": "23.61",
+      "country": "RU",
+      "description": "Вымышленная компания. Поставляет железобетон дорожным подрядчикам и жилищным проектам. Высокие постоянные затраты; новые заказы улучшают загрузку, но требуют оборотного капитала.",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "demo:companies",
+          "locator": "PRECAST",
+          "fragment_sha256": "e18aa18c38c47ea0f8cb2928f5eeb5cd08575b5a88fac0059d5081a9b388affa",
+          "author": "demo:catalog",
+          "as_of": "2026-09-11"
+        }
+      ]
+    },
+    {
+      "party_id": "DIGITAL-SERVICE",
+      "name": "«РитмСофт»: подписное ПО",
+      "kind": "company",
+      "okved": "62.01",
+      "country": "RU",
+      "description": "Вымышленная компания. Сервис учёта для малого бизнеса с годовой подпиской; клиенты из разных отраслей. Денежный резерв сопоставим с долгом, средства облигаций направлены на продукт.",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "demo:companies",
+          "locator": "DIGITAL-SERVICE",
+          "fragment_sha256": "871f1321fa45cbb2816e69bfea83a24e74313528a8934d357e40d6dc0c95b809",
+          "author": "demo:catalog",
+          "as_of": "2026-09-11"
+        }
+      ]
+    }
+  ],
+  "instruments": [
+    {
+      "instrument_id": "SHARE-PRECAST",
+      "instrument_type": "common_stock",
+      "name": "Обыкновенная акция: «ВолгаСбор»: завод ЖБИ",
+      "currency": "RUB",
+      "issuer_id": "PRECAST",
+      "terms": {
+        "ticker": "DMPC",
+        "market_index": "MOEX",
+        "sector": "materials"
+      },
+      "schema_version": "1"
+    },
+    {
+      "instrument_id": "SHARE-DIGITAL-SERVICE",
+      "instrument_type": "common_stock",
+      "name": "Обыкновенная акция: «РитмСофт»: подписное ПО",
+      "currency": "RUB",
+      "issuer_id": "DIGITAL-SERVICE",
+      "terms": {
+        "ticker": "DMDS",
+        "market_index": "MOEX",
+        "sector": "technology"
+      },
+      "schema_version": "1"
+    }
+  ],
+  "positions": [
+    {
+      "position_id": "SHARE-PRECAST",
+      "instrument_id": "SHARE-PRECAST",
+      "params": {
+        "quantity": {
+          "value": 300000,
+          "unit": "shares",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PRECAST/quantity",
+              "fragment_sha256": "c0110c3a46f691e9d84cdb279de68b357ae4606e9049b22c6ef893d249022993",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "direction": "long"
+      },
+      "schema_version": "1",
+      "model_id": null
+    },
+    {
+      "position_id": "SHARE-DIGITAL-SERVICE",
+      "instrument_id": "SHARE-DIGITAL-SERVICE",
+      "params": {
+        "quantity": {
+          "value": 250000,
+          "unit": "shares",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "DIGITAL-SERVICE/quantity",
+              "fragment_sha256": "4f4f4b8108a014b826a10600aa059e23b2081328d6e6f34b4a67c39896495f6a",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "direction": "long"
+      },
+      "schema_version": "1",
+      "model_id": null
+    }
+  ]
+}

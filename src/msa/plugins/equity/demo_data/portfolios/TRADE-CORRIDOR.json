@@ -1,0 +1,116 @@
+{
+  "parties": [
+    {
+      "party_id": "ROUTE-TRANS",
+      "name": "«Маршрут-Восток»: автоперевозчик",
+      "kind": "company",
+      "okved": "49.41",
+      "country": "RU",
+      "description": "Вымышленная компания. 420 грузовиков на внутренних и приграничных маршрутах. Длинный объезд увеличивает загрузку, но дизель и холостой пробег съедают маржу.",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "demo:companies",
+          "locator": "ROUTE-TRANS",
+          "fragment_sha256": "ed4fda9ba2d3a77e16ea05e226c9644129b5f5c0ecd10079e46ddb659e5949f7",
+          "author": "demo:catalog",
+          "as_of": "2026-09-11"
+        }
+      ]
+    },
+    {
+      "party_id": "NORTH-TIMBER",
+      "name": "«Северная доска»: лесопереработка",
+      "kind": "company",
+      "okved": "16.10",
+      "country": "RU",
+      "description": "Вымышленная компания. Два лесопильных завода; 65 % выручки дают экспортные контракты. Покупатели платят после получения груза, рублёвые затраты преобладают.",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "demo:companies",
+          "locator": "NORTH-TIMBER",
+          "fragment_sha256": "9915486fd7ce78cc0b179bb1d2229b78fa7198df455194cd1a1572fa63417b76",
+          "author": "demo:catalog",
+          "as_of": "2026-09-11"
+        }
+      ]
+    }
+  ],
+  "instruments": [
+    {
+      "instrument_id": "SHARE-ROUTE-TRANS",
+      "instrument_type": "common_stock",
+      "name": "Обыкновенная акция: «Маршрут-Восток»: автоперевозчик",
+      "currency": "RUB",
+      "issuer_id": "ROUTE-TRANS",
+      "terms": {
+        "ticker": "DMRT",
+        "market_index": "MOEX",
+        "sector": "transport"
+      },
+      "schema_version": "1"
+    },
+    {
+      "instrument_id": "SHARE-NORTH-TIMBER",
+      "instrument_type": "common_stock",
+      "name": "Обыкновенная акция: «Северная доска»: лесопереработка",
+      "currency": "RUB",
+      "issuer_id": "NORTH-TIMBER",
+      "terms": {
+        "ticker": "DMNT",
+        "market_index": "MOEX",
+        "sector": "materials"
+      },
+      "schema_version": "1"
+    }
+  ],
+  "positions": [
+    {
+      "position_id": "SHARE-ROUTE-TRANS",
+      "instrument_id": "SHARE-ROUTE-TRANS",
+      "params": {
+        "quantity": {
+          "value": 500000,
+          "unit": "shares",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "ROUTE-TRANS/quantity",
+              "fragment_sha256": "9f8c48e9d11d5e71996e3765753d36f903e0f79612adc69a4e00b8b39bf9b779",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "direction": "long"
+      },
+      "schema_version": "1",
+      "model_id": null
+    },
+    {
+      "position_id": "SHARE-NORTH-TIMBER",
+      "instrument_id": "SHARE-NORTH-TIMBER",
+      "params": {
+        "quantity": {
+          "value": 500000,
+          "unit": "shares",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "NORTH-TIMBER/quantity",
+              "fragment_sha256": "f80e58d1ebab44221b8cd1efc41d30ce1753af989780d07d3c084ddd0eba1355",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "direction": "long"
+      },
+      "schema_version": "1",
+      "model_id": null
+    }
+  ]
+}

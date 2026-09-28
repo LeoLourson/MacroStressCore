@@ -1,0 +1,212 @@
+{
+  "items": [
+    {
+      "item_id": "fx_rate:USD/RUB:2026-09-11",
+      "kind": "fx_rate",
+      "subject": "USD/RUB",
+      "observed_on": "2026-09-11",
+      "values": {
+        "rate": {
+          "value": 92.5,
+          "unit": "RUB_per_unit",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "US-LABWARE/fx_rate",
+              "fragment_sha256": "7521c3142fb34579050243878b19565b852be74ce07d41954e6ec7589b40493f",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "entered_by": "demo:catalog"
+      },
+      "evidence": []
+    },
+    {
+      "item_id": "price:SHARE-DIGITAL-SERVICE",
+      "kind": "price",
+      "subject": "SHARE-DIGITAL-SERVICE",
+      "observed_on": "2026-09-11",
+      "values": {
+        "price": {
+          "value": 384.0,
+          "unit": "RUB_per_unit",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "DIGITAL-SERVICE/price",
+              "fragment_sha256": "fd57fe34f800caac9c1ad399659ac4d185a3fe2b0b9f043336f9ca31e097a103",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "entered_by": "demo:catalog"
+      },
+      "evidence": []
+    },
+    {
+      "item_id": "price:SHARE-HOME-APPLIANCES",
+      "kind": "price",
+      "subject": "SHARE-HOME-APPLIANCES",
+      "observed_on": "2026-09-11",
+      "values": {
+        "price": {
+          "value": 156.0,
+          "unit": "RUB_per_unit",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "HOME-APPLIANCES/price",
+              "fragment_sha256": "f1b2fa7f6ab287b79c068d427c4c143d0665c187201816435c4e623e9647b705",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "entered_by": "demo:catalog"
+      },
+      "evidence": []
+    },
+    {
+      "item_id": "price:SHARE-NORTH-TIMBER",
+      "kind": "price",
+      "subject": "SHARE-NORTH-TIMBER",
+      "observed_on": "2026-09-11",
+      "values": {
+        "price": {
+          "value": 330.0,
+          "unit": "RUB_per_unit",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "NORTH-TIMBER/price",
+              "fragment_sha256": "8711e2a61413b35e419fc70a7939441ec507d3c2e6de70c840a3eef4ddbd7d82",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "entered_by": "demo:catalog"
+      },
+      "evidence": []
+    },
+    {
+      "item_id": "price:SHARE-PRECAST",
+      "kind": "price",
+      "subject": "SHARE-PRECAST",
+      "observed_on": "2026-09-11",
+      "values": {
+        "price": {
+          "value": 240.0,
+          "unit": "RUB_per_unit",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PRECAST/price",
+              "fragment_sha256": "8614058ebbb9c02892fb5f8ae015bc580c0edbb1c81e8ca9b4d62242d9a2953c",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "entered_by": "demo:catalog"
+      },
+      "evidence": []
+    },
+    {
+      "item_id": "price:SHARE-ROUTE-TRANS",
+      "kind": "price",
+      "subject": "SHARE-ROUTE-TRANS",
+      "observed_on": "2026-09-11",
+      "values": {
+        "price": {
+          "value": 176.0,
+          "unit": "RUB_per_unit",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "ROUTE-TRANS/price",
+              "fragment_sha256": "47f5b1e131e9cd2a2b6f83ded80db58a39a9ac63e2b59b7200c7b1ffcaeb263c",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "entered_by": "demo:catalog"
+      },
+      "evidence": []
+    },
+    {
+      "item_id": "price:SHARE-US-LABWARE",
+      "kind": "price",
+      "subject": "SHARE-US-LABWARE",
+      "observed_on": "2026-09-11",
+      "values": {
+        "price": {
+          "value": 82.0,
+          "unit": "USD_per_unit",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "US-LABWARE/price",
+              "fragment_sha256": "5d69128bc3f8ced18c7ab03b428ead78314ed0df9b3e8fda4d0c114318a9a71a",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "entered_by": "demo:catalog"
+      },
+      "evidence": []
+    },
+    {
+      "item_id": "price:SHARE-VALUE-MART",
+      "kind": "price",
+      "subject": "SHARE-VALUE-MART",
+      "observed_on": "2026-09-11",
+      "values": {
+        "price": {
+          "value": 304.0,
+          "unit": "RUB_per_unit",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "VALUE-MART/price",
+              "fragment_sha256": "358dba12c6f76ec135859d1f8bccd1ba0bbde77c678540aaceeeb5081908434a",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "entered_by": "demo:catalog"
+      },
+      "evidence": []
+    }
+  ]
+}

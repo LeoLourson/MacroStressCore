@@ -1,0 +1,5286 @@
+{
+  "items": [
+    {
+      "item_id": "financial_statement:AGRO-LEASE",
+      "kind": "financial_statement",
+      "subject": "AGRO-LEASE",
+      "observed_on": "2026-09-11",
+      "values": {
+        "net_investment_leases": {
+          "value": 5200.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "AGRO-LEASE/net_investment_leases",
+              "fragment_sha256": "8356532edebf287f7edbf2155e5192a0ad8376a561ff97580c1853a9682c9865",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "new_business": {
+          "value": 1350.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "AGRO-LEASE/new_business",
+              "fragment_sha256": "6ab2db01e1fe7853007bb7bade9521d285bc71e7d9ece48b0ec8d2b5c6f04152",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "debt": {
+          "value": 2500.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "AGRO-LEASE/debt",
+              "fragment_sha256": "4948ee1c1bbf20a5e934bf7908994d1ec5b8036b0f4f234506f1ba559a6826c8",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "equity": {
+          "value": 2700.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "AGRO-LEASE/equity",
+              "fragment_sha256": "1fcd0c36a5db45574e95f2d24d229c56b1c998ac72c194506a136ad3efe43584",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "portfolio_yield": {
+          "value": 0.24,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "AGRO-LEASE/portfolio_yield",
+              "fragment_sha256": "0447d22aaf6a80c1e4d3c14ff71df6187d14756c72ecbbe634e7b8242d40f170",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "amortization_rate": {
+          "value": 0.22,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "AGRO-LEASE/amortization_rate",
+              "fragment_sha256": "972553382ffc071e4067bc34cac348cf2bff57d9bc2229166504d3741dbfa573",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "borrowing_rate": {
+          "value": 0.154,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "AGRO-LEASE/borrowing_rate",
+              "fragment_sha256": "a9a5487b83de0edef3a51c9195c31c0ec4f0027c4bf356398735a3b6b60d02c5",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "opex": {
+          "value": 225.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "AGRO-LEASE/opex",
+              "fragment_sha256": "6f54742a43ace4b6602b1eb268f9039342bedd816b6754be505c767715a1ebc6",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "prepayment_share": {
+          "value": 0.025,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "AGRO-LEASE/prepayment_share",
+              "fragment_sha256": "fb872bcd0fd3e02bb9de91a7a6a36c14e226d81d4506dba9fa2bb9c5e317e997",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "advance_rate": {
+          "value": 0.28,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "AGRO-LEASE/advance_rate",
+              "fragment_sha256": "701e571652ea15c0809e5956f0b5f2eefda6c35bcfefffb9b5851d3ebfbeabc7",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "tax_rate": {
+          "value": 0.25,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "AGRO-LEASE/tax_rate",
+              "fragment_sha256": "e55dd775bdba20f650fe70a20e2ee871de802733a1ed9934f872f9850fcdf2a1",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "standard": "management",
+        "entered_by": "demo:catalog"
+      },
+      "evidence": []
+    },
+    {
+      "item_id": "financial_statement:CITY-BUILDER",
+      "kind": "financial_statement",
+      "subject": "CITY-BUILDER",
+      "observed_on": "2026-09-11",
+      "values": {
+        "revenue": {
+          "value": 8460.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "CITY-BUILDER/revenue",
+              "fragment_sha256": "6fd9f0eadb69a0d6c7c0a69895cf5574fcaae3df1b0b1546cab5e3cd1c4585e5",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "cogs": {
+          "value": 5710.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "CITY-BUILDER/cogs",
+              "fragment_sha256": "70164ad057ff1a818ba5f91c7950388f90e6c878ffecbf4bba57d4d036e01749",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "net_debt": {
+          "value": 2310.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "CITY-BUILDER/net_debt",
+              "fragment_sha256": "e9b787dfd6bd58f457f945198945e50d1bbafa85e537a668d9cbd5d8032a2d24",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "borrowing_rate": {
+          "value": 0.194,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "CITY-BUILDER/borrowing_rate",
+              "fragment_sha256": "7a424f3e07830ca0181518d145011f583968143e308e6221adf1ab3b2ec493a5",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "opex": {
+          "value": 1080.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "CITY-BUILDER/opex",
+              "fragment_sha256": "b0dfd0388599a812fc2f818aa9d679e467b92b80da468d50c8511be12d036365",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "opex_variable_share": {
+          "value": 0.15,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "CITY-BUILDER/opex_variable_share",
+              "fragment_sha256": "053b1ae0b20d94d2056f284141c1c9f4f1e8f045411b43a36582e3a12d09a4f8",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "cash": {
+          "value": 170.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "CITY-BUILDER/cash",
+              "fragment_sha256": "d7e3e2908b077769c5e0aed74e6655f2a999745d711d019894d52102d975a5ac",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "dso": {
+          "value": 102.0,
+          "unit": "days",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "CITY-BUILDER/dso",
+              "fragment_sha256": "c0010baf2ee029a921e785bac1ef6df1f2e7beb7efe6282e562c5d7539d842e0",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "dio": {
+          "value": 26.0,
+          "unit": "days",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "CITY-BUILDER/dio",
+              "fragment_sha256": "3242f274fb6c0a1ae0fe66966e6624001a17e5b0948c4d8694ca1c3d4d9e3e4d",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "dpo": {
+          "value": 49.0,
+          "unit": "days",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "CITY-BUILDER/dpo",
+              "fragment_sha256": "cc62a6639d6bb220c226fc9d73f45e9a025102f1bb750c900a7a1e517599981d",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "tax_rate": {
+          "value": 0.25,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "CITY-BUILDER/tax_rate",
+              "fragment_sha256": "81520b2878086acb8229142072aa41189508981c560a0325ab5bda7fab3181ab",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "demand_elasticity": {
+          "value": -0.75,
+          "unit": "ratio",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "CITY-BUILDER/demand_elasticity",
+              "fragment_sha256": "cef428f32d5773d1e1f3c968422e093294376dcbdedd0785018599e326097910",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "pass_through": {
+          "value": 0.12,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "CITY-BUILDER/pass_through",
+              "fragment_sha256": "2e9189a166566f2e6952f86f8e1f1da16f93fe3f31fa83d95514f4df533f3fc6",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "gross_debt": {
+          "value": 2480.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "CITY-BUILDER/gross_debt",
+              "fragment_sha256": "4d77043770245624d85340c8589270235108d0fd5b4ac94342727310df221b38",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "scheduled_amortisation": {
+          "value": 260.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "CITY-BUILDER/scheduled_amortisation",
+              "fragment_sha256": "78f1613a3033c9c9680bd1c4ce2db315c3a8b76560f79f704e9afed569da1191",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "credit_limit": {
+          "value": 700.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "CITY-BUILDER/credit_limit",
+              "fragment_sha256": "bb585b362933451647303a7ff16de7927f86091dca8766adb74bc255d6fc0c8a",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "fixed_production_cost": {
+          "value": 510.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "CITY-BUILDER/fixed_production_cost",
+              "fragment_sha256": "00361ff18b982bfbbfc59da070c6e9059ac41142c647cd625101afb276e191f1",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "capex": {
+          "value": 190.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "CITY-BUILDER/capex",
+              "fragment_sha256": "34353b7d1ae9edc0008a9290fbf685368852b7e17dcc64de87caa9b45f15b1e0",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "cash_floor": {
+          "value": 43.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "CITY-BUILDER/cash_floor",
+              "fragment_sha256": "76e36b16269b73212b4bf784fa27d15e037a9def0c5b76bbea6052a3b2eb780d",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "standard": "management",
+        "entered_by": "demo:catalog"
+      },
+      "evidence": []
+    },
+    {
+      "item_id": "financial_statement:CITY-CAFES",
+      "kind": "financial_statement",
+      "subject": "CITY-CAFES",
+      "observed_on": "2026-09-11",
+      "values": {
+        "revenue": {
+          "value": 3240.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "CITY-CAFES/revenue",
+              "fragment_sha256": "49884b050f54438a29098796a172d465468d45d83de2d7593bc5e43e75c526e3",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "cogs": {
+          "value": 1120.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "CITY-CAFES/cogs",
+              "fragment_sha256": "320415219dd1d69816127df147bdc3fbd671fadf9730804b6ecc41f5b77c41b3",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "net_debt": {
+          "value": 860.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "CITY-CAFES/net_debt",
+              "fragment_sha256": "e0f4f8d5048a4db574a4e4838c4db329d5bbd2b48f3578a4c5a1c4f6ea9ea123",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "borrowing_rate": {
+          "value": 0.202,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "CITY-CAFES/borrowing_rate",
+              "fragment_sha256": "391b12fcc2d04ebcd8b502abdae66b7be3664f44437451d8e440bd51dc28f8c3",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "opex": {
+          "value": 1510.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "CITY-CAFES/opex",
+              "fragment_sha256": "8e638b603f61b16aac9d67e0f63c4929d8cfa615eb9a08d40c781271653f3430",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "opex_variable_share": {
+          "value": 0.15,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "CITY-CAFES/opex_variable_share",
+              "fragment_sha256": "53c9bde7aca845e53b0673263aaedf09782687592e99125bce58211af7b509f3",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "cash": {
+          "value": 125.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "CITY-CAFES/cash",
+              "fragment_sha256": "48d5b70e5d9e6b93e15c725e62fb89a1138865beb1024e51c1eac413f461fb01",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "dso": {
+          "value": 2.0,
+          "unit": "days",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "CITY-CAFES/dso",
+              "fragment_sha256": "197490a8e777b441903daf73054aa6d8728063b06989bd89ac04e95f401c6ee4",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "dio": {
+          "value": 7.0,
+          "unit": "days",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "CITY-CAFES/dio",
+              "fragment_sha256": "6ec0dbbe65c6cc93347cb21326b742343658602d9e5882c4ff288961ea8abbdf",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "dpo": {
+          "value": 18.0,
+          "unit": "days",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "CITY-CAFES/dpo",
+              "fragment_sha256": "e4270ecc8edc992d1633dc09bf706b538a24a506aa59d96a5c76dcdd2f74f63c",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "tax_rate": {
+          "value": 0.25,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "CITY-CAFES/tax_rate",
+              "fragment_sha256": "a5504bb0b0360d8747832f4a85fe630e631fae5af168077948a4f4945daf1a81",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "demand_elasticity": {
+          "value": -1.35,
+          "unit": "ratio",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "CITY-CAFES/demand_elasticity",
+              "fragment_sha256": "ce7bcfc2eb581552239949bcb1f819135b956f5b0b4fc403e0e90ae59d2c3141",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "pass_through": {
+          "value": 0.35,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "CITY-CAFES/pass_through",
+              "fragment_sha256": "93171bad60f42cb4d0ee6b9afd47a5ca7888f75572346f35389fd0a2c0a770b8",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "gross_debt": {
+          "value": 985.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "CITY-CAFES/gross_debt",
+              "fragment_sha256": "ecc6d6d3cdcdf983d8a88f46e46ca7f5050ed274d2443141fc79fc4f21c6761f",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "scheduled_amortisation": {
+          "value": 95.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "CITY-CAFES/scheduled_amortisation",
+              "fragment_sha256": "e9359b80b2e7096535981082cbf0b660a336461d6dfd342d4ac55790ac64d1f6",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "credit_limit": {
+          "value": 240.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "CITY-CAFES/credit_limit",
+              "fragment_sha256": "c7e6371c1cea819fbc1915a82d04271652ed0d77c0ca796433f1b6167187d446",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "fixed_production_cost": {
+          "value": 0.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "CITY-CAFES/fixed_production_cost",
+              "fragment_sha256": "5b1fa5190a8926d8efb6a86daeaaa87db84c1ca7ed0fd06cd04be62e412b711d",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "capex": {
+          "value": 110.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "CITY-CAFES/capex",
+              "fragment_sha256": "08676aa5ad152aa2672e43b30874d69488c0b815635d668c6fac3b514ac5f430",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "cash_floor": {
+          "value": 31.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "CITY-CAFES/cash_floor",
+              "fragment_sha256": "3f96b726b9ca26657596adf06ed7c92e8a356735ce7c1f2dce46b8571c3c3713",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "standard": "management",
+        "entered_by": "demo:catalog"
+      },
+      "evidence": []
+    },
+    {
+      "item_id": "financial_statement:COLD-HUB",
+      "kind": "financial_statement",
+      "subject": "COLD-HUB",
+      "observed_on": "2026-09-11",
+      "values": {
+        "revenue": {
+          "value": 3680.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "COLD-HUB/revenue",
+              "fragment_sha256": "7b158fd18a09c61326d1f8b42367370c7147da60c64e4dac6241b1dd8da13694",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "cogs": {
+          "value": 1420.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "COLD-HUB/cogs",
+              "fragment_sha256": "3a11e8600aa714c440e05aa3b8bd7959bb0387221572da43755a721068dc10a3",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "net_debt": {
+          "value": 4950.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "COLD-HUB/net_debt",
+              "fragment_sha256": "627faecb382892f0438739dd418baf28531cb310137f2ac1e695379453697daa",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "borrowing_rate": {
+          "value": 0.173,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "COLD-HUB/borrowing_rate",
+              "fragment_sha256": "cbea70bf2479895f894d4bdd034d281e88910fd816ac10defb295151c56a84d8",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "opex": {
+          "value": 510.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "COLD-HUB/opex",
+              "fragment_sha256": "916eed48d7f5710f109cb62bc0325ac117bf019ef63c087531fa80f6ef4d9867",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "opex_variable_share": {
+          "value": 0.15,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "COLD-HUB/opex_variable_share",
+              "fragment_sha256": "6248b0c002f24cc150211dd81c055e84adc4c367bf75731e5ba690ccf09ce1d9",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "cash": {
+          "value": 390.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "COLD-HUB/cash",
+              "fragment_sha256": "0197112c639310694e68b9b0988e15a11f3d419c75e7955a00c4fb2d616efe04",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "dso": {
+          "value": 32.0,
+          "unit": "days",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "COLD-HUB/dso",
+              "fragment_sha256": "fbad9938428403726920c3fe921b0e04d36d83218fbb901a4c839dfbae118f62",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "dio": {
+          "value": 0.0,
+          "unit": "days",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "COLD-HUB/dio",
+              "fragment_sha256": "08ede1fca7484f9b9b2f3af962d1824bb00f5e786e6430d72b8a654912ccbab9",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "dpo": {
+          "value": 28.0,
+          "unit": "days",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "COLD-HUB/dpo",
+              "fragment_sha256": "568ec0643446eddea99980b9630d10a0fb1d8e6cba6ea70ddc5d23231cac4998",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "tax_rate": {
+          "value": 0.25,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "COLD-HUB/tax_rate",
+              "fragment_sha256": "432875f63346f1618fc536c8b2a7560beb8f1ad963bc86a460270170d7b001b2",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "demand_elasticity": {
+          "value": -0.25,
+          "unit": "ratio",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "COLD-HUB/demand_elasticity",
+              "fragment_sha256": "70cab0e1f59a9f4e7e990ed0efdbb77fe87f0801595c9544ae97e177d9d92266",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "pass_through": {
+          "value": 0.45,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "COLD-HUB/pass_through",
+              "fragment_sha256": "093de8c716b73b81de90eea87b61affc1744f6de9d5bf986bda9bc66b61e729d",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "gross_debt": {
+          "value": 5340.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "COLD-HUB/gross_debt",
+              "fragment_sha256": "965e45a0932cfe6f0ddb450d341adbaeb78796290fed4c2a9180a3d8813398c0",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "scheduled_amortisation": {
+          "value": 250.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "COLD-HUB/scheduled_amortisation",
+              "fragment_sha256": "a7161fc5120d20c84b988dc5ad4c966907d6145ba93a80390e8d2a482b3b3087",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "credit_limit": {
+          "value": 650.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "COLD-HUB/credit_limit",
+              "fragment_sha256": "a80792b18d8f49f730eaf7d715d9a1f8d467f93a58ff6bee487ca9af00f5167f",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "fixed_production_cost": {
+          "value": 430.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "COLD-HUB/fixed_production_cost",
+              "fragment_sha256": "a1fdfbf4226f34d6b7a2de67f8243ba811a0fcd87b26ed5c4b3753862194e99d",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "capex": {
+          "value": 210.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "COLD-HUB/capex",
+              "fragment_sha256": "61ebf2a5fa88a0ab085b1d3a84a33772bc45ee77f2f7646b0f35215fcf4d58b4",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "cash_floor": {
+          "value": 98.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "COLD-HUB/cash_floor",
+              "fragment_sha256": "ed11b3d4c6b0fb4dd66bddb91fbf9343880e1e61391a52ffd1b9f8bc4e0db495",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "standard": "management",
+        "entered_by": "demo:catalog"
+      },
+      "evidence": []
+    },
+    {
+      "item_id": "financial_statement:DIGITAL-SERVICE",
+      "kind": "financial_statement",
+      "subject": "DIGITAL-SERVICE",
+      "observed_on": "2026-09-11",
+      "values": {
+        "revenue": {
+          "value": 4520.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "DIGITAL-SERVICE/revenue",
+              "fragment_sha256": "ad5bc0e13ca83b3bdf30b670c02d7cb1172a4e9ec2e53069efb48a0c3a36f72f",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "cogs": {
+          "value": 1190.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "DIGITAL-SERVICE/cogs",
+              "fragment_sha256": "a49f5c2d732b38d568b8c14239486178d578f612995b804dd6ea66fa36490db3",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "net_debt": {
+          "value": 280.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "DIGITAL-SERVICE/net_debt",
+              "fragment_sha256": "b4b693177de7cc90b935468593e0660de07b74ad87d893149062bc9445751899",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "borrowing_rate": {
+          "value": 0.149,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "DIGITAL-SERVICE/borrowing_rate",
+              "fragment_sha256": "8d78339157944b4c941aba2c231a561f58bcf5d30c826516f24cdb92543a1e9d",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "opex": {
+          "value": 1900.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "DIGITAL-SERVICE/opex",
+              "fragment_sha256": "8b7b0a1e19aa93963324a937f2eed143ed574586cc9260fc100e1ce19bc682dc",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "opex_variable_share": {
+          "value": 0.15,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "DIGITAL-SERVICE/opex_variable_share",
+              "fragment_sha256": "556c15f7c8b14c068e5a27dc9135da8224d10fd3d28f909c237b7a96771a31c7",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "cash": {
+          "value": 920.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "DIGITAL-SERVICE/cash",
+              "fragment_sha256": "d4c4301146cee31c2286858ed59bfb935a7892db2f8b36697eafd0bb2d075f6f",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "dso": {
+          "value": 19.0,
+          "unit": "days",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "DIGITAL-SERVICE/dso",
+              "fragment_sha256": "7267defa9c6ffa852d459cccb14fc39f622449e7a03f22e16f0b218eefbd2791",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "dio": {
+          "value": 0.0,
+          "unit": "days",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "DIGITAL-SERVICE/dio",
+              "fragment_sha256": "499daffbd068b4f4b252e4c0a938278ebf948e896ab347d41cc6e08c2e89a0aa",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "dpo": {
+          "value": 24.0,
+          "unit": "days",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "DIGITAL-SERVICE/dpo",
+              "fragment_sha256": "1f48a4452ea8013f84d8db427c27b25e01e2574758d8fae6b62fc08b5e04337e",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "tax_rate": {
+          "value": 0.25,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "DIGITAL-SERVICE/tax_rate",
+              "fragment_sha256": "ff09edbdda64f40ba2d9bc89552e279886e4bf1fbe56cceb5474ebe8203fb871",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "demand_elasticity": {
+          "value": -0.4,
+          "unit": "ratio",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "DIGITAL-SERVICE/demand_elasticity",
+              "fragment_sha256": "7e43cc1601bf4d24b86a91c5e8fb9ae54c38406450f2db097bb9f0eb957d1bfb",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "pass_through": {
+          "value": 0.2,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "DIGITAL-SERVICE/pass_through",
+              "fragment_sha256": "18b73fcffa16b1664f2e634b314e9b7a71a3d2dca026ff8663de1d42e3cab11c",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "gross_debt": {
+          "value": 1200.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "DIGITAL-SERVICE/gross_debt",
+              "fragment_sha256": "a1802e1fcbed9c3993b29fe01818143293d424451fd7ab89d2874ab2dd0f0489",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "scheduled_amortisation": {
+          "value": 120.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "DIGITAL-SERVICE/scheduled_amortisation",
+              "fragment_sha256": "717e9022f634c48245ff0ddc20ea0fc695243764626fa07b70f98307e64921de",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "credit_limit": {
+          "value": 400.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "DIGITAL-SERVICE/credit_limit",
+              "fragment_sha256": "d054fc12e93599893484b5e37cf3ebc55a53f2ae139b3fa55f98577970a926d4",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "fixed_production_cost": {
+          "value": 0.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "DIGITAL-SERVICE/fixed_production_cost",
+              "fragment_sha256": "1eb29f1de9d1e57c4cf3ae2e3b90da18e7bcf544ba8f31cd8b6b37337d4853ec",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "capex": {
+          "value": 160.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "DIGITAL-SERVICE/capex",
+              "fragment_sha256": "c6a1aea26b2e597c7384844345fb61b3be43cbfdf0ac33180387cbc383fe735d",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "cash_floor": {
+          "value": 230.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "DIGITAL-SERVICE/cash_floor",
+              "fragment_sha256": "c541c74334d7e0c9d63dd2be8a41db674af695b5577a21f28bf337a173432154",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "standard": "management",
+        "entered_by": "demo:catalog"
+      },
+      "evidence": []
+    },
+    {
+      "item_id": "financial_statement:EAST-AUTO",
+      "kind": "financial_statement",
+      "subject": "EAST-AUTO",
+      "observed_on": "2026-09-11",
+      "values": {
+        "revenue": {
+          "value": 18650.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "EAST-AUTO/revenue",
+              "fragment_sha256": "ed731150dabd29b2ee47d0b2df2afcbf929e273ccd9ee7bc04a290bb3933f895",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "cogs": {
+          "value": 15120.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "EAST-AUTO/cogs",
+              "fragment_sha256": "9b20c2f624e05e8926018f11b3ed5a9d1f3c9e8c31516c1353adf5b83f4abcdc",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "net_debt": {
+          "value": 3620.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "EAST-AUTO/net_debt",
+              "fragment_sha256": "d9511b9c52c8021d00fb7e48c7c9f56530e7dbe9d0fda4aab1dd23522a533a9d",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "borrowing_rate": {
+          "value": 0.192,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "EAST-AUTO/borrowing_rate",
+              "fragment_sha256": "9c13baa315c0db00106f4046da1e93d52ce0c55784151d08ac01550d26138899",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "opex": {
+          "value": 1840.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "EAST-AUTO/opex",
+              "fragment_sha256": "0c8efadb78d369e7f3b40ecea73af8d490eb1d87cdce77a76ac9f175550f1761",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "opex_variable_share": {
+          "value": 0.15,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "EAST-AUTO/opex_variable_share",
+              "fragment_sha256": "6066bef3a382d30ae671ca07141dbcea9e0bcd1f830bddeb331253f4addfe22f",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "cash": {
+          "value": 480.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "EAST-AUTO/cash",
+              "fragment_sha256": "4da12e4fe0dee5a82bd6839597dbb0e9d58d5d55e6b85366da7a0218662c438f",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "dso": {
+          "value": 12.0,
+          "unit": "days",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "EAST-AUTO/dso",
+              "fragment_sha256": "44fb847c1f53d4e1067ce45603d895517a1f33f80d6e61c1aa954a1e45a40ca5",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "dio": {
+          "value": 84.0,
+          "unit": "days",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "EAST-AUTO/dio",
+              "fragment_sha256": "257b411a3c4f830f497f0eadafce191bbc23637b9b55eddd56404e60a5860ae8",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "dpo": {
+          "value": 24.0,
+          "unit": "days",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "EAST-AUTO/dpo",
+              "fragment_sha256": "34f3a918bd16090ac8643e4b6511e67c3cbd26c2faa1ed53e68349f445d23299",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "tax_rate": {
+          "value": 0.25,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "EAST-AUTO/tax_rate",
+              "fragment_sha256": "f4e855a4009d6bcdf14fef706814fdb38d8de03888e945a66c343385f7de0fa9",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "demand_elasticity": {
+          "value": -1.25,
+          "unit": "ratio",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "EAST-AUTO/demand_elasticity",
+              "fragment_sha256": "1fbb20aa6e6c6a9ac5536f06a1b1c0a9cacca05d82dc6ceb73169c27a2102da9",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "pass_through": {
+          "value": 0.52,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "EAST-AUTO/pass_through",
+              "fragment_sha256": "544ab4a843ce059c7cb7493cd55e94e15d32b738921053ee7969bc0699393e89",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "gross_debt": {
+          "value": 4100.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "EAST-AUTO/gross_debt",
+              "fragment_sha256": "c775e65d7ae48c95e2b0a602096d24ed86df87dec26c523429a82a71e24158d9",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "scheduled_amortisation": {
+          "value": 360.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "EAST-AUTO/scheduled_amortisation",
+              "fragment_sha256": "582317c39cda552d5e0c9e6d1efb6dd3e666318a9ab35d9a26c5e8c3264695e4",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "credit_limit": {
+          "value": 850.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "EAST-AUTO/credit_limit",
+              "fragment_sha256": "b1064f6cc6e84afb2a2683cd1f8ad66e21efe16849224e9b4685d9b99591b003",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "fixed_production_cost": {
+          "value": 0.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "EAST-AUTO/fixed_production_cost",
+              "fragment_sha256": "e47ad0e53108465e18ba3b806267ba810fce565e4f3d466ad44a4c60903403d9",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "capex": {
+          "value": 145.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "EAST-AUTO/capex",
+              "fragment_sha256": "570ff7d83fe01671ee9c71790dfc217943bb8198547d51dbbd6b621735ca9c37",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "cash_floor": {
+          "value": 120.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "EAST-AUTO/cash_floor",
+              "fragment_sha256": "bb0cf3301cc7da8ea358676ed9652c1f1e3a7e61a9f4ca6e3e1e89d4efb66070",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "standard": "management",
+        "entered_by": "demo:catalog"
+      },
+      "evidence": []
+    },
+    {
+      "item_id": "financial_statement:EQUIP-LEASE",
+      "kind": "financial_statement",
+      "subject": "EQUIP-LEASE",
+      "observed_on": "2026-09-11",
+      "values": {
+        "net_investment_leases": {
+          "value": 7100.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "EQUIP-LEASE/net_investment_leases",
+              "fragment_sha256": "188d77f8f8985cf208b683e46ce403dea18aafc303756195912bed01b7e4e988",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "new_business": {
+          "value": 3600.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "EQUIP-LEASE/new_business",
+              "fragment_sha256": "84065df76b64b7d1246c960dec5bdb678d60bf79dcc6c7e0ee0e3baef72affe7",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "debt": {
+          "value": 5470.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "EQUIP-LEASE/debt",
+              "fragment_sha256": "703eae616ed4693b63cd3174a1caa6d70c6c2810b23a36b3851d86d43ca8e68f",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "equity": {
+          "value": 1440.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "EQUIP-LEASE/equity",
+              "fragment_sha256": "1bc7377e4e1fab8594047052fb4fbe14c9ebd39926689fd2702c141be189442d",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "portfolio_yield": {
+          "value": 0.228,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "EQUIP-LEASE/portfolio_yield",
+              "fragment_sha256": "605a425632725ff0b41451ec42c1ea809af9110d267c607ddeb7d8ddb1b890e9",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "amortization_rate": {
+          "value": 0.26,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "EQUIP-LEASE/amortization_rate",
+              "fragment_sha256": "10a7befd02c2eec1deb54de1de73600321f3edff5b7ac438e91806214e249951",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "borrowing_rate": {
+          "value": 0.183,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "EQUIP-LEASE/borrowing_rate",
+              "fragment_sha256": "95347c0c50fb020f5244a304d8b8a02f6a1f88c1ec71886c84e2663a65224d3d",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "opex": {
+          "value": 265.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "EQUIP-LEASE/opex",
+              "fragment_sha256": "5da9b372264a9d8d4ad49bdd4d7f7b8c44e7d6cb04d9207a3025b1d5d4d0e641",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "prepayment_share": {
+          "value": 0.035,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "EQUIP-LEASE/prepayment_share",
+              "fragment_sha256": "fc97f30aa98112648e97ccf1e9a333a30cbfc85a50e08134d097e9137496b4b0",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "advance_rate": {
+          "value": 0.12,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "EQUIP-LEASE/advance_rate",
+              "fragment_sha256": "e4273aa967143d8d5e3656960c9916260a312532a978626100e1d103f56dbce0",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "tax_rate": {
+          "value": 0.25,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "EQUIP-LEASE/tax_rate",
+              "fragment_sha256": "dae7aea2f2228d92bf5dba3fb9894b3b2f08112e0c37c7d6046f3b6dff8a988b",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "standard": "management",
+        "entered_by": "demo:catalog"
+      },
+      "evidence": []
+    },
+    {
+      "item_id": "financial_statement:FLEET-LEASE",
+      "kind": "financial_statement",
+      "subject": "FLEET-LEASE",
+      "observed_on": "2026-09-11",
+      "values": {
+        "net_investment_leases": {
+          "value": 8600.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "FLEET-LEASE/net_investment_leases",
+              "fragment_sha256": "5c53f326b3fbd1005a58398858b83d0e9441555d1f6252914ca25c39ee4cd0b3",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "new_business": {
+          "value": 4200.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "FLEET-LEASE/new_business",
+              "fragment_sha256": "93ae447ae720fa2c9b41d3d73fdea2707d2fb12598c24e3adc7643c5b15e0d76",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "debt": {
+          "value": 6550.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "FLEET-LEASE/debt",
+              "fragment_sha256": "e49ea66372623bd73ecc4fee745c39979f917d285a2e3342c1b0bda46be80c29",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "equity": {
+          "value": 1800.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "FLEET-LEASE/equity",
+              "fragment_sha256": "3ba9957916c5b9825b9d4f7dd684594458f0fbb9414dfce7de3ea8c7f9c2314a",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "portfolio_yield": {
+          "value": 0.255,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "FLEET-LEASE/portfolio_yield",
+              "fragment_sha256": "a7aba50a900da2a1dfff6c2d5e9c3794f00989b2b655241b6a3e4bb0e320868e",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "amortization_rate": {
+          "value": 0.3,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "FLEET-LEASE/amortization_rate",
+              "fragment_sha256": "567f904e8cacbfe2cc286b7a495b2b5139e59f27c3cea5c273ae2f02d8bffdba",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "borrowing_rate": {
+          "value": 0.173,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "FLEET-LEASE/borrowing_rate",
+              "fragment_sha256": "4aad6dbf9cb6f2dcaf294589e1a585c6cc61bf892f57cffcf68f902c99502b0d",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "opex": {
+          "value": 310.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "FLEET-LEASE/opex",
+              "fragment_sha256": "3d6870b183d75095578dad1f8efffd57f2c4ca5bb42bbbb7d7ad025c64d235e5",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "prepayment_share": {
+          "value": 0.04,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "FLEET-LEASE/prepayment_share",
+              "fragment_sha256": "91146cb4f2ae3323a7292365ec42707b510af32d627718d92cf40d75134ec3fd",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "advance_rate": {
+          "value": 0.18,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "FLEET-LEASE/advance_rate",
+              "fragment_sha256": "dbeaf262b81f3bd256e7f51d3a3b4980f3ce5bc83504d0466b9a7217bdcd6892",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "tax_rate": {
+          "value": 0.25,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "FLEET-LEASE/tax_rate",
+              "fragment_sha256": "391244fb9ed2994e26cae1c9a7a3e384bf286e5526ede291f2624ae2b8457faf",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "standard": "management",
+        "entered_by": "demo:catalog"
+      },
+      "evidence": []
+    },
+    {
+      "item_id": "financial_statement:GARDEN-INFILL",
+      "kind": "financial_statement",
+      "subject": "GARDEN-INFILL",
+      "observed_on": "2026-09-11",
+      "values": {
+        "equity": {
+          "value": 230.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "GARDEN-INFILL/equity",
+              "fragment_sha256": "e24a7ed6e699b9c92ae35fd979739e92567bdfacd42cd52d965ceda5cf44addb",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "capex_month_1_12": {
+          "value": 44.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "GARDEN-INFILL/capex_month_1_12",
+              "fragment_sha256": "d99931f36ce9a36288e2ae23f997a272ca66c5fbb79c7aebd6e6302fb27193c1",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "monthly_sales": {
+          "value": 63.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "GARDEN-INFILL/monthly_sales",
+              "fragment_sha256": "049da88462a1d5ddcbeed2e8219b55e61392bdb6be4e261c2fd2c896c7da39d5",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "capex_month_13_24": {
+          "value": 0.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "GARDEN-INFILL/capex_month_13_24",
+              "fragment_sha256": "9721fdaf84a9b9b81a76fa186704dbecab7b4cceffb3e8f024f99fd9680b2718",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "sales_start_month": {
+          "value": 1.0,
+          "unit": "months",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "GARDEN-INFILL/sales_start_month",
+              "fragment_sha256": "af09f5afcfd4c2de40f5c1abcdbab96bd03515ed4f9a55e7c3a252a7b0dd0bab",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "commissioning_month": {
+          "value": 6.0,
+          "unit": "months",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "GARDEN-INFILL/commissioning_month",
+              "fragment_sha256": "5b044ffe3e79dac078f84069688a57479075867323eb3726f370fb85e21214a1",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "debt": {
+          "value": 780.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "GARDEN-INFILL/debt",
+              "fragment_sha256": "3d06b09b9577e00e35e6fa0635f8de7ad8d6f7a14a16d18f6e47607d39974b2c",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "escrow": {
+          "value": 1390.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "GARDEN-INFILL/escrow",
+              "fragment_sha256": "24ed521590b25eb96f68f61e1d3de21db037ab21a80086cfffef2b2fad0b525c",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "standard": "management",
+        "entered_by": "demo:catalog"
+      },
+      "evidence": []
+    },
+    {
+      "item_id": "financial_statement:HEAT-GRID",
+      "kind": "financial_statement",
+      "subject": "HEAT-GRID",
+      "observed_on": "2026-09-11",
+      "values": {
+        "revenue": {
+          "value": 9680.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "HEAT-GRID/revenue",
+              "fragment_sha256": "6cbb1d57a4d2d298346d3621e6ccba697133fc6a759922f54b3cb5a479063dba",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "cogs": {
+          "value": 4250.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "HEAT-GRID/cogs",
+              "fragment_sha256": "8fdbfc79b75c5c018ab900b5eb85224b3bfe1ac4fae7a5685bb465f33b649110",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "net_debt": {
+          "value": 5430.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "HEAT-GRID/net_debt",
+              "fragment_sha256": "fea5eaa9f5b482abb9b408dcb41adc9784671351f69890efe44693217a289297",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "borrowing_rate": {
+          "value": 0.157,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "HEAT-GRID/borrowing_rate",
+              "fragment_sha256": "d05b68c39cb46d01e53990d88346b390b3dc6030b40237260972116e0feba2c9",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "opex": {
+          "value": 1620.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "HEAT-GRID/opex",
+              "fragment_sha256": "64ab3f129bb0b99b445d72c21dd3caf83ef858c950e8e6f5ca10cfa36ee61b9f",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "opex_variable_share": {
+          "value": 0.15,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "HEAT-GRID/opex_variable_share",
+              "fragment_sha256": "0e631ee011678f8c598b892490a9fbb97bd2b1b720135b23687e546716a6aa5e",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "cash": {
+          "value": 480.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "HEAT-GRID/cash",
+              "fragment_sha256": "0776b7b245e296a05b7085cf322fc33b85f7aae7a89c8abc81f1a22175e230b7",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "dso": {
+          "value": 68.0,
+          "unit": "days",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "HEAT-GRID/dso",
+              "fragment_sha256": "167f5c537babe050e99efdf4c52ea16547b0830d2801f7021cfc0d5659f5a284",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "dio": {
+          "value": 19.0,
+          "unit": "days",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "HEAT-GRID/dio",
+              "fragment_sha256": "d2be2e0923b2df4405333e3df82795fcbbcf124947866560de52627a87542c7b",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "dpo": {
+          "value": 52.0,
+          "unit": "days",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "HEAT-GRID/dpo",
+              "fragment_sha256": "196134b9bd1688f38cb7e29640ec0c97d803aeabc20d845dbf221318cc2421f4",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "tax_rate": {
+          "value": 0.25,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "HEAT-GRID/tax_rate",
+              "fragment_sha256": "266ebdc62daaaf5dc20ce0fe38a7b1762e99ccfb1458d9a70d8e8541fd49899a",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "demand_elasticity": {
+          "value": -0.1,
+          "unit": "ratio",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "HEAT-GRID/demand_elasticity",
+              "fragment_sha256": "6aa0a6f20bef5b262fe29246b37e981649c1fe1a6c78fc28a27da8ebff002ffc",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "pass_through": {
+          "value": 0.1,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "HEAT-GRID/pass_through",
+              "fragment_sha256": "56a220b8de83a2623de8e7eaec8cb77b0065c1f67d0cf1ed6d415a2dab01347d",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "gross_debt": {
+          "value": 5910.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "HEAT-GRID/gross_debt",
+              "fragment_sha256": "ddd2cb0431f83b861e9025201e516c22d1f1d37bd3b071b6fa98e997f19f6608",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "scheduled_amortisation": {
+          "value": 310.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "HEAT-GRID/scheduled_amortisation",
+              "fragment_sha256": "b03ace8fe002b297382c29de70499e47e22a2ecf768c650a388c7da361da8ccb",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "credit_limit": {
+          "value": 1100.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "HEAT-GRID/credit_limit",
+              "fragment_sha256": "445e24fa05c99677b41b6429a7060141f883e1effd4533deb271376a1ce342a8",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "fixed_production_cost": {
+          "value": 1480.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "HEAT-GRID/fixed_production_cost",
+              "fragment_sha256": "c61ce47f52547423b76399c5c12993971ea8d31650d2f94f43fe2f94c1bb7a5d",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "capex": {
+          "value": 940.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "HEAT-GRID/capex",
+              "fragment_sha256": "b68f04c7119a85d28ea4bd201b3c40b11cba37cda295b7585281a717121cc966",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "cash_floor": {
+          "value": 120.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "HEAT-GRID/cash_floor",
+              "fragment_sha256": "c2c09ac90eaf985a514c4c7755302f894230b10dc2d1ae10fa865193fa0048cb",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "standard": "management",
+        "entered_by": "demo:catalog"
+      },
+      "evidence": []
+    },
+    {
+      "item_id": "financial_statement:HOME-APPLIANCES",
+      "kind": "financial_statement",
+      "subject": "HOME-APPLIANCES",
+      "observed_on": "2026-09-11",
+      "values": {
+        "revenue": {
+          "value": 11380.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "HOME-APPLIANCES/revenue",
+              "fragment_sha256": "6164bb4a6ab3c3975c7f6d7c227931e4962098fddb096d755a9052c7268b941a",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "cogs": {
+          "value": 8670.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "HOME-APPLIANCES/cogs",
+              "fragment_sha256": "dff23d0d88b60cdda54465749572ce91de748ddddae3323f15cd2d36b1c4e6c7",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "net_debt": {
+          "value": 2380.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "HOME-APPLIANCES/net_debt",
+              "fragment_sha256": "a7b3e2c6230ab969ecb93d3b408d60c177edf29d90b78904e8aae4541b8575cc",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "borrowing_rate": {
+          "value": 0.195,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "HOME-APPLIANCES/borrowing_rate",
+              "fragment_sha256": "665d955a3f6ce4af1562a13ae5a2821403e825937806d008474c54ac5a850af5",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "opex": {
+          "value": 1850.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "HOME-APPLIANCES/opex",
+              "fragment_sha256": "77d760fd4ec3d1cdf71c16edb1c74e89d194476fe5cf13b089b7336e98811872",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "opex_variable_share": {
+          "value": 0.15,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "HOME-APPLIANCES/opex_variable_share",
+              "fragment_sha256": "c27cf15d66baa3971c881c17435244eebee93bf32ab26467e4d22895b4760977",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "cash": {
+          "value": 340.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "HOME-APPLIANCES/cash",
+              "fragment_sha256": "55176780d676aaee4f010485dec5d8cafa24bd5f722acdbb60d96784127e11bc",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "dso": {
+          "value": 6.0,
+          "unit": "days",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "HOME-APPLIANCES/dso",
+              "fragment_sha256": "ae3364949376e1bf88620f747c91f2eadfcc70d3004a3f6e928710cf19d829de",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "dio": {
+          "value": 96.0,
+          "unit": "days",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "HOME-APPLIANCES/dio",
+              "fragment_sha256": "10730ca73111d440700ff7b96204c1cf673bde56cf7fcac0167ba14eaa6d1acc",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "dpo": {
+          "value": 48.0,
+          "unit": "days",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "HOME-APPLIANCES/dpo",
+              "fragment_sha256": "c0d9f5ae8c8d123d14590b30acdeb46a027f1cb75cef76a0e1529d3fc7b08b2f",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "tax_rate": {
+          "value": 0.25,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "HOME-APPLIANCES/tax_rate",
+              "fragment_sha256": "50911ffdbf0108a37a9329b6f82801463092a86f0bafaca68fe379ff898d7871",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "demand_elasticity": {
+          "value": -1.4,
+          "unit": "ratio",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "HOME-APPLIANCES/demand_elasticity",
+              "fragment_sha256": "f09075c4c7652f59b291c7a995df436849b4b9a3ec77bfea42d01750476b2814",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "pass_through": {
+          "value": 0.5,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "HOME-APPLIANCES/pass_through",
+              "fragment_sha256": "9986c6069c9d09b94290db60d6bac82c372365ca5de0b9ba2a83a90ba76e9e53",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "gross_debt": {
+          "value": 2720.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "HOME-APPLIANCES/gross_debt",
+              "fragment_sha256": "57516578d6cfa7253a2d4c9d06a3bc26fb43060f37691bc9415b34990add1980",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "scheduled_amortisation": {
+          "value": 220.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "HOME-APPLIANCES/scheduled_amortisation",
+              "fragment_sha256": "41291b2e8b9eb05c0471b799c04d16af8735bfc98cfa957da07deef4d848a663",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "credit_limit": {
+          "value": 680.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "HOME-APPLIANCES/credit_limit",
+              "fragment_sha256": "792048b9e36653f6de53de4c04082125c49f93e0b14c9fadc89d35896d930a4a",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "fixed_production_cost": {
+          "value": 0.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "HOME-APPLIANCES/fixed_production_cost",
+              "fragment_sha256": "2e1b62806d8c719fbc9452c41ade3f801ae0d218cb55c76bbfa26363370edc95",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "capex": {
+          "value": 130.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "HOME-APPLIANCES/capex",
+              "fragment_sha256": "0c4d898f6c9177efbb16c721f53c4e722d28e305136d6d5bd664c318ae25ae8e",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "cash_floor": {
+          "value": 85.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "HOME-APPLIANCES/cash_floor",
+              "fragment_sha256": "421fe7977cf2d001c3231ca9623448dab771c6eb9576d73d47bd07386e201d4b",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "standard": "management",
+        "entered_by": "demo:catalog"
+      },
+      "evidence": []
+    },
+    {
+      "item_id": "financial_statement:MED-SUPPLY",
+      "kind": "financial_statement",
+      "subject": "MED-SUPPLY",
+      "observed_on": "2026-09-11",
+      "values": {
+        "revenue": {
+          "value": 21900.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "MED-SUPPLY/revenue",
+              "fragment_sha256": "956c4eb3b4fbdd66435a7094dbd12c57c5c10dbca42d04a8097fe14c6ef98ef1",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "cogs": {
+          "value": 18140.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "MED-SUPPLY/cogs",
+              "fragment_sha256": "3f51d56c985132ac41d63daaa29ae56433a0fc3bd6e025fdf141af78f4ee5b4b",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "net_debt": {
+          "value": 2470.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "MED-SUPPLY/net_debt",
+              "fragment_sha256": "6398c17f3c2f779e2da80904a16808f47ffdc10d6ac624bcdaf9541018391daa",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "borrowing_rate": {
+          "value": 0.169,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "MED-SUPPLY/borrowing_rate",
+              "fragment_sha256": "8df18a972274a155bf9652f5f70d0c8a1fdafdeba5a1f6ac672cb2534b4c6a9e",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "opex": {
+          "value": 2040.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "MED-SUPPLY/opex",
+              "fragment_sha256": "0167136543f9d6dff6298bbf8add59df19e5c25b4df30aebe188ca168cd1a8ae",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "opex_variable_share": {
+          "value": 0.15,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "MED-SUPPLY/opex_variable_share",
+              "fragment_sha256": "739bf5ba1e8ff68b37c3ac43ea0c7e15c5560cfdc1a2f91ec882cc1e05ba3359",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "cash": {
+          "value": 560.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "MED-SUPPLY/cash",
+              "fragment_sha256": "2848c10a20542051127e79e714073945f00a35be7754dd5aa3f6afb41e70d5f2",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "dso": {
+          "value": 78.0,
+          "unit": "days",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "MED-SUPPLY/dso",
+              "fragment_sha256": "529798f54a3d9ea352ce72b0491510762527e6c5a1c23f245ff01a186bbebf81",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "dio": {
+          "value": 61.0,
+          "unit": "days",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "MED-SUPPLY/dio",
+              "fragment_sha256": "346949ed348dc7153660db5e227e2405dc2a6a1efdd6c2fa6f1a618cdd188052",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "dpo": {
+          "value": 68.0,
+          "unit": "days",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "MED-SUPPLY/dpo",
+              "fragment_sha256": "143c6f1c325e656546fd75961c98ab578084469a7808a48aa12baa6b37f49f2a",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "tax_rate": {
+          "value": 0.25,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "MED-SUPPLY/tax_rate",
+              "fragment_sha256": "2fd0914c1c08c237396881027a9de3e812ed58f439c99a32cc6d675a310929a1",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "demand_elasticity": {
+          "value": -0.18,
+          "unit": "ratio",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "MED-SUPPLY/demand_elasticity",
+              "fragment_sha256": "7b57d742a1904f55ac42feb2cbb6639600283ebe54d8d671e5e25971921360b4",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "pass_through": {
+          "value": 0.62,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "MED-SUPPLY/pass_through",
+              "fragment_sha256": "0b4b0774a544d811cb642e37c1fdc4e246804f872828684f25c8bd4405e38464",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "gross_debt": {
+          "value": 3030.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "MED-SUPPLY/gross_debt",
+              "fragment_sha256": "e1e128aab2e1ee5b1e24d950c71c8a7a9dd15539909c9933c1688f7ec9f09bbf",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "scheduled_amortisation": {
+          "value": 240.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "MED-SUPPLY/scheduled_amortisation",
+              "fragment_sha256": "bad0976531989dc2889ff04627ff8969419efdd95098908210b0dfcb1dd38568",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "credit_limit": {
+          "value": 1200.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "MED-SUPPLY/credit_limit",
+              "fragment_sha256": "5926c9d82b9c6c1657bb38f0a467f81477206015ed5e59e9d6c0de94e7e47bfe",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "fixed_production_cost": {
+          "value": 0.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "MED-SUPPLY/fixed_production_cost",
+              "fragment_sha256": "c0c6aceb82e8869085f9e7eb7cb5d4cb0c67ed17374a9c7de77c218a6a6c3dc5",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "capex": {
+          "value": 95.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "MED-SUPPLY/capex",
+              "fragment_sha256": "792a3714a27cfaeaa6f2dfa4845b5a2aaf662f2168f588c4c7f655c29b89c6e1",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "cash_floor": {
+          "value": 140.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "MED-SUPPLY/cash_floor",
+              "fragment_sha256": "e1fe5b21a76bd2d1e7d0a40804f2205b753a05d727ca6875930c42f7de1673ce",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "standard": "management",
+        "entered_by": "demo:catalog"
+      },
+      "evidence": []
+    },
+    {
+      "item_id": "financial_statement:NORTH-TIMBER",
+      "kind": "financial_statement",
+      "subject": "NORTH-TIMBER",
+      "observed_on": "2026-09-11",
+      "values": {
+        "revenue": {
+          "value": 12840.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "NORTH-TIMBER/revenue",
+              "fragment_sha256": "117cd17c3177fef56c95ad4a03083bb6363ffde4870b2d38eb63f99568515315",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "cogs": {
+          "value": 7460.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "NORTH-TIMBER/cogs",
+              "fragment_sha256": "2723388fcf4ab586d4f2f2f68d5408aacade6b688074c1894ea94eef5d63353a",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "net_debt": {
+          "value": 4180.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "NORTH-TIMBER/net_debt",
+              "fragment_sha256": "f633895ee65aadb22a23c6d200dd0de07c814c6dab81d272b0be83ce3b7998f7",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "borrowing_rate": {
+          "value": 0.164,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "NORTH-TIMBER/borrowing_rate",
+              "fragment_sha256": "ce75500d787da28f4316540f9e94f56046f4d115cb3d4f86e9c02d981aaf2b6e",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "opex": {
+          "value": 1680.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "NORTH-TIMBER/opex",
+              "fragment_sha256": "f3272bbf25a9e16846935e525f100003d18591d7d9ffaf83745af9b31a776281",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "opex_variable_share": {
+          "value": 0.15,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "NORTH-TIMBER/opex_variable_share",
+              "fragment_sha256": "7a926b58391178baddc449810c7f37a7c86a047a632a9d65dd819eae5e1b810c",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "cash": {
+          "value": 620.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "NORTH-TIMBER/cash",
+              "fragment_sha256": "5bcfa6eaadb9f5c026c2c7da683d842a867deeac7c39264ea05b4c682d785175",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "dso": {
+          "value": 57.0,
+          "unit": "days",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "NORTH-TIMBER/dso",
+              "fragment_sha256": "81ad31b8bb14c35aa644616ff24cc90d89e80a9fb668edbcd52f0a5d9d94ef19",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "dio": {
+          "value": 43.0,
+          "unit": "days",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "NORTH-TIMBER/dio",
+              "fragment_sha256": "bad12a8a569d2f048b35d3b8cc71f928b01bc1315151285ed15d6352484844d0",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "dpo": {
+          "value": 31.0,
+          "unit": "days",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "NORTH-TIMBER/dpo",
+              "fragment_sha256": "b1db2ce087bf7de34611c8436229b0fe19dbb83b812df89bf407f457a10ac5af",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "tax_rate": {
+          "value": 0.25,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "NORTH-TIMBER/tax_rate",
+              "fragment_sha256": "12bde76c26da210444f1061ad1e8721401f928127e99d5357fd7e3d58ed0691f",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "demand_elasticity": {
+          "value": -0.65,
+          "unit": "ratio",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "NORTH-TIMBER/demand_elasticity",
+              "fragment_sha256": "7eebd7528a5cd72467f8120eba2be89997fbb7e010fd03545def2bdb9c619eee",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "pass_through": {
+          "value": 0.18,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "NORTH-TIMBER/pass_through",
+              "fragment_sha256": "995df43a68289614d49ee0c6874d325d6584ecce53004c216ab75378b1332ca7",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "gross_debt": {
+          "value": 4800.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "NORTH-TIMBER/gross_debt",
+              "fragment_sha256": "6498a6c0ca1135f48fa6faddde73d5530b0bc4dbc789aea23215863eae96b2f5",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "scheduled_amortisation": {
+          "value": 420.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "NORTH-TIMBER/scheduled_amortisation",
+              "fragment_sha256": "814c981c04ef0212b24a14110644da56d3ae6d78626537fb6c32f0880035847f",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "credit_limit": {
+          "value": 900.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "NORTH-TIMBER/credit_limit",
+              "fragment_sha256": "28f8a3690d459269e0032da4a5a0d5f7de7e053e652c4a5a5f3c3df994956eef",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "fixed_production_cost": {
+          "value": 1260.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "NORTH-TIMBER/fixed_production_cost",
+              "fragment_sha256": "60a6c3f6a55a725c43deb8583ff5a16e570634b4f1e93dd859f48d0935e321a6",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "capex": {
+          "value": 580.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "NORTH-TIMBER/capex",
+              "fragment_sha256": "6e8f97c0f8f83b2ab3c656c98fe0b89363e679c827aab4eaa5ea7eb31e9ddd5e",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "cash_floor": {
+          "value": 155.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "NORTH-TIMBER/cash_floor",
+              "fragment_sha256": "34410a78777c4a3ef3ef69628dbaa3af9f918cadf448e3d42a7e45feec3c591c",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "standard": "management",
+        "entered_by": "demo:catalog"
+      },
+      "evidence": []
+    },
+    {
+      "item_id": "financial_statement:PACKAGING",
+      "kind": "financial_statement",
+      "subject": "PACKAGING",
+      "observed_on": "2026-09-11",
+      "values": {
+        "revenue": {
+          "value": 5940.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PACKAGING/revenue",
+              "fragment_sha256": "f7bb264554ff404fd0b15a73249be8759f2217ad64704a0916cfbb4d1d77d7e4",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "cogs": {
+          "value": 3470.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PACKAGING/cogs",
+              "fragment_sha256": "a058a1c9b33e5730af23831e3b0e89057532aa5ae53146f884e9a0239bc9b8e6",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "net_debt": {
+          "value": 1870.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PACKAGING/net_debt",
+              "fragment_sha256": "b1f7d7d2716e04706ade9a36d2073f317f08603694c09bc3d847afb728d4efa3",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "borrowing_rate": {
+          "value": 0.161,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PACKAGING/borrowing_rate",
+              "fragment_sha256": "266dc62fd68bba6d75a72aa818d1af69dabf0e93aef420c1ae23685cb3d5ffc1",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "opex": {
+          "value": 780.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PACKAGING/opex",
+              "fragment_sha256": "4ae6f8e51fb3e8cb78262ad0896708a7601fa89c3aeddb870dacdbbd7a929032",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "opex_variable_share": {
+          "value": 0.15,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PACKAGING/opex_variable_share",
+              "fragment_sha256": "fa00934f3751454c805873167f42408ee3a8c0fe907c7f08272feb29aeee0d6c",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "cash": {
+          "value": 310.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PACKAGING/cash",
+              "fragment_sha256": "13a176f90abbcb28366b089f4148a43263067e9e485b0535f4fa169cec5167b7",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "dso": {
+          "value": 39.0,
+          "unit": "days",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PACKAGING/dso",
+              "fragment_sha256": "540d0504142870d904b4c72feaa2e8e29023d0a6dc0c613a59591f62b8477a07",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "dio": {
+          "value": 34.0,
+          "unit": "days",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PACKAGING/dio",
+              "fragment_sha256": "17a549f2c776725775429682a68167fc71cdcf8c0b290de99be9c26ef5ab2985",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "dpo": {
+          "value": 42.0,
+          "unit": "days",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PACKAGING/dpo",
+              "fragment_sha256": "5fb28a8d3af4ed97615066a7273897c773fc1acbd8483b96e69e54db7c9b091b",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "tax_rate": {
+          "value": 0.25,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PACKAGING/tax_rate",
+              "fragment_sha256": "7ed23f6b29244c035801e6aed67666d65aac1bd747779bcf2bf3ea2483923de6",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "demand_elasticity": {
+          "value": -0.62,
+          "unit": "ratio",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PACKAGING/demand_elasticity",
+              "fragment_sha256": "2cdc94c355123a5cf110021578752afe76d2000fb2f4882e18a5eabd2bd3c228",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "pass_through": {
+          "value": 0.48,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PACKAGING/pass_through",
+              "fragment_sha256": "992cc19d5b8c2ed68868a1cb7a905904ee0d428140df648290f2a203ff7198a8",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "gross_debt": {
+          "value": 2180.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PACKAGING/gross_debt",
+              "fragment_sha256": "0f7c10b7b1d337eac7376dc19ed81e9d7855250cd317b3e83c0cd73e56541eff",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "scheduled_amortisation": {
+          "value": 170.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PACKAGING/scheduled_amortisation",
+              "fragment_sha256": "e4c799637d67a9201638f522908c31a660302a01add72765c1bd3c9e54e5e996",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "credit_limit": {
+          "value": 500.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PACKAGING/credit_limit",
+              "fragment_sha256": "eaa8d1dbd3078b83193783b33022be39de2704d173303e31947032cdabe6a19b",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "fixed_production_cost": {
+          "value": 590.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PACKAGING/fixed_production_cost",
+              "fragment_sha256": "02856590c3dbd2d6e2642d3b64da66195c5f5986f5883981b4013461d79879ff",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "capex": {
+          "value": 240.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PACKAGING/capex",
+              "fragment_sha256": "0ab20b39dbde1a562e0ca2d1e788fc3831ef933e5b039246c3c33bcd79919cb0",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "cash_floor": {
+          "value": 78.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PACKAGING/cash_floor",
+              "fragment_sha256": "dc03c1237904aaf155258c44af70242a98ddf3d86c8928183aed6fecaa10eb63",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "standard": "management",
+        "entered_by": "demo:catalog"
+      },
+      "evidence": []
+    },
+    {
+      "item_id": "financial_statement:PARK-QUARTER",
+      "kind": "financial_statement",
+      "subject": "PARK-QUARTER",
+      "observed_on": "2026-09-11",
+      "values": {
+        "equity": {
+          "value": 410.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PARK-QUARTER/equity",
+              "fragment_sha256": "6243d30db9a4ede62e702c42c35e31d77e076da984b3681f4bee4626940e3ddd",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "capex_month_1_12": {
+          "value": 88.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PARK-QUARTER/capex_month_1_12",
+              "fragment_sha256": "ac4c19fd8521f0e02567387f1e344cef00b6a49db3638a459080002a729ddbc2",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "monthly_sales": {
+          "value": 135.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PARK-QUARTER/monthly_sales",
+              "fragment_sha256": "056f298ce48d262ed40b9500b72773b4e98d45e477ed897903ee5e4238318bee",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "capex_month_13_24": {
+          "value": 0.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PARK-QUARTER/capex_month_13_24",
+              "fragment_sha256": "5bf765bc17daa9e21fcbce5047c9e058956325477f96e1427f29527fe9b4fff0",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "sales_start_month": {
+          "value": 1.0,
+          "unit": "months",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PARK-QUARTER/sales_start_month",
+              "fragment_sha256": "cc3566b0cc0d7dbc83332d3e4aba9e30e67381cc2b29fd8f27d37a637536973f",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "commissioning_month": {
+          "value": 9.0,
+          "unit": "months",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PARK-QUARTER/commissioning_month",
+              "fragment_sha256": "3483f76f0bcf25bce281292c36d2ba59919aa56ed30e657aa61bfd29a5005a6f",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "debt": {
+          "value": 1540.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PARK-QUARTER/debt",
+              "fragment_sha256": "64e7ad98d6d71d8b459c2367787660a002ef9ecfb7c9208a764a34ec7ca5213f",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "escrow": {
+          "value": 2110.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PARK-QUARTER/escrow",
+              "fragment_sha256": "299765e0da798c6007e007f5937a7cb665492e1a74f27abc136ecae557231297",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "standard": "management",
+        "entered_by": "demo:catalog"
+      },
+      "evidence": []
+    },
+    {
+      "item_id": "financial_statement:PRECAST",
+      "kind": "financial_statement",
+      "subject": "PRECAST",
+      "observed_on": "2026-09-11",
+      "values": {
+        "revenue": {
+          "value": 5270.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PRECAST/revenue",
+              "fragment_sha256": "c59b4c3877184049713db7ad78ec1cf1934c46221a3515041bcef5fb4932ca9c",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "cogs": {
+          "value": 2910.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PRECAST/cogs",
+              "fragment_sha256": "7489263667e764349748c0cc2ea5388fa3c23bdc8bf29657da6050d8b4593484",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "net_debt": {
+          "value": 1840.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PRECAST/net_debt",
+              "fragment_sha256": "46bc60869a9e63a92a821b71655741aa1330c664ab5cb8b57813f8b79799138c",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "borrowing_rate": {
+          "value": 0.183,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PRECAST/borrowing_rate",
+              "fragment_sha256": "c1e870e1c80cefd1bf8c9cc62335c6d8eae3dffdc0eaa573644b4d47be33483d",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "opex": {
+          "value": 730.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PRECAST/opex",
+              "fragment_sha256": "f85e5c489b0f2414472f3dd93fe92286f1119c7e07145ed3aeeffc8f96f5a9d2",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "opex_variable_share": {
+          "value": 0.15,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PRECAST/opex_variable_share",
+              "fragment_sha256": "0ccca8d1d1c7e703c9d53028f403c99295c890889174b95e32423c8cd963af57",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "cash": {
+          "value": 215.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PRECAST/cash",
+              "fragment_sha256": "3cfa3851187c750248f44481e37ce2c50ae2d2d90dec877e57f6c69dcc918f8a",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "dso": {
+          "value": 52.0,
+          "unit": "days",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PRECAST/dso",
+              "fragment_sha256": "46b9b04419bb53aa9f7c42dfbbf3c0e83cea3cdd5e69e79b115465048d5030d7",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "dio": {
+          "value": 37.0,
+          "unit": "days",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PRECAST/dio",
+              "fragment_sha256": "b57d0c55fc9b6a1b1010ad810c347b5a2ff232a37154bc067eabfdeb9fdea80c",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "dpo": {
+          "value": 35.0,
+          "unit": "days",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PRECAST/dpo",
+              "fragment_sha256": "6c0da0e5e01163e9ef1488c98377e79cca0afb1ca8333da1763a9e6d614efb3d",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "tax_rate": {
+          "value": 0.25,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PRECAST/tax_rate",
+              "fragment_sha256": "1cece5fd2da46d0c005aded4968d9d6ea2b851e0ff06c5481b765e0b89c59af9",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "demand_elasticity": {
+          "value": -0.8,
+          "unit": "ratio",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PRECAST/demand_elasticity",
+              "fragment_sha256": "853589a8eb4292136cbb96881c944523e850b6f40981f74e21e0ca690b5067e1",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "pass_through": {
+          "value": 0.32,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PRECAST/pass_through",
+              "fragment_sha256": "9e325e12b13a2e7f59e823e9011f08c26c1682c7e85904a9781a15da71d89505",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "gross_debt": {
+          "value": 2055.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PRECAST/gross_debt",
+              "fragment_sha256": "9e69eee12254131e812af1741ae4fad9a379fa520dbc479dea1be17708ea7681",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "scheduled_amortisation": {
+          "value": 180.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PRECAST/scheduled_amortisation",
+              "fragment_sha256": "cdcae5c1cb1770d5b7f047aa6057e15f120c7cf61ed73fd16082109d108771e3",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "credit_limit": {
+          "value": 600.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PRECAST/credit_limit",
+              "fragment_sha256": "37c331867c43e35af91fe8a2cb94e8e7e1e93e3a3a6e1bf8a095b210b9093b39",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "fixed_production_cost": {
+          "value": 840.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PRECAST/fixed_production_cost",
+              "fragment_sha256": "c4a02bfcc5f8272ea439f29da367f8d65ee2f35788066cbe3eb5cef416142e5f",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "capex": {
+          "value": 270.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PRECAST/capex",
+              "fragment_sha256": "00289245ae3864ae37b58d84474d3600ea450d14e94f8c9cb84e100925e3a865",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "cash_floor": {
+          "value": 54.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PRECAST/cash_floor",
+              "fragment_sha256": "894dbbbdfad55089497fbf702ad542afdd12ddaa4cb64ee3bcf763bad763ece6",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "standard": "management",
+        "entered_by": "demo:catalog"
+      },
+      "evidence": []
+    },
+    {
+      "item_id": "financial_statement:REGION-LEASE",
+      "kind": "financial_statement",
+      "subject": "REGION-LEASE",
+      "observed_on": "2026-09-11",
+      "values": {
+        "net_investment_leases": {
+          "value": 3950.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "REGION-LEASE/net_investment_leases",
+              "fragment_sha256": "ec68e4d8cf759ddc59c9ad1ce51734363dc3a4701631bb09a9261afc89d6f914",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "new_business": {
+          "value": 480.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "REGION-LEASE/new_business",
+              "fragment_sha256": "133c74c8ea2c7e0ccc03f477dd07303dd9af539c6c5a9371276720a8e059e75d",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "debt": {
+          "value": 1840.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "REGION-LEASE/debt",
+              "fragment_sha256": "30b1777caa23290ca4a00d55fd883fc77480ae8f1d932b4ab84657ba6d872db7",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "equity": {
+          "value": 2110.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "REGION-LEASE/equity",
+              "fragment_sha256": "4329ad43c83d9e06cc21d93382d7a3cd030f9a339c7ca042de763d2b90925296",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "portfolio_yield": {
+          "value": 0.231,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "REGION-LEASE/portfolio_yield",
+              "fragment_sha256": "b4fcd1929ca394fa98f07c8e0619e1896f0dbcc2c7486d2972464e69e71b4a81",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "amortization_rate": {
+          "value": 0.33,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "REGION-LEASE/amortization_rate",
+              "fragment_sha256": "4d1862d6ee81aed441865698ee95b2a1604a53c383981c52964483423965df54",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "borrowing_rate": {
+          "value": 0.158,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "REGION-LEASE/borrowing_rate",
+              "fragment_sha256": "63ad00b8e37538faca5689e4ac1af85d2f891ccf35fe017fd48e7d65a5b7ff8c",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "opex": {
+          "value": 205.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "REGION-LEASE/opex",
+              "fragment_sha256": "365abac34101c1fef35506bf5cdb317221ab2f1d1c76f3034f084ad40a874e36",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "prepayment_share": {
+          "value": 0.09,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "REGION-LEASE/prepayment_share",
+              "fragment_sha256": "6813c5a67230055057e5d2fa4a28f99573bad2db291acbbf9d58e3adbf17934e",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "advance_rate": {
+          "value": 0.22,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "REGION-LEASE/advance_rate",
+              "fragment_sha256": "aca0368c122b970f0f08e15e4733ee1ef1ea99097244f3cf5c468f39221faf67",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "tax_rate": {
+          "value": 0.25,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "REGION-LEASE/tax_rate",
+              "fragment_sha256": "3be46264ed9b0b2ee590c6868b9e42ae0218eb4b9a21778d810aedb3b715b5d0",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "standard": "management",
+        "entered_by": "demo:catalog"
+      },
+      "evidence": []
+    },
+    {
+      "item_id": "financial_statement:REGIONAL-DAIRY",
+      "kind": "financial_statement",
+      "subject": "REGIONAL-DAIRY",
+      "observed_on": "2026-09-11",
+      "values": {
+        "revenue": {
+          "value": 7160.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "REGIONAL-DAIRY/revenue",
+              "fragment_sha256": "a7b80228a3e755363c2c284ec6b42d2a7add1172ac14a8e9760ca87dc06c1e62",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "cogs": {
+          "value": 4890.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "REGIONAL-DAIRY/cogs",
+              "fragment_sha256": "87e15beac69cc386a2c8457ab7b3157cd0b797e8adc95ddb4113c6b104a5d801",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "net_debt": {
+          "value": 1790.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "REGIONAL-DAIRY/net_debt",
+              "fragment_sha256": "821c8868caeeee9dec07c37a25ae9ba5e77e0b15359edbcec461fd3e00fcbfe3",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "borrowing_rate": {
+          "value": 0.175,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "REGIONAL-DAIRY/borrowing_rate",
+              "fragment_sha256": "d7337cc1e74afc2eee098c6683308239161a117efd5efc011057b5c88c8c259a",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "opex": {
+          "value": 870.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "REGIONAL-DAIRY/opex",
+              "fragment_sha256": "ade7fe5d92704d5e67d624f6199e520d112cc40efdd61278fe3f8c89a36db3e0",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "opex_variable_share": {
+          "value": 0.15,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "REGIONAL-DAIRY/opex_variable_share",
+              "fragment_sha256": "654a6e3c2416b98206cefcf98be35795515a7c2771242b4448b36b8af0cea592",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "cash": {
+          "value": 260.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "REGIONAL-DAIRY/cash",
+              "fragment_sha256": "fb063eb62fc205d11ffcb98891358f0f7bf20e95a4fa4dca7afce77d2408c9e7",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "dso": {
+          "value": 37.0,
+          "unit": "days",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "REGIONAL-DAIRY/dso",
+              "fragment_sha256": "d17d6ebf655dba9b29768aa8eadbdfa36beecc9d6483a3616dc68f1e000aa811",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "dio": {
+          "value": 12.0,
+          "unit": "days",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "REGIONAL-DAIRY/dio",
+              "fragment_sha256": "8c0995137a1060057b8b00f684fc4a1bf4235a183c198910c1e83f4cfbbc3fa6",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "dpo": {
+          "value": 24.0,
+          "unit": "days",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "REGIONAL-DAIRY/dpo",
+              "fragment_sha256": "e5d5c9178ab58c66f3268e1a336a5e6ded68753fcf85a973224c3d3b3aba9737",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "tax_rate": {
+          "value": 0.25,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "REGIONAL-DAIRY/tax_rate",
+              "fragment_sha256": "797fac96b598b2b06ed087b75189b8e387bc9bcf33411b0496ac3f4d04f46aca",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "demand_elasticity": {
+          "value": -0.45,
+          "unit": "ratio",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "REGIONAL-DAIRY/demand_elasticity",
+              "fragment_sha256": "485adb49e986c0ddc2bd95f8ca180b5a4578863650bc4992be7797b449e017a1",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "pass_through": {
+          "value": 0.42,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "REGIONAL-DAIRY/pass_through",
+              "fragment_sha256": "82c29874d682117c77df748330b4d9c3c4f4ac938f7ce57945f71f0e8df793ef",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "gross_debt": {
+          "value": 2050.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "REGIONAL-DAIRY/gross_debt",
+              "fragment_sha256": "96c7956e91a7d738a1d25ea78b8f6769cc3b71e30c23d8abf8105afaaca0d98f",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "scheduled_amortisation": {
+          "value": 160.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "REGIONAL-DAIRY/scheduled_amortisation",
+              "fragment_sha256": "2572fc27f724f2eaeeaa1586258403e2a0a8f0f342769de3f21fce5169b8c4a8",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "credit_limit": {
+          "value": 450.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "REGIONAL-DAIRY/credit_limit",
+              "fragment_sha256": "9e6cda3f05c3bd802ee14827fafc69e94be8def1b69cb2d3e910608e77b96877",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "fixed_production_cost": {
+          "value": 360.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "REGIONAL-DAIRY/fixed_production_cost",
+              "fragment_sha256": "a05054b286d25061e87e5a48089c9f2d7fd85814fcb3af5ca7df99cd8f9adff8",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "capex": {
+          "value": 310.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "REGIONAL-DAIRY/capex",
+              "fragment_sha256": "d4c72f21c8abda02cf8a3262c62b4d6f9aeabcc2f26d5b4090c550ad3ef4ba7c",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "cash_floor": {
+          "value": 65.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "REGIONAL-DAIRY/cash_floor",
+              "fragment_sha256": "b65a788c6dbb173be1ae2a245978cc9d7d686eadf7e7e2f84bec12b0bf573bd5",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "standard": "management",
+        "entered_by": "demo:catalog"
+      },
+      "evidence": []
+    },
+    {
+      "item_id": "financial_statement:RIVER-QUARTER",
+      "kind": "financial_statement",
+      "subject": "RIVER-QUARTER",
+      "observed_on": "2026-09-11",
+      "values": {
+        "equity": {
+          "value": 340.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "RIVER-QUARTER/equity",
+              "fragment_sha256": "efb2c2f2dd8d795df50b53dec1840de632dd86bae363929e820b025e685eaa6c",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "capex_month_1_12": {
+          "value": 145.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "RIVER-QUARTER/capex_month_1_12",
+              "fragment_sha256": "e936c8fc982daa748d83c8c882e8c47773b4343af815b21187f74819b31a8699",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "monthly_sales": {
+          "value": 192.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "RIVER-QUARTER/monthly_sales",
+              "fragment_sha256": "71853466a049fde7d88a13eb474d3d0d2c5bed342dcac48951a32583651d1092",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "capex_month_13_24": {
+          "value": 105.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "RIVER-QUARTER/capex_month_13_24",
+              "fragment_sha256": "e615b7ad2ffc7ddfcef9863421765d614a74ff682182f402e919d9b34d36813f",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "sales_start_month": {
+          "value": 1.0,
+          "unit": "months",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "RIVER-QUARTER/sales_start_month",
+              "fragment_sha256": "ef9ef9cfac34bb483cec3f5cfba10fe0bdaa2b2c8e252530584efe7d05c601eb",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "commissioning_month": {
+          "value": 18.0,
+          "unit": "months",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "RIVER-QUARTER/commissioning_month",
+              "fragment_sha256": "8b1d556c47217483f67fcfdcdb9adbe36d30f856b5014bd126f99cd2f5c26078",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "debt": {
+          "value": 1760.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "RIVER-QUARTER/debt",
+              "fragment_sha256": "ffdd09c3c008583f0f50c2a449e0381cf83349038b2ae8c8269532ede788b0e4",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "escrow": {
+          "value": 1490.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "RIVER-QUARTER/escrow",
+              "fragment_sha256": "15f30a0c2c3a13d20847bea76e63ecc97650e1755d8a2289285d6958815d0b7d",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "standard": "management",
+        "entered_by": "demo:catalog"
+      },
+      "evidence": []
+    },
+    {
+      "item_id": "financial_statement:ROUTE-TRANS",
+      "kind": "financial_statement",
+      "subject": "ROUTE-TRANS",
+      "observed_on": "2026-09-11",
+      "values": {
+        "revenue": {
+          "value": 6740.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "ROUTE-TRANS/revenue",
+              "fragment_sha256": "3bc3c9a328051c0137448a62d3570242a1ed5a31265d089575873299b7f6d2d5",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "cogs": {
+          "value": 3830.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "ROUTE-TRANS/cogs",
+              "fragment_sha256": "2d143c9f3e71bf9f2999b4e469a01ad857badf4ef0f483f2797ffee99b109835",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "net_debt": {
+          "value": 1760.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "ROUTE-TRANS/net_debt",
+              "fragment_sha256": "a4de4c83b1d8d6782b7a638516dfac9a514f19bb77ca03b5e48dfb4cba1f5da5",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "borrowing_rate": {
+          "value": 0.181,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "ROUTE-TRANS/borrowing_rate",
+              "fragment_sha256": "84c678009a6d009bb3041836c9dc86cbe3d6df45e735d617bb6cc2c37007f6bb",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "opex": {
+          "value": 1020.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "ROUTE-TRANS/opex",
+              "fragment_sha256": "7be88a09b8da15ad8feeb3a7779695a469611385a32395cbfef0dc387734aecf",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "opex_variable_share": {
+          "value": 0.15,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "ROUTE-TRANS/opex_variable_share",
+              "fragment_sha256": "967898aa573c13c4db9c36c0e2e4dd661069bf21d12b5d88a0bd5166e01d87b8",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "cash": {
+          "value": 245.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "ROUTE-TRANS/cash",
+              "fragment_sha256": "18ebf3854c3243b06b3aaaf0179fadf522ccc3874d0d6a71307f8e24ca20ec47",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "dso": {
+          "value": 44.0,
+          "unit": "days",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "ROUTE-TRANS/dso",
+              "fragment_sha256": "784ef508f42f0a7dc42a78fad2b7e8ddef7d77f498d6a312781e8219c4035707",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "dio": {
+          "value": 6.0,
+          "unit": "days",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "ROUTE-TRANS/dio",
+              "fragment_sha256": "54937870f34b10329a29e1cdccee0e2af769438f27f27dcc5858d010cbba0b37",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "dpo": {
+          "value": 27.0,
+          "unit": "days",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "ROUTE-TRANS/dpo",
+              "fragment_sha256": "d2a3770d8aac2ef430fb0a2d72a1b021e7ba872487286bc57dab40a09f8d3fb9",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "tax_rate": {
+          "value": 0.25,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "ROUTE-TRANS/tax_rate",
+              "fragment_sha256": "209d8d9edbfeff8a02c5f81c598ed6a1d65ffed67fc9619d4fac421f39803486",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "demand_elasticity": {
+          "value": -0.55,
+          "unit": "ratio",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "ROUTE-TRANS/demand_elasticity",
+              "fragment_sha256": "668c4fb11ad81f9dd75fb9f26f3e66b825f31453946d442947dfd2d8f86eccda",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "pass_through": {
+          "value": 0.35,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "ROUTE-TRANS/pass_through",
+              "fragment_sha256": "05196cb6915ee7fe36deb9f96590ed50c1616cc05e2dfe8be0ef75ef4ea95338",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "gross_debt": {
+          "value": 2005.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "ROUTE-TRANS/gross_debt",
+              "fragment_sha256": "3c6b1a745da6366a683f7ac520bcd63d03419e8b3847ff6960c8fdf045503355",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "scheduled_amortisation": {
+          "value": 180.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "ROUTE-TRANS/scheduled_amortisation",
+              "fragment_sha256": "7c33e8fee645f7d44520817bce6f5aed749abf0d534a3996ba122b55b10eb2dd",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "credit_limit": {
+          "value": 460.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "ROUTE-TRANS/credit_limit",
+              "fragment_sha256": "a7e4190ddc34ad8e00401d6c7afed3fcc2723735b1aa0a93a0cb7779258a4643",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "fixed_production_cost": {
+          "value": 640.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "ROUTE-TRANS/fixed_production_cost",
+              "fragment_sha256": "ac4f782a5c58cec938255e166337597491a863fe574685533df7adbc83be2971",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "capex": {
+          "value": 430.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "ROUTE-TRANS/capex",
+              "fragment_sha256": "5b73406ea483c50054676b668a60aa16a00758f1de75461d6743c39ffd3f6bf1",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "cash_floor": {
+          "value": 61.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "ROUTE-TRANS/cash_floor",
+              "fragment_sha256": "fe6ab156872de783ad84dbbcba0f372ef0f97faeec58603bc19c05fe23d41f11",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "standard": "management",
+        "entered_by": "demo:catalog"
+      },
+      "evidence": []
+    },
+    {
+      "item_id": "financial_statement:STATION-HOMES",
+      "kind": "financial_statement",
+      "subject": "STATION-HOMES",
+      "observed_on": "2026-09-11",
+      "values": {
+        "equity": {
+          "value": 270.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "STATION-HOMES/equity",
+              "fragment_sha256": "e4a0d7a13a93ced27f66b95220d38a3e6c8b4bbbb78a54fc634c7bc30b287c35",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "capex_month_1_12": {
+          "value": 165.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "STATION-HOMES/capex_month_1_12",
+              "fragment_sha256": "5745ad55165d4d46d573ba3791d237a8064fb9469eb8b656b02579e056e142ac",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "monthly_sales": {
+          "value": 188.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "STATION-HOMES/monthly_sales",
+              "fragment_sha256": "279e041314b8f648f43a4876fa7f7648c4714d26143906a7e3a6adc8d8ee5965",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "capex_month_13_24": {
+          "value": 125.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "STATION-HOMES/capex_month_13_24",
+              "fragment_sha256": "d8fb8fac1f42260735f5b955a0c10822bc3c814704a5930384dfa1cc7b7f47e7",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "sales_start_month": {
+          "value": 4.0,
+          "unit": "months",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "STATION-HOMES/sales_start_month",
+              "fragment_sha256": "02c91060291cb077616aaf7f8a3116af72b3d245df2f6c2fd1c65cdab90916d2",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "commissioning_month": {
+          "value": 22.0,
+          "unit": "months",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "STATION-HOMES/commissioning_month",
+              "fragment_sha256": "68c3938f242904efb8e49de27ce08ed789730310eb266360e94e4ba9c55d63f5",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "debt": {
+          "value": 520.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "STATION-HOMES/debt",
+              "fragment_sha256": "191f384dcb25ffe8761a8919463c50d4600dd379e15503ed5b96992c4cdb587b",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "escrow": {
+          "value": 120.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "STATION-HOMES/escrow",
+              "fragment_sha256": "518d4c836139e437e74d364101b4b1ca86e8df95180674d389b03607590096a6",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "standard": "management",
+        "entered_by": "demo:catalog"
+      },
+      "evidence": []
+    },
+    {
+      "item_id": "financial_statement:VALUE-MART",
+      "kind": "financial_statement",
+      "subject": "VALUE-MART",
+      "observed_on": "2026-09-11",
+      "values": {
+        "revenue": {
+          "value": 24750.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "VALUE-MART/revenue",
+              "fragment_sha256": "b2877a3ba7ec9f280c25659a52463fda2af76443f1c51b3ad9dd5ef34e116145",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "cogs": {
+          "value": 19240.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "VALUE-MART/cogs",
+              "fragment_sha256": "d59ed3a88785975ff74862d8a2b1681b0c25c94f26161b78d828cf5cf1e62c78",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "net_debt": {
+          "value": 2350.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "VALUE-MART/net_debt",
+              "fragment_sha256": "09200943728c32a35da9e775a4c5b6c8bc373890a33b88174ddc8faa5f28078c",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "borrowing_rate": {
+          "value": 0.166,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "VALUE-MART/borrowing_rate",
+              "fragment_sha256": "3f7da2f0202bb2f5a4d89f74315e5094ea10ae95fe6484414bdcc22094ea2ace",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "opex": {
+          "value": 4060.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "VALUE-MART/opex",
+              "fragment_sha256": "3684d935b2237455aa7417ff2d26f5cf4be555316573791935def12757b22f34",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "opex_variable_share": {
+          "value": 0.15,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "VALUE-MART/opex_variable_share",
+              "fragment_sha256": "0c20e37712069cf171f9f35d174540410d57e713adae9b1d91f4ed1524bd413e",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "cash": {
+          "value": 735.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "VALUE-MART/cash",
+              "fragment_sha256": "8032a0c00907be8519678d901f486f9b3d8a737845105e9a784dd96c3a47a18d",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "dso": {
+          "value": 2.0,
+          "unit": "days",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "VALUE-MART/dso",
+              "fragment_sha256": "b5b6c653c7b8931dafb17be505379993f8315b4281c515197bd6b0a433c9f49e",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "dio": {
+          "value": 24.0,
+          "unit": "days",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "VALUE-MART/dio",
+              "fragment_sha256": "beee9b43af2daa4c377b09190ac085ac9e76def0adc001977be727d76315ca79",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "dpo": {
+          "value": 43.0,
+          "unit": "days",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "VALUE-MART/dpo",
+              "fragment_sha256": "3a34aa9f4ccfc9dcf7052b46abfc959fdba199b5abf7478e3f67cf87635745e5",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "tax_rate": {
+          "value": 0.25,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "VALUE-MART/tax_rate",
+              "fragment_sha256": "3925d13f3a18b6f7e8b62d4172b09eb64d08eedfa2971098c145e867c51f0a94",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "demand_elasticity": {
+          "value": -0.35,
+          "unit": "ratio",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "VALUE-MART/demand_elasticity",
+              "fragment_sha256": "ffe775614285f156dbdffb619b738a16a4c0256a9f20c8ce44638f093117b53f",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "pass_through": {
+          "value": 0.75,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "VALUE-MART/pass_through",
+              "fragment_sha256": "b2540e3a4a021b292bf027453e991d9752aafab3c7391abec47d065503cf0aeb",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "gross_debt": {
+          "value": 3085.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "VALUE-MART/gross_debt",
+              "fragment_sha256": "1a9e377fcb4871a8fe4b1cda67b646eb9be98671f86d95ae476a7154f5e99e12",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "scheduled_amortisation": {
+          "value": 230.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "VALUE-MART/scheduled_amortisation",
+              "fragment_sha256": "16481e87df6b3b13cc38600bbec45a8ec1aa02d8f8045909c7ab221dc0cf8f8d",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "credit_limit": {
+          "value": 1000.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "VALUE-MART/credit_limit",
+              "fragment_sha256": "bec4b3fc5c0a2c6cbc30a715c6ed3de28298dce5b3d93106ba9ff3d8e004a6ae",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "fixed_production_cost": {
+          "value": 0.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "VALUE-MART/fixed_production_cost",
+              "fragment_sha256": "3f07b3689108f8e36f172d9bb7176e088c6d2330ff153551a35791de08e3990d",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "capex": {
+          "value": 390.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "VALUE-MART/capex",
+              "fragment_sha256": "f876159555562a799064d4221e3960a910d75c3dc9125c78166e2f70bf2f14e8",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "cash_floor": {
+          "value": 184.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "VALUE-MART/cash_floor",
+              "fragment_sha256": "19cc54c20027a45cf4163f5322cb0c8d2d4b202040a396bda29e992f2267dfc0",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "standard": "management",
+        "entered_by": "demo:catalog"
+      },
+      "evidence": []
+    },
+    {
+      "item_id": "rate:risk_free:RUB:BOND-DIGITAL-SERVICE",
+      "kind": "rate",
+      "subject": "risk_free:RUB",
+      "observed_on": "2026-09-11",
+      "values": {
+        "rate": {
+          "value": 0.14,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "DIGITAL-SERVICE/risk_free_rate",
+              "fragment_sha256": "bf5797959cbcac53b76b3fc141edf457a88f3b012e2e084dddbe1ec1ddfb6e5d",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "entered_by": "demo:catalog"
+      },
+      "evidence": []
+    },
+    {
+      "item_id": "rate:risk_free:RUB:BOND-HEAT-GRID",
+      "kind": "rate",
+      "subject": "risk_free:RUB",
+      "observed_on": "2026-09-11",
+      "values": {
+        "rate": {
+          "value": 0.14,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "HEAT-GRID/risk_free_rate",
+              "fragment_sha256": "bd5fe5d4acd690d607dbb3526f8092f3d4ba98f320eb0071985c389b05ccb74a",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "entered_by": "demo:catalog"
+      },
+      "evidence": []
+    },
+    {
+      "item_id": "rate:risk_free:RUB:BOND-HEAT-LONG",
+      "kind": "rate",
+      "subject": "risk_free:RUB",
+      "observed_on": "2026-09-11",
+      "values": {
+        "rate": {
+          "value": 0.14,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "HEAT-GRID/risk_free_rate",
+              "fragment_sha256": "bd5fe5d4acd690d607dbb3526f8092f3d4ba98f320eb0071985c389b05ccb74a",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "entered_by": "demo:catalog"
+      },
+      "evidence": []
+    },
+    {
+      "item_id": "rate:risk_free:RUB:BOND-HEAT-SHORT",
+      "kind": "rate",
+      "subject": "risk_free:RUB",
+      "observed_on": "2026-09-11",
+      "values": {
+        "rate": {
+          "value": 0.14,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "HEAT-GRID/risk_free_rate",
+              "fragment_sha256": "bd5fe5d4acd690d607dbb3526f8092f3d4ba98f320eb0071985c389b05ccb74a",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "entered_by": "demo:catalog"
+      },
+      "evidence": []
+    },
+    {
+      "item_id": "rate:risk_free:RUB:BOND-PACKAGING",
+      "kind": "rate",
+      "subject": "risk_free:RUB",
+      "observed_on": "2026-09-11",
+      "values": {
+        "rate": {
+          "value": 0.14,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PACKAGING/risk_free_rate",
+              "fragment_sha256": "1cfd04e0965d473b4b10082f53919934d3d4675b2d4dba91f860f8d5f9bb2829",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "entered_by": "demo:catalog"
+      },
+      "evidence": []
+    },
+    {
+      "item_id": "rate:risk_free:RUB:FRN-DAIRY",
+      "kind": "rate",
+      "subject": "risk_free:RUB",
+      "observed_on": "2026-09-11",
+      "values": {
+        "rate": {
+          "value": 0.14,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "REGIONAL-DAIRY/risk_free_rate",
+              "fragment_sha256": "81e03e365df63cfe3c2ad42c1280f8370d188ca2ef58815d0097d8b4820aad96",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "entered_by": "demo:catalog"
+      },
+      "evidence": []
+    },
+    {
+      "item_id": "rate:risk_free:RUB:FRN-DIGITAL",
+      "kind": "rate",
+      "subject": "risk_free:RUB",
+      "observed_on": "2026-09-11",
+      "values": {
+        "rate": {
+          "value": 0.14,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "DIGITAL-SERVICE/risk_free_rate",
+              "fragment_sha256": "bf5797959cbcac53b76b3fc141edf457a88f3b012e2e084dddbe1ec1ddfb6e5d",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "entered_by": "demo:catalog"
+      },
+      "evidence": []
+    },
+    {
+      "item_id": "rate:risk_free:RUB:FRN-PACKAGING",
+      "kind": "rate",
+      "subject": "risk_free:RUB",
+      "observed_on": "2026-09-11",
+      "values": {
+        "rate": {
+          "value": 0.14,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PACKAGING/risk_free_rate",
+              "fragment_sha256": "1cfd04e0965d473b4b10082f53919934d3d4675b2d4dba91f860f8d5f9bb2829",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "entered_by": "demo:catalog"
+      },
+      "evidence": []
+    }
+  ]
+}

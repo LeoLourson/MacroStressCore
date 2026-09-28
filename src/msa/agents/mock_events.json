@@ -1,4 +1,477 @@
 {
+  "7ff2898b3fd48b8081d0a96aa3fdeccc47bc9d0c2d4cca9ec566a07f3ffaf5ef": {
+    "event_type": "Погранпереход перегружен: товар есть, денег пока нет",
+    "channels": {
+      "import_fx": "Подорожание валютных закупок автомобилей",
+      "car_sales": "Перенос выдачи автомобилей покупателям",
+      "car_cash": "Задержка поступления денег автодилеру",
+      "timber_cash": "Задержка оплаты экспортных партий",
+      "timber_volume": "Снижение экспортных отгрузок пиломатериалов",
+      "timber_fx": "Валютная поддержка экспортной выручки",
+      "freight_orders": "Дополнительные километры в счетах перевозчика",
+      "diesel": "Дизель и холостой пробег",
+      "storage_orders": "Дополнительная загрузка холодильных складов",
+      "timber_equity": "Переоценка акций лесопереработки",
+      "freight_equity": "Неоднозначная переоценка акций перевозчика"
+    },
+    "links": [
+      {
+        "channel": "import_fx",
+        "okved": "45.11",
+        "factor": "credit.fx",
+        "lag": 1,
+        "elasticity": 1
+      },
+      {
+        "channel": "car_sales",
+        "okved": "45.11",
+        "factor": "credit.revenue",
+        "lag": 1,
+        "elasticity": 1
+      },
+      {
+        "channel": "car_cash",
+        "okved": "45.11",
+        "factor": "credit.working_capital",
+        "lag": 0,
+        "elasticity": 1
+      },
+      {
+        "channel": "timber_cash",
+        "okved": "16.10",
+        "factor": "credit.working_capital",
+        "lag": 1,
+        "elasticity": 0.65
+      },
+      {
+        "channel": "timber_volume",
+        "okved": "16.10",
+        "factor": "credit.revenue",
+        "lag": 1,
+        "elasticity": 1
+      },
+      {
+        "channel": "timber_fx",
+        "okved": "16.10",
+        "factor": "credit.revenue",
+        "lag": 1,
+        "elasticity": 0.65
+      },
+      {
+        "channel": "freight_orders",
+        "okved": "49.41",
+        "factor": "credit.revenue",
+        "lag": 1,
+        "elasticity": 1
+      },
+      {
+        "channel": "diesel",
+        "okved": "49.41",
+        "factor": "credit.logistics",
+        "lag": 0,
+        "elasticity": 0.34
+      },
+      {
+        "channel": "storage_orders",
+        "okved": "52.10",
+        "factor": "credit.revenue",
+        "lag": 1,
+        "elasticity": 1
+      },
+      {
+        "channel": "timber_equity",
+        "okved": "16.10",
+        "factor": "equity.sector",
+        "lag": 0,
+        "elasticity": 1
+      },
+      {
+        "channel": "freight_equity",
+        "okved": "49.41",
+        "factor": "equity.sector",
+        "lag": 0,
+        "elasticity": 1
+      }
+    ],
+    "scenario": {
+      "import_fx": {
+        "kind": "triangular",
+        "low": 0.05,
+        "mode": 0.075,
+        "high": 0.11,
+        "label": "Подорожание валютных закупок автомобилей",
+        "unit": "fraction",
+        "factor": "credit.fx",
+        "channel": "import_fx"
+      },
+      "car_sales": {
+        "kind": "triangular",
+        "low": -0.12,
+        "mode": -0.08,
+        "high": -0.04,
+        "label": "Перенос выдачи автомобилей покупателям",
+        "unit": "fraction",
+        "factor": "credit.revenue",
+        "channel": "car_sales"
+      },
+      "car_cash": {
+        "kind": "triangular",
+        "low": 18,
+        "mode": 26,
+        "high": 36,
+        "label": "Задержка поступления денег автодилеру",
+        "unit": "days",
+        "factor": "credit.working_capital",
+        "channel": "car_cash"
+      },
+      "timber_cash": {
+        "kind": "triangular",
+        "low": 14,
+        "mode": 22,
+        "high": 32,
+        "label": "Задержка оплаты экспортных партий",
+        "unit": "days",
+        "factor": "credit.working_capital",
+        "channel": "timber_cash"
+      },
+      "timber_volume": {
+        "kind": "triangular",
+        "low": -0.14,
+        "mode": -0.1,
+        "high": -0.07,
+        "label": "Снижение экспортных отгрузок пиломатериалов",
+        "unit": "fraction",
+        "factor": "credit.revenue",
+        "channel": "timber_volume"
+      },
+      "timber_fx": {
+        "kind": "triangular",
+        "low": 0.05,
+        "mode": 0.075,
+        "high": 0.11,
+        "label": "Валютная поддержка экспортной выручки",
+        "unit": "fraction",
+        "factor": "credit.revenue",
+        "channel": "timber_fx"
+      },
+      "freight_orders": {
+        "kind": "triangular",
+        "low": 0.04,
+        "mode": 0.075,
+        "high": 0.11,
+        "label": "Дополнительные километры в счетах перевозчика",
+        "unit": "fraction",
+        "factor": "credit.revenue",
+        "channel": "freight_orders"
+      },
+      "diesel": {
+        "kind": "triangular",
+        "low": 0.12,
+        "mode": 0.18,
+        "high": 0.26,
+        "label": "Дизель и холостой пробег",
+        "unit": "fraction",
+        "factor": "credit.logistics",
+        "channel": "diesel"
+      },
+      "storage_orders": {
+        "kind": "triangular",
+        "low": 0.035,
+        "mode": 0.065,
+        "high": 0.1,
+        "label": "Дополнительная загрузка холодильных складов",
+        "unit": "fraction",
+        "factor": "credit.revenue",
+        "channel": "storage_orders"
+      },
+      "timber_equity": {
+        "kind": "triangular",
+        "low": -0.18,
+        "mode": -0.12,
+        "high": -0.07,
+        "label": "Переоценка акций лесопереработки",
+        "unit": "fraction",
+        "factor": "equity.sector",
+        "channel": "timber_equity"
+      },
+      "freight_equity": {
+        "kind": "triangular",
+        "low": -0.07,
+        "mode": -0.02,
+        "high": 0.04,
+        "label": "Неоднозначная переоценка акций перевозчика",
+        "unit": "fraction",
+        "factor": "equity.sector",
+        "channel": "freight_equity"
+      }
+    }
+  },
+  "c8befc26e53cd24396dc4d5e9775991271425fa3ed68f93b206019a19d6c6c9b": {
+    "event_type": "Очереди рассосались, надбавки за срочность исчезают",
+    "channels": {
+      "car_recovery": "Восстановление продаж автомобилей",
+      "car_release": "Высвобождение оборотного капитала автодилера",
+      "car_freight": "Снижение стоимости доставки автомобилей",
+      "timber_recovery": "Восстановление отгрузок пиломатериалов",
+      "timber_release": "Ускорение оплаты экспортных партий",
+      "freight_normalization": "Отмена срочных надбавок перевозчика",
+      "route_saving": "Экономия перевозчика на маршруте",
+      "storage_normalization": "Снижение выручки временного хранения",
+      "timber_rerating": "Восстановление стоимости акций лесопереработки",
+      "freight_rerating": "Снижение срочной маржи в акциях перевозчика"
+    },
+    "links": [
+      {
+        "channel": "car_recovery",
+        "okved": "45.11",
+        "factor": "credit.revenue",
+        "lag": 1,
+        "elasticity": 1
+      },
+      {
+        "channel": "car_release",
+        "okved": "45.11",
+        "factor": "credit.working_capital",
+        "lag": 0,
+        "elasticity": 1
+      },
+      {
+        "channel": "car_freight",
+        "okved": "45.11",
+        "factor": "credit.logistics",
+        "lag": 1,
+        "elasticity": 0.07
+      },
+      {
+        "channel": "timber_recovery",
+        "okved": "16.10",
+        "factor": "credit.revenue",
+        "lag": 1,
+        "elasticity": 1
+      },
+      {
+        "channel": "timber_release",
+        "okved": "16.10",
+        "factor": "credit.working_capital",
+        "lag": 1,
+        "elasticity": 0.65
+      },
+      {
+        "channel": "freight_normalization",
+        "okved": "49.41",
+        "factor": "credit.revenue",
+        "lag": 1,
+        "elasticity": 1
+      },
+      {
+        "channel": "route_saving",
+        "okved": "49.41",
+        "factor": "credit.logistics",
+        "lag": 0,
+        "elasticity": 0.2
+      },
+      {
+        "channel": "storage_normalization",
+        "okved": "52.10",
+        "factor": "credit.revenue",
+        "lag": 2,
+        "elasticity": 1
+      },
+      {
+        "channel": "timber_rerating",
+        "okved": "16.10",
+        "factor": "equity.sector",
+        "lag": 0,
+        "elasticity": 1
+      },
+      {
+        "channel": "freight_rerating",
+        "okved": "49.41",
+        "factor": "equity.sector",
+        "lag": 0,
+        "elasticity": 1
+      }
+    ],
+    "scenario": {
+      "car_recovery": {
+        "kind": "triangular",
+        "low": 0.03,
+        "mode": 0.055,
+        "high": 0.085,
+        "label": "Восстановление продаж автомобилей",
+        "unit": "fraction",
+        "factor": "credit.revenue",
+        "channel": "car_recovery"
+      },
+      "car_release": {
+        "kind": "triangular",
+        "low": -24,
+        "mode": -17,
+        "high": -10,
+        "label": "Высвобождение оборотного капитала автодилера",
+        "unit": "days",
+        "factor": "credit.working_capital",
+        "channel": "car_release"
+      },
+      "car_freight": {
+        "kind": "triangular",
+        "low": -0.22,
+        "mode": -0.16,
+        "high": -0.1,
+        "label": "Снижение стоимости доставки автомобилей",
+        "unit": "fraction",
+        "factor": "credit.logistics",
+        "channel": "car_freight"
+      },
+      "timber_recovery": {
+        "kind": "triangular",
+        "low": 0.04,
+        "mode": 0.07,
+        "high": 0.11,
+        "label": "Восстановление отгрузок пиломатериалов",
+        "unit": "fraction",
+        "factor": "credit.revenue",
+        "channel": "timber_recovery"
+      },
+      "timber_release": {
+        "kind": "triangular",
+        "low": -18,
+        "mode": -12,
+        "high": -6,
+        "label": "Ускорение оплаты экспортных партий",
+        "unit": "days",
+        "factor": "credit.working_capital",
+        "channel": "timber_release"
+      },
+      "freight_normalization": {
+        "kind": "triangular",
+        "low": -0.11,
+        "mode": -0.075,
+        "high": -0.04,
+        "label": "Отмена срочных надбавок перевозчика",
+        "unit": "fraction",
+        "factor": "credit.revenue",
+        "channel": "freight_normalization"
+      },
+      "route_saving": {
+        "kind": "triangular",
+        "low": -0.2,
+        "mode": -0.14,
+        "high": -0.08,
+        "label": "Экономия перевозчика на маршруте",
+        "unit": "fraction",
+        "factor": "credit.logistics",
+        "channel": "route_saving"
+      },
+      "storage_normalization": {
+        "kind": "triangular",
+        "low": -0.08,
+        "mode": -0.055,
+        "high": -0.03,
+        "label": "Снижение выручки временного хранения",
+        "unit": "fraction",
+        "factor": "credit.revenue",
+        "channel": "storage_normalization"
+      },
+      "timber_rerating": {
+        "kind": "triangular",
+        "low": 0.04,
+        "mode": 0.08,
+        "high": 0.13,
+        "label": "Восстановление стоимости акций лесопереработки",
+        "unit": "fraction",
+        "factor": "equity.sector",
+        "channel": "timber_rerating"
+      },
+      "freight_rerating": {
+        "kind": "triangular",
+        "low": -0.14,
+        "mode": -0.1,
+        "high": -0.065,
+        "label": "Снижение срочной маржи в акциях перевозчика",
+        "unit": "fraction",
+        "factor": "equity.sector",
+        "channel": "freight_rerating"
+      }
+    }
+  },
+  "64636277be4c0b7d30923c6aafb6b55c494e72b9a96c3114f4df27dc48c1f7d0": {
+    "event_type": "Снижение ставок поддержало облигации, ремонт сетей требует денег",
+    "channels": {
+      "yield_decline": "Снижение безрисковых доходностей и ставки фондирования",
+      "network_repairs": "Внеплановая замена тепловых магистралей",
+      "tariff_compensation": "Частичная тарифная компенсация ремонта"
+    },
+    "links": [
+      {
+        "channel": "yield_decline",
+        "okved": "17.21",
+        "factor": "credit.interest",
+        "lag": 0,
+        "elasticity": 1
+      },
+      {
+        "channel": "yield_decline",
+        "okved": "62.01",
+        "factor": "credit.interest",
+        "lag": 0,
+        "elasticity": 1
+      },
+      {
+        "channel": "yield_decline",
+        "okved": "35.30",
+        "factor": "credit.interest",
+        "lag": 0,
+        "elasticity": 1
+      },
+      {
+        "channel": "network_repairs",
+        "okved": "35.30",
+        "factor": "credit.capex",
+        "lag": 0,
+        "elasticity": 1
+      },
+      {
+        "channel": "tariff_compensation",
+        "okved": "35.30",
+        "factor": "credit.revenue",
+        "lag": 6,
+        "elasticity": 1
+      }
+    ],
+    "scenario": {
+      "yield_decline": {
+        "kind": "triangular",
+        "low": -0.03,
+        "mode": -0.022,
+        "high": -0.014,
+        "label": "Снижение безрисковых доходностей и ставки фондирования",
+        "unit": "fraction",
+        "factor": "credit.interest",
+        "channel": "yield_decline"
+      },
+      "network_repairs": {
+        "kind": "triangular",
+        "low": 0.4,
+        "mode": 0.65,
+        "high": 0.95,
+        "label": "Внеплановая замена тепловых магистралей",
+        "unit": "fraction",
+        "factor": "credit.capex",
+        "channel": "network_repairs"
+      },
+      "tariff_compensation": {
+        "kind": "triangular",
+        "low": 0.015,
+        "mode": 0.025,
+        "high": 0.04,
+        "label": "Частичная тарифная компенсация ремонта",
+        "unit": "fraction",
+        "factor": "credit.revenue",
+        "channel": "tariff_compensation"
+      }
+    }
+  },
   "324b89aeccda0ab02065fa386dce2b0d4e32db7d94bd8917a2874c115c58757d": {
     "event_type": "Распродажа акций",
     "channels": {
@@ -59,6 +532,269 @@
       }
     }
   },
+  "1a840a8f5ce27049e19a9aef5ca616567f754fb9daa9f28491a40d3d83203e85": {
+    "event_type": "Рынок растёт на снижении ставки, крепкий рубль меняет лидеров",
+    "channels": {
+      "moex_rebound": "Рост российского рынка",
+      "us_market": "Умеренное изменение рынка США",
+      "strong_ruble": "Снижение курса USD/RUB",
+      "timber_discount": "Снижение оценки экспортной лесопереработки сверх рынка",
+      "retail_rotation": "Ротация в продавцов техники сверх рынка",
+      "software_rotation": "Ротация в разработчиков ПО сверх рынка"
+    },
+    "links": [
+      {
+        "channel": "timber_discount",
+        "okved": "16.10",
+        "factor": "equity.sector",
+        "lag": 0,
+        "elasticity": 1
+      },
+      {
+        "channel": "retail_rotation",
+        "okved": "47.54",
+        "factor": "equity.sector",
+        "lag": 0,
+        "elasticity": 1
+      },
+      {
+        "channel": "software_rotation",
+        "okved": "62.01",
+        "factor": "equity.sector",
+        "lag": 0,
+        "elasticity": 1
+      }
+    ],
+    "scenario": {
+      "moex_rebound": {
+        "kind": "triangular",
+        "low": 0.039220713153281295,
+        "mode": 0.06765864847381481,
+        "high": 0.10436001532424277,
+        "label": "Рост российского рынка",
+        "unit": "log_return",
+        "factor": "equity.market",
+        "key": "MOEX",
+        "channel": "moex_rebound"
+      },
+      "us_market": {
+        "kind": "triangular",
+        "low": -0.01511363781004817,
+        "mode": 0.009950330853168083,
+        "high": 0.0344014267173324,
+        "label": "Умеренное изменение рынка США",
+        "unit": "log_return",
+        "factor": "equity.market",
+        "key": "SPX",
+        "channel": "us_market"
+      },
+      "strong_ruble": {
+        "kind": "triangular",
+        "low": -0.17435338714477774,
+        "mode": -0.12783337150988489,
+        "high": -0.08338160893905106,
+        "label": "Снижение курса USD/RUB",
+        "unit": "log_return",
+        "factor": "market.fx",
+        "key": "USD/RUB",
+        "channel": "strong_ruble"
+      },
+      "timber_discount": {
+        "kind": "triangular",
+        "low": -0.25,
+        "mode": -0.19,
+        "high": -0.13,
+        "label": "Снижение оценки экспортной лесопереработки сверх рынка",
+        "unit": "fraction",
+        "factor": "equity.sector",
+        "channel": "timber_discount"
+      },
+      "retail_rotation": {
+        "kind": "triangular",
+        "low": 0.055,
+        "mode": 0.095,
+        "high": 0.15,
+        "label": "Ротация в продавцов техники сверх рынка",
+        "unit": "fraction",
+        "factor": "equity.sector",
+        "channel": "retail_rotation"
+      },
+      "software_rotation": {
+        "kind": "triangular",
+        "low": 0.035,
+        "mode": 0.065,
+        "high": 0.105,
+        "label": "Ротация в разработчиков ПО сверх рынка",
+        "unit": "fraction",
+        "factor": "equity.sector",
+        "channel": "software_rotation"
+      }
+    },
+    "direct": [
+      {
+        "channel": "moex_rebound",
+        "factor": "equity.market",
+        "key": "MOEX"
+      },
+      {
+        "channel": "us_market",
+        "factor": "equity.market",
+        "key": "SPX"
+      },
+      {
+        "channel": "strong_ruble",
+        "factor": "market.fx",
+        "key": "USD/RUB"
+      }
+    ]
+  },
+  "1eb30ec20a3e58fa28d62a0bdb6693c9c9388a82a7a88ad65b1dd03ca33e51ca": {
+    "event_type": "Проверка ипотечных заявок затянулась, строительство продолжается",
+    "channels": {
+      "mortgage_processing": "Снижение темпа новых продаж жилья",
+      "building_inputs": "Рост цен строительных материалов",
+      "project_rate_relief": "Отложенное снижение ставки проектного кредита"
+    },
+    "links": [
+      {
+        "channel": "mortgage_processing",
+        "okved": "41.20",
+        "factor": "credit.revenue",
+        "lag": 0,
+        "elasticity": 1
+      },
+      {
+        "channel": "building_inputs",
+        "okved": "41.20",
+        "factor": "credit.capex",
+        "lag": 1,
+        "elasticity": 0.55
+      },
+      {
+        "channel": "project_rate_relief",
+        "okved": "41.20",
+        "factor": "credit.interest",
+        "lag": 3,
+        "elasticity": 1
+      }
+    ],
+    "scenario": {
+      "mortgage_processing": {
+        "kind": "triangular",
+        "low": -0.2,
+        "mode": -0.135,
+        "high": -0.08,
+        "label": "Снижение темпа новых продаж жилья",
+        "unit": "fraction",
+        "factor": "credit.revenue",
+        "channel": "mortgage_processing"
+      },
+      "building_inputs": {
+        "kind": "triangular",
+        "low": 0.05,
+        "mode": 0.085,
+        "high": 0.13,
+        "label": "Рост цен строительных материалов",
+        "unit": "fraction",
+        "factor": "credit.capex",
+        "channel": "building_inputs"
+      },
+      "project_rate_relief": {
+        "kind": "triangular",
+        "low": -0.025,
+        "mode": -0.018,
+        "high": -0.01,
+        "label": "Отложенное снижение ставки проектного кредита",
+        "unit": "fraction",
+        "factor": "credit.interest",
+        "channel": "project_rate_relief"
+      }
+    }
+  },
+  "f75a351b6410b36e08bc543ee1792716c0a7651b496d0a73add4493c606253a2": {
+    "event_type": "Купон флоатеров растёт вместе с нагрузкой на эмитентов",
+    "channels": {
+      "funding_hike": "Рост ставки фондирования эмитентов",
+      "milk_cost": "Рост цены сырого молока",
+      "pack_orders": "Дополнительные заказы упаковки"
+    },
+    "links": [
+      {
+        "channel": "funding_hike",
+        "okved": "35.30",
+        "factor": "credit.interest",
+        "lag": 0,
+        "elasticity": 1
+      },
+      {
+        "channel": "funding_hike",
+        "okved": "17.21",
+        "factor": "credit.interest",
+        "lag": 0,
+        "elasticity": 1
+      },
+      {
+        "channel": "funding_hike",
+        "okved": "10.51",
+        "factor": "credit.interest",
+        "lag": 0,
+        "elasticity": 1
+      },
+      {
+        "channel": "funding_hike",
+        "okved": "62.01",
+        "factor": "credit.interest",
+        "lag": 0,
+        "elasticity": 1
+      },
+      {
+        "channel": "milk_cost",
+        "okved": "10.51",
+        "factor": "credit.cogs",
+        "lag": 1,
+        "elasticity": 0.62
+      },
+      {
+        "channel": "pack_orders",
+        "okved": "17.21",
+        "factor": "credit.revenue",
+        "lag": 2,
+        "elasticity": 1
+      }
+    ],
+    "scenario": {
+      "funding_hike": {
+        "kind": "triangular",
+        "low": 0.02,
+        "mode": 0.032,
+        "high": 0.048,
+        "label": "Рост ставки фондирования эмитентов",
+        "unit": "fraction",
+        "factor": "credit.interest",
+        "channel": "funding_hike"
+      },
+      "milk_cost": {
+        "kind": "triangular",
+        "low": 0.1,
+        "mode": 0.17,
+        "high": 0.24,
+        "label": "Рост цены сырого молока",
+        "unit": "fraction",
+        "factor": "credit.cogs",
+        "channel": "milk_cost"
+      },
+      "pack_orders": {
+        "kind": "triangular",
+        "low": 0.04,
+        "mode": 0.07,
+        "high": 0.11,
+        "label": "Дополнительные заказы упаковки",
+        "unit": "fraction",
+        "factor": "credit.revenue",
+        "channel": "pack_orders"
+      }
+    }
+  },
   "e40b7ccaa1a0d77ff01c8dba14c49a104e17f6d3a24846c6482a5fef28d837c7": {
     "event_type": "Льготная ипотека",
     "channels": {
@@ -81,6 +817,312 @@
         "unit": "fraction",
         "factor": "credit.revenue",
         "channel": "mortgage_demand"
+      }
+    }
+  },
+  "26de9e876e08099337f0f7eb9ab8bb30137a6a487043305a4ed3a052e95a20cf": {
+    "event_type": "Покупатели экономят: дискаунтеры растут, кафе и техника теряют",
+    "channels": {
+      "value_retail": "Переток покупателей в магазины низких цен",
+      "cafe_traffic": "Сокращение посещений кафе",
+      "appliance_demand": "Отложенные покупки бытовой техники",
+      "dairy_volume": "Новые контракты молочного завода с сетями",
+      "dairy_discount": "Скидка сетям на недорогую молочную продукцию",
+      "retail_equity": "Переток спроса в акциях магазинов низких цен",
+      "appliance_equity": "Слабый спрос в акциях продавца техники"
+    },
+    "links": [
+      {
+        "channel": "value_retail",
+        "okved": "47.11",
+        "factor": "credit.revenue",
+        "lag": 1,
+        "elasticity": 1
+      },
+      {
+        "channel": "cafe_traffic",
+        "okved": "56.10",
+        "factor": "credit.revenue",
+        "lag": 0,
+        "elasticity": 1
+      },
+      {
+        "channel": "appliance_demand",
+        "okved": "47.54",
+        "factor": "credit.revenue",
+        "lag": 1,
+        "elasticity": 1
+      },
+      {
+        "channel": "dairy_volume",
+        "okved": "10.51",
+        "factor": "credit.revenue",
+        "lag": 2,
+        "elasticity": 1
+      },
+      {
+        "channel": "dairy_discount",
+        "okved": "10.51",
+        "factor": "credit.revenue",
+        "lag": 0,
+        "elasticity": 1
+      },
+      {
+        "channel": "retail_equity",
+        "okved": "47.11",
+        "factor": "equity.sector",
+        "lag": 0,
+        "elasticity": 1
+      },
+      {
+        "channel": "appliance_equity",
+        "okved": "47.54",
+        "factor": "equity.sector",
+        "lag": 0,
+        "elasticity": 1
+      }
+    ],
+    "scenario": {
+      "value_retail": {
+        "kind": "triangular",
+        "low": 0.025,
+        "mode": 0.05,
+        "high": 0.08,
+        "label": "Переток покупателей в магазины низких цен",
+        "unit": "fraction",
+        "factor": "credit.revenue",
+        "channel": "value_retail"
+      },
+      "cafe_traffic": {
+        "kind": "triangular",
+        "low": -0.16,
+        "mode": -0.105,
+        "high": -0.06,
+        "label": "Сокращение посещений кафе",
+        "unit": "fraction",
+        "factor": "credit.revenue",
+        "channel": "cafe_traffic"
+      },
+      "appliance_demand": {
+        "kind": "triangular",
+        "low": -0.18,
+        "mode": -0.12,
+        "high": -0.07,
+        "label": "Отложенные покупки бытовой техники",
+        "unit": "fraction",
+        "factor": "credit.revenue",
+        "channel": "appliance_demand"
+      },
+      "dairy_volume": {
+        "kind": "triangular",
+        "low": 0.025,
+        "mode": 0.045,
+        "high": 0.07,
+        "label": "Новые контракты молочного завода с сетями",
+        "unit": "fraction",
+        "factor": "credit.revenue",
+        "channel": "dairy_volume"
+      },
+      "dairy_discount": {
+        "kind": "triangular",
+        "low": -0.04,
+        "mode": -0.025,
+        "high": -0.015,
+        "label": "Скидка сетям на недорогую молочную продукцию",
+        "unit": "fraction",
+        "factor": "credit.revenue",
+        "channel": "dairy_discount"
+      },
+      "retail_equity": {
+        "kind": "triangular",
+        "low": 0.025,
+        "mode": 0.055,
+        "high": 0.095,
+        "label": "Переток спроса в акциях магазинов низких цен",
+        "unit": "fraction",
+        "factor": "equity.sector",
+        "channel": "retail_equity"
+      },
+      "appliance_equity": {
+        "kind": "triangular",
+        "low": -0.24,
+        "mode": -0.17,
+        "high": -0.1,
+        "label": "Слабый спрос в акциях продавца техники",
+        "unit": "fraction",
+        "factor": "equity.sector",
+        "channel": "appliance_equity"
+      }
+    }
+  },
+  "6cfff27e22175aada860023d1e1f878b0726be0675e0691eb7ca32aea915e5fb": {
+    "event_type": "Стройка оживает, материалы дорожают раньше новых продаж",
+    "channels": {
+      "housing_sales": "Восстановление продаж жилья",
+      "project_materials": "Подорожание строительных материалов проекта",
+      "road_orders": "Новые дорожные заказы",
+      "road_inputs": "Материалы дорожного подрядчика",
+      "precast_orders": "Рост загрузки завода ЖБИ",
+      "precast_inputs": "Цемент и арматура для ЖБИ",
+      "heat_capex": "Реконструкция теплосетей",
+      "heat_tariff": "Отложенная индексация тарифа теплосетей",
+      "construction_equity": "Новые заказы в стоимости акций ЖБИ"
+    },
+    "links": [
+      {
+        "channel": "housing_sales",
+        "okved": "41.20",
+        "factor": "credit.revenue",
+        "lag": 3,
+        "elasticity": 1
+      },
+      {
+        "channel": "project_materials",
+        "okved": "41.20",
+        "factor": "credit.capex",
+        "lag": 0,
+        "elasticity": 0.6
+      },
+      {
+        "channel": "road_orders",
+        "okved": "42.11",
+        "factor": "credit.revenue",
+        "lag": 2,
+        "elasticity": 1
+      },
+      {
+        "channel": "road_inputs",
+        "okved": "42.11",
+        "factor": "credit.cogs",
+        "lag": 0,
+        "elasticity": 0.45
+      },
+      {
+        "channel": "precast_orders",
+        "okved": "23.61",
+        "factor": "credit.revenue",
+        "lag": 2,
+        "elasticity": 1
+      },
+      {
+        "channel": "precast_inputs",
+        "okved": "23.61",
+        "factor": "credit.cogs",
+        "lag": 0,
+        "elasticity": 0.4
+      },
+      {
+        "channel": "heat_capex",
+        "okved": "35.30",
+        "factor": "credit.capex",
+        "lag": 0,
+        "elasticity": 1
+      },
+      {
+        "channel": "heat_tariff",
+        "okved": "35.30",
+        "factor": "credit.revenue",
+        "lag": 6,
+        "elasticity": 1
+      },
+      {
+        "channel": "construction_equity",
+        "okved": "23.61",
+        "factor": "equity.sector",
+        "lag": 0,
+        "elasticity": 1
+      }
+    ],
+    "scenario": {
+      "housing_sales": {
+        "kind": "triangular",
+        "low": 0.08,
+        "mode": 0.14,
+        "high": 0.22,
+        "label": "Восстановление продаж жилья",
+        "unit": "fraction",
+        "factor": "credit.revenue",
+        "channel": "housing_sales"
+      },
+      "project_materials": {
+        "kind": "triangular",
+        "low": 0.04,
+        "mode": 0.07,
+        "high": 0.11,
+        "label": "Подорожание строительных материалов проекта",
+        "unit": "fraction",
+        "factor": "credit.capex",
+        "channel": "project_materials"
+      },
+      "road_orders": {
+        "kind": "triangular",
+        "low": 0.07,
+        "mode": 0.11,
+        "high": 0.16,
+        "label": "Новые дорожные заказы",
+        "unit": "fraction",
+        "factor": "credit.revenue",
+        "channel": "road_orders"
+      },
+      "road_inputs": {
+        "kind": "triangular",
+        "low": 0.03,
+        "mode": 0.05,
+        "high": 0.08,
+        "label": "Материалы дорожного подрядчика",
+        "unit": "fraction",
+        "factor": "credit.cogs",
+        "channel": "road_inputs"
+      },
+      "precast_orders": {
+        "kind": "triangular",
+        "low": 0.1,
+        "mode": 0.16,
+        "high": 0.23,
+        "label": "Рост загрузки завода ЖБИ",
+        "unit": "fraction",
+        "factor": "credit.revenue",
+        "channel": "precast_orders"
+      },
+      "precast_inputs": {
+        "kind": "triangular",
+        "low": 0.04,
+        "mode": 0.07,
+        "high": 0.11,
+        "label": "Цемент и арматура для ЖБИ",
+        "unit": "fraction",
+        "factor": "credit.cogs",
+        "channel": "precast_inputs"
+      },
+      "heat_capex": {
+        "kind": "triangular",
+        "low": 0.18,
+        "mode": 0.28,
+        "high": 0.42,
+        "label": "Реконструкция теплосетей",
+        "unit": "fraction",
+        "factor": "credit.capex",
+        "channel": "heat_capex"
+      },
+      "heat_tariff": {
+        "kind": "triangular",
+        "low": 0.025,
+        "mode": 0.04,
+        "high": 0.055,
+        "label": "Отложенная индексация тарифа теплосетей",
+        "unit": "fraction",
+        "factor": "credit.revenue",
+        "channel": "heat_tariff"
+      },
+      "construction_equity": {
+        "kind": "triangular",
+        "low": 0.07,
+        "mode": 0.12,
+        "high": 0.2,
+        "label": "Новые заказы в стоимости акций ЖБИ",
+        "unit": "fraction",
+        "factor": "equity.sector",
+        "channel": "construction_equity"
       }
     }
   },
@@ -124,6 +1166,186 @@
       }
     }
   },
+  "f68fb52b9a4f7b4e6ed92eacb98c4347cf176ba73cb7bfda149d95fedd07fd44": {
+    "event_type": "Лизинговые заявки растут быстрее доступного фондирования",
+    "channels": {
+      "leasing_originations": "Рост нового лизингового бизнеса",
+      "leasing_funding": "Удорожание фондирования лизингодателей",
+      "leasing_servicing": "Расходы на сопровождение новых договоров"
+    },
+    "links": [
+      {
+        "channel": "leasing_originations",
+        "okved": "64.91",
+        "factor": "credit.revenue",
+        "lag": 2,
+        "elasticity": 1
+      },
+      {
+        "channel": "leasing_funding",
+        "okved": "64.91",
+        "factor": "credit.interest",
+        "lag": 0,
+        "elasticity": 1
+      },
+      {
+        "channel": "leasing_servicing",
+        "okved": "64.91",
+        "factor": "credit.cogs",
+        "lag": 1,
+        "elasticity": 1
+      }
+    ],
+    "scenario": {
+      "leasing_originations": {
+        "kind": "triangular",
+        "low": 0.18,
+        "mode": 0.28,
+        "high": 0.42,
+        "label": "Рост нового лизингового бизнеса",
+        "unit": "fraction",
+        "factor": "credit.revenue",
+        "channel": "leasing_originations"
+      },
+      "leasing_funding": {
+        "kind": "triangular",
+        "low": 0.018,
+        "mode": 0.03,
+        "high": 0.045,
+        "label": "Удорожание фондирования лизингодателей",
+        "unit": "fraction",
+        "factor": "credit.interest",
+        "channel": "leasing_funding"
+      },
+      "leasing_servicing": {
+        "kind": "triangular",
+        "low": 0.06,
+        "mode": 0.1,
+        "high": 0.16,
+        "label": "Расходы на сопровождение новых договоров",
+        "unit": "fraction",
+        "factor": "credit.cogs",
+        "channel": "leasing_servicing"
+      }
+    }
+  },
+  "364cc96d8246c35a5fe6dbf9ec31460f5989a805127663f080cba2752208152f": {
+    "event_type": "Сырое молоко дорожает, сети не сразу принимают новые цены",
+    "channels": {
+      "raw_milk": "Подорожание сырого молока",
+      "retail_terms": "Удлинение оплаты сетями молочной продукции",
+      "retail_inputs": "Подорожание молочной полки для магазинов",
+      "retail_switch": "Приток покупателей в магазины низких цен",
+      "cafe_inputs": "Молочные ингредиенты кафе",
+      "retail_margin": "Неопределённость маржи продуктового ритейла"
+    },
+    "links": [
+      {
+        "channel": "raw_milk",
+        "okved": "10.51",
+        "factor": "credit.cogs",
+        "lag": 1,
+        "elasticity": 0.62
+      },
+      {
+        "channel": "retail_terms",
+        "okved": "10.51",
+        "factor": "credit.working_capital",
+        "lag": 1,
+        "elasticity": 1
+      },
+      {
+        "channel": "retail_inputs",
+        "okved": "47.11",
+        "factor": "credit.cogs",
+        "lag": 2,
+        "elasticity": 0.16
+      },
+      {
+        "channel": "retail_switch",
+        "okved": "47.11",
+        "factor": "credit.revenue",
+        "lag": 2,
+        "elasticity": 1
+      },
+      {
+        "channel": "cafe_inputs",
+        "okved": "56.10",
+        "factor": "credit.cogs",
+        "lag": 1,
+        "elasticity": 0.18
+      },
+      {
+        "channel": "retail_margin",
+        "okved": "47.11",
+        "factor": "equity.sector",
+        "lag": 0,
+        "elasticity": 1
+      }
+    ],
+    "scenario": {
+      "raw_milk": {
+        "kind": "triangular",
+        "low": 0.12,
+        "mode": 0.19,
+        "high": 0.28,
+        "label": "Подорожание сырого молока",
+        "unit": "fraction",
+        "factor": "credit.cogs",
+        "channel": "raw_milk"
+      },
+      "retail_terms": {
+        "kind": "triangular",
+        "low": 7,
+        "mode": 12,
+        "high": 19,
+        "label": "Удлинение оплаты сетями молочной продукции",
+        "unit": "days",
+        "factor": "credit.working_capital",
+        "channel": "retail_terms"
+      },
+      "retail_inputs": {
+        "kind": "triangular",
+        "low": 0.05,
+        "mode": 0.08,
+        "high": 0.12,
+        "label": "Подорожание молочной полки для магазинов",
+        "unit": "fraction",
+        "factor": "credit.cogs",
+        "channel": "retail_inputs"
+      },
+      "retail_switch": {
+        "kind": "triangular",
+        "low": 0.01,
+        "mode": 0.02,
+        "high": 0.035,
+        "label": "Приток покупателей в магазины низких цен",
+        "unit": "fraction",
+        "factor": "credit.revenue",
+        "channel": "retail_switch"
+      },
+      "cafe_inputs": {
+        "kind": "triangular",
+        "low": 0.07,
+        "mode": 0.11,
+        "high": 0.17,
+        "label": "Молочные ингредиенты кафе",
+        "unit": "fraction",
+        "factor": "credit.cogs",
+        "channel": "cafe_inputs"
+      },
+      "retail_margin": {
+        "kind": "triangular",
+        "low": -0.055,
+        "mode": -0.02,
+        "high": 0.025,
+        "label": "Неопределённость маржи продуктового ритейла",
+        "unit": "fraction",
+        "factor": "equity.sector",
+        "channel": "retail_margin"
+      }
+    }
+  },
   "8258dc2924f661a8cba5d604a01da49c3a60febca2011f364a5a3512567516b0": {
     "event_type": "Первоначальный взнос по ипотеке",
     "channels": {
@@ -162,6 +1384,105 @@
         "unit": "fraction",
         "factor": "credit.revenue",
         "channel": "construction_volume"
+      }
+    }
+  },
+  "f1b8ae9dc7849b83c7b7f7b1c492b46048cef0dc3d90232f4dd9e6aa50139967": {
+    "event_type": "Работы приняты, оплата подрядчикам отложена",
+    "channels": {
+      "budget_delay": "Отсрочка оплаты муниципальных контрактов",
+      "supplier_delay": "Перенос оплаты железобетона подрядчиками",
+      "contractor_funding": "Надбавка к ставке оборотных кредитов подрядчика",
+      "housing_pause": "Пауза в продажах квартир до ясности с дорогами",
+      "precast_risk": "Переоценка риска дебиторской задолженности ЖБИ"
+    },
+    "links": [
+      {
+        "channel": "budget_delay",
+        "okved": "42.11",
+        "factor": "credit.working_capital",
+        "lag": 0,
+        "elasticity": 0.72
+      },
+      {
+        "channel": "supplier_delay",
+        "okved": "23.61",
+        "factor": "credit.working_capital",
+        "lag": 1,
+        "elasticity": 0.55
+      },
+      {
+        "channel": "contractor_funding",
+        "okved": "42.11",
+        "factor": "credit.interest",
+        "lag": 1,
+        "elasticity": 0.8
+      },
+      {
+        "channel": "housing_pause",
+        "okved": "41.20",
+        "factor": "credit.revenue",
+        "lag": 2,
+        "elasticity": 1
+      },
+      {
+        "channel": "precast_risk",
+        "okved": "23.61",
+        "factor": "equity.sector",
+        "lag": 0,
+        "elasticity": 1
+      }
+    ],
+    "scenario": {
+      "budget_delay": {
+        "kind": "triangular",
+        "low": 25,
+        "mode": 38,
+        "high": 55,
+        "label": "Отсрочка оплаты муниципальных контрактов",
+        "unit": "days",
+        "factor": "credit.working_capital",
+        "channel": "budget_delay"
+      },
+      "supplier_delay": {
+        "kind": "triangular",
+        "low": 14,
+        "mode": 22,
+        "high": 32,
+        "label": "Перенос оплаты железобетона подрядчиками",
+        "unit": "days",
+        "factor": "credit.working_capital",
+        "channel": "supplier_delay"
+      },
+      "contractor_funding": {
+        "kind": "triangular",
+        "low": 0.02,
+        "mode": 0.035,
+        "high": 0.055,
+        "label": "Надбавка к ставке оборотных кредитов подрядчика",
+        "unit": "fraction",
+        "factor": "credit.interest",
+        "channel": "contractor_funding"
+      },
+      "housing_pause": {
+        "kind": "triangular",
+        "low": -0.12,
+        "mode": -0.075,
+        "high": -0.035,
+        "label": "Пауза в продажах квартир до ясности с дорогами",
+        "unit": "fraction",
+        "factor": "credit.revenue",
+        "channel": "housing_pause"
+      },
+      "precast_risk": {
+        "kind": "triangular",
+        "low": -0.19,
+        "mode": -0.13,
+        "high": -0.08,
+        "label": "Переоценка риска дебиторской задолженности ЖБИ",
+        "unit": "fraction",
+        "factor": "equity.sector",
+        "channel": "precast_risk"
       }
     }
   },
@@ -239,6 +1560,90 @@
         "unit": "fraction",
         "factor": "credit.capex",
         "channel": "platform_repair"
+      }
+    }
+  },
+  "e8d888ea65510df5907ab193709ea3ad36c53a591139c07234a132cca6583ef3": {
+    "event_type": "Ставки снизились, но заказчики платят позже",
+    "channels": {
+      "road_payment": "Перенос бюджетной оплаты дорожных работ",
+      "hospital_payment": "Удлинение оплаты лекарств больницами",
+      "funding_easing": "Удешевление продлеваемого долга"
+    },
+    "links": [
+      {
+        "channel": "road_payment",
+        "okved": "42.11",
+        "factor": "credit.working_capital",
+        "lag": 0,
+        "elasticity": 0.72
+      },
+      {
+        "channel": "hospital_payment",
+        "okved": "46.46",
+        "factor": "credit.working_capital",
+        "lag": 1,
+        "elasticity": 0.6
+      },
+      {
+        "channel": "funding_easing",
+        "okved": "42.11",
+        "factor": "credit.interest",
+        "lag": 2,
+        "elasticity": 0.8
+      },
+      {
+        "channel": "funding_easing",
+        "okved": "46.46",
+        "factor": "credit.interest",
+        "lag": 2,
+        "elasticity": 0.65
+      },
+      {
+        "channel": "funding_easing",
+        "okved": "45.11",
+        "factor": "credit.interest",
+        "lag": 1,
+        "elasticity": 0.7
+      },
+      {
+        "channel": "funding_easing",
+        "okved": "16.10",
+        "factor": "credit.interest",
+        "lag": 1,
+        "elasticity": 0.5
+      }
+    ],
+    "scenario": {
+      "road_payment": {
+        "kind": "triangular",
+        "low": 24,
+        "mode": 36,
+        "high": 52,
+        "label": "Перенос бюджетной оплаты дорожных работ",
+        "unit": "days",
+        "factor": "credit.working_capital",
+        "channel": "road_payment"
+      },
+      "hospital_payment": {
+        "kind": "triangular",
+        "low": 20,
+        "mode": 32,
+        "high": 46,
+        "label": "Удлинение оплаты лекарств больницами",
+        "unit": "days",
+        "factor": "credit.working_capital",
+        "channel": "hospital_payment"
+      },
+      "funding_easing": {
+        "kind": "triangular",
+        "low": -0.028,
+        "mode": -0.02,
+        "high": -0.012,
+        "label": "Удешевление продлеваемого долга",
+        "unit": "fraction",
+        "factor": "credit.interest",
+        "channel": "funding_easing"
       }
     }
   },

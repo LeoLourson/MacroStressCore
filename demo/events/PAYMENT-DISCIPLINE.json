@@ -1,0 +1,109 @@
+{
+  "event_id": "PAYMENT-DISCIPLINE",
+  "title": "Ставки снизились, но заказчики платят позже",
+  "text": "Синтетическая новость для демонстрации. Банки снизили стоимость продления оборотных кредитов после смягчения денежной политики. Одновременно бюджетные заказчики переносят оплату дорожных работ, а больницы увеличивают срок расчётов с поставщиками лекарств. Импортёры автомобилей и экспортёры древесины получают более дешёвое фондирование без изменения сроков оплаты. Годовые подписки на программное обеспечение уже оплачены и в новые банковские соглашения не входят.",
+  "metadata": {
+    "portfolio_id": "CORPORATE-LOANS",
+    "synthetic": true,
+    "source": "Вымышленная новость; численные диапазоны — экспертные допущения демо-каталога",
+    "scenario_text": "Горизонт 12 месяцев. Бюджетные заказчики платят на 24–52 дня позже (мода 36), доля дорожных контрактов 72 %, лаг 0. Больницы платят на 20–46 дней позже (32), их доля в продажах лекарств 60 %, лаг 1 месяц. Ставка продлеваемого долга снижается на 1,2–2,8 п.п. (2): доля переоцениваемого долга подрядчика 80 %, поставщика лекарств 65 %, у обоих лаг 2 месяца; у автодилера 70 %, экспортёра 50 %, лаг 1 месяц. Все эффекты сохраняются после лага до конца горизонта. Выручка и отпускные цены не шокируются: проверяется именно разрыв между прибылью и оплатой. ПО вне графа.",
+    "horizon_months": 12
+  },
+  "mock_answer": {
+    "event_type": "Ставки снизились, но заказчики платят позже",
+    "channels": {
+      "road_payment": "Перенос бюджетной оплаты дорожных работ",
+      "hospital_payment": "Удлинение оплаты лекарств больницами",
+      "funding_easing": "Удешевление продлеваемого долга"
+    },
+    "links": [
+      {
+        "channel": "road_payment",
+        "okved": "42.11",
+        "factor": "credit.working_capital",
+        "lag": 0,
+        "elasticity": 0.72
+      },
+      {
+        "channel": "hospital_payment",
+        "okved": "46.46",
+        "factor": "credit.working_capital",
+        "lag": 1,
+        "elasticity": 0.6
+      },
+      {
+        "channel": "funding_easing",
+        "okved": "42.11",
+        "factor": "credit.interest",
+        "lag": 2,
+        "elasticity": 0.8
+      },
+      {
+        "channel": "funding_easing",
+        "okved": "46.46",
+        "factor": "credit.interest",
+        "lag": 2,
+        "elasticity": 0.65
+      },
+      {
+        "channel": "funding_easing",
+        "okved": "45.11",
+        "factor": "credit.interest",
+        "lag": 1,
+        "elasticity": 0.7
+      },
+      {
+        "channel": "funding_easing",
+        "okved": "16.10",
+        "factor": "credit.interest",
+        "lag": 1,
+        "elasticity": 0.5
+      }
+    ],
+    "scenario": {
+      "road_payment": {
+        "kind": "triangular",
+        "low": 24,
+        "mode": 36,
+        "high": 52,
+        "label": "Перенос бюджетной оплаты дорожных работ",
+        "unit": "days",
+        "factor": "credit.working_capital",
+        "channel": "road_payment"
+      },
+      "hospital_payment": {
+        "kind": "triangular",
+        "low": 20,
+        "mode": 32,
+        "high": 46,
+        "label": "Удлинение оплаты лекарств больницами",
+        "unit": "days",
+        "factor": "credit.working_capital",
+        "channel": "hospital_payment"
+      },
+      "funding_easing": {
+        "kind": "triangular",
+        "low": -0.028,
+        "mode": -0.02,
+        "high": -0.012,
+        "label": "Удешевление продлеваемого долга",
+        "unit": "fraction",
+        "factor": "credit.interest",
+        "channel": "funding_easing"
+      }
+    }
+  },
+  "expect": {
+    "loses": [
+      "LOAN-CITY-BUILDER",
+      "LOAN-MED-SUPPLY"
+    ],
+    "gains": [
+      "LOAN-EAST-AUTO",
+      "LOAN-NORTH-TIMBER"
+    ],
+    "unaffected": [
+      "LOAN-DIGITAL-SERVICE"
+    ]
+  }
+}

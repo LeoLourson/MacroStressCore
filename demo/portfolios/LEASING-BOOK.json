@@ -1,0 +1,15 @@
+{
+  "portfolio": {
+    "portfolio_id": "LEASING-BOOK",
+    "name": "Только лизинговые компании — рост и фондирование",
+    "base_currency": "RUB",
+    "as_of": "2026-09-11",
+    "snapshot_id": "SYNTHETIC-STORIES-V1-2026-09-11",
+    "builtin": true,
+    "metadata": {
+      "synthetic": true,
+      "description": "Синтетический однородный портфель. Четыре лизингодателя с разными авансами, доходностью портфеля, скоростью выдач и капиталом. Общий отраслевой шок показывает цену роста при дорогом фондировании.",
+      "generated_by": "demo/build_catalog.py"
+    }
+  }
+}

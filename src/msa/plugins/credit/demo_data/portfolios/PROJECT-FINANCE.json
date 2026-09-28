@@ -1,0 +1,618 @@
+{
+  "parties": [
+    {
+      "party_id": "RIVER-QUARTER",
+      "name": "«Речной квартал»: проект жилья",
+      "kind": "company",
+      "okved": "41.20",
+      "country": "RU",
+      "description": "Вымышленная компания. Отдельная проектная компания: 620 квартир комфорт-класса, деньги покупателей на эскроу. Ввод в 18-м месяце, вне годового горизонта оценки.",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "demo:companies",
+          "locator": "RIVER-QUARTER",
+          "fragment_sha256": "f2761e81712bbc1900717fe77d1f4fd9c50714d9ef91371a83ea48686269dbb6",
+          "author": "demo:catalog",
+          "as_of": "2026-09-11"
+        }
+      ]
+    },
+    {
+      "party_id": "PARK-QUARTER",
+      "name": "«Парк у озера»: жилой проект",
+      "kind": "company",
+      "okved": "41.20",
+      "country": "RU",
+      "description": "Вымышленная компания. Строительство на завершающей стадии; ввод в месяце 9, значительная часть квартир оплачена на эскроу. У проекта есть собственные средства и запас лимита.",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "demo:companies",
+          "locator": "PARK-QUARTER",
+          "fragment_sha256": "ea7d885168c32abf8ce3323cbc8f2f3c78e154ec3b5a643ec5a0597dd09aa039",
+          "author": "demo:catalog",
+          "as_of": "2026-09-11"
+        }
+      ]
+    },
+    {
+      "party_id": "STATION-HOMES",
+      "name": "«Станционные сады»: жилой проект",
+      "kind": "company",
+      "okved": "41.20",
+      "country": "RU",
+      "description": "Вымышленная компания. Ранняя стадия: основные продажи начинаются в месяце 4, ввод в месяце 22. Строительные расходы идут до существенного наполнения эскроу.",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "demo:companies",
+          "locator": "STATION-HOMES",
+          "fragment_sha256": "f8550335ec4563e9a79387f8309638b2d7c51e1c5f45bfeee2635f16be54b237",
+          "author": "demo:catalog",
+          "as_of": "2026-09-11"
+        }
+      ]
+    },
+    {
+      "party_id": "GARDEN-INFILL",
+      "name": "«Садовый переулок»: жилой проект",
+      "kind": "company",
+      "okved": "41.20",
+      "country": "RU",
+      "description": "Вымышленная компания. Небольшой достраиваемый объект с вводом в месяце 6. Эскроу уже заметно превышает выбранный долг; снижение новых продаж влияет слабее.",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "demo:companies",
+          "locator": "GARDEN-INFILL",
+          "fragment_sha256": "0b5d39ad756f0d48fa6e514d714aa1f38f94b32b8de0054d6dfb58cb6fcde8eb",
+          "author": "demo:catalog",
+          "as_of": "2026-09-11"
+        }
+      ]
+    }
+  ],
+  "instruments": [
+    {
+      "instrument_id": "PROJECT-RIVER-QUARTER",
+      "instrument_type": "pf_escrow",
+      "name": "Проектное финансирование с эскроу: «Речной квартал»: проект жилья",
+      "currency": "RUB",
+      "issuer_id": "RIVER-QUARTER",
+      "terms": {
+        "covenants": [
+          {
+            "covenant_id": "PROJECT-RIVER-QUARTER-escrow_coverage",
+            "metric": "escrow_coverage",
+            "operator": "ge",
+            "threshold": 1,
+            "unit": "ratio",
+            "test_dates": [
+              "2026-12-31",
+              "2027-03-31",
+              "2027-06-30"
+            ],
+            "evidence": [
+              {
+                "kind": "expert_assumption",
+                "source_id": "demo:companies",
+                "locator": "RIVER-QUARTER/covenant/escrow_coverage",
+                "fragment_sha256": "8cfa00f780e6b7a32024650003efc0baf5361615d310385bf3c7a4db7d7713d6",
+                "author": "demo:catalog",
+                "as_of": "2026-09-11"
+              }
+            ]
+          }
+        ],
+        "collateral": [],
+        "credit_limit": {
+          "value": 3150,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "RIVER-QUARTER/credit_limit",
+              "fragment_sha256": "455744124db921cc2630ae15a577669e91982b12814809f0853714c854bdd71f",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "base_rate": {
+          "value": 0.184,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "RIVER-QUARTER/base_rate",
+              "fragment_sha256": "4c02d693734d7c2a6257ecb2db766c67820f1e5bd88aa0f984082798b4e17bb9",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "subsidized_rate": {
+          "value": 0.092,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "RIVER-QUARTER/subsidized_rate",
+              "fragment_sha256": "30473853a22505a48ef57584ddb3e3bca0de8ffdc556b310e19758014f035630",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "schema_version": "1"
+    },
+    {
+      "instrument_id": "PROJECT-PARK-QUARTER",
+      "instrument_type": "pf_escrow",
+      "name": "Проектное финансирование с эскроу: «Парк у озера»: жилой проект",
+      "currency": "RUB",
+      "issuer_id": "PARK-QUARTER",
+      "terms": {
+        "covenants": [
+          {
+            "covenant_id": "PROJECT-PARK-QUARTER-escrow_coverage",
+            "metric": "escrow_coverage",
+            "operator": "ge",
+            "threshold": 1,
+            "unit": "ratio",
+            "test_dates": [
+              "2026-12-31",
+              "2027-03-31",
+              "2027-06-30"
+            ],
+            "evidence": [
+              {
+                "kind": "expert_assumption",
+                "source_id": "demo:companies",
+                "locator": "PARK-QUARTER/covenant/escrow_coverage",
+                "fragment_sha256": "a0645e329aae1c3b84028e94b2b0797f281c6e6f4c00410083f3a494ec7a4709",
+                "author": "demo:catalog",
+                "as_of": "2026-09-11"
+              }
+            ]
+          }
+        ],
+        "collateral": [],
+        "credit_limit": {
+          "value": 2650,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PARK-QUARTER/credit_limit",
+              "fragment_sha256": "f62803af004eb69ab6cc5f9f7b2189435aa81ab03ea535c4e47a74819d348d25",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "base_rate": {
+          "value": 0.125,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PARK-QUARTER/base_rate",
+              "fragment_sha256": "885e224168e047524b86087aa1afb4a03149084bc440703f630a4a140eeba09e",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "schema_version": "1"
+    },
+    {
+      "instrument_id": "PROJECT-STATION-HOMES",
+      "instrument_type": "pf_escrow",
+      "name": "Проектное финансирование с эскроу: «Станционные сады»: жилой проект",
+      "currency": "RUB",
+      "issuer_id": "STATION-HOMES",
+      "terms": {
+        "covenants": [
+          {
+            "covenant_id": "PROJECT-STATION-HOMES-escrow_coverage",
+            "metric": "escrow_coverage",
+            "operator": "ge",
+            "threshold": 1,
+            "unit": "ratio",
+            "test_dates": [
+              "2026-12-31",
+              "2027-03-31",
+              "2027-06-30"
+            ],
+            "evidence": [
+              {
+                "kind": "expert_assumption",
+                "source_id": "demo:companies",
+                "locator": "STATION-HOMES/covenant/escrow_coverage",
+                "fragment_sha256": "3de49b205e3de5a69ed1031b1bb4ae3f9a8c485ee40705d3491f3db7d6d91fee",
+                "author": "demo:catalog",
+                "as_of": "2026-09-11"
+              }
+            ]
+          }
+        ],
+        "collateral": [],
+        "credit_limit": {
+          "value": 2950,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "STATION-HOMES/credit_limit",
+              "fragment_sha256": "d96b5bc3b6d159bc8cad28512d1d2b941a3be4292925960de6c2112ce716270b",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "base_rate": {
+          "value": 0.189,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "STATION-HOMES/base_rate",
+              "fragment_sha256": "81e41a30ad02fbf4b48992609267a160221eaf817a036b6eea2d256d4be83be6",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "schema_version": "1"
+    },
+    {
+      "instrument_id": "PROJECT-GARDEN-INFILL",
+      "instrument_type": "pf_escrow",
+      "name": "Проектное финансирование с эскроу: «Садовый переулок»: жилой проект",
+      "currency": "RUB",
+      "issuer_id": "GARDEN-INFILL",
+      "terms": {
+        "covenants": [
+          {
+            "covenant_id": "PROJECT-GARDEN-INFILL-escrow_coverage",
+            "metric": "escrow_coverage",
+            "operator": "ge",
+            "threshold": 1,
+            "unit": "ratio",
+            "test_dates": [
+              "2026-12-31",
+              "2027-03-31",
+              "2027-06-30"
+            ],
+            "evidence": [
+              {
+                "kind": "expert_assumption",
+                "source_id": "demo:companies",
+                "locator": "GARDEN-INFILL/covenant/escrow_coverage",
+                "fragment_sha256": "f584b34e5752a7191cfead3abdb6ffe5f05cf26d08fecc036e81d9a534179d5e",
+                "author": "demo:catalog",
+                "as_of": "2026-09-11"
+              }
+            ]
+          }
+        ],
+        "collateral": [],
+        "credit_limit": {
+          "value": 1400,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "GARDEN-INFILL/credit_limit",
+              "fragment_sha256": "2c2aa8bf1fe289a002f2a8f03806744e2fd7d5fa5edbb77b8215f85358e5c142",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "base_rate": {
+          "value": 0.112,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "GARDEN-INFILL/base_rate",
+              "fragment_sha256": "0b296e7da69293c7f17157b1733d5fb40bd6daec189a9074eea61770d47a4aad",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "schema_version": "1"
+    }
+  ],
+  "positions": [
+    {
+      "position_id": "PROJECT-RIVER-QUARTER",
+      "instrument_id": "PROJECT-RIVER-QUARTER",
+      "params": {
+        "ead": {
+          "value": 1950,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "RIVER-QUARTER/ead",
+              "fragment_sha256": "6a5f26e7e4316ce5a2ad41dabeed8408fb883fb95acfe025bca26e35d4a3beca",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "lgd": {
+          "value": 0.3,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "RIVER-QUARTER/lgd",
+              "fragment_sha256": "edb4a20cf79c94b8aff12212f6058fc07bccdcc6572124dbb6822a59a6d051ee",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "ccf": {
+          "value": 1,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "RIVER-QUARTER/ccf",
+              "fragment_sha256": "f7275d12317504fafe8d58f09196d900bae34044f1f15c788be6756204be4457",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "import_share": {
+          "value": 0,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "RIVER-QUARTER/import_share",
+              "fragment_sha256": "d0e6838be38dac4f3087bc710e89263ca589964967abb3cdd25d8c446ffa5c7e",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "driver_elasticity": {},
+        "proxy_peer_ids": [],
+        "status": "ok",
+        "flags": []
+      },
+      "schema_version": "1",
+      "model_id": null
+    },
+    {
+      "position_id": "PROJECT-PARK-QUARTER",
+      "instrument_id": "PROJECT-PARK-QUARTER",
+      "params": {
+        "ead": {
+          "value": 1480,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PARK-QUARTER/ead",
+              "fragment_sha256": "9c22c33897d32c0240d8ec7e15f598e599fc51f2d3ba90887cbce60e0c23b969",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "lgd": {
+          "value": 0.27,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PARK-QUARTER/lgd",
+              "fragment_sha256": "5df4457000a720fab514a357f1187ce3b1b18caf2f61a1aaf65547b242a6a498",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "ccf": {
+          "value": 1,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PARK-QUARTER/ccf",
+              "fragment_sha256": "10076d0e8b3969e426fd90e6ddec055640cc0258edb5ad34447e99cf8ac44b1c",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "import_share": {
+          "value": 0,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PARK-QUARTER/import_share",
+              "fragment_sha256": "30e34299e5219711a8f6c77d29884a5b988a9f64c93da4e958ae15f0b97d4554",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "driver_elasticity": {},
+        "proxy_peer_ids": [],
+        "status": "ok",
+        "flags": []
+      },
+      "schema_version": "1",
+      "model_id": null
+    },
+    {
+      "position_id": "PROJECT-STATION-HOMES",
+      "instrument_id": "PROJECT-STATION-HOMES",
+      "params": {
+        "ead": {
+          "value": 1120,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "STATION-HOMES/ead",
+              "fragment_sha256": "fb0f1025ea2320fb042a404e900abfc47bb4647c7c879600cf4948ad5d4c2ab5",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "lgd": {
+          "value": 0.37,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "STATION-HOMES/lgd",
+              "fragment_sha256": "ac450132ef0e73383d3c9db356ceaa32f794de002655db534a6b6ee9012f9196",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "ccf": {
+          "value": 1,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "STATION-HOMES/ccf",
+              "fragment_sha256": "8dcef3e1d460ec32e4a69a02c69e43c2adc23844040a9bcfe8e251082efcf2e9",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "import_share": {
+          "value": 0,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "STATION-HOMES/import_share",
+              "fragment_sha256": "7e8b35bb2835f5944ebbcd57fcc60979bf029d512b3be0adfe0dea3e6c1fa43e",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "driver_elasticity": {},
+        "proxy_peer_ids": [],
+        "status": "ok",
+        "flags": []
+      },
+      "schema_version": "1",
+      "model_id": null
+    },
+    {
+      "position_id": "PROJECT-GARDEN-INFILL",
+      "instrument_id": "PROJECT-GARDEN-INFILL",
+      "params": {
+        "ead": {
+          "value": 640,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "GARDEN-INFILL/ead",
+              "fragment_sha256": "9174ecdd0f922228f8555c32676180130d9a8597002335f5d3e880f8b6b59980",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "lgd": {
+          "value": 0.23,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "GARDEN-INFILL/lgd",
+              "fragment_sha256": "b59f4ff93b67d507b6f79f32493519de939262d035fe4e447527cc2f63adc852",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "ccf": {
+          "value": 1,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "GARDEN-INFILL/ccf",
+              "fragment_sha256": "e5b43f6253a23e2474fc9ed9288104f7999908fb02fe30c4bcef4707f064435c",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "import_share": {
+          "value": 0,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "GARDEN-INFILL/import_share",
+              "fragment_sha256": "fbeccf10b1bf212095c9db68212c97e6852b6fdbaf4a9583f2bdac40a170645a",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "driver_elasticity": {},
+        "proxy_peer_ids": [],
+        "status": "ok",
+        "flags": []
+      },
+      "schema_version": "1",
+      "model_id": null
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "portfolio": {
+    "portfolio_id": "EQUITY-ROTATION",
+    "name": "Только акции — ротация и валютный противовес",
+    "base_currency": "RUB",
+    "as_of": "2026-09-11",
+    "snapshot_id": "SYNTHETIC-STORIES-V1-2026-09-11",
+    "builtin": true,
+    "metadata": {
+      "synthetic": true,
+      "description": "Синтетический однородный портфель. Пять акций: лесопереработка, техника, магазины низких цен, ПО и долларовая акция медицинского оборудования. Положительный индекс конкурирует с отраслевыми шоками и укреплением рубля.",
+      "generated_by": "demo/build_catalog.py"
+    }
+  }
+}

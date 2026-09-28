@@ -1,23 +1,8 @@
 from langgraph.types import interrupt
 
 from msa.agents.causal_output import scenario_violations
-from msa.engine.exposure import scenario_coverage
-from msa.plugin_sdk.model import RunOptions
 
-
-def coverage(state, graph, parameters, context):
-    return scenario_coverage(
-        state.get("portfolio_positions") or [],
-        graph,
-        parameters,
-        RunOptions(
-            as_of=state["as_of"],
-            horizon=state.get("horizon", 12),
-            base_currency=state.get("base_currency", "RUB"),
-            options=context.options,
-        ),
-        context.registry,
-    )
+from .validate_causal import coverage
 
 
 def run(state, *, context):
@@ -25,7 +10,7 @@ def run(state, *, context):
     parameters = state.get("macro_parameters") or {}
     required = state.get("scenario_required", False)
     errors = (
-        state.get("verdicts", [])
+        [v for v in state.get("verdicts", []) if v["rule_id"] != "SCENARIO"]
         + scenario_violations(parameters, state["graph"], required=required)
         + coverage(state, state["graph"], parameters, context)
     )

@@ -26,7 +26,6 @@ def build_agents(
     original_store,
     options: dict,
     tools=None,
-    estimate_scenario: bool = False,
 ) -> Agents:
     """The production line: the LLM agents, the models per position and the portfolio.
 
@@ -44,7 +43,7 @@ def build_agents(
 
     return Agents(
         ingest=IngestAgent(store=original_store),
-        causal=CausalAgent(llm=llm, mock=mock_llm, estimate_scenario=estimate_scenario),
+        causal=CausalAgent(llm=llm, mock=mock_llm),
         exposure=ExposureAgent(registry=registry, resolver=resolver),
         draw_macro=DrawMacroAgent(registry=registry),
         quant=QuantAgent(registry=registry, tools=tools),

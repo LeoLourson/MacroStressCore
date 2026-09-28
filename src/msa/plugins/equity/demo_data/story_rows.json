@@ -1,0 +1,198 @@
+{
+  "TRADE-CORRIDOR": [
+    {
+      "position_id": "SHARE-ROUTE-TRANS",
+      "party": "ROUTE-TRANS",
+      "instrument_type": "common_stock",
+      "currency": "RUB",
+      "values": {
+        "ticker": "DMRT",
+        "market_index": "MOEX",
+        "sector": "transport",
+        "quantity": 500000,
+        "price": 176,
+        "beta_market": 1.12,
+        "beta_sector": 1,
+        "residual_volatility": 0.27,
+        "dividend": 7
+      }
+    },
+    {
+      "position_id": "SHARE-NORTH-TIMBER",
+      "party": "NORTH-TIMBER",
+      "instrument_type": "common_stock",
+      "currency": "RUB",
+      "values": {
+        "ticker": "DMNT",
+        "market_index": "MOEX",
+        "sector": "materials",
+        "quantity": 500000,
+        "price": 330,
+        "beta_market": 1.08,
+        "beta_sector": 1,
+        "residual_volatility": 0.31,
+        "dividend": 11
+      }
+    }
+  ],
+  "REGIONAL-DEVELOPMENT": [
+    {
+      "position_id": "SHARE-PRECAST",
+      "party": "PRECAST",
+      "instrument_type": "common_stock",
+      "currency": "RUB",
+      "values": {
+        "ticker": "DMPC",
+        "market_index": "MOEX",
+        "sector": "materials",
+        "quantity": 300000,
+        "price": 240,
+        "beta_market": 1.18,
+        "beta_sector": 1,
+        "residual_volatility": 0.29,
+        "dividend": 8
+      }
+    },
+    {
+      "position_id": "SHARE-DIGITAL-SERVICE",
+      "party": "DIGITAL-SERVICE",
+      "instrument_type": "common_stock",
+      "currency": "RUB",
+      "values": {
+        "ticker": "DMDS",
+        "market_index": "MOEX",
+        "sector": "technology",
+        "quantity": 250000,
+        "price": 384,
+        "beta_market": 0.82,
+        "beta_sector": 1,
+        "residual_volatility": 0.26,
+        "dividend": 0
+      }
+    }
+  ],
+  "EVERYDAY-ECONOMY": [
+    {
+      "position_id": "SHARE-VALUE-MART",
+      "party": "VALUE-MART",
+      "instrument_type": "common_stock",
+      "currency": "RUB",
+      "values": {
+        "ticker": "DMVM",
+        "market_index": "MOEX",
+        "sector": "trade",
+        "quantity": 500000,
+        "price": 304,
+        "beta_market": 0.67,
+        "beta_sector": 1,
+        "residual_volatility": 0.21,
+        "dividend": 9
+      }
+    },
+    {
+      "position_id": "SHARE-HOME-APPLIANCES",
+      "party": "HOME-APPLIANCES",
+      "instrument_type": "common_stock",
+      "currency": "RUB",
+      "values": {
+        "ticker": "DMHA",
+        "market_index": "MOEX",
+        "sector": "trade",
+        "quantity": 400000,
+        "price": 156,
+        "beta_market": 1.26,
+        "beta_sector": 1,
+        "residual_volatility": 0.33,
+        "dividend": 2
+      }
+    }
+  ],
+  "EQUITY-ROTATION": [
+    {
+      "position_id": "SHARE-NORTH-TIMBER",
+      "party": "NORTH-TIMBER",
+      "instrument_type": "common_stock",
+      "currency": "RUB",
+      "values": {
+        "ticker": "DMNT",
+        "market_index": "MOEX",
+        "sector": "materials",
+        "quantity": 500000,
+        "price": 330,
+        "beta_market": 1.08,
+        "beta_sector": 1,
+        "residual_volatility": 0.31,
+        "dividend": 11
+      }
+    },
+    {
+      "position_id": "SHARE-HOME-APPLIANCES",
+      "party": "HOME-APPLIANCES",
+      "instrument_type": "common_stock",
+      "currency": "RUB",
+      "values": {
+        "ticker": "DMHA",
+        "market_index": "MOEX",
+        "sector": "trade",
+        "quantity": 400000,
+        "price": 156,
+        "beta_market": 1.26,
+        "beta_sector": 1,
+        "residual_volatility": 0.33,
+        "dividend": 2
+      }
+    },
+    {
+      "position_id": "SHARE-VALUE-MART",
+      "party": "VALUE-MART",
+      "instrument_type": "common_stock",
+      "currency": "RUB",
+      "values": {
+        "ticker": "DMVM",
+        "market_index": "MOEX",
+        "sector": "trade",
+        "quantity": 500000,
+        "price": 304,
+        "beta_market": 0.67,
+        "beta_sector": 1,
+        "residual_volatility": 0.21,
+        "dividend": 9
+      }
+    },
+    {
+      "position_id": "SHARE-DIGITAL-SERVICE",
+      "party": "DIGITAL-SERVICE",
+      "instrument_type": "common_stock",
+      "currency": "RUB",
+      "values": {
+        "ticker": "DMDS",
+        "market_index": "MOEX",
+        "sector": "technology",
+        "quantity": 250000,
+        "price": 384,
+        "beta_market": 0.82,
+        "beta_sector": 1,
+        "residual_volatility": 0.26,
+        "dividend": 0
+      }
+    },
+    {
+      "position_id": "SHARE-US-LABWARE",
+      "party": "US-LABWARE",
+      "instrument_type": "common_stock",
+      "currency": "USD",
+      "values": {
+        "ticker": "DMLB",
+        "market_index": "SPX",
+        "sector": "healthcare",
+        "quantity": 20000,
+        "price": 82,
+        "beta_market": 0.68,
+        "beta_sector": 1,
+        "residual_volatility": 0.23,
+        "dividend": 1.2,
+        "fx_rate": 92.5
+      }
+    }
+  ]
+}

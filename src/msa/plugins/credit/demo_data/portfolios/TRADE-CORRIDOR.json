@@ -1,0 +1,735 @@
+{
+  "parties": [
+    {
+      "party_id": "EAST-AUTO",
+      "name": "«Восток Авто»: региональный импортёр",
+      "kind": "company",
+      "okved": "45.11",
+      "country": "RU",
+      "description": "Вымышленная компания. Сеть из 18 дилерских центров; 78 % закупок зависят от валюты. Машины оплачиваются до доставки, покупатели чувствительны к цене.",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "demo:companies",
+          "locator": "EAST-AUTO",
+          "fragment_sha256": "14e65252b680c1bdcdd528ef89815e2e7aad6113b625ee6c2c587a0ab803f8ac",
+          "author": "demo:catalog",
+          "as_of": "2026-09-11"
+        }
+      ]
+    },
+    {
+      "party_id": "NORTH-TIMBER",
+      "name": "«Северная доска»: лесопереработка",
+      "kind": "company",
+      "okved": "16.10",
+      "country": "RU",
+      "description": "Вымышленная компания. Два лесопильных завода; 65 % выручки дают экспортные контракты. Покупатели платят после получения груза, рублёвые затраты преобладают.",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "demo:companies",
+          "locator": "NORTH-TIMBER",
+          "fragment_sha256": "9915486fd7ce78cc0b179bb1d2229b78fa7198df455194cd1a1572fa63417b76",
+          "author": "demo:catalog",
+          "as_of": "2026-09-11"
+        }
+      ]
+    },
+    {
+      "party_id": "ROUTE-TRANS",
+      "name": "«Маршрут-Восток»: автоперевозчик",
+      "kind": "company",
+      "okved": "49.41",
+      "country": "RU",
+      "description": "Вымышленная компания. 420 грузовиков на внутренних и приграничных маршрутах. Длинный объезд увеличивает загрузку, но дизель и холостой пробег съедают маржу.",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "demo:companies",
+          "locator": "ROUTE-TRANS",
+          "fragment_sha256": "ed4fda9ba2d3a77e16ea05e226c9644129b5f5c0ecd10079e46ddb659e5949f7",
+          "author": "demo:catalog",
+          "as_of": "2026-09-11"
+        }
+      ]
+    },
+    {
+      "party_id": "COLD-HUB",
+      "name": "«Холодный узел»: складской оператор",
+      "kind": "company",
+      "okved": "52.10",
+      "country": "RU",
+      "description": "Вымышленная компания. Три холодильных комплекса у крупных городов, 82 % площадей сданы по годовым договорам. Долг привлечён под расширение, тарифы пересматриваются с задержкой.",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "demo:companies",
+          "locator": "COLD-HUB",
+          "fragment_sha256": "3e9e6cb1b14b4f327152309909f9379fcdd9b9e86be7623e4fff613b0a101942",
+          "author": "demo:catalog",
+          "as_of": "2026-09-11"
+        }
+      ]
+    },
+    {
+      "party_id": "MED-SUPPLY",
+      "name": "«МедРезерв»: дистрибуция лекарств",
+      "kind": "company",
+      "okved": "46.46",
+      "country": "RU",
+      "description": "Вымышленная компания. Поставляет лекарства аптекам и больницам; 55 % закупок импортные, есть двухмесячный запас. Спрос устойчив, оплата больниц занимает до 78 дней.",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "demo:companies",
+          "locator": "MED-SUPPLY",
+          "fragment_sha256": "da946e35ddf6e7ea698953ebc8a4c611a5e7808b9dd437ad1c2c73a45e0cf90f",
+          "author": "demo:catalog",
+          "as_of": "2026-09-11"
+        }
+      ]
+    },
+    {
+      "party_id": "PACKAGING",
+      "name": "«КонтурПак»: картонная упаковка",
+      "kind": "company",
+      "okved": "17.21",
+      "country": "RU",
+      "description": "Вымышленная компания. Региональный производитель коробов для пищевых и непродовольственных товаров. Диверсифицированные внутренние заказчики, облигационный долг с фиксированным купоном.",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "demo:companies",
+          "locator": "PACKAGING",
+          "fragment_sha256": "f602133e105f76a6ce3a2e37e9f820e2329fb940e17dadd3c8f7e20e21cbf9fd",
+          "author": "demo:catalog",
+          "as_of": "2026-09-11"
+        }
+      ]
+    }
+  ],
+  "instruments": [
+    {
+      "instrument_id": "LOAN-EAST-AUTO",
+      "instrument_type": "corp_loan",
+      "name": "Корпоративный кредит: «Восток Авто»: региональный импортёр",
+      "currency": "RUB",
+      "issuer_id": "EAST-AUTO",
+      "terms": {
+        "covenants": [
+          {
+            "covenant_id": "LOAN-EAST-AUTO-icr",
+            "metric": "icr",
+            "operator": "ge",
+            "threshold": 1.4,
+            "unit": "ratio",
+            "test_dates": [
+              "2026-12-31",
+              "2027-03-31",
+              "2027-06-30"
+            ],
+            "evidence": [
+              {
+                "kind": "expert_assumption",
+                "source_id": "demo:companies",
+                "locator": "EAST-AUTO/covenant/icr",
+                "fragment_sha256": "32d4a38db1f39688199cd73c5362d333c2aafc233a912ae76bc3d5971d47d904",
+                "author": "demo:catalog",
+                "as_of": "2026-09-11"
+              }
+            ]
+          }
+        ],
+        "collateral": []
+      },
+      "schema_version": "1"
+    },
+    {
+      "instrument_id": "LOAN-NORTH-TIMBER",
+      "instrument_type": "corp_loan",
+      "name": "Корпоративный кредит: «Северная доска»: лесопереработка",
+      "currency": "RUB",
+      "issuer_id": "NORTH-TIMBER",
+      "terms": {
+        "covenants": [
+          {
+            "covenant_id": "LOAN-NORTH-TIMBER-nd_ebitda",
+            "metric": "nd_ebitda",
+            "operator": "le",
+            "threshold": 4.5,
+            "unit": "ratio",
+            "test_dates": [
+              "2026-12-31",
+              "2027-03-31",
+              "2027-06-30"
+            ],
+            "evidence": [
+              {
+                "kind": "expert_assumption",
+                "source_id": "demo:companies",
+                "locator": "NORTH-TIMBER/covenant/nd_ebitda",
+                "fragment_sha256": "91d03972364f37b33d59ddb9a54d3c19c2665ece08cea7375ce16bafa311e456",
+                "author": "demo:catalog",
+                "as_of": "2026-09-11"
+              }
+            ]
+          }
+        ],
+        "collateral": []
+      },
+      "schema_version": "1"
+    },
+    {
+      "instrument_id": "LOAN-ROUTE-TRANS",
+      "instrument_type": "corp_loan",
+      "name": "Корпоративный кредит: «Маршрут-Восток»: автоперевозчик",
+      "currency": "RUB",
+      "issuer_id": "ROUTE-TRANS",
+      "terms": {
+        "covenants": [],
+        "collateral": []
+      },
+      "schema_version": "1"
+    },
+    {
+      "instrument_id": "LOAN-COLD-HUB",
+      "instrument_type": "corp_loan",
+      "name": "Корпоративный кредит: «Холодный узел»: складской оператор",
+      "currency": "RUB",
+      "issuer_id": "COLD-HUB",
+      "terms": {
+        "covenants": [
+          {
+            "covenant_id": "LOAN-COLD-HUB-icr",
+            "metric": "icr",
+            "operator": "ge",
+            "threshold": 1.3,
+            "unit": "ratio",
+            "test_dates": [
+              "2026-12-31",
+              "2027-03-31",
+              "2027-06-30"
+            ],
+            "evidence": [
+              {
+                "kind": "expert_assumption",
+                "source_id": "demo:companies",
+                "locator": "COLD-HUB/covenant/icr",
+                "fragment_sha256": "0148ebb2475921572b67e807bd238bc657f598de2aa13ec434e63a97d9f890f0",
+                "author": "demo:catalog",
+                "as_of": "2026-09-11"
+              }
+            ]
+          }
+        ],
+        "collateral": []
+      },
+      "schema_version": "1"
+    },
+    {
+      "instrument_id": "LOAN-MED-SUPPLY",
+      "instrument_type": "corp_loan",
+      "name": "Корпоративный кредит: «МедРезерв»: дистрибуция лекарств",
+      "currency": "RUB",
+      "issuer_id": "MED-SUPPLY",
+      "terms": {
+        "covenants": [],
+        "collateral": []
+      },
+      "schema_version": "1"
+    },
+    {
+      "instrument_id": "BOND-PACKAGING",
+      "instrument_type": "bond_fixed",
+      "name": "Облигация с фиксированным купоном: «КонтурПак»: картонная упаковка",
+      "currency": "RUB",
+      "issuer_id": "PACKAGING",
+      "terms": {
+        "covenants": [],
+        "collateral": [],
+        "face_value": {
+          "value": 430,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PACKAGING/face_value",
+              "fragment_sha256": "ac043bdcd223aa7739b682d4a551e32af5731858d7d13bd46b7522fc9051cfbe",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "coupon_rate": {
+          "value": 0.169,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PACKAGING/coupon_rate",
+              "fragment_sha256": "548e4ae18d10b201bb8c53e8317293f9b896267725eb36838d4d9eeba843a6a6",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "maturity_months": {
+          "value": 39,
+          "unit": "months",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PACKAGING/maturity_months",
+              "fragment_sha256": "5ea905887f70f0d6bbf1af5725105f0b637c0dc98305f5d36e7eeb47a62e6e28",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "coupon_frequency": {
+          "value": 4,
+          "unit": "count",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PACKAGING/coupon_frequency",
+              "fragment_sha256": "2d5378c9a2a08dee7726b85a16f7135f08efe6008823b7ce402126cc52c25aea",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "credit_spread": {
+          "value": 0.029,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PACKAGING/credit_spread",
+              "fragment_sha256": "4821396a145b66e59ec8390f24fb46088410a612c3a660c1de3ef95b9cf9501b",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "schema_version": "1"
+    }
+  ],
+  "positions": [
+    {
+      "position_id": "LOAN-EAST-AUTO",
+      "instrument_id": "LOAN-EAST-AUTO",
+      "params": {
+        "ead": {
+          "value": 1350,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "EAST-AUTO/ead",
+              "fragment_sha256": "fe206eb8c154f7df65cca81bef039ba1ea6606ad1104ef2c9dd37e8a9cb4e3cd",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "lgd": {
+          "value": 0.47,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "EAST-AUTO/lgd",
+              "fragment_sha256": "b13979b2efc94d9b4491b8e2f5a69976f7d0d38abed0a8ad58dc66306d3a0226",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "ccf": {
+          "value": 1,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "EAST-AUTO/ccf",
+              "fragment_sha256": "bfa43aa7392197a8f79f4a4fb47dfba5927f8d463b661fd90b1e189c0a757232",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "import_share": {
+          "value": 0.78,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "EAST-AUTO/import_share",
+              "fragment_sha256": "f883f41f7868dbbaa2af35598d3804dc8e9a61402cfb809900e29203b0697b84",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "driver_elasticity": {},
+        "proxy_peer_ids": [],
+        "status": "ok",
+        "flags": []
+      },
+      "schema_version": "1",
+      "model_id": null
+    },
+    {
+      "position_id": "LOAN-NORTH-TIMBER",
+      "instrument_id": "LOAN-NORTH-TIMBER",
+      "params": {
+        "ead": {
+          "value": 1825,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "NORTH-TIMBER/ead",
+              "fragment_sha256": "e3c701adc69ecaf1ab4c54ee7e19d397fdf90efdee11237f6225257768104cf9",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "lgd": {
+          "value": 0.44,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "NORTH-TIMBER/lgd",
+              "fragment_sha256": "f57ed303ee40a15d6200fe436a3f34a0027156a85da7b55b1aca27f7b480796a",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "ccf": {
+          "value": 1,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "NORTH-TIMBER/ccf",
+              "fragment_sha256": "b948f19e21c4241588500cadc6726583a7098a112e570dddf72249115d9f8247",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "import_share": {
+          "value": 0.08,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "NORTH-TIMBER/import_share",
+              "fragment_sha256": "ec183244b1be0d8e7f0270c82efbddd2049a2b36b024a52bdf196fb495488632",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "driver_elasticity": {},
+        "proxy_peer_ids": [],
+        "status": "ok",
+        "flags": []
+      },
+      "schema_version": "1",
+      "model_id": null
+    },
+    {
+      "position_id": "LOAN-ROUTE-TRANS",
+      "instrument_id": "LOAN-ROUTE-TRANS",
+      "params": {
+        "ead": {
+          "value": 640,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "ROUTE-TRANS/ead",
+              "fragment_sha256": "f5514b521e92441cc882df97248e635923a9bd92c20cdbbcc16c6ee43cbbf6d8",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "lgd": {
+          "value": 0.49,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "ROUTE-TRANS/lgd",
+              "fragment_sha256": "2d6f7889375f6452cd21de358a1d3f84d6ed7c6f456b7e3daaccbea57922785d",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "ccf": {
+          "value": 1,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "ROUTE-TRANS/ccf",
+              "fragment_sha256": "56d6390cac17242e77cff6c964b2fdb84f185b71ed0dd2a7d60649a72703d813",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "import_share": {
+          "value": 0.12,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "ROUTE-TRANS/import_share",
+              "fragment_sha256": "0c8c7b7ab5f63babaad7f80ac7a63a93a010a8741edcb99d7189d33efc5ac114",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "driver_elasticity": {},
+        "proxy_peer_ids": [],
+        "status": "ok",
+        "flags": []
+      },
+      "schema_version": "1",
+      "model_id": null
+    },
+    {
+      "position_id": "LOAN-COLD-HUB",
+      "instrument_id": "LOAN-COLD-HUB",
+      "params": {
+        "ead": {
+          "value": 920,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "COLD-HUB/ead",
+              "fragment_sha256": "30286ba2924ae11b5806bc880f56f7a354b8540dd7e541d70d9adb1edadf1281",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "lgd": {
+          "value": 0.32,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "COLD-HUB/lgd",
+              "fragment_sha256": "a0ea565de0feb06358bfc3f679bd735cd6bbdcc12531f6903d6d98be660cedca",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "ccf": {
+          "value": 1,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "COLD-HUB/ccf",
+              "fragment_sha256": "c450ce76612581e12fa7e21ce13e56dfb206d00556dbbff0f8e2a521f539dfd3",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "import_share": {
+          "value": 0.05,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "COLD-HUB/import_share",
+              "fragment_sha256": "a2f2c81a222246f2600c864d82a157721f62951424a84dfec62b5a6761d95608",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "driver_elasticity": {},
+        "proxy_peer_ids": [],
+        "status": "ok",
+        "flags": []
+      },
+      "schema_version": "1",
+      "model_id": null
+    },
+    {
+      "position_id": "LOAN-MED-SUPPLY",
+      "instrument_id": "LOAN-MED-SUPPLY",
+      "params": {
+        "ead": {
+          "value": 780,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "MED-SUPPLY/ead",
+              "fragment_sha256": "353d1880336a4ce4747ce57daa4566975dd0f0b1674ecd6f6c409ff57a09f04f",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "lgd": {
+          "value": 0.38,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "MED-SUPPLY/lgd",
+              "fragment_sha256": "746812bd51ba65f1a3f924f9646c96f609696af40ef4d6e6182605f07151c493",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "ccf": {
+          "value": 1,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "MED-SUPPLY/ccf",
+              "fragment_sha256": "9d90a523030de1f809be3ca84822360fc390ca56f1534f2147aa3e999598ff58",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "import_share": {
+          "value": 0.55,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "MED-SUPPLY/import_share",
+              "fragment_sha256": "492b64654dce19db10f0ffbc80a2a4f33f64ed0ef5ef254c352521b12ea032df",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "driver_elasticity": {},
+        "proxy_peer_ids": [],
+        "status": "ok",
+        "flags": []
+      },
+      "schema_version": "1",
+      "model_id": null
+    },
+    {
+      "position_id": "BOND-PACKAGING",
+      "instrument_id": "BOND-PACKAGING",
+      "params": {
+        "ead": {
+          "value": 430,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PACKAGING/ead",
+              "fragment_sha256": "3aea4c517cde19e145dd40d7b9ce25b74c53fbe9f5bb901beb0703034b5de3ab",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "lgd": {
+          "value": 0.46,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PACKAGING/lgd",
+              "fragment_sha256": "b2e4aee7f26379bc6298ae4077580561ab3ba41b3ce1efab45f2e50d4dd8fc37",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "ccf": {
+          "value": 1,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PACKAGING/ccf",
+              "fragment_sha256": "15f2c794ddb06ab3cd17d269388028f5f492e9515fc5a757e5fcf94651bff3ca",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "import_share": {
+          "value": 0.1,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PACKAGING/import_share",
+              "fragment_sha256": "9b1a2d5dab78178888c8a4c5d339630359ea01f18c30e94407c0a54f6c9e4ae0",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "driver_elasticity": {},
+        "proxy_peer_ids": [],
+        "status": "ok",
+        "flags": []
+      },
+      "schema_version": "1",
+      "model_id": null
+    }
+  ]
+}

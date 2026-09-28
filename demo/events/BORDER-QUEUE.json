@@ -1,0 +1,237 @@
+{
+  "event_id": "BORDER-QUEUE",
+  "title": "Погранпереход перегружен: товар есть, денег пока нет",
+  "text": "Синтетическая новость для демонстрации. После введения дополнительной проверки товарных деклараций время прохождения восточного погранперехода выросло. Автодилеры переносят выдачу машин клиентам, экспортёры пиломатериалов позже получают оплату. Рубль ослаб, частично поддержав рублёвую выручку экспортёров. Перевозчики используют более длинные маршруты: счета клиентам растут вместе с расходами на дизель. Холодильные склады получают дополнительные заявки на хранение. Лекарства поступают по другому маршруту с приоритетным оформлением; внутренние поставки картонной упаковки продолжаются по графику.",
+  "metadata": {
+    "portfolio_id": "TRADE-CORRIDOR",
+    "synthetic": true,
+    "source": "Вымышленная новость; численные диапазоны — экспертные допущения демо-каталога",
+    "scenario_text": "Горизонт — 12 месяцев; после указанного лага эффекты сохраняются до его конца. Закупки автомобилей в валюте дорожают на 5–11 % (мода 7,5 %), лаг 1 месяц; доля импорта 78 % задана в позиции. Продажи автомобилей падают на 4–12 % (8 %) с месяца 2, срок получения денег растёт на 18–36 дней (26) сразу. Отгрузки пиломатериалов снижаются на 7–14 % (10 %), валютный эффект +5–11 % (7,5 %) передаётся в выручку с коэффициентом 0,65; оба лага 1 месяц. Срок оплаты экспорта растёт на 14–32 дня (22), коэффициент 0,65, лаг 1 месяц. Выручка перевозчика +4–11 % (7,5 %), лаг 1 месяц; дизель и холостой пробег +12–26 % (18 %), коэффициент 0,34 к переменным затратам, без лага. Выручка складов +3,5–10 % (6,5 %), лаг 1 месяц. Отраслевой шок акций лесопереработки −18…−7 % (−12 %), перевозчика −7…+4 % (−2 %). Общий индекс не шокируется. Валютные диапазоны для закупок и экспорта моделируются отдельными параметрами; их корреляция не задана. Лекарства и упаковка вне графа.",
+    "horizon_months": 12
+  },
+  "mock_answer": {
+    "event_type": "Погранпереход перегружен: товар есть, денег пока нет",
+    "channels": {
+      "import_fx": "Подорожание валютных закупок автомобилей",
+      "car_sales": "Перенос выдачи автомобилей покупателям",
+      "car_cash": "Задержка поступления денег автодилеру",
+      "timber_cash": "Задержка оплаты экспортных партий",
+      "timber_volume": "Снижение экспортных отгрузок пиломатериалов",
+      "timber_fx": "Валютная поддержка экспортной выручки",
+      "freight_orders": "Дополнительные километры в счетах перевозчика",
+      "diesel": "Дизель и холостой пробег",
+      "storage_orders": "Дополнительная загрузка холодильных складов",
+      "timber_equity": "Переоценка акций лесопереработки",
+      "freight_equity": "Неоднозначная переоценка акций перевозчика"
+    },
+    "links": [
+      {
+        "channel": "import_fx",
+        "okved": "45.11",
+        "factor": "credit.fx",
+        "lag": 1,
+        "elasticity": 1
+      },
+      {
+        "channel": "car_sales",
+        "okved": "45.11",
+        "factor": "credit.revenue",
+        "lag": 1,
+        "elasticity": 1
+      },
+      {
+        "channel": "car_cash",
+        "okved": "45.11",
+        "factor": "credit.working_capital",
+        "lag": 0,
+        "elasticity": 1
+      },
+      {
+        "channel": "timber_cash",
+        "okved": "16.10",
+        "factor": "credit.working_capital",
+        "lag": 1,
+        "elasticity": 0.65
+      },
+      {
+        "channel": "timber_volume",
+        "okved": "16.10",
+        "factor": "credit.revenue",
+        "lag": 1,
+        "elasticity": 1
+      },
+      {
+        "channel": "timber_fx",
+        "okved": "16.10",
+        "factor": "credit.revenue",
+        "lag": 1,
+        "elasticity": 0.65
+      },
+      {
+        "channel": "freight_orders",
+        "okved": "49.41",
+        "factor": "credit.revenue",
+        "lag": 1,
+        "elasticity": 1
+      },
+      {
+        "channel": "diesel",
+        "okved": "49.41",
+        "factor": "credit.logistics",
+        "lag": 0,
+        "elasticity": 0.34
+      },
+      {
+        "channel": "storage_orders",
+        "okved": "52.10",
+        "factor": "credit.revenue",
+        "lag": 1,
+        "elasticity": 1
+      },
+      {
+        "channel": "timber_equity",
+        "okved": "16.10",
+        "factor": "equity.sector",
+        "lag": 0,
+        "elasticity": 1
+      },
+      {
+        "channel": "freight_equity",
+        "okved": "49.41",
+        "factor": "equity.sector",
+        "lag": 0,
+        "elasticity": 1
+      }
+    ],
+    "scenario": {
+      "import_fx": {
+        "kind": "triangular",
+        "low": 0.05,
+        "mode": 0.075,
+        "high": 0.11,
+        "label": "Подорожание валютных закупок автомобилей",
+        "unit": "fraction",
+        "factor": "credit.fx",
+        "channel": "import_fx"
+      },
+      "car_sales": {
+        "kind": "triangular",
+        "low": -0.12,
+        "mode": -0.08,
+        "high": -0.04,
+        "label": "Перенос выдачи автомобилей покупателям",
+        "unit": "fraction",
+        "factor": "credit.revenue",
+        "channel": "car_sales"
+      },
+      "car_cash": {
+        "kind": "triangular",
+        "low": 18,
+        "mode": 26,
+        "high": 36,
+        "label": "Задержка поступления денег автодилеру",
+        "unit": "days",
+        "factor": "credit.working_capital",
+        "channel": "car_cash"
+      },
+      "timber_cash": {
+        "kind": "triangular",
+        "low": 14,
+        "mode": 22,
+        "high": 32,
+        "label": "Задержка оплаты экспортных партий",
+        "unit": "days",
+        "factor": "credit.working_capital",
+        "channel": "timber_cash"
+      },
+      "timber_volume": {
+        "kind": "triangular",
+        "low": -0.14,
+        "mode": -0.1,
+        "high": -0.07,
+        "label": "Снижение экспортных отгрузок пиломатериалов",
+        "unit": "fraction",
+        "factor": "credit.revenue",
+        "channel": "timber_volume"
+      },
+      "timber_fx": {
+        "kind": "triangular",
+        "low": 0.05,
+        "mode": 0.075,
+        "high": 0.11,
+        "label": "Валютная поддержка экспортной выручки",
+        "unit": "fraction",
+        "factor": "credit.revenue",
+        "channel": "timber_fx"
+      },
+      "freight_orders": {
+        "kind": "triangular",
+        "low": 0.04,
+        "mode": 0.075,
+        "high": 0.11,
+        "label": "Дополнительные километры в счетах перевозчика",
+        "unit": "fraction",
+        "factor": "credit.revenue",
+        "channel": "freight_orders"
+      },
+      "diesel": {
+        "kind": "triangular",
+        "low": 0.12,
+        "mode": 0.18,
+        "high": 0.26,
+        "label": "Дизель и холостой пробег",
+        "unit": "fraction",
+        "factor": "credit.logistics",
+        "channel": "diesel"
+      },
+      "storage_orders": {
+        "kind": "triangular",
+        "low": 0.035,
+        "mode": 0.065,
+        "high": 0.1,
+        "label": "Дополнительная загрузка холодильных складов",
+        "unit": "fraction",
+        "factor": "credit.revenue",
+        "channel": "storage_orders"
+      },
+      "timber_equity": {
+        "kind": "triangular",
+        "low": -0.18,
+        "mode": -0.12,
+        "high": -0.07,
+        "label": "Переоценка акций лесопереработки",
+        "unit": "fraction",
+        "factor": "equity.sector",
+        "channel": "timber_equity"
+      },
+      "freight_equity": {
+        "kind": "triangular",
+        "low": -0.07,
+        "mode": -0.02,
+        "high": 0.04,
+        "label": "Неоднозначная переоценка акций перевозчика",
+        "unit": "fraction",
+        "factor": "equity.sector",
+        "channel": "freight_equity"
+      }
+    }
+  },
+  "expect": {
+    "loses": [
+      "LOAN-EAST-AUTO",
+      "LOAN-NORTH-TIMBER",
+      "SHARE-NORTH-TIMBER"
+    ],
+    "gains": [
+      "LOAN-COLD-HUB"
+    ],
+    "reached": [
+      "LOAN-ROUTE-TRANS",
+      "SHARE-ROUTE-TRANS"
+    ],
+    "unaffected": [
+      "LOAN-MED-SUPPLY",
+      "BOND-PACKAGING"
+    ]
+  }
+}

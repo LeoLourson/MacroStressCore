@@ -1,4 +1,5 @@
 from datetime import date
+from typing import Literal
 
 from pydantic import ValidationError
 
@@ -18,6 +19,12 @@ class ScenarioParameter(MacroParameter):
         return MacroParameter.model_validate(self.model_dump(exclude={"label", "evidence"}))
 
 
+class ProposedParameter(ScenarioParameter):
+    """A scenario parameter as the model answers it: is its magnitude in the source?"""
+
+    magnitude: Literal["stated", "estimated"]
+
+
 class EventPassport(Contract):
     event_type: Identifier
     authority: Identifier | None = None
@@ -33,11 +40,17 @@ class CausalOutput(Contract):
     inferred_okved: list[Identifier]
     graph: TransmissionGraph
     scenario: dict[Identifier, ScenarioParameter] = {}
-    prompt_version: Identifier = "v6"
+    prompt_version: Identifier = "v7"
 
     @property
     def all_okved(self):
         return set(self.direct_okved) | set(self.inferred_okved)
+
+
+class CausalAnswer(CausalOutput):
+    """The model's answer: each scenario parameter says whether the source sized it."""
+
+    scenario: dict[Identifier, ProposedParameter] = {}
 
 
 # Parameters without a factor replace a model input instead of shocking a factor.

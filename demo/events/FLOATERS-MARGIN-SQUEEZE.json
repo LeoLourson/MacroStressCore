@@ -1,0 +1,106 @@
+{
+  "event_id": "FLOATERS-MARGIN-SQUEEZE",
+  "title": "Купон флоатеров растёт вместе с нагрузкой на эмитентов",
+  "text": "Синтетическая новость для демонстрации. Банки и долговой рынок пересмотрели ставки вверх. Купоны облигаций с плавающей ставкой следуют за ориентиром, но эмитентам приходится платить больше по долгу. Для молочного завода одновременно подорожало сырьё. Производитель упаковки получил дополнительный заказ от сетей, который частично компенсирует расходы. У разработчика ПО небольшой чистый долг, а теплосети ограничены действующим тарифом.",
+  "metadata": {
+    "portfolio_id": "FLOATING-BONDS",
+    "synthetic": true,
+    "source": "Вымышленная новость; численные диапазоны — экспертные допущения демо-каталога",
+    "scenario_text": "Горизонт 12 месяцев. Эффективная ставка долга всех четырёх эмитентов +2–4,8 п.п. (мода 3,2), лаг 0. Цены сырого молока +10–24 % (17 %), доля 62 % переменных затрат завода, лаг 1 месяц; перенос в отпускную цену берётся из отчётности. Выручка упаковки +4–11 % (7 %), лаг 2 месяца. Эффекты сохраняются до конца горизонта. У флоатера модель убирает прямую переоценку цены от безрисковой ставки при пересмотре купона, но изменение кредитного спреда сохраняет. Упаковка получает конкурирующие эффекты, а ПО имеет малую долговую нагрузку; знак для них заранее не фиксируется. Доход на свободные денежные средства отдельным каналом не моделируется.",
+    "horizon_months": 12
+  },
+  "mock_answer": {
+    "event_type": "Купон флоатеров растёт вместе с нагрузкой на эмитентов",
+    "channels": {
+      "funding_hike": "Рост ставки фондирования эмитентов",
+      "milk_cost": "Рост цены сырого молока",
+      "pack_orders": "Дополнительные заказы упаковки"
+    },
+    "links": [
+      {
+        "channel": "funding_hike",
+        "okved": "35.30",
+        "factor": "credit.interest",
+        "lag": 0,
+        "elasticity": 1
+      },
+      {
+        "channel": "funding_hike",
+        "okved": "17.21",
+        "factor": "credit.interest",
+        "lag": 0,
+        "elasticity": 1
+      },
+      {
+        "channel": "funding_hike",
+        "okved": "10.51",
+        "factor": "credit.interest",
+        "lag": 0,
+        "elasticity": 1
+      },
+      {
+        "channel": "funding_hike",
+        "okved": "62.01",
+        "factor": "credit.interest",
+        "lag": 0,
+        "elasticity": 1
+      },
+      {
+        "channel": "milk_cost",
+        "okved": "10.51",
+        "factor": "credit.cogs",
+        "lag": 1,
+        "elasticity": 0.62
+      },
+      {
+        "channel": "pack_orders",
+        "okved": "17.21",
+        "factor": "credit.revenue",
+        "lag": 2,
+        "elasticity": 1
+      }
+    ],
+    "scenario": {
+      "funding_hike": {
+        "kind": "triangular",
+        "low": 0.02,
+        "mode": 0.032,
+        "high": 0.048,
+        "label": "Рост ставки фондирования эмитентов",
+        "unit": "fraction",
+        "factor": "credit.interest",
+        "channel": "funding_hike"
+      },
+      "milk_cost": {
+        "kind": "triangular",
+        "low": 0.1,
+        "mode": 0.17,
+        "high": 0.24,
+        "label": "Рост цены сырого молока",
+        "unit": "fraction",
+        "factor": "credit.cogs",
+        "channel": "milk_cost"
+      },
+      "pack_orders": {
+        "kind": "triangular",
+        "low": 0.04,
+        "mode": 0.07,
+        "high": 0.11,
+        "label": "Дополнительные заказы упаковки",
+        "unit": "fraction",
+        "factor": "credit.revenue",
+        "channel": "pack_orders"
+      }
+    }
+  },
+  "expect": {
+    "loses": [
+      "BOND-HEAT-GRID",
+      "FRN-DAIRY"
+    ],
+    "reached": [
+      "FRN-PACKAGING",
+      "FRN-DIGITAL"
+    ]
+  }
+}

@@ -1,0 +1,125 @@
+{
+  "event_id": "MUNICIPAL-PAYMENT-GAP",
+  "title": "Работы приняты, оплата подрядчикам отложена",
+  "text": "Синтетическая новость для демонстрации. Муниципальные заказчики перенесли оплату дорожных контрактов после уточнения графика бюджетного финансирования. Подрядчики продолжают работы, но позже рассчитываются с заводами ЖБИ. Банки ужесточили условия продления оборотных кредитов для дорожных подрядчиков. Из-за неопределённости со сроками подъездных дорог покупатели откладывают часть сделок в новых жилых кварталах. Теплоснабжение, складские договоры и подписки на программное обеспечение оплачиваются в прежнем порядке.",
+  "metadata": {
+    "portfolio_id": "REGIONAL-DEVELOPMENT",
+    "synthetic": true,
+    "source": "Вымышленная новость; численные диапазоны — экспертные допущения демо-каталога",
+    "scenario_text": "На 12-месячном горизонте оплата дорожных контрактов удлиняется на 25–55 дней (мода 38); доля бюджетных заказов 72 %, лаг 0. Для ЖБИ задержка 14–32 дня (22), доля продаж затронутым подрядчикам 55 %, лаг 1 месяц. Ставка продлеваемых кредитов подрядчика +2–5,5 п.п. (3,5), доля переоцениваемого долга 80 %, лаг 1 месяц. Продажи жилья −12…−3,5 % (−7,5 %), лаг 2 месяца; строительные затраты и дата ввода не меняются. Отраслевой шок акций ЖБИ −19…−8 % (−13 %). Эффекты сохраняются после лага; теплосети, склад и ИТ не входят в граф. Это задержка денег при сохранении контрактов, а не списание всей выручки.",
+    "horizon_months": 12
+  },
+  "mock_answer": {
+    "event_type": "Работы приняты, оплата подрядчикам отложена",
+    "channels": {
+      "budget_delay": "Отсрочка оплаты муниципальных контрактов",
+      "supplier_delay": "Перенос оплаты железобетона подрядчиками",
+      "contractor_funding": "Надбавка к ставке оборотных кредитов подрядчика",
+      "housing_pause": "Пауза в продажах квартир до ясности с дорогами",
+      "precast_risk": "Переоценка риска дебиторской задолженности ЖБИ"
+    },
+    "links": [
+      {
+        "channel": "budget_delay",
+        "okved": "42.11",
+        "factor": "credit.working_capital",
+        "lag": 0,
+        "elasticity": 0.72
+      },
+      {
+        "channel": "supplier_delay",
+        "okved": "23.61",
+        "factor": "credit.working_capital",
+        "lag": 1,
+        "elasticity": 0.55
+      },
+      {
+        "channel": "contractor_funding",
+        "okved": "42.11",
+        "factor": "credit.interest",
+        "lag": 1,
+        "elasticity": 0.8
+      },
+      {
+        "channel": "housing_pause",
+        "okved": "41.20",
+        "factor": "credit.revenue",
+        "lag": 2,
+        "elasticity": 1
+      },
+      {
+        "channel": "precast_risk",
+        "okved": "23.61",
+        "factor": "equity.sector",
+        "lag": 0,
+        "elasticity": 1
+      }
+    ],
+    "scenario": {
+      "budget_delay": {
+        "kind": "triangular",
+        "low": 25,
+        "mode": 38,
+        "high": 55,
+        "label": "Отсрочка оплаты муниципальных контрактов",
+        "unit": "days",
+        "factor": "credit.working_capital",
+        "channel": "budget_delay"
+      },
+      "supplier_delay": {
+        "kind": "triangular",
+        "low": 14,
+        "mode": 22,
+        "high": 32,
+        "label": "Перенос оплаты железобетона подрядчиками",
+        "unit": "days",
+        "factor": "credit.working_capital",
+        "channel": "supplier_delay"
+      },
+      "contractor_funding": {
+        "kind": "triangular",
+        "low": 0.02,
+        "mode": 0.035,
+        "high": 0.055,
+        "label": "Надбавка к ставке оборотных кредитов подрядчика",
+        "unit": "fraction",
+        "factor": "credit.interest",
+        "channel": "contractor_funding"
+      },
+      "housing_pause": {
+        "kind": "triangular",
+        "low": -0.12,
+        "mode": -0.075,
+        "high": -0.035,
+        "label": "Пауза в продажах квартир до ясности с дорогами",
+        "unit": "fraction",
+        "factor": "credit.revenue",
+        "channel": "housing_pause"
+      },
+      "precast_risk": {
+        "kind": "triangular",
+        "low": -0.19,
+        "mode": -0.13,
+        "high": -0.08,
+        "label": "Переоценка риска дебиторской задолженности ЖБИ",
+        "unit": "fraction",
+        "factor": "equity.sector",
+        "channel": "precast_risk"
+      }
+    }
+  },
+  "expect": {
+    "loses": [
+      "LOAN-CITY-BUILDER",
+      "LOAN-PRECAST",
+      "PROJECT-RIVER-QUARTER",
+      "SHARE-PRECAST"
+    ],
+    "unaffected": [
+      "LOAN-HEAT-GRID",
+      "BOND-HEAT-GRID",
+      "LOAN-COLD-HUB",
+      "SHARE-DIGITAL-SERVICE"
+    ]
+  }
+}

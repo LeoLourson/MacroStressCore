@@ -133,7 +133,20 @@ CORE_AGENTS = (
         causal,
         consumes=("document", "attempts", "portfolio_positions"),
     ),
-    _core("validate_causal", "Проверка графа", validate_causal, consumes=("graph",)),
+    _core(
+        "validate_causal",
+        "Проверка графа и сценария",
+        validate_causal,
+        consumes=(
+            "graph",
+            "macro_parameters",
+            "scenario_required",
+            "portfolio_positions",
+            "as_of",
+            "horizon",
+            "base_currency",
+        ),
+    ),
     _core("human_fix_graph", "Проверка графа и сценария аналитиком", human_fix_graph),
     _core(
         "exposure",

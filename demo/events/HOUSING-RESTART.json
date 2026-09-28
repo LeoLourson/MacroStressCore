@@ -1,0 +1,201 @@
+{
+  "event_id": "HOUSING-RESTART",
+  "title": "Стройка оживает, материалы дорожают раньше новых продаж",
+  "text": "Синтетическая новость для демонстрации. Регион согласовал финансирование подъездных дорог и расширил программу рассрочки первоначального взноса за жильё. Подрядчики и заводы ЖБИ получили заказы на следующий строительный сезон; продажи квартир восстанавливаются постепенно. Поставщики уже повысили цены на строительные материалы. Теплосетям предстоит авансировать реконструкцию сетей, тогда как согласованная индексация тарифа вступит в силу только через полгода. Складские договоры и корпоративные ИТ-подписки напрямую не затронуты.",
+  "metadata": {
+    "portfolio_id": "REGIONAL-DEVELOPMENT",
+    "synthetic": true,
+    "source": "Вымышленная новость; численные диапазоны — экспертные допущения демо-каталога",
+    "scenario_text": "Горизонт 12 месяцев, эффекты сохраняются после лага. Продажи жилья +8–22 % (мода 14 %), лаг 3 месяца; материалы +4–11 % (7 %), доля в строительном capex 60 %, без лага. Выручка дорожного подрядчика +7–16 % (11 %), лаг 2 месяца; закупочные цены +3–8 % (5 %), доля затронутых материалов 45 %, без лага. Выручка ЖБИ +10–23 % (16 %), лаг 2 месяца; цены цемента и арматуры +4–11 % (7 %), доля 40 %, без лага. Capex теплосетей +18–42 % (28 %) сразу, тарифная выручка +2,5–5,5 % (4 %) только с месяца 7. Акции ЖБИ: отраслевой шок +7–20 % (12 %). Для проекта и теплосетей знак совокупного результата заранее не фиксируется: улучшение продаж конкурирует с ранними расходами. Склад и ИТ вне графа.",
+    "horizon_months": 12
+  },
+  "mock_answer": {
+    "event_type": "Стройка оживает, материалы дорожают раньше новых продаж",
+    "channels": {
+      "housing_sales": "Восстановление продаж жилья",
+      "project_materials": "Подорожание строительных материалов проекта",
+      "road_orders": "Новые дорожные заказы",
+      "road_inputs": "Материалы дорожного подрядчика",
+      "precast_orders": "Рост загрузки завода ЖБИ",
+      "precast_inputs": "Цемент и арматура для ЖБИ",
+      "heat_capex": "Реконструкция теплосетей",
+      "heat_tariff": "Отложенная индексация тарифа теплосетей",
+      "construction_equity": "Новые заказы в стоимости акций ЖБИ"
+    },
+    "links": [
+      {
+        "channel": "housing_sales",
+        "okved": "41.20",
+        "factor": "credit.revenue",
+        "lag": 3,
+        "elasticity": 1
+      },
+      {
+        "channel": "project_materials",
+        "okved": "41.20",
+        "factor": "credit.capex",
+        "lag": 0,
+        "elasticity": 0.6
+      },
+      {
+        "channel": "road_orders",
+        "okved": "42.11",
+        "factor": "credit.revenue",
+        "lag": 2,
+        "elasticity": 1
+      },
+      {
+        "channel": "road_inputs",
+        "okved": "42.11",
+        "factor": "credit.cogs",
+        "lag": 0,
+        "elasticity": 0.45
+      },
+      {
+        "channel": "precast_orders",
+        "okved": "23.61",
+        "factor": "credit.revenue",
+        "lag": 2,
+        "elasticity": 1
+      },
+      {
+        "channel": "precast_inputs",
+        "okved": "23.61",
+        "factor": "credit.cogs",
+        "lag": 0,
+        "elasticity": 0.4
+      },
+      {
+        "channel": "heat_capex",
+        "okved": "35.30",
+        "factor": "credit.capex",
+        "lag": 0,
+        "elasticity": 1
+      },
+      {
+        "channel": "heat_tariff",
+        "okved": "35.30",
+        "factor": "credit.revenue",
+        "lag": 6,
+        "elasticity": 1
+      },
+      {
+        "channel": "construction_equity",
+        "okved": "23.61",
+        "factor": "equity.sector",
+        "lag": 0,
+        "elasticity": 1
+      }
+    ],
+    "scenario": {
+      "housing_sales": {
+        "kind": "triangular",
+        "low": 0.08,
+        "mode": 0.14,
+        "high": 0.22,
+        "label": "Восстановление продаж жилья",
+        "unit": "fraction",
+        "factor": "credit.revenue",
+        "channel": "housing_sales"
+      },
+      "project_materials": {
+        "kind": "triangular",
+        "low": 0.04,
+        "mode": 0.07,
+        "high": 0.11,
+        "label": "Подорожание строительных материалов проекта",
+        "unit": "fraction",
+        "factor": "credit.capex",
+        "channel": "project_materials"
+      },
+      "road_orders": {
+        "kind": "triangular",
+        "low": 0.07,
+        "mode": 0.11,
+        "high": 0.16,
+        "label": "Новые дорожные заказы",
+        "unit": "fraction",
+        "factor": "credit.revenue",
+        "channel": "road_orders"
+      },
+      "road_inputs": {
+        "kind": "triangular",
+        "low": 0.03,
+        "mode": 0.05,
+        "high": 0.08,
+        "label": "Материалы дорожного подрядчика",
+        "unit": "fraction",
+        "factor": "credit.cogs",
+        "channel": "road_inputs"
+      },
+      "precast_orders": {
+        "kind": "triangular",
+        "low": 0.1,
+        "mode": 0.16,
+        "high": 0.23,
+        "label": "Рост загрузки завода ЖБИ",
+        "unit": "fraction",
+        "factor": "credit.revenue",
+        "channel": "precast_orders"
+      },
+      "precast_inputs": {
+        "kind": "triangular",
+        "low": 0.04,
+        "mode": 0.07,
+        "high": 0.11,
+        "label": "Цемент и арматура для ЖБИ",
+        "unit": "fraction",
+        "factor": "credit.cogs",
+        "channel": "precast_inputs"
+      },
+      "heat_capex": {
+        "kind": "triangular",
+        "low": 0.18,
+        "mode": 0.28,
+        "high": 0.42,
+        "label": "Реконструкция теплосетей",
+        "unit": "fraction",
+        "factor": "credit.capex",
+        "channel": "heat_capex"
+      },
+      "heat_tariff": {
+        "kind": "triangular",
+        "low": 0.025,
+        "mode": 0.04,
+        "high": 0.055,
+        "label": "Отложенная индексация тарифа теплосетей",
+        "unit": "fraction",
+        "factor": "credit.revenue",
+        "channel": "heat_tariff"
+      },
+      "construction_equity": {
+        "kind": "triangular",
+        "low": 0.07,
+        "mode": 0.12,
+        "high": 0.2,
+        "label": "Новые заказы в стоимости акций ЖБИ",
+        "unit": "fraction",
+        "factor": "equity.sector",
+        "channel": "construction_equity"
+      }
+    }
+  },
+  "expect": {
+    "loses": [
+      "LOAN-CITY-BUILDER"
+    ],
+    "gains": [
+      "LOAN-PRECAST",
+      "SHARE-PRECAST"
+    ],
+    "reached": [
+      "PROJECT-RIVER-QUARTER",
+      "LOAN-HEAT-GRID",
+      "BOND-HEAT-GRID"
+    ],
+    "unaffected": [
+      "LOAN-COLD-HUB",
+      "SHARE-DIGITAL-SERVICE"
+    ]
+  }
+}

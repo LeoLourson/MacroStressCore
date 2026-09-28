@@ -1,0 +1,10 @@
+{
+  "snapshot_id": "SYNTHETIC-STORIES-V1-2026-09-11",
+  "as_of": "2026-09-11",
+  "label": "Синтетические компании и рыночные допущения деловых историй, версия 1, на 11.09.2026",
+  "kind": "demo",
+  "metadata": {
+    "synthetic": true,
+    "generated_by": "demo/build_catalog.py"
+  }
+}

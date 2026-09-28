@@ -1,0 +1,165 @@
+{
+  "event_id": "HOUSEHOLD-TRADE-DOWN",
+  "title": "Покупатели экономят: дискаунтеры растут, кафе и техника теряют",
+  "text": "Синтетическая новость для демонстрации. После сокращения премий у крупных работодателей семьи региона пересматривают расходы. Покупатели чаще выбирают магазины низких цен и собственные марки, откладывают замену бытовой техники и реже обедают вне дома. Молочные заводы увеличивают выпуск недорогой продукции по контрактам с сетями, однако уступают им в отпускной цене. Продажи лекарств и годовые договоры на учётное ПО напрямую не меняются.",
+  "metadata": {
+    "portfolio_id": "EVERYDAY-ECONOMY",
+    "synthetic": true,
+    "source": "Вымышленная новость; численные диапазоны — экспертные допущения демо-каталога",
+    "scenario_text": "Горизонт 12 месяцев, это перераспределение спроса, а не одинаковый шок всему ритейлу. Выручка магазинов низких цен +2,5–8 % (мода 5 %), лаг 1 месяц. Выручка кафе −16…−6 % (−10,5 %) сразу; продавца техники −18…−7 % (−12 %), лаг 1 месяц. Молочный завод: объём контрактов даёт +2,5–7 % (4,5 %) к выручке через 2 месяца, скидки сетям −4…−1,5 % (−2,5 %) сразу; оба эффекта соединяются в модели. Отраслевой шок акций магазинов низких цен +2,5–9,5 % (5,5 %), продавца техники −24…−10 % (−17 %). Общий индекс не шокируется. Дистрибуция лекарств и подписное ПО вне графа; после лага эффекты сохраняются до конца горизонта.",
+    "horizon_months": 12
+  },
+  "mock_answer": {
+    "event_type": "Покупатели экономят: дискаунтеры растут, кафе и техника теряют",
+    "channels": {
+      "value_retail": "Переток покупателей в магазины низких цен",
+      "cafe_traffic": "Сокращение посещений кафе",
+      "appliance_demand": "Отложенные покупки бытовой техники",
+      "dairy_volume": "Новые контракты молочного завода с сетями",
+      "dairy_discount": "Скидка сетям на недорогую молочную продукцию",
+      "retail_equity": "Переток спроса в акциях магазинов низких цен",
+      "appliance_equity": "Слабый спрос в акциях продавца техники"
+    },
+    "links": [
+      {
+        "channel": "value_retail",
+        "okved": "47.11",
+        "factor": "credit.revenue",
+        "lag": 1,
+        "elasticity": 1
+      },
+      {
+        "channel": "cafe_traffic",
+        "okved": "56.10",
+        "factor": "credit.revenue",
+        "lag": 0,
+        "elasticity": 1
+      },
+      {
+        "channel": "appliance_demand",
+        "okved": "47.54",
+        "factor": "credit.revenue",
+        "lag": 1,
+        "elasticity": 1
+      },
+      {
+        "channel": "dairy_volume",
+        "okved": "10.51",
+        "factor": "credit.revenue",
+        "lag": 2,
+        "elasticity": 1
+      },
+      {
+        "channel": "dairy_discount",
+        "okved": "10.51",
+        "factor": "credit.revenue",
+        "lag": 0,
+        "elasticity": 1
+      },
+      {
+        "channel": "retail_equity",
+        "okved": "47.11",
+        "factor": "equity.sector",
+        "lag": 0,
+        "elasticity": 1
+      },
+      {
+        "channel": "appliance_equity",
+        "okved": "47.54",
+        "factor": "equity.sector",
+        "lag": 0,
+        "elasticity": 1
+      }
+    ],
+    "scenario": {
+      "value_retail": {
+        "kind": "triangular",
+        "low": 0.025,
+        "mode": 0.05,
+        "high": 0.08,
+        "label": "Переток покупателей в магазины низких цен",
+        "unit": "fraction",
+        "factor": "credit.revenue",
+        "channel": "value_retail"
+      },
+      "cafe_traffic": {
+        "kind": "triangular",
+        "low": -0.16,
+        "mode": -0.105,
+        "high": -0.06,
+        "label": "Сокращение посещений кафе",
+        "unit": "fraction",
+        "factor": "credit.revenue",
+        "channel": "cafe_traffic"
+      },
+      "appliance_demand": {
+        "kind": "triangular",
+        "low": -0.18,
+        "mode": -0.12,
+        "high": -0.07,
+        "label": "Отложенные покупки бытовой техники",
+        "unit": "fraction",
+        "factor": "credit.revenue",
+        "channel": "appliance_demand"
+      },
+      "dairy_volume": {
+        "kind": "triangular",
+        "low": 0.025,
+        "mode": 0.045,
+        "high": 0.07,
+        "label": "Новые контракты молочного завода с сетями",
+        "unit": "fraction",
+        "factor": "credit.revenue",
+        "channel": "dairy_volume"
+      },
+      "dairy_discount": {
+        "kind": "triangular",
+        "low": -0.04,
+        "mode": -0.025,
+        "high": -0.015,
+        "label": "Скидка сетям на недорогую молочную продукцию",
+        "unit": "fraction",
+        "factor": "credit.revenue",
+        "channel": "dairy_discount"
+      },
+      "retail_equity": {
+        "kind": "triangular",
+        "low": 0.025,
+        "mode": 0.055,
+        "high": 0.095,
+        "label": "Переток спроса в акциях магазинов низких цен",
+        "unit": "fraction",
+        "factor": "equity.sector",
+        "channel": "retail_equity"
+      },
+      "appliance_equity": {
+        "kind": "triangular",
+        "low": -0.24,
+        "mode": -0.17,
+        "high": -0.1,
+        "label": "Слабый спрос в акциях продавца техники",
+        "unit": "fraction",
+        "factor": "equity.sector",
+        "channel": "appliance_equity"
+      }
+    }
+  },
+  "expect": {
+    "loses": [
+      "LOAN-CITY-CAFES",
+      "LOAN-HOME-APPLIANCES",
+      "SHARE-HOME-APPLIANCES"
+    ],
+    "gains": [
+      "LOAN-VALUE-MART",
+      "SHARE-VALUE-MART"
+    ],
+    "reached": [
+      "LOAN-REGIONAL-DAIRY"
+    ],
+    "unaffected": [
+      "LOAN-MED-SUPPLY",
+      "BOND-DIGITAL-SERVICE"
+    ]
+  }
+}

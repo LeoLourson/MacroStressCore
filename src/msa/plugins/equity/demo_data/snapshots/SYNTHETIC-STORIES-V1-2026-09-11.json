@@ -1,0 +1,592 @@
+{
+  "items": [
+    {
+      "item_id": "dividend:SHARE-DIGITAL-SERVICE",
+      "kind": "dividend",
+      "subject": "SHARE-DIGITAL-SERVICE",
+      "observed_on": "2026-09-11",
+      "values": {
+        "amount": {
+          "value": 0.0,
+          "unit": "RUB_per_unit",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "DIGITAL-SERVICE/dividend",
+              "fragment_sha256": "5260a59356e8432af7aca321c475e0463d9968a980069697129bb63e14915754",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "horizon_months": 12,
+        "entered_by": "demo:catalog"
+      },
+      "evidence": []
+    },
+    {
+      "item_id": "dividend:SHARE-HOME-APPLIANCES",
+      "kind": "dividend",
+      "subject": "SHARE-HOME-APPLIANCES",
+      "observed_on": "2026-09-11",
+      "values": {
+        "amount": {
+          "value": 2.0,
+          "unit": "RUB_per_unit",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "HOME-APPLIANCES/dividend",
+              "fragment_sha256": "127cd6cad70f4f698276e9b144033180d14e4f849aff9aee43f94533eb00488b",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "horizon_months": 12,
+        "entered_by": "demo:catalog"
+      },
+      "evidence": []
+    },
+    {
+      "item_id": "dividend:SHARE-NORTH-TIMBER",
+      "kind": "dividend",
+      "subject": "SHARE-NORTH-TIMBER",
+      "observed_on": "2026-09-11",
+      "values": {
+        "amount": {
+          "value": 11.0,
+          "unit": "RUB_per_unit",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "NORTH-TIMBER/dividend",
+              "fragment_sha256": "c20ade06102867c31dc8a68ff8ee9a0effd07a6e8ba8f8e2c921b39094ca4b51",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "horizon_months": 12,
+        "entered_by": "demo:catalog"
+      },
+      "evidence": []
+    },
+    {
+      "item_id": "dividend:SHARE-PRECAST",
+      "kind": "dividend",
+      "subject": "SHARE-PRECAST",
+      "observed_on": "2026-09-11",
+      "values": {
+        "amount": {
+          "value": 8.0,
+          "unit": "RUB_per_unit",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PRECAST/dividend",
+              "fragment_sha256": "a09335f485f6cd31be1bff1d3d8125ee8c535336ad4638d35616581be01dfe8b",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "horizon_months": 12,
+        "entered_by": "demo:catalog"
+      },
+      "evidence": []
+    },
+    {
+      "item_id": "dividend:SHARE-ROUTE-TRANS",
+      "kind": "dividend",
+      "subject": "SHARE-ROUTE-TRANS",
+      "observed_on": "2026-09-11",
+      "values": {
+        "amount": {
+          "value": 7.0,
+          "unit": "RUB_per_unit",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "ROUTE-TRANS/dividend",
+              "fragment_sha256": "b23bf389c13191321f4cbeb147b9984c1ec2a5437941a935e61bf27ad6a8469b",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "horizon_months": 12,
+        "entered_by": "demo:catalog"
+      },
+      "evidence": []
+    },
+    {
+      "item_id": "dividend:SHARE-US-LABWARE",
+      "kind": "dividend",
+      "subject": "SHARE-US-LABWARE",
+      "observed_on": "2026-09-11",
+      "values": {
+        "amount": {
+          "value": 1.2,
+          "unit": "USD_per_unit",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "US-LABWARE/dividend",
+              "fragment_sha256": "0b543574c2de8269d817c6fda2396724703247087d2bcf60afcd107d9b31d4c8",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "horizon_months": 12,
+        "entered_by": "demo:catalog"
+      },
+      "evidence": []
+    },
+    {
+      "item_id": "dividend:SHARE-VALUE-MART",
+      "kind": "dividend",
+      "subject": "SHARE-VALUE-MART",
+      "observed_on": "2026-09-11",
+      "values": {
+        "amount": {
+          "value": 9.0,
+          "unit": "RUB_per_unit",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "VALUE-MART/dividend",
+              "fragment_sha256": "807ccba4e2fac6bddfb11803f4cc53d5ddc194047e6546b5989fddb1f80563c5",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "horizon_months": 12,
+        "entered_by": "demo:catalog"
+      },
+      "evidence": []
+    },
+    {
+      "item_id": "sensitivity:SHARE-DIGITAL-SERVICE",
+      "kind": "sensitivity",
+      "subject": "SHARE-DIGITAL-SERVICE",
+      "observed_on": "2026-09-11",
+      "values": {
+        "beta_market": {
+          "value": 0.82,
+          "unit": "ratio",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "DIGITAL-SERVICE/beta_market",
+              "fragment_sha256": "18722e1c3765c7104e08ddb2f096fa02a20ccb399c6ff9358264fabad9a853dc",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "beta_sector": {
+          "value": 1.0,
+          "unit": "ratio",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "DIGITAL-SERVICE/beta_sector",
+              "fragment_sha256": "eab3c2981b1b731697436c21a10737534428cb7e9b5f5a728b36c29015ab635c",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "residual_volatility": {
+          "value": 0.26,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "DIGITAL-SERVICE/residual_volatility",
+              "fragment_sha256": "8b18dda6bb694b0b8758d6024a389760a6215468013640cc843d550e5d73c137",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "method": "expert",
+        "market_index": "MOEX",
+        "sector": "technology",
+        "entered_by": "demo:catalog"
+      },
+      "evidence": []
+    },
+    {
+      "item_id": "sensitivity:SHARE-HOME-APPLIANCES",
+      "kind": "sensitivity",
+      "subject": "SHARE-HOME-APPLIANCES",
+      "observed_on": "2026-09-11",
+      "values": {
+        "beta_market": {
+          "value": 1.26,
+          "unit": "ratio",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "HOME-APPLIANCES/beta_market",
+              "fragment_sha256": "c8afb0559c6dcbb14429846f82430e279c41428cd98bf2fdf2160594850ea24b",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "beta_sector": {
+          "value": 1.0,
+          "unit": "ratio",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "HOME-APPLIANCES/beta_sector",
+              "fragment_sha256": "caad01f56334a4481adb75da85f4190dc42b2e31fbc142a636cc7371b647c934",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "residual_volatility": {
+          "value": 0.33,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "HOME-APPLIANCES/residual_volatility",
+              "fragment_sha256": "18aa6f1e7684aa065614b39039b441abb0de78fac53dd1a72e241237b6a16bba",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "method": "expert",
+        "market_index": "MOEX",
+        "sector": "trade",
+        "entered_by": "demo:catalog"
+      },
+      "evidence": []
+    },
+    {
+      "item_id": "sensitivity:SHARE-NORTH-TIMBER",
+      "kind": "sensitivity",
+      "subject": "SHARE-NORTH-TIMBER",
+      "observed_on": "2026-09-11",
+      "values": {
+        "beta_market": {
+          "value": 1.08,
+          "unit": "ratio",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "NORTH-TIMBER/beta_market",
+              "fragment_sha256": "93b665986f757aa0ac253ba9bd720191d1c0120b14babd4c6bfaa55c1391aad6",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "beta_sector": {
+          "value": 1.0,
+          "unit": "ratio",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "NORTH-TIMBER/beta_sector",
+              "fragment_sha256": "bf3d9e1cb9b48e9259ec84e43e21a7eb7e3f74f4db6da7829f0030167bbf6080",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "residual_volatility": {
+          "value": 0.31,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "NORTH-TIMBER/residual_volatility",
+              "fragment_sha256": "e0b7c98b825d57ce27c7707aca9f30991e59f87d363a6d0b8891ba2524d8d541",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "method": "expert",
+        "market_index": "MOEX",
+        "sector": "materials",
+        "entered_by": "demo:catalog"
+      },
+      "evidence": []
+    },
+    {
+      "item_id": "sensitivity:SHARE-PRECAST",
+      "kind": "sensitivity",
+      "subject": "SHARE-PRECAST",
+      "observed_on": "2026-09-11",
+      "values": {
+        "beta_market": {
+          "value": 1.18,
+          "unit": "ratio",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PRECAST/beta_market",
+              "fragment_sha256": "1ff6632c0ea4968c0f7d5377d8dce0fcf111c6cd49399312aa87b49afa2825ce",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "beta_sector": {
+          "value": 1.0,
+          "unit": "ratio",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PRECAST/beta_sector",
+              "fragment_sha256": "dcc533f3f73c08ecfa252fc835c20af648e29c1a7481e3155662df5be2104e51",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "residual_volatility": {
+          "value": 0.29,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PRECAST/residual_volatility",
+              "fragment_sha256": "9c66d1f75c65edd12b9a6dfeb99dbc8ce9cbb47ea9d4ea209319abef6b86fd2d",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "method": "expert",
+        "market_index": "MOEX",
+        "sector": "materials",
+        "entered_by": "demo:catalog"
+      },
+      "evidence": []
+    },
+    {
+      "item_id": "sensitivity:SHARE-ROUTE-TRANS",
+      "kind": "sensitivity",
+      "subject": "SHARE-ROUTE-TRANS",
+      "observed_on": "2026-09-11",
+      "values": {
+        "beta_market": {
+          "value": 1.12,
+          "unit": "ratio",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "ROUTE-TRANS/beta_market",
+              "fragment_sha256": "af19563470c3ff380b30df8aee5c54ebe911b4b5d6da56c015e62a00c950112f",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "beta_sector": {
+          "value": 1.0,
+          "unit": "ratio",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "ROUTE-TRANS/beta_sector",
+              "fragment_sha256": "56e3c89473979e794410dd2d64ced9f5939952782ef3a1853d2a9ea06633019d",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "residual_volatility": {
+          "value": 0.27,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "ROUTE-TRANS/residual_volatility",
+              "fragment_sha256": "ff89f7f5395a998150337c1b36329ceed362d1821b8240e74a799ec980ebd7ab",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "method": "expert",
+        "market_index": "MOEX",
+        "sector": "transport",
+        "entered_by": "demo:catalog"
+      },
+      "evidence": []
+    },
+    {
+      "item_id": "sensitivity:SHARE-US-LABWARE",
+      "kind": "sensitivity",
+      "subject": "SHARE-US-LABWARE",
+      "observed_on": "2026-09-11",
+      "values": {
+        "beta_market": {
+          "value": 0.68,
+          "unit": "ratio",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "US-LABWARE/beta_market",
+              "fragment_sha256": "674c84f211f6c1c3d599776f2fa3ab45396bb6b1e9c878c217b190eb0c98a426",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "beta_sector": {
+          "value": 1.0,
+          "unit": "ratio",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "US-LABWARE/beta_sector",
+              "fragment_sha256": "7bfab4a13ad8820775681e058df239b617570a8419cdb3eeb25bd91af62fde40",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "residual_volatility": {
+          "value": 0.23,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "US-LABWARE/residual_volatility",
+              "fragment_sha256": "8bf87ea0126ab5ad683c355e1dc54a2d928b8d1f2a36642c5ac9535760281341",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "method": "expert",
+        "market_index": "SPX",
+        "sector": "healthcare",
+        "entered_by": "demo:catalog"
+      },
+      "evidence": []
+    },
+    {
+      "item_id": "sensitivity:SHARE-VALUE-MART",
+      "kind": "sensitivity",
+      "subject": "SHARE-VALUE-MART",
+      "observed_on": "2026-09-11",
+      "values": {
+        "beta_market": {
+          "value": 0.67,
+          "unit": "ratio",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "VALUE-MART/beta_market",
+              "fragment_sha256": "0ee3e0c68c68eabf1f1af15c44061b17d82165bba5d7d1ba6c16e6bf10624fd1",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "beta_sector": {
+          "value": 1.0,
+          "unit": "ratio",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "VALUE-MART/beta_sector",
+              "fragment_sha256": "06769ff8f5f39137bc49ef252398877c56a027edf4931ff2bb1bed85fa931f3d",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "residual_volatility": {
+          "value": 0.21,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "VALUE-MART/residual_volatility",
+              "fragment_sha256": "acf82ba1709790316d32561d5fff16df880b03af684293fc553a64a29aca5af3",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "method": "expert",
+        "market_index": "MOEX",
+        "sector": "trade",
+        "entered_by": "demo:catalog"
+      },
+      "evidence": []
+    }
+  ]
+}

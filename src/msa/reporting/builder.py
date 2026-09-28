@@ -58,6 +58,10 @@ def build(
         notes=notes or {},
     )
     rules, defaults = thresholds_in_force(registry, thresholds)
+    # Only the rules of the plugins that calculated these positions concern this report.
+    plugins = [registry.plugins[p] for p in {r.plugin_id for r in results} if p in registry.plugins]
+    own = {spec.rule_id for plugin in plugins for spec in plugin.rules}
+    defaults = [rule_id for rule_id in defaults if rule_id in own]
     recommendations = [
         rec for result in results for rec in apply(result, registry, rules, tree_context)
     ]
@@ -113,7 +117,8 @@ def build(
     # One line per source and author, not per assumed field.
     lines.extend(
         dict.fromkeys(
-            f"- {authors.get(e.author, e.author)}, источник: {source(e.source_id, registry)}"
+            f"- {authors.get(e.author, e.author)}, источник: "
+            + ("текст события" if e.source_id in event_documents else source(e.source_id, registry))
             for e in assumptions
         )
     )

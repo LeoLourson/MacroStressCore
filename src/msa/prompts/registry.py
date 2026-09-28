@@ -8,8 +8,9 @@ A plugin's prompt is named ``<plugin_id>.<name>``: its version in force is decla
 import json
 from importlib.resources import files
 
-_CURRENT = {"causal": "v6", "advisory": "v2", "explain": "v2"}
+_CURRENT = {"causal": "v7", "advisory": "v2", "explain": "v2"}
 _KNOWN = {name: {version} for name, version in _CURRENT.items()}
+_KNOWN["causal"].add("v6")
 
 
 def _plugin_prompt(name: str):

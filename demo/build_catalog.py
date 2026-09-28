@@ -9,6 +9,10 @@ reads them: the headers in demo/, the positions and the snapshot items of each p
 ``demo_data``, one snapshot for the four themed portfolios and one for each portfolio in
 ``OWN_SNAPSHOTS``.
 
+The story portfolios are declared in ``demo/story_catalog.json``. Their editor rows live
+in each plugin's ``demo_data/story_rows.json``; the builder treats financial values as
+opaque input to the plugin's editor, just like an analyst's draft.
+
 The mock profile's answers (``src/msa/agents/mock_events.json``) are collected from the
 analyst's prepared answer (``mock_answer``) of every library event and of the pilot event.
 
@@ -598,8 +602,8 @@ def _evidence(locator, value) -> dict:
     }
 
 
-def _party(party_id) -> dict:
-    company = COMPANIES[party_id]
+def _party(party_id, companies) -> dict:
+    company = companies[party_id]
     return {
         "party_id": party_id,
         "name": company.name,
@@ -611,18 +615,20 @@ def _party(party_id) -> dict:
     }
 
 
-def portfolio(portfolio_id, registry) -> tuple[dict, list[dict]]:
+def portfolio(portfolio_id, registry, *, rows=None, companies=None) -> tuple[dict, list[dict]]:
     """The portfolio's parties, instruments and positions, and its snapshot items."""
-    _, _, rows = PORTFOLIOS[portfolio_id]
+    if rows is None:
+        _, _, rows = PORTFOLIOS[portfolio_id]
+    companies = COMPANIES if companies is None else companies
     draft = PortfolioDraft(
         name=portfolio_id,
         positions=[
             {
                 "position_id": row["position_id"],
                 "name": f"{registry.instrument_type(row['instrument_type']).label}: "
-                f"{COMPANIES[row['party']].name}",
+                f"{companies[row['party']].name}",
                 "instrument_type": row["instrument_type"],
-                "okved": COMPANIES[row["party"]].okved,
+                "okved": companies[row["party"]].okved,
                 "currency": row.get("currency", "RUB"),
                 "values": row["values"],
                 "tables": row.get("tables", {}),
@@ -650,7 +656,7 @@ def portfolio(portfolio_id, registry) -> tuple[dict, list[dict]]:
         raise ValueError(f"{portfolio_id}: " + "; ".join(problems))
     data = bundle.model_dump(mode="json")
     # A company is described by the catalog, not by the row that first named it.
-    data["parties"] = [_party(party["party_id"]) for party in data["parties"]]
+    data["parties"] = [_party(party["party_id"], companies) for party in data["parties"]]
     return data, snapshot.model_dump(mode="json")["items"]
 
 
@@ -664,12 +670,32 @@ def _merge(target: dict, records: list, key: str, where: str) -> None:
 def outputs(registry=None) -> dict[Path, str]:
     """Every generated file and its text."""
     registry = registry or current()
+    stories = json.loads((CATALOG / "story_catalog.json").read_text("utf-8"))
+    companies = dict(COMPANIES)
+    for company_id, description in stories["companies"].items():
+        if company_id in companies:
+            raise ValueError(f"duplicate story company {company_id}")
+        companies[company_id] = Company(**description)
+    portfolios = dict(PORTFOLIOS)
+    own_snapshots = dict(OWN_SNAPSHOTS)
+    for portfolio_id, header in stories["portfolios"].items():
+        if portfolio_id in portfolios:
+            raise ValueError(f"duplicate story portfolio {portfolio_id}")
+        portfolios[portfolio_id] = (header["name"], header["description"], [])
+        own_snapshots[portfolio_id] = (stories["snapshot_id"], stories["snapshot_label"])
+    for plugin_id in registry.plugins:
+        path = _demo_data(registry, plugin_id) / "story_rows.json"
+        if path.exists():
+            for portfolio_id, rows in json.loads(path.read_text("utf-8")).items():
+                if portfolio_id not in stories["portfolios"]:
+                    raise ValueError(f"{plugin_id}: unknown story portfolio {portfolio_id}")
+                portfolios[portfolio_id][2].extend(rows)
     files: dict[Path, str] = {}
     #: snapshot id -> item id -> item
     items: dict[str, dict[str, dict]] = {}
-    for portfolio_id, (name, description, _) in PORTFOLIOS.items():
-        data, found = portfolio(portfolio_id, registry)
-        snapshot_id = OWN_SNAPSHOTS.get(portfolio_id, (SNAPSHOT_ID,))[0]
+    for portfolio_id, (name, description, rows) in portfolios.items():
+        data, found = portfolio(portfolio_id, registry, rows=rows, companies=companies)
+        snapshot_id = own_snapshots.get(portfolio_id, (SNAPSHOT_ID,))[0]
         header = {
             "portfolio": {
                 "portfolio_id": portfolio_id,
@@ -709,7 +735,7 @@ def outputs(registry=None) -> dict[Path, str]:
                 {name: list(records.values()) for name, records in part.items()}
             )
         _merge(items.setdefault(snapshot_id, {}), found, "item_id", portfolio_id)
-    labels = {SNAPSHOT_ID: SNAPSHOT_LABEL} | dict(OWN_SNAPSHOTS.values())
+    labels = {SNAPSHOT_ID: SNAPSHOT_LABEL} | dict(own_snapshots.values())
     for snapshot_id, snapshot_items in items.items():
         parts: dict[str, dict[str, dict]] = {}
         for item in snapshot_items.values():

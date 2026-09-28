@@ -1,0 +1,712 @@
+{
+  "parties": [
+    {
+      "party_id": "VALUE-MART",
+      "name": "«Рядом»: магазины низких цен",
+      "kind": "company",
+      "okved": "47.11",
+      "country": "RU",
+      "description": "Вымышленная компания. 86 магазинов у дома, собственные марки дают 38 % продаж. Покупатели платят сразу, отсрочка поставщиков финансирует часть запасов.",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "demo:companies",
+          "locator": "VALUE-MART",
+          "fragment_sha256": "115551134b42e7705dd291ae2accc8ca1f4fab8ea1bb2598bacbe184b8dd84c0",
+          "author": "demo:catalog",
+          "as_of": "2026-09-11"
+        }
+      ]
+    },
+    {
+      "party_id": "REGIONAL-DAIRY",
+      "name": "«Луговая линия»: молочный завод",
+      "kind": "company",
+      "okved": "10.51",
+      "country": "RU",
+      "description": "Вымышленная компания. Пастеризованное молоко, масло и сыры для региональных сетей. Сырое молоко — 62 % переменных затрат; сети пересматривают отпускные цены с задержкой.",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "demo:companies",
+          "locator": "REGIONAL-DAIRY",
+          "fragment_sha256": "c62510fda50dd3df677a0b1a92b54afb7c074f4d8e531d78092ecedc1bcb2bdf",
+          "author": "demo:catalog",
+          "as_of": "2026-09-11"
+        }
+      ]
+    },
+    {
+      "party_id": "CITY-CAFES",
+      "name": "«Обеденный круг»: кафе",
+      "kind": "company",
+      "okved": "56.10",
+      "country": "RU",
+      "description": "Вымышленная компания. 24 кафе у офисов и торговых центров. Аренда и персонал формируют большую часть постоянных расходов; средний чек чувствителен к экономии домохозяйств.",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "demo:companies",
+          "locator": "CITY-CAFES",
+          "fragment_sha256": "d7ef26a23c95f316325d41959110c9276f68ba5e00f12059ac098892190c020d",
+          "author": "demo:catalog",
+          "as_of": "2026-09-11"
+        }
+      ]
+    },
+    {
+      "party_id": "HOME-APPLIANCES",
+      "name": "«ДомТехника»: бытовая техника",
+      "kind": "company",
+      "okved": "47.54",
+      "country": "RU",
+      "description": "Вымышленная компания. Магазины и интернет-продажи техники; импортная составляющая закупок 72 %. Длительный оборот запасов, значимая доля продаж в рассрочку.",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "demo:companies",
+          "locator": "HOME-APPLIANCES",
+          "fragment_sha256": "79cb541c290d7a315f43cb6982e4b9d9e1a02c71f0b0a01ebd15be61e14175f7",
+          "author": "demo:catalog",
+          "as_of": "2026-09-11"
+        }
+      ]
+    },
+    {
+      "party_id": "MED-SUPPLY",
+      "name": "«МедРезерв»: дистрибуция лекарств",
+      "kind": "company",
+      "okved": "46.46",
+      "country": "RU",
+      "description": "Вымышленная компания. Поставляет лекарства аптекам и больницам; 55 % закупок импортные, есть двухмесячный запас. Спрос устойчив, оплата больниц занимает до 78 дней.",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "demo:companies",
+          "locator": "MED-SUPPLY",
+          "fragment_sha256": "da946e35ddf6e7ea698953ebc8a4c611a5e7808b9dd437ad1c2c73a45e0cf90f",
+          "author": "demo:catalog",
+          "as_of": "2026-09-11"
+        }
+      ]
+    },
+    {
+      "party_id": "DIGITAL-SERVICE",
+      "name": "«РитмСофт»: подписное ПО",
+      "kind": "company",
+      "okved": "62.01",
+      "country": "RU",
+      "description": "Вымышленная компания. Сервис учёта для малого бизнеса с годовой подпиской; клиенты из разных отраслей. Денежный резерв сопоставим с долгом, средства облигаций направлены на продукт.",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "demo:companies",
+          "locator": "DIGITAL-SERVICE",
+          "fragment_sha256": "871f1321fa45cbb2816e69bfea83a24e74313528a8934d357e40d6dc0c95b809",
+          "author": "demo:catalog",
+          "as_of": "2026-09-11"
+        }
+      ]
+    }
+  ],
+  "instruments": [
+    {
+      "instrument_id": "LOAN-VALUE-MART",
+      "instrument_type": "corp_loan",
+      "name": "Корпоративный кредит: «Рядом»: магазины низких цен",
+      "currency": "RUB",
+      "issuer_id": "VALUE-MART",
+      "terms": {
+        "covenants": [],
+        "collateral": []
+      },
+      "schema_version": "1"
+    },
+    {
+      "instrument_id": "LOAN-REGIONAL-DAIRY",
+      "instrument_type": "corp_loan",
+      "name": "Корпоративный кредит: «Луговая линия»: молочный завод",
+      "currency": "RUB",
+      "issuer_id": "REGIONAL-DAIRY",
+      "terms": {
+        "covenants": [
+          {
+            "covenant_id": "LOAN-REGIONAL-DAIRY-icr",
+            "metric": "icr",
+            "operator": "ge",
+            "threshold": 1.5,
+            "unit": "ratio",
+            "test_dates": [
+              "2026-12-31",
+              "2027-03-31",
+              "2027-06-30"
+            ],
+            "evidence": [
+              {
+                "kind": "expert_assumption",
+                "source_id": "demo:companies",
+                "locator": "REGIONAL-DAIRY/covenant/icr",
+                "fragment_sha256": "1f58914c36f2352e2f275d7a7412cbda34dafed0a90670bd25f6b7afbd7837d6",
+                "author": "demo:catalog",
+                "as_of": "2026-09-11"
+              }
+            ]
+          }
+        ],
+        "collateral": []
+      },
+      "schema_version": "1"
+    },
+    {
+      "instrument_id": "LOAN-CITY-CAFES",
+      "instrument_type": "corp_loan",
+      "name": "Корпоративный кредит: «Обеденный круг»: кафе",
+      "currency": "RUB",
+      "issuer_id": "CITY-CAFES",
+      "terms": {
+        "covenants": [
+          {
+            "covenant_id": "LOAN-CITY-CAFES-nd_ebitda",
+            "metric": "nd_ebitda",
+            "operator": "le",
+            "threshold": 3.5,
+            "unit": "ratio",
+            "test_dates": [
+              "2026-12-31",
+              "2027-03-31",
+              "2027-06-30"
+            ],
+            "evidence": [
+              {
+                "kind": "expert_assumption",
+                "source_id": "demo:companies",
+                "locator": "CITY-CAFES/covenant/nd_ebitda",
+                "fragment_sha256": "42ae36a93da7873ab92aa3a8ae3078c22e7cc389788d34e0b516b6b735efab62",
+                "author": "demo:catalog",
+                "as_of": "2026-09-11"
+              }
+            ]
+          }
+        ],
+        "collateral": []
+      },
+      "schema_version": "1"
+    },
+    {
+      "instrument_id": "LOAN-HOME-APPLIANCES",
+      "instrument_type": "corp_loan",
+      "name": "Корпоративный кредит: «ДомТехника»: бытовая техника",
+      "currency": "RUB",
+      "issuer_id": "HOME-APPLIANCES",
+      "terms": {
+        "covenants": [],
+        "collateral": []
+      },
+      "schema_version": "1"
+    },
+    {
+      "instrument_id": "LOAN-MED-SUPPLY",
+      "instrument_type": "corp_loan",
+      "name": "Корпоративный кредит: «МедРезерв»: дистрибуция лекарств",
+      "currency": "RUB",
+      "issuer_id": "MED-SUPPLY",
+      "terms": {
+        "covenants": [],
+        "collateral": []
+      },
+      "schema_version": "1"
+    },
+    {
+      "instrument_id": "BOND-DIGITAL-SERVICE",
+      "instrument_type": "bond_fixed",
+      "name": "Облигация с фиксированным купоном: «РитмСофт»: подписное ПО",
+      "currency": "RUB",
+      "issuer_id": "DIGITAL-SERVICE",
+      "terms": {
+        "covenants": [],
+        "collateral": [],
+        "face_value": {
+          "value": 325,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "DIGITAL-SERVICE/face_value",
+              "fragment_sha256": "6eab2f0817bfdb36162f0bcb93eb4aab0edeb0f0a719fb658533718332d71f7c",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "coupon_rate": {
+          "value": 0.16,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "DIGITAL-SERVICE/coupon_rate",
+              "fragment_sha256": "43286067f87e5fac206c695632d16605e0859e07f300677cebdf4a521d2e3ef3",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "maturity_months": {
+          "value": 27,
+          "unit": "months",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "DIGITAL-SERVICE/maturity_months",
+              "fragment_sha256": "d73309d05e73c9c993beebf1ecd126e7b0497192086a6c29db106fdb7125bbca",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "coupon_frequency": {
+          "value": 2,
+          "unit": "count",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "DIGITAL-SERVICE/coupon_frequency",
+              "fragment_sha256": "5f3e2261958953b451f8307a32edad83d85c07baf16e890c8d46b321f0abc8d6",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "credit_spread": {
+          "value": 0.02,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "DIGITAL-SERVICE/credit_spread",
+              "fragment_sha256": "39a956a558158e4d8b94930cbc8193e502c8cc1764ab83d8eb076a17a1bd51ac",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "schema_version": "1"
+    }
+  ],
+  "positions": [
+    {
+      "position_id": "LOAN-VALUE-MART",
+      "instrument_id": "LOAN-VALUE-MART",
+      "params": {
+        "ead": {
+          "value": 1275,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "VALUE-MART/ead",
+              "fragment_sha256": "859584ed9eac55be1ca324f7f54c979961dc7c12b4617bd4666b513158556c38",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "lgd": {
+          "value": 0.37,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "VALUE-MART/lgd",
+              "fragment_sha256": "d44be3ffc30c4e31f9cd15a50e1ea9d48366825a907a585e9ba71f6036466b70",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "ccf": {
+          "value": 1,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "VALUE-MART/ccf",
+              "fragment_sha256": "64ce5926ac3724cbd4a0b80aadf9dd492eb64d54b33af9598766705f0f545125",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "import_share": {
+          "value": 0.09,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "VALUE-MART/import_share",
+              "fragment_sha256": "f7b9c9a0cc18ee66b6a7aa86b44e0b3597883a95805b462b3e2c56abe7f38d7b",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "driver_elasticity": {},
+        "proxy_peer_ids": [],
+        "status": "ok",
+        "flags": []
+      },
+      "schema_version": "1",
+      "model_id": null
+    },
+    {
+      "position_id": "LOAN-REGIONAL-DAIRY",
+      "instrument_id": "LOAN-REGIONAL-DAIRY",
+      "params": {
+        "ead": {
+          "value": 460,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "REGIONAL-DAIRY/ead",
+              "fragment_sha256": "d1d847551a35d7808eea3d5b51bc95c9da6ec502e2591d9c94ee1d6d0ffa5221",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "lgd": {
+          "value": 0.43,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "REGIONAL-DAIRY/lgd",
+              "fragment_sha256": "ece6db8d64ddf66bc729b9cf35d26a9800552b1303e5099b705b67d3c83aea7d",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "ccf": {
+          "value": 1,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "REGIONAL-DAIRY/ccf",
+              "fragment_sha256": "001a3595a69e5dde0dc342cfe3abbb6df02169f196017b707058ce19407dc060",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "import_share": {
+          "value": 0.06,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "REGIONAL-DAIRY/import_share",
+              "fragment_sha256": "0a483cf0b64848d4951c713dd5ba032ce873f1e20d6bf7b86e3664c355616cae",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "driver_elasticity": {},
+        "proxy_peer_ids": [],
+        "status": "ok",
+        "flags": []
+      },
+      "schema_version": "1",
+      "model_id": null
+    },
+    {
+      "position_id": "LOAN-CITY-CAFES",
+      "instrument_id": "LOAN-CITY-CAFES",
+      "params": {
+        "ead": {
+          "value": 285,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "CITY-CAFES/ead",
+              "fragment_sha256": "b5fc2bb714779bcf98e9571dc3e91ec78c031b87696f250ec2d389d5c0357e96",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "lgd": {
+          "value": 0.58,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "CITY-CAFES/lgd",
+              "fragment_sha256": "4295b4e5f1149f5f1d066be08a10944a242e3e142a56ae3d87a9c92d8072bbae",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "ccf": {
+          "value": 1,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "CITY-CAFES/ccf",
+              "fragment_sha256": "653d06aa2a488955949cc3604184fb0830c2ba76328fefb41703b975f94f6baa",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "import_share": {
+          "value": 0.07,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "CITY-CAFES/import_share",
+              "fragment_sha256": "ae34260332fe649eb3149ef5742dbaa74cb99b171572a18458a4be4f73fbd354",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "driver_elasticity": {},
+        "proxy_peer_ids": [],
+        "status": "ok",
+        "flags": []
+      },
+      "schema_version": "1",
+      "model_id": null
+    },
+    {
+      "position_id": "LOAN-HOME-APPLIANCES",
+      "instrument_id": "LOAN-HOME-APPLIANCES",
+      "params": {
+        "ead": {
+          "value": 635,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "HOME-APPLIANCES/ead",
+              "fragment_sha256": "7fc25646a632501a1a034ba7b4f52a2ebd5c701853fda939d213c8fcfe9cbe62",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "lgd": {
+          "value": 0.51,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "HOME-APPLIANCES/lgd",
+              "fragment_sha256": "370fff31592ccbc2cd41393f856dea58664fe2e85a97f10048f75c9dfc35ebe9",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "ccf": {
+          "value": 1,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "HOME-APPLIANCES/ccf",
+              "fragment_sha256": "be0a21e74f71adeeafa3dece77705591155c18970811a09df30508cff56e422f",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "import_share": {
+          "value": 0.72,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "HOME-APPLIANCES/import_share",
+              "fragment_sha256": "c6984feee82ccb826bb32d283673ec29c881a28ae97d6e1a54387f9f3423a819",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "driver_elasticity": {},
+        "proxy_peer_ids": [],
+        "status": "ok",
+        "flags": []
+      },
+      "schema_version": "1",
+      "model_id": null
+    },
+    {
+      "position_id": "LOAN-MED-SUPPLY",
+      "instrument_id": "LOAN-MED-SUPPLY",
+      "params": {
+        "ead": {
+          "value": 780,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "MED-SUPPLY/ead",
+              "fragment_sha256": "353d1880336a4ce4747ce57daa4566975dd0f0b1674ecd6f6c409ff57a09f04f",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "lgd": {
+          "value": 0.38,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "MED-SUPPLY/lgd",
+              "fragment_sha256": "746812bd51ba65f1a3f924f9646c96f609696af40ef4d6e6182605f07151c493",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "ccf": {
+          "value": 1,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "MED-SUPPLY/ccf",
+              "fragment_sha256": "9d90a523030de1f809be3ca84822360fc390ca56f1534f2147aa3e999598ff58",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "import_share": {
+          "value": 0.55,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "MED-SUPPLY/import_share",
+              "fragment_sha256": "492b64654dce19db10f0ffbc80a2a4f33f64ed0ef5ef254c352521b12ea032df",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "driver_elasticity": {},
+        "proxy_peer_ids": [],
+        "status": "ok",
+        "flags": []
+      },
+      "schema_version": "1",
+      "model_id": null
+    },
+    {
+      "position_id": "BOND-DIGITAL-SERVICE",
+      "instrument_id": "BOND-DIGITAL-SERVICE",
+      "params": {
+        "ead": {
+          "value": 325,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "DIGITAL-SERVICE/ead",
+              "fragment_sha256": "f4250d5492f9db6ebc95342e9b9193cee7d4295919b00c361ba436ad37047ad6",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "lgd": {
+          "value": 0.52,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "DIGITAL-SERVICE/lgd",
+              "fragment_sha256": "992abb505241f0007bbb9abd4da8794bf482cf28c195e49f63239fbb0a1bceae",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "ccf": {
+          "value": 1,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "DIGITAL-SERVICE/ccf",
+              "fragment_sha256": "6934a6c85cce6d635e8bbbe3c195432149f10e5e515b8e1dc6949e9ab967885d",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "import_share": {
+          "value": 0.03,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "DIGITAL-SERVICE/import_share",
+              "fragment_sha256": "25d8a47c890117fa9f69543c3ca4facb79b0a93abdc3838c64f22a04b9314d34",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "driver_elasticity": {},
+        "proxy_peer_ids": [],
+        "status": "ok",
+        "flags": []
+      },
+      "schema_version": "1",
+      "model_id": null
+    }
+  ]
+}

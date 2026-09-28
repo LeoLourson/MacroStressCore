@@ -1,0 +1,116 @@
+{
+  "parties": [
+    {
+      "party_id": "VALUE-MART",
+      "name": "«Рядом»: магазины низких цен",
+      "kind": "company",
+      "okved": "47.11",
+      "country": "RU",
+      "description": "Вымышленная компания. 86 магазинов у дома, собственные марки дают 38 % продаж. Покупатели платят сразу, отсрочка поставщиков финансирует часть запасов.",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "demo:companies",
+          "locator": "VALUE-MART",
+          "fragment_sha256": "115551134b42e7705dd291ae2accc8ca1f4fab8ea1bb2598bacbe184b8dd84c0",
+          "author": "demo:catalog",
+          "as_of": "2026-09-11"
+        }
+      ]
+    },
+    {
+      "party_id": "HOME-APPLIANCES",
+      "name": "«ДомТехника»: бытовая техника",
+      "kind": "company",
+      "okved": "47.54",
+      "country": "RU",
+      "description": "Вымышленная компания. Магазины и интернет-продажи техники; импортная составляющая закупок 72 %. Длительный оборот запасов, значимая доля продаж в рассрочку.",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "demo:companies",
+          "locator": "HOME-APPLIANCES",
+          "fragment_sha256": "79cb541c290d7a315f43cb6982e4b9d9e1a02c71f0b0a01ebd15be61e14175f7",
+          "author": "demo:catalog",
+          "as_of": "2026-09-11"
+        }
+      ]
+    }
+  ],
+  "instruments": [
+    {
+      "instrument_id": "SHARE-VALUE-MART",
+      "instrument_type": "common_stock",
+      "name": "Обыкновенная акция: «Рядом»: магазины низких цен",
+      "currency": "RUB",
+      "issuer_id": "VALUE-MART",
+      "terms": {
+        "ticker": "DMVM",
+        "market_index": "MOEX",
+        "sector": "trade"
+      },
+      "schema_version": "1"
+    },
+    {
+      "instrument_id": "SHARE-HOME-APPLIANCES",
+      "instrument_type": "common_stock",
+      "name": "Обыкновенная акция: «ДомТехника»: бытовая техника",
+      "currency": "RUB",
+      "issuer_id": "HOME-APPLIANCES",
+      "terms": {
+        "ticker": "DMHA",
+        "market_index": "MOEX",
+        "sector": "trade"
+      },
+      "schema_version": "1"
+    }
+  ],
+  "positions": [
+    {
+      "position_id": "SHARE-VALUE-MART",
+      "instrument_id": "SHARE-VALUE-MART",
+      "params": {
+        "quantity": {
+          "value": 500000,
+          "unit": "shares",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "VALUE-MART/quantity",
+              "fragment_sha256": "bbb11871ee4210714688975f937bcf0317d8e4d031ee4893d08603f388c1a3a7",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "direction": "long"
+      },
+      "schema_version": "1",
+      "model_id": null
+    },
+    {
+      "position_id": "SHARE-HOME-APPLIANCES",
+      "instrument_id": "SHARE-HOME-APPLIANCES",
+      "params": {
+        "quantity": {
+          "value": 400000,
+          "unit": "shares",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "HOME-APPLIANCES/quantity",
+              "fragment_sha256": "babd0d4c0bc4d70a2111ae23e5eb04e4b9bcd093eee6d2c0dcb7a960480cdf02",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "direction": "long"
+      },
+      "schema_version": "1",
+      "model_id": null
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "portfolio": {
+    "portfolio_id": "PROJECT-FINANCE",
+    "name": "Только проектное финансирование — четыре стадии стройки",
+    "base_currency": "RUB",
+    "as_of": "2026-09-11",
+    "snapshot_id": "SYNTHETIC-STORIES-V1-2026-09-11",
+    "builtin": true,
+    "metadata": {
+      "synthetic": true,
+      "description": "Синтетический однородный портфель. Четыре независимых жилищных проекта: ранние продажи, середина строительства и близкий ввод. Различаются эскроу, долг, собственные средства и доступный лимит при общем шоке ипотеки.",
+      "generated_by": "demo/build_catalog.py"
+    }
+  }
+}

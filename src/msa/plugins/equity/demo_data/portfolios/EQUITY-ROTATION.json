@@ -1,0 +1,278 @@
+{
+  "parties": [
+    {
+      "party_id": "NORTH-TIMBER",
+      "name": "«Северная доска»: лесопереработка",
+      "kind": "company",
+      "okved": "16.10",
+      "country": "RU",
+      "description": "Вымышленная компания. Два лесопильных завода; 65 % выручки дают экспортные контракты. Покупатели платят после получения груза, рублёвые затраты преобладают.",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "demo:companies",
+          "locator": "NORTH-TIMBER",
+          "fragment_sha256": "9915486fd7ce78cc0b179bb1d2229b78fa7198df455194cd1a1572fa63417b76",
+          "author": "demo:catalog",
+          "as_of": "2026-09-11"
+        }
+      ]
+    },
+    {
+      "party_id": "HOME-APPLIANCES",
+      "name": "«ДомТехника»: бытовая техника",
+      "kind": "company",
+      "okved": "47.54",
+      "country": "RU",
+      "description": "Вымышленная компания. Магазины и интернет-продажи техники; импортная составляющая закупок 72 %. Длительный оборот запасов, значимая доля продаж в рассрочку.",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "demo:companies",
+          "locator": "HOME-APPLIANCES",
+          "fragment_sha256": "79cb541c290d7a315f43cb6982e4b9d9e1a02c71f0b0a01ebd15be61e14175f7",
+          "author": "demo:catalog",
+          "as_of": "2026-09-11"
+        }
+      ]
+    },
+    {
+      "party_id": "VALUE-MART",
+      "name": "«Рядом»: магазины низких цен",
+      "kind": "company",
+      "okved": "47.11",
+      "country": "RU",
+      "description": "Вымышленная компания. 86 магазинов у дома, собственные марки дают 38 % продаж. Покупатели платят сразу, отсрочка поставщиков финансирует часть запасов.",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "demo:companies",
+          "locator": "VALUE-MART",
+          "fragment_sha256": "115551134b42e7705dd291ae2accc8ca1f4fab8ea1bb2598bacbe184b8dd84c0",
+          "author": "demo:catalog",
+          "as_of": "2026-09-11"
+        }
+      ]
+    },
+    {
+      "party_id": "DIGITAL-SERVICE",
+      "name": "«РитмСофт»: подписное ПО",
+      "kind": "company",
+      "okved": "62.01",
+      "country": "RU",
+      "description": "Вымышленная компания. Сервис учёта для малого бизнеса с годовой подпиской; клиенты из разных отраслей. Денежный резерв сопоставим с долгом, средства облигаций направлены на продукт.",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "demo:companies",
+          "locator": "DIGITAL-SERVICE",
+          "fragment_sha256": "871f1321fa45cbb2816e69bfea83a24e74313528a8934d357e40d6dc0c95b809",
+          "author": "demo:catalog",
+          "as_of": "2026-09-11"
+        }
+      ]
+    },
+    {
+      "party_id": "US-LABWARE",
+      "name": "Atlas Lab Systems — медицинское оборудование",
+      "kind": "company",
+      "okved": "26.60",
+      "country": "US",
+      "description": "Вымышленная компания. Синтетический американский эмитент медицинского оборудования; долларовая котировка, умеренная чувствительность к рынку США. Рублёвый результат зависит от USD/RUB.",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "demo:companies",
+          "locator": "US-LABWARE",
+          "fragment_sha256": "9ecf3c9fd048655b7da89cfae76a4917fe2e6f9b7498087cec45c402cffaca6f",
+          "author": "demo:catalog",
+          "as_of": "2026-09-11"
+        }
+      ]
+    }
+  ],
+  "instruments": [
+    {
+      "instrument_id": "SHARE-NORTH-TIMBER",
+      "instrument_type": "common_stock",
+      "name": "Обыкновенная акция: «Северная доска»: лесопереработка",
+      "currency": "RUB",
+      "issuer_id": "NORTH-TIMBER",
+      "terms": {
+        "ticker": "DMNT",
+        "market_index": "MOEX",
+        "sector": "materials"
+      },
+      "schema_version": "1"
+    },
+    {
+      "instrument_id": "SHARE-HOME-APPLIANCES",
+      "instrument_type": "common_stock",
+      "name": "Обыкновенная акция: «ДомТехника»: бытовая техника",
+      "currency": "RUB",
+      "issuer_id": "HOME-APPLIANCES",
+      "terms": {
+        "ticker": "DMHA",
+        "market_index": "MOEX",
+        "sector": "trade"
+      },
+      "schema_version": "1"
+    },
+    {
+      "instrument_id": "SHARE-VALUE-MART",
+      "instrument_type": "common_stock",
+      "name": "Обыкновенная акция: «Рядом»: магазины низких цен",
+      "currency": "RUB",
+      "issuer_id": "VALUE-MART",
+      "terms": {
+        "ticker": "DMVM",
+        "market_index": "MOEX",
+        "sector": "trade"
+      },
+      "schema_version": "1"
+    },
+    {
+      "instrument_id": "SHARE-DIGITAL-SERVICE",
+      "instrument_type": "common_stock",
+      "name": "Обыкновенная акция: «РитмСофт»: подписное ПО",
+      "currency": "RUB",
+      "issuer_id": "DIGITAL-SERVICE",
+      "terms": {
+        "ticker": "DMDS",
+        "market_index": "MOEX",
+        "sector": "technology"
+      },
+      "schema_version": "1"
+    },
+    {
+      "instrument_id": "SHARE-US-LABWARE",
+      "instrument_type": "common_stock",
+      "name": "Обыкновенная акция: Atlas Lab Systems — медицинское оборудование",
+      "currency": "USD",
+      "issuer_id": "US-LABWARE",
+      "terms": {
+        "ticker": "DMLB",
+        "market_index": "SPX",
+        "sector": "healthcare"
+      },
+      "schema_version": "1"
+    }
+  ],
+  "positions": [
+    {
+      "position_id": "SHARE-NORTH-TIMBER",
+      "instrument_id": "SHARE-NORTH-TIMBER",
+      "params": {
+        "quantity": {
+          "value": 500000,
+          "unit": "shares",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "NORTH-TIMBER/quantity",
+              "fragment_sha256": "f80e58d1ebab44221b8cd1efc41d30ce1753af989780d07d3c084ddd0eba1355",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "direction": "long"
+      },
+      "schema_version": "1",
+      "model_id": null
+    },
+    {
+      "position_id": "SHARE-HOME-APPLIANCES",
+      "instrument_id": "SHARE-HOME-APPLIANCES",
+      "params": {
+        "quantity": {
+          "value": 400000,
+          "unit": "shares",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "HOME-APPLIANCES/quantity",
+              "fragment_sha256": "babd0d4c0bc4d70a2111ae23e5eb04e4b9bcd093eee6d2c0dcb7a960480cdf02",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "direction": "long"
+      },
+      "schema_version": "1",
+      "model_id": null
+    },
+    {
+      "position_id": "SHARE-VALUE-MART",
+      "instrument_id": "SHARE-VALUE-MART",
+      "params": {
+        "quantity": {
+          "value": 500000,
+          "unit": "shares",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "VALUE-MART/quantity",
+              "fragment_sha256": "bbb11871ee4210714688975f937bcf0317d8e4d031ee4893d08603f388c1a3a7",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "direction": "long"
+      },
+      "schema_version": "1",
+      "model_id": null
+    },
+    {
+      "position_id": "SHARE-DIGITAL-SERVICE",
+      "instrument_id": "SHARE-DIGITAL-SERVICE",
+      "params": {
+        "quantity": {
+          "value": 250000,
+          "unit": "shares",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "DIGITAL-SERVICE/quantity",
+              "fragment_sha256": "4f4f4b8108a014b826a10600aa059e23b2081328d6e6f34b4a67c39896495f6a",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "direction": "long"
+      },
+      "schema_version": "1",
+      "model_id": null
+    },
+    {
+      "position_id": "SHARE-US-LABWARE",
+      "instrument_id": "SHARE-US-LABWARE",
+      "params": {
+        "quantity": {
+          "value": 20000,
+          "unit": "shares",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "US-LABWARE/quantity",
+              "fragment_sha256": "fd69d80a2af264fa1f0b3036e63343a87e04de637379888f295298da5b387a5c",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "direction": "long"
+      },
+      "schema_version": "1",
+      "model_id": null
+    }
+  ]
+}

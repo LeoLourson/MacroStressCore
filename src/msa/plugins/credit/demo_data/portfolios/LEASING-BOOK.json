@@ -1,0 +1,580 @@
+{
+  "parties": [
+    {
+      "party_id": "FLEET-LEASE",
+      "name": "«Тягач Лизинг»: грузовая техника",
+      "kind": "company",
+      "okved": "64.91",
+      "country": "RU",
+      "description": "Вымышленная компания. Быстро растущая компания; невысокие авансы и значительная долговая нагрузка. Старый портфель даёт доход, новые выдачи требуют фондирования.",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "demo:companies",
+          "locator": "FLEET-LEASE",
+          "fragment_sha256": "f1b58b8329f925c3ac7754b94cea53560eb19c9c0e3257ddf5d0b3b32c9a7f7d",
+          "author": "demo:catalog",
+          "as_of": "2026-09-11"
+        }
+      ]
+    },
+    {
+      "party_id": "AGRO-LEASE",
+      "name": "«Посев Лизинг»: агротехника",
+      "kind": "company",
+      "okved": "64.91",
+      "country": "RU",
+      "description": "Вымышленная компания. Консервативный лизингодатель с высоким капиталом и крупными авансами. Доходность старого портфеля поддерживает процентное покрытие.",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "demo:companies",
+          "locator": "AGRO-LEASE",
+          "fragment_sha256": "355f403ecf56808b62d4ca290488dd93497707ab7457c086a45c58f3b41c0909",
+          "author": "demo:catalog",
+          "as_of": "2026-09-11"
+        }
+      ]
+    },
+    {
+      "party_id": "EQUIP-LEASE",
+      "name": "«СтанкоЛиз»: оборудование",
+      "kind": "company",
+      "okved": "64.91",
+      "country": "RU",
+      "description": "Вымышленная компания. Лизинг производственного оборудования, активный рост выдач. Маржа между доходностью портфеля и ставкой долга невелика.",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "demo:companies",
+          "locator": "EQUIP-LEASE",
+          "fragment_sha256": "1d0436587c92f6cd58116facab96aac5f5db49f821554aa44cb346f45035be77",
+          "author": "demo:catalog",
+          "as_of": "2026-09-11"
+        }
+      ]
+    },
+    {
+      "party_id": "REGION-LEASE",
+      "name": "«Регион Аренда»: зрелый лизинговый портфель",
+      "kind": "company",
+      "okved": "64.91",
+      "country": "RU",
+      "description": "Вымышленная компания. Невысокий объём нового бизнеса, старый портфель постепенно погашается. Долг умеренный, операционные расходы распределяются на сокращающуюся базу.",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "demo:companies",
+          "locator": "REGION-LEASE",
+          "fragment_sha256": "44457d67c5f0b1c034932cbcd2c89bc1ebed622b37eb92064df4c767f14f5d43",
+          "author": "demo:catalog",
+          "as_of": "2026-09-11"
+        }
+      ]
+    }
+  ],
+  "instruments": [
+    {
+      "instrument_id": "LEASE-FLEET-LEASE",
+      "instrument_type": "leasing",
+      "name": "Кредит лизинговой компании: «Тягач Лизинг»: грузовая техника",
+      "currency": "RUB",
+      "issuer_id": "FLEET-LEASE",
+      "terms": {
+        "covenants": [
+          {
+            "covenant_id": "LEASE-FLEET-LEASE-icr",
+            "metric": "icr",
+            "operator": "ge",
+            "threshold": 1.3,
+            "unit": "ratio",
+            "test_dates": [
+              "2026-12-31",
+              "2027-03-31",
+              "2027-06-30"
+            ],
+            "evidence": [
+              {
+                "kind": "expert_assumption",
+                "source_id": "demo:companies",
+                "locator": "FLEET-LEASE/covenant/icr",
+                "fragment_sha256": "0fea13d1d95966d11cd64bdf5a0eda112e32a48d8de86994b3271962c766b6b8",
+                "author": "demo:catalog",
+                "as_of": "2026-09-11"
+              }
+            ]
+          },
+          {
+            "covenant_id": "LEASE-FLEET-LEASE-debt_equity-2",
+            "metric": "debt_equity",
+            "operator": "le",
+            "threshold": 5,
+            "unit": "ratio",
+            "test_dates": [
+              "2026-12-31",
+              "2027-03-31",
+              "2027-06-30"
+            ],
+            "evidence": [
+              {
+                "kind": "expert_assumption",
+                "source_id": "demo:companies",
+                "locator": "FLEET-LEASE/covenant/debt_equity",
+                "fragment_sha256": "075d33bef0102ba636fa2f747a5dcbe11d48952cdb5b6b5ddc7e359622d322d3",
+                "author": "demo:catalog",
+                "as_of": "2026-09-11"
+              }
+            ]
+          }
+        ],
+        "collateral": []
+      },
+      "schema_version": "1"
+    },
+    {
+      "instrument_id": "LEASE-AGRO-LEASE",
+      "instrument_type": "leasing",
+      "name": "Кредит лизинговой компании: «Посев Лизинг»: агротехника",
+      "currency": "RUB",
+      "issuer_id": "AGRO-LEASE",
+      "terms": {
+        "covenants": [
+          {
+            "covenant_id": "LEASE-AGRO-LEASE-icr",
+            "metric": "icr",
+            "operator": "ge",
+            "threshold": 1.3,
+            "unit": "ratio",
+            "test_dates": [
+              "2026-12-31",
+              "2027-03-31",
+              "2027-06-30"
+            ],
+            "evidence": [
+              {
+                "kind": "expert_assumption",
+                "source_id": "demo:companies",
+                "locator": "AGRO-LEASE/covenant/icr",
+                "fragment_sha256": "7225aa9c1a1c0cc0ea60636f7bdce6a80b8af9b46c9690352c2decae806ec41c",
+                "author": "demo:catalog",
+                "as_of": "2026-09-11"
+              }
+            ]
+          },
+          {
+            "covenant_id": "LEASE-AGRO-LEASE-debt_equity-2",
+            "metric": "debt_equity",
+            "operator": "le",
+            "threshold": 5,
+            "unit": "ratio",
+            "test_dates": [
+              "2026-12-31",
+              "2027-03-31",
+              "2027-06-30"
+            ],
+            "evidence": [
+              {
+                "kind": "expert_assumption",
+                "source_id": "demo:companies",
+                "locator": "AGRO-LEASE/covenant/debt_equity",
+                "fragment_sha256": "c816904576f498f6b8f6a4a04a744b09e98f754d453475937e609ce2d0aaf691",
+                "author": "demo:catalog",
+                "as_of": "2026-09-11"
+              }
+            ]
+          }
+        ],
+        "collateral": []
+      },
+      "schema_version": "1"
+    },
+    {
+      "instrument_id": "LEASE-EQUIP-LEASE",
+      "instrument_type": "leasing",
+      "name": "Кредит лизинговой компании: «СтанкоЛиз»: оборудование",
+      "currency": "RUB",
+      "issuer_id": "EQUIP-LEASE",
+      "terms": {
+        "covenants": [
+          {
+            "covenant_id": "LEASE-EQUIP-LEASE-icr",
+            "metric": "icr",
+            "operator": "ge",
+            "threshold": 1.3,
+            "unit": "ratio",
+            "test_dates": [
+              "2026-12-31",
+              "2027-03-31",
+              "2027-06-30"
+            ],
+            "evidence": [
+              {
+                "kind": "expert_assumption",
+                "source_id": "demo:companies",
+                "locator": "EQUIP-LEASE/covenant/icr",
+                "fragment_sha256": "9727f2331a4d9514c797dbd70b0e5db80aaaa19d58feb7bc6aecd9b17ec88e20",
+                "author": "demo:catalog",
+                "as_of": "2026-09-11"
+              }
+            ]
+          },
+          {
+            "covenant_id": "LEASE-EQUIP-LEASE-debt_equity-2",
+            "metric": "debt_equity",
+            "operator": "le",
+            "threshold": 5,
+            "unit": "ratio",
+            "test_dates": [
+              "2026-12-31",
+              "2027-03-31",
+              "2027-06-30"
+            ],
+            "evidence": [
+              {
+                "kind": "expert_assumption",
+                "source_id": "demo:companies",
+                "locator": "EQUIP-LEASE/covenant/debt_equity",
+                "fragment_sha256": "90901a2416346ed8db4981a7872e669a4aeb67af01655a574fd940c917ab8e61",
+                "author": "demo:catalog",
+                "as_of": "2026-09-11"
+              }
+            ]
+          }
+        ],
+        "collateral": []
+      },
+      "schema_version": "1"
+    },
+    {
+      "instrument_id": "LEASE-REGION-LEASE",
+      "instrument_type": "leasing",
+      "name": "Кредит лизинговой компании: «Регион Аренда»: зрелый лизинговый портфель",
+      "currency": "RUB",
+      "issuer_id": "REGION-LEASE",
+      "terms": {
+        "covenants": [
+          {
+            "covenant_id": "LEASE-REGION-LEASE-icr",
+            "metric": "icr",
+            "operator": "ge",
+            "threshold": 1.3,
+            "unit": "ratio",
+            "test_dates": [
+              "2026-12-31",
+              "2027-03-31",
+              "2027-06-30"
+            ],
+            "evidence": [
+              {
+                "kind": "expert_assumption",
+                "source_id": "demo:companies",
+                "locator": "REGION-LEASE/covenant/icr",
+                "fragment_sha256": "cad30a9d776d696c5428efd7085e5c7a0c81c2ab1c5d1abada8e42e89ec82310",
+                "author": "demo:catalog",
+                "as_of": "2026-09-11"
+              }
+            ]
+          },
+          {
+            "covenant_id": "LEASE-REGION-LEASE-debt_equity-2",
+            "metric": "debt_equity",
+            "operator": "le",
+            "threshold": 5,
+            "unit": "ratio",
+            "test_dates": [
+              "2026-12-31",
+              "2027-03-31",
+              "2027-06-30"
+            ],
+            "evidence": [
+              {
+                "kind": "expert_assumption",
+                "source_id": "demo:companies",
+                "locator": "REGION-LEASE/covenant/debt_equity",
+                "fragment_sha256": "47c2fb1c1995e8e64ee1e160ec3bfb08d521ea89e24786fb7dabda27f88bb054",
+                "author": "demo:catalog",
+                "as_of": "2026-09-11"
+              }
+            ]
+          }
+        ],
+        "collateral": []
+      },
+      "schema_version": "1"
+    }
+  ],
+  "positions": [
+    {
+      "position_id": "LEASE-FLEET-LEASE",
+      "instrument_id": "LEASE-FLEET-LEASE",
+      "params": {
+        "ead": {
+          "value": 1230,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "FLEET-LEASE/ead",
+              "fragment_sha256": "afb204929c5c1842fc77e69c363d62d50d0a210248d02e042e344f3adef8b576",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "lgd": {
+          "value": 0.5,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "FLEET-LEASE/lgd",
+              "fragment_sha256": "539bb77509784b50e00ba632ff901185ecc5b837fb566fecde6bad3e07bda514",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "ccf": {
+          "value": 1,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "FLEET-LEASE/ccf",
+              "fragment_sha256": "b9914ff8b38257061b4d40f2bd8c0b313b162c1ee18ac17c855e2d7e7dbfd041",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "import_share": {
+          "value": 0,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "FLEET-LEASE/import_share",
+              "fragment_sha256": "4cdeb3f76ae2f9af0486f2bc9c9a2b1b37768efb5c4859a2a2cba85818528415",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "driver_elasticity": {},
+        "proxy_peer_ids": [],
+        "status": "ok",
+        "flags": []
+      },
+      "schema_version": "1",
+      "model_id": null
+    },
+    {
+      "position_id": "LEASE-AGRO-LEASE",
+      "instrument_id": "LEASE-AGRO-LEASE",
+      "params": {
+        "ead": {
+          "value": 760,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "AGRO-LEASE/ead",
+              "fragment_sha256": "d6c0c8a31484de3440993aed2f51f341cf9b71be4c2aa4fe359bc21cb7b01e35",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "lgd": {
+          "value": 0.4,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "AGRO-LEASE/lgd",
+              "fragment_sha256": "0daee06434a03527558e36a0a2182f6d747e3368261ed92ba92e826a2e61a78c",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "ccf": {
+          "value": 1,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "AGRO-LEASE/ccf",
+              "fragment_sha256": "5b0ff75d190582b7e2cb9ba9779ba784d3059f3516375927e589fe17b7dd195c",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "import_share": {
+          "value": 0,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "AGRO-LEASE/import_share",
+              "fragment_sha256": "86012aed3ba277ad4330fc1e5afb98eeebf97a7813352a276dbd89bcb3efc400",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "driver_elasticity": {},
+        "proxy_peer_ids": [],
+        "status": "ok",
+        "flags": []
+      },
+      "schema_version": "1",
+      "model_id": null
+    },
+    {
+      "position_id": "LEASE-EQUIP-LEASE",
+      "instrument_id": "LEASE-EQUIP-LEASE",
+      "params": {
+        "ead": {
+          "value": 940,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "EQUIP-LEASE/ead",
+              "fragment_sha256": "1e773a772bf97615ec72ca46b72ba20cfc83a6b5a36dce7aa491315ea4a32abb",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "lgd": {
+          "value": 0.48,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "EQUIP-LEASE/lgd",
+              "fragment_sha256": "1e67a734ab092e579b46eb1c81c43151096003dca934443349b88d754293ef04",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "ccf": {
+          "value": 1,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "EQUIP-LEASE/ccf",
+              "fragment_sha256": "7142310f712642b7bdbb5b2d6ac05ff3169bdc29640146e8b55f0e707ec4a55c",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "import_share": {
+          "value": 0,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "EQUIP-LEASE/import_share",
+              "fragment_sha256": "59b829893d35d5f13a426564dafbfb455c65422901b6f1784c30d2b38509ccba",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "driver_elasticity": {},
+        "proxy_peer_ids": [],
+        "status": "ok",
+        "flags": []
+      },
+      "schema_version": "1",
+      "model_id": null
+    },
+    {
+      "position_id": "LEASE-REGION-LEASE",
+      "instrument_id": "LEASE-REGION-LEASE",
+      "params": {
+        "ead": {
+          "value": 410,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "REGION-LEASE/ead",
+              "fragment_sha256": "f6d3c156900d77e6e9f9595119319764e2b0585cbfd30a99a39924656fcae460",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "lgd": {
+          "value": 0.42,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "REGION-LEASE/lgd",
+              "fragment_sha256": "af3497d8883eaacdfe258a2f3cabed9d93796284485cdb720e28d323abd6972f",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "ccf": {
+          "value": 1,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "REGION-LEASE/ccf",
+              "fragment_sha256": "b07a213e05bb1a6fd3d9361460225d6bb04a5a8ce8751a3a00ef353dc5c565a1",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "import_share": {
+          "value": 0,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "REGION-LEASE/import_share",
+              "fragment_sha256": "1ab85782d0abcbfbcbc932eb1620e78d34c20256e36f8355e7a7fd639c82b41d",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "driver_elasticity": {},
+        "proxy_peer_ids": [],
+        "status": "ok",
+        "flags": []
+      },
+      "schema_version": "1",
+      "model_id": null
+    }
+  ]
+}

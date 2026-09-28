@@ -1,0 +1,680 @@
+{
+  "parties": [
+    {
+      "party_id": "HEAT-GRID",
+      "name": "«Тёплый округ»: теплосети",
+      "kind": "company",
+      "okved": "35.30",
+      "country": "RU",
+      "description": "Вымышленная компания. Теплоснабжение трёх городов с регулируемыми тарифами. Изношенные сети требуют вложений, повышение тарифа компенсирует рост расходов с задержкой.",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "demo:companies",
+          "locator": "HEAT-GRID",
+          "fragment_sha256": "c6efcd87be5850979d4c4eac891cddb3f9de78a06d1e1a23703a56de17816ac6",
+          "author": "demo:catalog",
+          "as_of": "2026-09-11"
+        }
+      ]
+    },
+    {
+      "party_id": "PACKAGING",
+      "name": "«КонтурПак»: картонная упаковка",
+      "kind": "company",
+      "okved": "17.21",
+      "country": "RU",
+      "description": "Вымышленная компания. Региональный производитель коробов для пищевых и непродовольственных товаров. Диверсифицированные внутренние заказчики, облигационный долг с фиксированным купоном.",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "demo:companies",
+          "locator": "PACKAGING",
+          "fragment_sha256": "f602133e105f76a6ce3a2e37e9f820e2329fb940e17dadd3c8f7e20e21cbf9fd",
+          "author": "demo:catalog",
+          "as_of": "2026-09-11"
+        }
+      ]
+    },
+    {
+      "party_id": "REGIONAL-DAIRY",
+      "name": "«Луговая линия»: молочный завод",
+      "kind": "company",
+      "okved": "10.51",
+      "country": "RU",
+      "description": "Вымышленная компания. Пастеризованное молоко, масло и сыры для региональных сетей. Сырое молоко — 62 % переменных затрат; сети пересматривают отпускные цены с задержкой.",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "demo:companies",
+          "locator": "REGIONAL-DAIRY",
+          "fragment_sha256": "c62510fda50dd3df677a0b1a92b54afb7c074f4d8e531d78092ecedc1bcb2bdf",
+          "author": "demo:catalog",
+          "as_of": "2026-09-11"
+        }
+      ]
+    },
+    {
+      "party_id": "DIGITAL-SERVICE",
+      "name": "«РитмСофт»: подписное ПО",
+      "kind": "company",
+      "okved": "62.01",
+      "country": "RU",
+      "description": "Вымышленная компания. Сервис учёта для малого бизнеса с годовой подпиской; клиенты из разных отраслей. Денежный резерв сопоставим с долгом, средства облигаций направлены на продукт.",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "demo:companies",
+          "locator": "DIGITAL-SERVICE",
+          "fragment_sha256": "871f1321fa45cbb2816e69bfea83a24e74313528a8934d357e40d6dc0c95b809",
+          "author": "demo:catalog",
+          "as_of": "2026-09-11"
+        }
+      ]
+    }
+  ],
+  "instruments": [
+    {
+      "instrument_id": "BOND-HEAT-GRID",
+      "instrument_type": "bond_floater",
+      "name": "Облигация с плавающим купоном: «Тёплый округ»: теплосети",
+      "currency": "RUB",
+      "issuer_id": "HEAT-GRID",
+      "terms": {
+        "covenants": [],
+        "collateral": [],
+        "face_value": {
+          "value": 380,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "HEAT-GRID/face_value",
+              "fragment_sha256": "5ea1ebe95c1e4ec6a9e525dc0696a02f538e4ad6943b01bc9ca7a852f82b0de4",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "coupon_rate": {
+          "value": 0.167,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "HEAT-GRID/coupon_rate",
+              "fragment_sha256": "450b747dc14940dfd5a5b3a927cb434addbf4df94478195fd15f53ae38b99f6e",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "maturity_months": {
+          "value": 30,
+          "unit": "months",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "HEAT-GRID/maturity_months",
+              "fragment_sha256": "8f6e3c5d97c8b52ac42133764b7b87b6b599f1ee526f54fd9b118f3fa84a307b",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "coupon_frequency": {
+          "value": 4,
+          "unit": "count",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "HEAT-GRID/coupon_frequency",
+              "fragment_sha256": "613cb1add4922d4c79a875dcdb64ff3ea7a85bbd44325a5953a30a0917f92242",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "credit_spread": {
+          "value": 0.027,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "HEAT-GRID/credit_spread",
+              "fragment_sha256": "e1bd9356a4057d60bfe5121c5fd320e519365fb26942953bd9135a8a7c0b6d8b",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "schema_version": "1"
+    },
+    {
+      "instrument_id": "FRN-PACKAGING",
+      "instrument_type": "bond_floater",
+      "name": "Облигация с плавающим купоном: «КонтурПак»: картонная упаковка",
+      "currency": "RUB",
+      "issuer_id": "PACKAGING",
+      "terms": {
+        "covenants": [],
+        "collateral": [],
+        "face_value": {
+          "value": 480,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PACKAGING/face_value",
+              "fragment_sha256": "3779605e7bcff201645020cb2e45d4085e24f787c6cf3006f1c26c7ff92261cb",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "coupon_rate": {
+          "value": 0.167,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PACKAGING/coupon_rate",
+              "fragment_sha256": "2653f8d0b303e0cd35c38549aaf0183d1c2181363af7f714025085a6a661a3e3",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "maturity_months": {
+          "value": 36,
+          "unit": "months",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PACKAGING/maturity_months",
+              "fragment_sha256": "d47e5058def79f060e3348bb9434835f88276e7f32f2bc5fd63e0e4c62285dc9",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "coupon_frequency": {
+          "value": 4,
+          "unit": "count",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PACKAGING/coupon_frequency",
+              "fragment_sha256": "2d5378c9a2a08dee7726b85a16f7135f08efe6008823b7ce402126cc52c25aea",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "credit_spread": {
+          "value": 0.027,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PACKAGING/credit_spread",
+              "fragment_sha256": "7370b996994e595a8e26e2e0f9610ad5b9d71cc0a9dec7de90eed6e2ce75fd74",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "schema_version": "1"
+    },
+    {
+      "instrument_id": "FRN-DAIRY",
+      "instrument_type": "bond_floater",
+      "name": "Облигация с плавающим купоном: «Луговая линия»: молочный завод",
+      "currency": "RUB",
+      "issuer_id": "REGIONAL-DAIRY",
+      "terms": {
+        "covenants": [],
+        "collateral": [],
+        "face_value": {
+          "value": 350,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "REGIONAL-DAIRY/face_value",
+              "fragment_sha256": "c2ef9f6b6bd829af3cd81953864551c54ff1e06cd538928a22038cdd8870f5a2",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "coupon_rate": {
+          "value": 0.187,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "REGIONAL-DAIRY/coupon_rate",
+              "fragment_sha256": "41a199f5a2a94bb50c95d7d314fba3491543ac12aac0f852c3fc18cd7c2f03ab",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "maturity_months": {
+          "value": 24,
+          "unit": "months",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "REGIONAL-DAIRY/maturity_months",
+              "fragment_sha256": "9b876cf78b9e47dfe25d0427ba303960c6471145244ab44e4ec7a74488f6a300",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "coupon_frequency": {
+          "value": 4,
+          "unit": "count",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "REGIONAL-DAIRY/coupon_frequency",
+              "fragment_sha256": "a901fc580929a15df9b832acd12d2a7bf1bbc6d70af5bf4d65008c66cfcfca11",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "credit_spread": {
+          "value": 0.047,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "REGIONAL-DAIRY/credit_spread",
+              "fragment_sha256": "2646e01c3a1762afb3ce6f97451bd94ba539c5dda497c7c0f40f0fc25fa56596",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "schema_version": "1"
+    },
+    {
+      "instrument_id": "FRN-DIGITAL",
+      "instrument_type": "bond_floater",
+      "name": "Облигация с плавающим купоном: «РитмСофт»: подписное ПО",
+      "currency": "RUB",
+      "issuer_id": "DIGITAL-SERVICE",
+      "terms": {
+        "covenants": [],
+        "collateral": [],
+        "face_value": {
+          "value": 290,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "DIGITAL-SERVICE/face_value",
+              "fragment_sha256": "00450f09a8d402d9183618ecf0657714e5aee16707c95033bc8f4558e6284905",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "coupon_rate": {
+          "value": 0.161,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "DIGITAL-SERVICE/coupon_rate",
+              "fragment_sha256": "3f3054e85888727f0bbdc289225a430726c9ca097bc47c5eb26f4d294222683f",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "maturity_months": {
+          "value": 48,
+          "unit": "months",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "DIGITAL-SERVICE/maturity_months",
+              "fragment_sha256": "a784a21ada2b92ef2f932342ae42844d7d47f48ddfd752995163179854527295",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "coupon_frequency": {
+          "value": 4,
+          "unit": "count",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "DIGITAL-SERVICE/coupon_frequency",
+              "fragment_sha256": "fbe45fe5748ba48f3461c242fa3ddc9229f13b188bc8a5c38980d9796e0dd135",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "credit_spread": {
+          "value": 0.021,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "DIGITAL-SERVICE/credit_spread",
+              "fragment_sha256": "7375ecf3b034b715a398ab2314fb22bded44785ef4ffa943038d43c14eb7720f",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "schema_version": "1"
+    }
+  ],
+  "positions": [
+    {
+      "position_id": "BOND-HEAT-GRID",
+      "instrument_id": "BOND-HEAT-GRID",
+      "params": {
+        "ead": {
+          "value": 380,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "HEAT-GRID/ead",
+              "fragment_sha256": "13335283e1ad67655e8310e01964e787290eea08333c1eb7d31a05ef98c628e2",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "lgd": {
+          "value": 0.48,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "HEAT-GRID/lgd",
+              "fragment_sha256": "80265d5e7d183884aa7d1bc4c73b1c64db82ba97c1528623a281c6173417fdda",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "ccf": {
+          "value": 1,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "HEAT-GRID/ccf",
+              "fragment_sha256": "8f6ac23be35d48174a2acc605bd1eb51b509565c5cdca565a33458b91575eb40",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "import_share": {
+          "value": 0.04,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "HEAT-GRID/import_share",
+              "fragment_sha256": "85ac95e3ab56187b1ee827eb4f1ba0637b10d312d7cd107e32e96dad118129de",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "driver_elasticity": {},
+        "proxy_peer_ids": [],
+        "status": "ok",
+        "flags": []
+      },
+      "schema_version": "1",
+      "model_id": null
+    },
+    {
+      "position_id": "FRN-PACKAGING",
+      "instrument_id": "FRN-PACKAGING",
+      "params": {
+        "ead": {
+          "value": 480,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PACKAGING/ead",
+              "fragment_sha256": "72dc8ef19cf57822fd7a059c26f31fbfe912056e07a0dda2465f9834c6addd4c",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "lgd": {
+          "value": 0.46,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PACKAGING/lgd",
+              "fragment_sha256": "b2e4aee7f26379bc6298ae4077580561ab3ba41b3ce1efab45f2e50d4dd8fc37",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "ccf": {
+          "value": 1,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PACKAGING/ccf",
+              "fragment_sha256": "15f2c794ddb06ab3cd17d269388028f5f492e9515fc5a757e5fcf94651bff3ca",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "import_share": {
+          "value": 0.1,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PACKAGING/import_share",
+              "fragment_sha256": "9b1a2d5dab78178888c8a4c5d339630359ea01f18c30e94407c0a54f6c9e4ae0",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "driver_elasticity": {},
+        "proxy_peer_ids": [],
+        "status": "ok",
+        "flags": []
+      },
+      "schema_version": "1",
+      "model_id": null
+    },
+    {
+      "position_id": "FRN-DAIRY",
+      "instrument_id": "FRN-DAIRY",
+      "params": {
+        "ead": {
+          "value": 350,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "REGIONAL-DAIRY/ead",
+              "fragment_sha256": "31ac059e036ae635a7c74c1c54b289a6619bb6ae14b474a0d80a39124ff41311",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "lgd": {
+          "value": 0.43,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "REGIONAL-DAIRY/lgd",
+              "fragment_sha256": "ece6db8d64ddf66bc729b9cf35d26a9800552b1303e5099b705b67d3c83aea7d",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "ccf": {
+          "value": 1,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "REGIONAL-DAIRY/ccf",
+              "fragment_sha256": "001a3595a69e5dde0dc342cfe3abbb6df02169f196017b707058ce19407dc060",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "import_share": {
+          "value": 0.06,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "REGIONAL-DAIRY/import_share",
+              "fragment_sha256": "0a483cf0b64848d4951c713dd5ba032ce873f1e20d6bf7b86e3664c355616cae",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "driver_elasticity": {},
+        "proxy_peer_ids": [],
+        "status": "ok",
+        "flags": []
+      },
+      "schema_version": "1",
+      "model_id": null
+    },
+    {
+      "position_id": "FRN-DIGITAL",
+      "instrument_id": "FRN-DIGITAL",
+      "params": {
+        "ead": {
+          "value": 290,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "DIGITAL-SERVICE/ead",
+              "fragment_sha256": "c2adbdf4aaa18f21122d58d6d6a6a7057405f1b26c55f8061d1671fba5ae8e75",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "lgd": {
+          "value": 0.52,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "DIGITAL-SERVICE/lgd",
+              "fragment_sha256": "992abb505241f0007bbb9abd4da8794bf482cf28c195e49f63239fbb0a1bceae",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "ccf": {
+          "value": 1,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "DIGITAL-SERVICE/ccf",
+              "fragment_sha256": "6934a6c85cce6d635e8bbbe3c195432149f10e5e515b8e1dc6949e9ab967885d",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "import_share": {
+          "value": 0.03,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "DIGITAL-SERVICE/import_share",
+              "fragment_sha256": "25d8a47c890117fa9f69543c3ca4facb79b0a93abdc3838c64f22a04b9314d34",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "driver_elasticity": {},
+        "proxy_peer_ids": [],
+        "status": "ok",
+        "flags": []
+      },
+      "schema_version": "1",
+      "model_id": null
+    }
+  ]
+}

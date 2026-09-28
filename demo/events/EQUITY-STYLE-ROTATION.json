@@ -1,0 +1,139 @@
+{
+  "event_id": "EQUITY-STYLE-ROTATION",
+  "title": "Рынок растёт на снижении ставки, крепкий рубль меняет лидеров",
+  "text": "Синтетическая новость для демонстрации. Ожидание снижения ставки поддержало российский рынок акций, особенно продавцов техники и разработчиков ПО. Рубль укрепился на фоне притока экспортной выручки. Инвесторы снизили оценки лесопереработчиков, ориентированных на экспорт, несмотря на общий рост индекса. Американский рынок изменился умеренно, но рублёвая стоимость долларовых акций медицинского оборудования снизилась вслед за курсом.",
+  "metadata": {
+    "portfolio_id": "EQUITY-ROTATION",
+    "synthetic": true,
+    "source": "Вымышленная новость; численные диапазоны — экспертные допущения демо-каталога",
+    "scenario_text": "Горизонт 12 месяцев. MOEX +4–11 % (мода 7 %), SPX −1,5…+3,5 % (1 %), курс USD/RUB −16…−8 % (−12 %). Для прямых рыночных факторов в mock используются ln(1+r), а проценты здесь означают простую доходность. Отраслевой компонент сверх рынка: лесопереработка −25…−13 % (−19 %), бытовая техника +5,5–15 % (9,5 %), ПО +3,5–10,5 % (6,5 %). Для магазинов низких цен и медицинского оборудования отдельного отраслевого шока нет. Реакция на индекс масштабируется индивидуальной beta. Дивиденды берутся из исходного снимка. Валютный фактор переоценивает долларовую позицию в рублях; рублёвые акции не получают его второй раз. Все рыночные эффекты заданы без лага; совместная корреляционная калибровка не задавалась.",
+    "horizon_months": 12
+  },
+  "mock_answer": {
+    "event_type": "Рынок растёт на снижении ставки, крепкий рубль меняет лидеров",
+    "channels": {
+      "moex_rebound": "Рост российского рынка",
+      "us_market": "Умеренное изменение рынка США",
+      "strong_ruble": "Снижение курса USD/RUB",
+      "timber_discount": "Снижение оценки экспортной лесопереработки сверх рынка",
+      "retail_rotation": "Ротация в продавцов техники сверх рынка",
+      "software_rotation": "Ротация в разработчиков ПО сверх рынка"
+    },
+    "links": [
+      {
+        "channel": "timber_discount",
+        "okved": "16.10",
+        "factor": "equity.sector",
+        "lag": 0,
+        "elasticity": 1
+      },
+      {
+        "channel": "retail_rotation",
+        "okved": "47.54",
+        "factor": "equity.sector",
+        "lag": 0,
+        "elasticity": 1
+      },
+      {
+        "channel": "software_rotation",
+        "okved": "62.01",
+        "factor": "equity.sector",
+        "lag": 0,
+        "elasticity": 1
+      }
+    ],
+    "scenario": {
+      "moex_rebound": {
+        "kind": "triangular",
+        "low": 0.039220713153281295,
+        "mode": 0.06765864847381481,
+        "high": 0.10436001532424277,
+        "label": "Рост российского рынка",
+        "unit": "log_return",
+        "factor": "equity.market",
+        "key": "MOEX",
+        "channel": "moex_rebound"
+      },
+      "us_market": {
+        "kind": "triangular",
+        "low": -0.01511363781004817,
+        "mode": 0.009950330853168083,
+        "high": 0.0344014267173324,
+        "label": "Умеренное изменение рынка США",
+        "unit": "log_return",
+        "factor": "equity.market",
+        "key": "SPX",
+        "channel": "us_market"
+      },
+      "strong_ruble": {
+        "kind": "triangular",
+        "low": -0.17435338714477774,
+        "mode": -0.12783337150988489,
+        "high": -0.08338160893905106,
+        "label": "Снижение курса USD/RUB",
+        "unit": "log_return",
+        "factor": "market.fx",
+        "key": "USD/RUB",
+        "channel": "strong_ruble"
+      },
+      "timber_discount": {
+        "kind": "triangular",
+        "low": -0.25,
+        "mode": -0.19,
+        "high": -0.13,
+        "label": "Снижение оценки экспортной лесопереработки сверх рынка",
+        "unit": "fraction",
+        "factor": "equity.sector",
+        "channel": "timber_discount"
+      },
+      "retail_rotation": {
+        "kind": "triangular",
+        "low": 0.055,
+        "mode": 0.095,
+        "high": 0.15,
+        "label": "Ротация в продавцов техники сверх рынка",
+        "unit": "fraction",
+        "factor": "equity.sector",
+        "channel": "retail_rotation"
+      },
+      "software_rotation": {
+        "kind": "triangular",
+        "low": 0.035,
+        "mode": 0.065,
+        "high": 0.105,
+        "label": "Ротация в разработчиков ПО сверх рынка",
+        "unit": "fraction",
+        "factor": "equity.sector",
+        "channel": "software_rotation"
+      }
+    },
+    "direct": [
+      {
+        "channel": "moex_rebound",
+        "factor": "equity.market",
+        "key": "MOEX"
+      },
+      {
+        "channel": "us_market",
+        "factor": "equity.market",
+        "key": "SPX"
+      },
+      {
+        "channel": "strong_ruble",
+        "factor": "market.fx",
+        "key": "USD/RUB"
+      }
+    ]
+  },
+  "expect": {
+    "loses": [
+      "SHARE-NORTH-TIMBER",
+      "SHARE-US-LABWARE"
+    ],
+    "gains": [
+      "SHARE-HOME-APPLIANCES",
+      "SHARE-VALUE-MART",
+      "SHARE-DIGITAL-SERVICE"
+    ]
+  }
+}

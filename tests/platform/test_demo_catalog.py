@@ -372,6 +372,8 @@ def test_each_snapshot_gets_a_header_with_its_label():
     labels = {build_catalog.SNAPSHOT_ID: build_catalog.SNAPSHOT_LABEL} | dict(
         build_catalog.OWN_SNAPSHOTS.values()
     )
+    stories = json.loads((build_catalog.CATALOG / "story_catalog.json").read_text("utf-8"))
+    labels[stories["snapshot_id"]] = stories["snapshot_label"]
     assert {sid: header["label"] for sid, header in headers.items()} == labels
 
 
@@ -387,6 +389,16 @@ def test_seeding_the_same_database_twice_keeps_the_own_snapshot(tmp_path):
     assert counts[OIL_SNAPSHOT] > 0
     assert counts["SGZH-CREDIT"] == 1
     assert counts[SGZH_SNAPSHOT] > 0
+    assert counts["TRADE-CORRIDOR"] == 8
+    assert counts["REGIONAL-DEVELOPMENT"] == 8
+    assert counts["EVERYDAY-ECONOMY"] == 8
+    assert counts["CORPORATE-LOANS"] == 5
+    assert counts["FIXED-BONDS"] == 4
+    assert counts["FLOATING-BONDS"] == 4
+    assert counts["PROJECT-FINANCE"] == 4
+    assert counts["LEASING-BOOK"] == 4
+    assert counts["EQUITY-ROTATION"] == 5
+    assert counts["SYNTHETIC-STORIES-V1-2026-09-11"] > 0
 
 
 # -- a library event with monthly lags ---------------------------------------------------

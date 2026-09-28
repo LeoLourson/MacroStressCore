@@ -1,0 +1,759 @@
+{
+  "parties": [
+    {
+      "party_id": "RIVER-QUARTER",
+      "name": "«Речной квартал»: проект жилья",
+      "kind": "company",
+      "okved": "41.20",
+      "country": "RU",
+      "description": "Вымышленная компания. Отдельная проектная компания: 620 квартир комфорт-класса, деньги покупателей на эскроу. Ввод в 18-м месяце, вне годового горизонта оценки.",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "demo:companies",
+          "locator": "RIVER-QUARTER",
+          "fragment_sha256": "f2761e81712bbc1900717fe77d1f4fd9c50714d9ef91371a83ea48686269dbb6",
+          "author": "demo:catalog",
+          "as_of": "2026-09-11"
+        }
+      ]
+    },
+    {
+      "party_id": "CITY-BUILDER",
+      "name": "«Городские дороги»: подрядчик",
+      "kind": "company",
+      "okved": "42.11",
+      "country": "RU",
+      "description": "Вымышленная компания. Ремонт дорог и дворов по муниципальным контрактам; 72 % выручки от бюджетных заказчиков. Прибыль есть, свободных денег мало из-за дебиторской задолженности.",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "demo:companies",
+          "locator": "CITY-BUILDER",
+          "fragment_sha256": "2d9ae46399eba2578b8d4ed6d493fab54dda0dc54e9ff83a6f0479ce8c9ba19e",
+          "author": "demo:catalog",
+          "as_of": "2026-09-11"
+        }
+      ]
+    },
+    {
+      "party_id": "PRECAST",
+      "name": "«ВолгаСбор»: завод ЖБИ",
+      "kind": "company",
+      "okved": "23.61",
+      "country": "RU",
+      "description": "Вымышленная компания. Поставляет железобетон дорожным подрядчикам и жилищным проектам. Высокие постоянные затраты; новые заказы улучшают загрузку, но требуют оборотного капитала.",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "demo:companies",
+          "locator": "PRECAST",
+          "fragment_sha256": "e18aa18c38c47ea0f8cb2928f5eeb5cd08575b5a88fac0059d5081a9b388affa",
+          "author": "demo:catalog",
+          "as_of": "2026-09-11"
+        }
+      ]
+    },
+    {
+      "party_id": "HEAT-GRID",
+      "name": "«Тёплый округ»: теплосети",
+      "kind": "company",
+      "okved": "35.30",
+      "country": "RU",
+      "description": "Вымышленная компания. Теплоснабжение трёх городов с регулируемыми тарифами. Изношенные сети требуют вложений, повышение тарифа компенсирует рост расходов с задержкой.",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "demo:companies",
+          "locator": "HEAT-GRID",
+          "fragment_sha256": "c6efcd87be5850979d4c4eac891cddb3f9de78a06d1e1a23703a56de17816ac6",
+          "author": "demo:catalog",
+          "as_of": "2026-09-11"
+        }
+      ]
+    },
+    {
+      "party_id": "COLD-HUB",
+      "name": "«Холодный узел»: складской оператор",
+      "kind": "company",
+      "okved": "52.10",
+      "country": "RU",
+      "description": "Вымышленная компания. Три холодильных комплекса у крупных городов, 82 % площадей сданы по годовым договорам. Долг привлечён под расширение, тарифы пересматриваются с задержкой.",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "demo:companies",
+          "locator": "COLD-HUB",
+          "fragment_sha256": "3e9e6cb1b14b4f327152309909f9379fcdd9b9e86be7623e4fff613b0a101942",
+          "author": "demo:catalog",
+          "as_of": "2026-09-11"
+        }
+      ]
+    }
+  ],
+  "instruments": [
+    {
+      "instrument_id": "PROJECT-RIVER-QUARTER",
+      "instrument_type": "pf_escrow",
+      "name": "Проектное финансирование с эскроу: «Речной квартал»: проект жилья",
+      "currency": "RUB",
+      "issuer_id": "RIVER-QUARTER",
+      "terms": {
+        "covenants": [
+          {
+            "covenant_id": "PROJECT-RIVER-QUARTER-escrow_coverage",
+            "metric": "escrow_coverage",
+            "operator": "ge",
+            "threshold": 1,
+            "unit": "ratio",
+            "test_dates": [
+              "2026-12-31",
+              "2027-03-31",
+              "2027-06-30"
+            ],
+            "evidence": [
+              {
+                "kind": "expert_assumption",
+                "source_id": "demo:companies",
+                "locator": "RIVER-QUARTER/covenant/escrow_coverage",
+                "fragment_sha256": "8cfa00f780e6b7a32024650003efc0baf5361615d310385bf3c7a4db7d7713d6",
+                "author": "demo:catalog",
+                "as_of": "2026-09-11"
+              }
+            ]
+          }
+        ],
+        "collateral": [],
+        "credit_limit": {
+          "value": 3150,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "RIVER-QUARTER/credit_limit",
+              "fragment_sha256": "455744124db921cc2630ae15a577669e91982b12814809f0853714c854bdd71f",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "base_rate": {
+          "value": 0.184,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "RIVER-QUARTER/base_rate",
+              "fragment_sha256": "4c02d693734d7c2a6257ecb2db766c67820f1e5bd88aa0f984082798b4e17bb9",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "subsidized_rate": {
+          "value": 0.092,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "RIVER-QUARTER/subsidized_rate",
+              "fragment_sha256": "30473853a22505a48ef57584ddb3e3bca0de8ffdc556b310e19758014f035630",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "schema_version": "1"
+    },
+    {
+      "instrument_id": "LOAN-CITY-BUILDER",
+      "instrument_type": "corp_loan",
+      "name": "Корпоративный кредит: «Городские дороги»: подрядчик",
+      "currency": "RUB",
+      "issuer_id": "CITY-BUILDER",
+      "terms": {
+        "covenants": [
+          {
+            "covenant_id": "LOAN-CITY-BUILDER-icr",
+            "metric": "icr",
+            "operator": "ge",
+            "threshold": 1.4,
+            "unit": "ratio",
+            "test_dates": [
+              "2026-12-31",
+              "2027-03-31",
+              "2027-06-30"
+            ],
+            "evidence": [
+              {
+                "kind": "expert_assumption",
+                "source_id": "demo:companies",
+                "locator": "CITY-BUILDER/covenant/icr",
+                "fragment_sha256": "b92c8dc79737710198496a6f0d8e6bc588515c6bf5ff948c4882542a5da98443",
+                "author": "demo:catalog",
+                "as_of": "2026-09-11"
+              }
+            ]
+          }
+        ],
+        "collateral": []
+      },
+      "schema_version": "1"
+    },
+    {
+      "instrument_id": "LOAN-PRECAST",
+      "instrument_type": "corp_loan",
+      "name": "Корпоративный кредит: «ВолгаСбор»: завод ЖБИ",
+      "currency": "RUB",
+      "issuer_id": "PRECAST",
+      "terms": {
+        "covenants": [],
+        "collateral": []
+      },
+      "schema_version": "1"
+    },
+    {
+      "instrument_id": "LOAN-HEAT-GRID",
+      "instrument_type": "corp_loan",
+      "name": "Корпоративный кредит: «Тёплый округ»: теплосети",
+      "currency": "RUB",
+      "issuer_id": "HEAT-GRID",
+      "terms": {
+        "covenants": [],
+        "collateral": []
+      },
+      "schema_version": "1"
+    },
+    {
+      "instrument_id": "LOAN-COLD-HUB",
+      "instrument_type": "corp_loan",
+      "name": "Корпоративный кредит: «Холодный узел»: складской оператор",
+      "currency": "RUB",
+      "issuer_id": "COLD-HUB",
+      "terms": {
+        "covenants": [
+          {
+            "covenant_id": "LOAN-COLD-HUB-icr",
+            "metric": "icr",
+            "operator": "ge",
+            "threshold": 1.3,
+            "unit": "ratio",
+            "test_dates": [
+              "2026-12-31",
+              "2027-03-31",
+              "2027-06-30"
+            ],
+            "evidence": [
+              {
+                "kind": "expert_assumption",
+                "source_id": "demo:companies",
+                "locator": "COLD-HUB/covenant/icr",
+                "fragment_sha256": "0148ebb2475921572b67e807bd238bc657f598de2aa13ec434e63a97d9f890f0",
+                "author": "demo:catalog",
+                "as_of": "2026-09-11"
+              }
+            ]
+          }
+        ],
+        "collateral": []
+      },
+      "schema_version": "1"
+    },
+    {
+      "instrument_id": "BOND-HEAT-GRID",
+      "instrument_type": "bond_floater",
+      "name": "Облигация с плавающим купоном: «Тёплый округ»: теплосети",
+      "currency": "RUB",
+      "issuer_id": "HEAT-GRID",
+      "terms": {
+        "covenants": [],
+        "collateral": [],
+        "face_value": {
+          "value": 380,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "HEAT-GRID/face_value",
+              "fragment_sha256": "5ea1ebe95c1e4ec6a9e525dc0696a02f538e4ad6943b01bc9ca7a852f82b0de4",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "coupon_rate": {
+          "value": 0.167,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "HEAT-GRID/coupon_rate",
+              "fragment_sha256": "450b747dc14940dfd5a5b3a927cb434addbf4df94478195fd15f53ae38b99f6e",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "maturity_months": {
+          "value": 30,
+          "unit": "months",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "HEAT-GRID/maturity_months",
+              "fragment_sha256": "8f6e3c5d97c8b52ac42133764b7b87b6b599f1ee526f54fd9b118f3fa84a307b",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "coupon_frequency": {
+          "value": 4,
+          "unit": "count",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "HEAT-GRID/coupon_frequency",
+              "fragment_sha256": "613cb1add4922d4c79a875dcdb64ff3ea7a85bbd44325a5953a30a0917f92242",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "credit_spread": {
+          "value": 0.027,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "HEAT-GRID/credit_spread",
+              "fragment_sha256": "e1bd9356a4057d60bfe5121c5fd320e519365fb26942953bd9135a8a7c0b6d8b",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "schema_version": "1"
+    }
+  ],
+  "positions": [
+    {
+      "position_id": "PROJECT-RIVER-QUARTER",
+      "instrument_id": "PROJECT-RIVER-QUARTER",
+      "params": {
+        "ead": {
+          "value": 1950,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "RIVER-QUARTER/ead",
+              "fragment_sha256": "6a5f26e7e4316ce5a2ad41dabeed8408fb883fb95acfe025bca26e35d4a3beca",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "lgd": {
+          "value": 0.3,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "RIVER-QUARTER/lgd",
+              "fragment_sha256": "edb4a20cf79c94b8aff12212f6058fc07bccdcc6572124dbb6822a59a6d051ee",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "ccf": {
+          "value": 1,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "RIVER-QUARTER/ccf",
+              "fragment_sha256": "f7275d12317504fafe8d58f09196d900bae34044f1f15c788be6756204be4457",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "import_share": {
+          "value": 0,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "RIVER-QUARTER/import_share",
+              "fragment_sha256": "d0e6838be38dac4f3087bc710e89263ca589964967abb3cdd25d8c446ffa5c7e",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "driver_elasticity": {},
+        "proxy_peer_ids": [],
+        "status": "ok",
+        "flags": []
+      },
+      "schema_version": "1",
+      "model_id": null
+    },
+    {
+      "position_id": "LOAN-CITY-BUILDER",
+      "instrument_id": "LOAN-CITY-BUILDER",
+      "params": {
+        "ead": {
+          "value": 720,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "CITY-BUILDER/ead",
+              "fragment_sha256": "ab59979366f1d0950d6b5e4ab154f7fe0cbf8ffc3c07c98e0a8eedc6a9cc9314",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "lgd": {
+          "value": 0.48,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "CITY-BUILDER/lgd",
+              "fragment_sha256": "942f112f485f586782754cecec960263c992ae16e77f5a5e0973893b71c32d57",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "ccf": {
+          "value": 1,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "CITY-BUILDER/ccf",
+              "fragment_sha256": "2afe03fbb60a821472710655f86de57363ec63601c4ddd4f2194c840f2e446e8",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "import_share": {
+          "value": 0.04,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "CITY-BUILDER/import_share",
+              "fragment_sha256": "43d1c2c56a3285297488f5b04e1cf77085703850a12af8f033864994f4acf104",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "driver_elasticity": {},
+        "proxy_peer_ids": [],
+        "status": "ok",
+        "flags": []
+      },
+      "schema_version": "1",
+      "model_id": null
+    },
+    {
+      "position_id": "LOAN-PRECAST",
+      "instrument_id": "LOAN-PRECAST",
+      "params": {
+        "ead": {
+          "value": 560,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PRECAST/ead",
+              "fragment_sha256": "d0115105978cccdb2a1d15f47f218edcb85495f1e3e7d71e480a3aed3a3593c3",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "lgd": {
+          "value": 0.46,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PRECAST/lgd",
+              "fragment_sha256": "2659e87f1fc520e4bb8012e248b0fbb830f028be9af295b7f085d7c3588e68ed",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "ccf": {
+          "value": 1,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PRECAST/ccf",
+              "fragment_sha256": "725c7a885265d64311cee8c19e2bbaa82e231d2bc88e6e65b7df21e0b77f7a7d",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "import_share": {
+          "value": 0.09,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "PRECAST/import_share",
+              "fragment_sha256": "cf1f5337f1462f740f0a2c68b830d4280b458abca251762ed231aa2b2eecd541",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "driver_elasticity": {},
+        "proxy_peer_ids": [],
+        "status": "ok",
+        "flags": []
+      },
+      "schema_version": "1",
+      "model_id": null
+    },
+    {
+      "position_id": "LOAN-HEAT-GRID",
+      "instrument_id": "LOAN-HEAT-GRID",
+      "params": {
+        "ead": {
+          "value": 1150,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "HEAT-GRID/ead",
+              "fragment_sha256": "88a8594d2b01063848907c6fcfeb854df7a4c4ec73f1527ba03222e0c53d432a",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "lgd": {
+          "value": 0.36,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "HEAT-GRID/lgd",
+              "fragment_sha256": "a1e4d0549680c18fbc7acc1cea92345fe01030c1a130a508f04356dc0d7e311d",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "ccf": {
+          "value": 1,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "HEAT-GRID/ccf",
+              "fragment_sha256": "8f6ac23be35d48174a2acc605bd1eb51b509565c5cdca565a33458b91575eb40",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "import_share": {
+          "value": 0.04,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "HEAT-GRID/import_share",
+              "fragment_sha256": "85ac95e3ab56187b1ee827eb4f1ba0637b10d312d7cd107e32e96dad118129de",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "driver_elasticity": {},
+        "proxy_peer_ids": [],
+        "status": "ok",
+        "flags": []
+      },
+      "schema_version": "1",
+      "model_id": null
+    },
+    {
+      "position_id": "LOAN-COLD-HUB",
+      "instrument_id": "LOAN-COLD-HUB",
+      "params": {
+        "ead": {
+          "value": 920,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "COLD-HUB/ead",
+              "fragment_sha256": "30286ba2924ae11b5806bc880f56f7a354b8540dd7e541d70d9adb1edadf1281",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "lgd": {
+          "value": 0.32,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "COLD-HUB/lgd",
+              "fragment_sha256": "a0ea565de0feb06358bfc3f679bd735cd6bbdcc12531f6903d6d98be660cedca",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "ccf": {
+          "value": 1,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "COLD-HUB/ccf",
+              "fragment_sha256": "c450ce76612581e12fa7e21ce13e56dfb206d00556dbbff0f8e2a521f539dfd3",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "import_share": {
+          "value": 0.05,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "COLD-HUB/import_share",
+              "fragment_sha256": "a2f2c81a222246f2600c864d82a157721f62951424a84dfec62b5a6761d95608",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "driver_elasticity": {},
+        "proxy_peer_ids": [],
+        "status": "ok",
+        "flags": []
+      },
+      "schema_version": "1",
+      "model_id": null
+    },
+    {
+      "position_id": "BOND-HEAT-GRID",
+      "instrument_id": "BOND-HEAT-GRID",
+      "params": {
+        "ead": {
+          "value": 380,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "HEAT-GRID/ead",
+              "fragment_sha256": "13335283e1ad67655e8310e01964e787290eea08333c1eb7d31a05ef98c628e2",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "lgd": {
+          "value": 0.48,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "HEAT-GRID/lgd",
+              "fragment_sha256": "80265d5e7d183884aa7d1bc4c73b1c64db82ba97c1528623a281c6173417fdda",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "ccf": {
+          "value": 1,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "HEAT-GRID/ccf",
+              "fragment_sha256": "8f6ac23be35d48174a2acc605bd1eb51b509565c5cdca565a33458b91575eb40",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "import_share": {
+          "value": 0.04,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "HEAT-GRID/import_share",
+              "fragment_sha256": "85ac95e3ab56187b1ee827eb4f1ba0637b10d312d7cd107e32e96dad118129de",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "driver_elasticity": {},
+        "proxy_peer_ids": [],
+        "status": "ok",
+        "flags": []
+      },
+      "schema_version": "1",
+      "model_id": null
+    }
+  ]
+}

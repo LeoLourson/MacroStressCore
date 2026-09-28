@@ -18,6 +18,7 @@ from . import calibration, profile
 from .contracts import RiskResult
 from .factors import FACTORS
 from .families import family_for
+from .families.corporate import OperatingCompany
 from .position_risk import MODEL_VERSION, AssetRiskInput, review_flags, run_asset
 
 PLUGIN_ID = "credit"
@@ -66,6 +67,14 @@ class CreditModel(CalculationModel):
             "Помесячная модель заёмщика на совместных сценариях: PD, ожидаемые потери, "
             "ковенанты, ликвидность, вклад каналов и обратный стресс-тест."
         )
+        if isinstance(family, OperatingCompany):
+            self.description += (
+                " Изменения credit.cogs, credit.logistics и credit.fx уже влияют на цену "
+                "и спрос внутри модели через pass_through и demand_elasticity из отчётности. "
+                "Не дублируйте перенос затрат в отпускную цену отдельным путём к "
+                "credit.revenue: этот фактор задаёт только независимое изменение спроса "
+                "или продаж."
+            )
         self.review_flags = review_flags()
 
     def requirements(self, position, options):

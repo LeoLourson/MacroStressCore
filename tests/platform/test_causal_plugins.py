@@ -184,7 +184,7 @@ def test_only_selected_model_factors_and_their_units_reach_the_llm():
     )
     llm = CapturingLLM(response)
     output = CausalAgent(llm=llm).run_structured(payload)
-    assert output.prompt_version == current_version("causal") == "v6"
+    assert output.prompt_version == current_version("causal") == "v7"
     assert "portfolio_context" in llm.messages[1]["content"]
     assert "bank portfolio" not in llm.messages[0]["content"]
     # Direct factors name their key; the sector factor comes through the graph without one.

@@ -1,0 +1,15 @@
+{
+  "portfolio": {
+    "portfolio_id": "FLOATING-BONDS",
+    "name": "Только флоатеры — купон не отменяет риск эмитента",
+    "base_currency": "RUB",
+    "as_of": "2026-09-11",
+    "snapshot_id": "SYNTHETIC-STORIES-V1-2026-09-11",
+    "builtin": true,
+    "metadata": {
+      "synthetic": true,
+      "description": "Синтетический однородный портфель. Четыре эмитента с разной маржой и долгом: теплосети, упаковка, молочный завод и ПО. Пересмотр купона защищает от прямой процентной переоценки, но оставляет кредитный канал.",
+      "generated_by": "demo/build_catalog.py"
+    }
+  }
+}

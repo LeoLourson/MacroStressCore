@@ -10,7 +10,7 @@ from msa.integrations.llm import LLMClient, MockLLM
 from msa.prompts.registry import current_version, messages_for
 
 from .base import AgentError
-from .causal_output import CausalOutput
+from .causal_output import CausalAnswer, CausalOutput, ScenarioParameter
 from .ingest import is_scenario
 
 
@@ -124,7 +124,11 @@ def _prepared_response(document, answer, context) -> dict:
         factor_node(target, item["factor"], item["key"])
         edge(item["channel"], target, item["channel"])
     scenario = {
-        name: {**spec, "evidence": _cite(document, scenario_words, spec["label"])}
+        name: {
+            **spec,
+            "magnitude": "stated",
+            "evidence": _cite(document, scenario_words, spec["label"]),
+        }
         for name, spec in answer.get("scenario", {}).items()
         if (spec["factor"], spec.get("key")) in used and spec.get("channel") in nodes
     }
@@ -145,10 +149,9 @@ def _prepared_response(document, answer, context) -> dict:
 
 
 class CausalAgent:
-    def __init__(self, llm=None, *, mock=False, estimate_scenario=False):
+    def __init__(self, llm=None, *, mock=False):
         self.llm = llm
         self.mock = mock
-        self.estimate_scenario = estimate_scenario
 
     @staticmethod
     def _mock_response(document, scope, context):
@@ -196,7 +199,7 @@ class CausalAgent:
         }
         words = next((f for f in document.fragments if is_scenario(f.locator)), source)
         # A fixed central shock with a spread around it: 45 days of delay, costs up or revenue
-        # down by 10 %, from half to one and a half times that.
+        # down by 10 %, from half to one and a half times that. No text states it: an estimate.
         days = selected is not None and selected["unit"] == "days"
         central = 45.0 if days else (-0.1 if driver == "revenue" else 0.1)
         low, high = sorted((0.5 * central, 1.5 * central))
@@ -209,6 +212,7 @@ class CausalAgent:
             "unit": selected["unit"] if selected else "fraction",
             "channel": "channel",
             "factor": factor,
+            "magnitude": "estimated",
             "evidence": [{**evidence, "locator": words.locator, "fragment_sha256": words.sha256}],
         }
         proposals = {"channel_shock": scenario} if selected else {}
@@ -253,6 +257,7 @@ class CausalAgent:
                 "unit": spec["unit"],
                 "factor": factor_id,
                 "key": key,
+                "magnitude": "estimated",
                 "evidence": [
                     {**evidence, "locator": words.locator, "fragment_sha256": words.sha256}
                 ],
@@ -286,37 +291,8 @@ class CausalAgent:
         llm = self.llm or (
             MockLLM(self._mock_response(document, scope, context)) if self.mock else LLMClient()
         )
-        estimate = self.estimate_scenario and not any(
-            is_scenario(f.locator) for f in document.fragments
-        )
-        if estimate:
-            messages[0]["content"] += "\n\n" + (
-                files("msa.prompts.templates").joinpath("demo-scenario-v2.txt").read_text("utf-8")
-            )
-        output = llm.complete(messages, CausalOutput, payload["seed"])
-        if estimate:
-            if not output.scenario:
-                raise AgentError("Demo scenario requires proposed assumptions for analyst review")
-            for parameter in output.scenario.values():
-                if parameter.kind != "triangular" or not parameter.evidence:
-                    raise AgentError(
-                        "Demo assumptions require triangular bounds and source context"
-                    )
-                for evidence in parameter.evidence:
-                    self._verify_document_evidence(document, evidence)
-                # Attribution is server-owned; a model cannot present a guess as a sourced fact.
-                parameter.evidence = [
-                    Evidence.model_validate(
-                        {
-                            **e.model_dump(),
-                            "kind": "expert_assumption",
-                            "author": f"LLM:{getattr(llm, 'model', 'demo')} (демо, не утверждено)",
-                            "as_of": datetime.now(UTC).date(),
-                        }
-                    )
-                    for e in parameter.evidence
-                ]
-                parameter.label = "Демо-допущение: " + parameter.label
+        answer = llm.complete(messages, CausalAnswer, payload["seed"])
+        output = self._attributed(answer, f"LLM:{getattr(llm, 'model', 'mock')} (оценка модели)")
         if output.prompt_version != current_version("causal"):
             raise AgentError("Response prompt_version differs from requested version")
         self._verify_model_context(output, context)
@@ -331,6 +307,41 @@ class CausalAgent:
             for evidence in parameter.evidence:
                 self._verify_document_evidence(document, evidence)
         return output
+
+    @staticmethod
+    def _attributed(answer, author) -> CausalOutput:
+        """The answer with each magnitude the source does not state attributed to the model.
+
+        Attribution is server-owned: a model cannot present its guess as a sourced fact. The
+        analyst sees the estimate as an assumption with its author on the scenario tab and in
+        the report.
+        """
+        scenario = {}
+        for name, parameter in answer.scenario.items():
+            evidence = parameter.evidence
+            if parameter.magnitude == "estimated":
+                if parameter.kind == "point" or not evidence:
+                    raise AgentError(
+                        f"Scenario parameter {name}: an estimated magnitude is a range, not a "
+                        "point, and cites the sentence stating its mechanism"
+                    )
+                evidence = [
+                    Evidence.model_validate(
+                        {
+                            **e.model_dump(),
+                            "kind": "expert_assumption",
+                            "author": author,
+                            "as_of": datetime.now(UTC).date(),
+                        }
+                    )
+                    for e in evidence
+                ]
+            scenario[name] = ScenarioParameter.model_validate(
+                {**parameter.model_dump(exclude={"magnitude", "evidence"}), "evidence": evidence}
+            )
+        return CausalOutput.model_validate(
+            {**answer.model_dump(exclude={"scenario"}), "scenario": scenario}
+        )
 
     @staticmethod
     def _verify_model_context(output, context):

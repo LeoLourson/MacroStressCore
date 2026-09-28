@@ -70,6 +70,11 @@ function quote(evidence: ScenarioParameter['evidence'] | undefined, document: So
   return '—';
 }
 
+/** Parameters whose magnitude no text states: an assumption with its author, such as the model's estimate. */
+function assumptions(parameters: Record<string, ScenarioParameter>): number {
+  return Object.values(parameters).filter((p) => p.evidence?.some((e) => e.kind === 'expert_assumption')).length;
+}
+
 /** A graph the screens can draw; an answer that failed every check leaves an empty object. */
 function drawable(graph: Graph | null | undefined): Graph | null {
   return graph && Array.isArray(graph.nodes) && Array.isArray(graph.edges) ? graph : null;
@@ -95,6 +100,7 @@ function Gate({
   const { graph: graphProblems, scenario: scenarioProblems } = split(violations);
   const built = !!graph?.nodes.length;
   const words = gateWords(stop, plan, changed, graphProblems, scenarioProblems, built);
+  const assumed = plan.confirmed ? 0 : assumptions(parameters);
   const color = words.tone === 'problem' ? 'orange' : words.tone === 'task' ? 'yellow' : 'steel';
   const icon =
     words.tone === 'problem' ? <IconAlertTriangle /> : words.tone === 'task' ? <IconMessageReport /> : <IconInfoCircle />;
@@ -102,6 +108,12 @@ function Gate({
     <Alert color={color} variant="light" icon={icon} title={words.title} styles={{ title: { fontSize: 'var(--mantine-font-size-md)' } }}>
       <Stack gap="xs">
         <Text size="sm">{words.text}</Text>
+        {built && assumed > 0 && (
+          <Text size="sm">
+            В тексте нет величин для {plural(assumed, 'параметра', 'параметров', 'параметров')}: их оценила
+            модель, в таблице сценария они отмечены «Допущение». Проверьте их перед подтверждением.
+          </Text>
+        )}
         {built && violations.length > 0 && (
           <List size="sm" spacing={4}>
             {graphProblems.map((v, i) => {
@@ -459,8 +471,9 @@ function Body({
   const blocking = violations.length > 0;
   const pending = !hasGraph && ACTIVE.includes(status.status);
   const count = Object.keys(parameters).length;
+  const assumed = assumptions(parameters);
   const scenarioSummary = count
-    ? `${plural(count, 'параметр', 'параметра', 'параметров')}${!draft && plan.confirmed ? ', подтверждён аналитиком' : ''}`
+    ? `${plural(count, 'параметр', 'параметра', 'параметров')}${assumed ? `, из них ${plural(assumed, 'допущение', 'допущения', 'допущений')}` : ''}${!draft && plan.confirmed ? ', подтверждён аналитиком' : ''}`
     : pending
       ? 'появится, когда модель разберёт событие'
       : 'не задан';

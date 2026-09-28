@@ -1,0 +1,567 @@
+{
+  "parties": [
+    {
+      "party_id": "EAST-AUTO",
+      "name": "«Восток Авто»: региональный импортёр",
+      "kind": "company",
+      "okved": "45.11",
+      "country": "RU",
+      "description": "Вымышленная компания. Сеть из 18 дилерских центров; 78 % закупок зависят от валюты. Машины оплачиваются до доставки, покупатели чувствительны к цене.",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "demo:companies",
+          "locator": "EAST-AUTO",
+          "fragment_sha256": "14e65252b680c1bdcdd528ef89815e2e7aad6113b625ee6c2c587a0ab803f8ac",
+          "author": "demo:catalog",
+          "as_of": "2026-09-11"
+        }
+      ]
+    },
+    {
+      "party_id": "CITY-BUILDER",
+      "name": "«Городские дороги»: подрядчик",
+      "kind": "company",
+      "okved": "42.11",
+      "country": "RU",
+      "description": "Вымышленная компания. Ремонт дорог и дворов по муниципальным контрактам; 72 % выручки от бюджетных заказчиков. Прибыль есть, свободных денег мало из-за дебиторской задолженности.",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "demo:companies",
+          "locator": "CITY-BUILDER",
+          "fragment_sha256": "2d9ae46399eba2578b8d4ed6d493fab54dda0dc54e9ff83a6f0479ce8c9ba19e",
+          "author": "demo:catalog",
+          "as_of": "2026-09-11"
+        }
+      ]
+    },
+    {
+      "party_id": "MED-SUPPLY",
+      "name": "«МедРезерв»: дистрибуция лекарств",
+      "kind": "company",
+      "okved": "46.46",
+      "country": "RU",
+      "description": "Вымышленная компания. Поставляет лекарства аптекам и больницам; 55 % закупок импортные, есть двухмесячный запас. Спрос устойчив, оплата больниц занимает до 78 дней.",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "demo:companies",
+          "locator": "MED-SUPPLY",
+          "fragment_sha256": "da946e35ddf6e7ea698953ebc8a4c611a5e7808b9dd437ad1c2c73a45e0cf90f",
+          "author": "demo:catalog",
+          "as_of": "2026-09-11"
+        }
+      ]
+    },
+    {
+      "party_id": "NORTH-TIMBER",
+      "name": "«Северная доска»: лесопереработка",
+      "kind": "company",
+      "okved": "16.10",
+      "country": "RU",
+      "description": "Вымышленная компания. Два лесопильных завода; 65 % выручки дают экспортные контракты. Покупатели платят после получения груза, рублёвые затраты преобладают.",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "demo:companies",
+          "locator": "NORTH-TIMBER",
+          "fragment_sha256": "9915486fd7ce78cc0b179bb1d2229b78fa7198df455194cd1a1572fa63417b76",
+          "author": "demo:catalog",
+          "as_of": "2026-09-11"
+        }
+      ]
+    },
+    {
+      "party_id": "DIGITAL-SERVICE",
+      "name": "«РитмСофт»: подписное ПО",
+      "kind": "company",
+      "okved": "62.01",
+      "country": "RU",
+      "description": "Вымышленная компания. Сервис учёта для малого бизнеса с годовой подпиской; клиенты из разных отраслей. Денежный резерв сопоставим с долгом, средства облигаций направлены на продукт.",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "demo:companies",
+          "locator": "DIGITAL-SERVICE",
+          "fragment_sha256": "871f1321fa45cbb2816e69bfea83a24e74313528a8934d357e40d6dc0c95b809",
+          "author": "demo:catalog",
+          "as_of": "2026-09-11"
+        }
+      ]
+    }
+  ],
+  "instruments": [
+    {
+      "instrument_id": "LOAN-EAST-AUTO",
+      "instrument_type": "corp_loan",
+      "name": "Корпоративный кредит: «Восток Авто»: региональный импортёр",
+      "currency": "RUB",
+      "issuer_id": "EAST-AUTO",
+      "terms": {
+        "covenants": [
+          {
+            "covenant_id": "LOAN-EAST-AUTO-icr",
+            "metric": "icr",
+            "operator": "ge",
+            "threshold": 1.4,
+            "unit": "ratio",
+            "test_dates": [
+              "2026-12-31",
+              "2027-03-31",
+              "2027-06-30"
+            ],
+            "evidence": [
+              {
+                "kind": "expert_assumption",
+                "source_id": "demo:companies",
+                "locator": "EAST-AUTO/covenant/icr",
+                "fragment_sha256": "32d4a38db1f39688199cd73c5362d333c2aafc233a912ae76bc3d5971d47d904",
+                "author": "demo:catalog",
+                "as_of": "2026-09-11"
+              }
+            ]
+          }
+        ],
+        "collateral": []
+      },
+      "schema_version": "1"
+    },
+    {
+      "instrument_id": "LOAN-CITY-BUILDER",
+      "instrument_type": "corp_loan",
+      "name": "Корпоративный кредит: «Городские дороги»: подрядчик",
+      "currency": "RUB",
+      "issuer_id": "CITY-BUILDER",
+      "terms": {
+        "covenants": [
+          {
+            "covenant_id": "LOAN-CITY-BUILDER-icr",
+            "metric": "icr",
+            "operator": "ge",
+            "threshold": 1.4,
+            "unit": "ratio",
+            "test_dates": [
+              "2026-12-31",
+              "2027-03-31",
+              "2027-06-30"
+            ],
+            "evidence": [
+              {
+                "kind": "expert_assumption",
+                "source_id": "demo:companies",
+                "locator": "CITY-BUILDER/covenant/icr",
+                "fragment_sha256": "b92c8dc79737710198496a6f0d8e6bc588515c6bf5ff948c4882542a5da98443",
+                "author": "demo:catalog",
+                "as_of": "2026-09-11"
+              }
+            ]
+          }
+        ],
+        "collateral": []
+      },
+      "schema_version": "1"
+    },
+    {
+      "instrument_id": "LOAN-MED-SUPPLY",
+      "instrument_type": "corp_loan",
+      "name": "Корпоративный кредит: «МедРезерв»: дистрибуция лекарств",
+      "currency": "RUB",
+      "issuer_id": "MED-SUPPLY",
+      "terms": {
+        "covenants": [],
+        "collateral": []
+      },
+      "schema_version": "1"
+    },
+    {
+      "instrument_id": "LOAN-NORTH-TIMBER",
+      "instrument_type": "corp_loan",
+      "name": "Корпоративный кредит: «Северная доска»: лесопереработка",
+      "currency": "RUB",
+      "issuer_id": "NORTH-TIMBER",
+      "terms": {
+        "covenants": [
+          {
+            "covenant_id": "LOAN-NORTH-TIMBER-nd_ebitda",
+            "metric": "nd_ebitda",
+            "operator": "le",
+            "threshold": 4.5,
+            "unit": "ratio",
+            "test_dates": [
+              "2026-12-31",
+              "2027-03-31",
+              "2027-06-30"
+            ],
+            "evidence": [
+              {
+                "kind": "expert_assumption",
+                "source_id": "demo:companies",
+                "locator": "NORTH-TIMBER/covenant/nd_ebitda",
+                "fragment_sha256": "91d03972364f37b33d59ddb9a54d3c19c2665ece08cea7375ce16bafa311e456",
+                "author": "demo:catalog",
+                "as_of": "2026-09-11"
+              }
+            ]
+          }
+        ],
+        "collateral": []
+      },
+      "schema_version": "1"
+    },
+    {
+      "instrument_id": "LOAN-DIGITAL-SERVICE",
+      "instrument_type": "corp_loan",
+      "name": "Корпоративный кредит: «РитмСофт»: подписное ПО",
+      "currency": "RUB",
+      "issuer_id": "DIGITAL-SERVICE",
+      "terms": {
+        "covenants": [],
+        "collateral": []
+      },
+      "schema_version": "1"
+    }
+  ],
+  "positions": [
+    {
+      "position_id": "LOAN-EAST-AUTO",
+      "instrument_id": "LOAN-EAST-AUTO",
+      "params": {
+        "ead": {
+          "value": 1350,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "EAST-AUTO/ead",
+              "fragment_sha256": "fe206eb8c154f7df65cca81bef039ba1ea6606ad1104ef2c9dd37e8a9cb4e3cd",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "lgd": {
+          "value": 0.47,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "EAST-AUTO/lgd",
+              "fragment_sha256": "b13979b2efc94d9b4491b8e2f5a69976f7d0d38abed0a8ad58dc66306d3a0226",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "ccf": {
+          "value": 1,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "EAST-AUTO/ccf",
+              "fragment_sha256": "bfa43aa7392197a8f79f4a4fb47dfba5927f8d463b661fd90b1e189c0a757232",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "import_share": {
+          "value": 0.78,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "EAST-AUTO/import_share",
+              "fragment_sha256": "f883f41f7868dbbaa2af35598d3804dc8e9a61402cfb809900e29203b0697b84",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "driver_elasticity": {},
+        "proxy_peer_ids": [],
+        "status": "ok",
+        "flags": []
+      },
+      "schema_version": "1",
+      "model_id": null
+    },
+    {
+      "position_id": "LOAN-CITY-BUILDER",
+      "instrument_id": "LOAN-CITY-BUILDER",
+      "params": {
+        "ead": {
+          "value": 720,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "CITY-BUILDER/ead",
+              "fragment_sha256": "ab59979366f1d0950d6b5e4ab154f7fe0cbf8ffc3c07c98e0a8eedc6a9cc9314",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "lgd": {
+          "value": 0.48,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "CITY-BUILDER/lgd",
+              "fragment_sha256": "942f112f485f586782754cecec960263c992ae16e77f5a5e0973893b71c32d57",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "ccf": {
+          "value": 1,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "CITY-BUILDER/ccf",
+              "fragment_sha256": "2afe03fbb60a821472710655f86de57363ec63601c4ddd4f2194c840f2e446e8",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "import_share": {
+          "value": 0.04,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "CITY-BUILDER/import_share",
+              "fragment_sha256": "43d1c2c56a3285297488f5b04e1cf77085703850a12af8f033864994f4acf104",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "driver_elasticity": {},
+        "proxy_peer_ids": [],
+        "status": "ok",
+        "flags": []
+      },
+      "schema_version": "1",
+      "model_id": null
+    },
+    {
+      "position_id": "LOAN-MED-SUPPLY",
+      "instrument_id": "LOAN-MED-SUPPLY",
+      "params": {
+        "ead": {
+          "value": 780,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "MED-SUPPLY/ead",
+              "fragment_sha256": "353d1880336a4ce4747ce57daa4566975dd0f0b1674ecd6f6c409ff57a09f04f",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "lgd": {
+          "value": 0.38,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "MED-SUPPLY/lgd",
+              "fragment_sha256": "746812bd51ba65f1a3f924f9646c96f609696af40ef4d6e6182605f07151c493",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "ccf": {
+          "value": 1,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "MED-SUPPLY/ccf",
+              "fragment_sha256": "9d90a523030de1f809be3ca84822360fc390ca56f1534f2147aa3e999598ff58",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "import_share": {
+          "value": 0.55,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "MED-SUPPLY/import_share",
+              "fragment_sha256": "492b64654dce19db10f0ffbc80a2a4f33f64ed0ef5ef254c352521b12ea032df",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "driver_elasticity": {},
+        "proxy_peer_ids": [],
+        "status": "ok",
+        "flags": []
+      },
+      "schema_version": "1",
+      "model_id": null
+    },
+    {
+      "position_id": "LOAN-NORTH-TIMBER",
+      "instrument_id": "LOAN-NORTH-TIMBER",
+      "params": {
+        "ead": {
+          "value": 1825,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "NORTH-TIMBER/ead",
+              "fragment_sha256": "e3c701adc69ecaf1ab4c54ee7e19d397fdf90efdee11237f6225257768104cf9",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "lgd": {
+          "value": 0.44,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "NORTH-TIMBER/lgd",
+              "fragment_sha256": "f57ed303ee40a15d6200fe436a3f34a0027156a85da7b55b1aca27f7b480796a",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "ccf": {
+          "value": 1,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "NORTH-TIMBER/ccf",
+              "fragment_sha256": "b948f19e21c4241588500cadc6726583a7098a112e570dddf72249115d9f8247",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "import_share": {
+          "value": 0.08,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "NORTH-TIMBER/import_share",
+              "fragment_sha256": "ec183244b1be0d8e7f0270c82efbddd2049a2b36b024a52bdf196fb495488632",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "driver_elasticity": {},
+        "proxy_peer_ids": [],
+        "status": "ok",
+        "flags": []
+      },
+      "schema_version": "1",
+      "model_id": null
+    },
+    {
+      "position_id": "LOAN-DIGITAL-SERVICE",
+      "instrument_id": "LOAN-DIGITAL-SERVICE",
+      "params": {
+        "ead": {
+          "value": 270,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "DIGITAL-SERVICE/ead",
+              "fragment_sha256": "806cd7b08711b86474ec754b9b8db67b1415037764354195c4b6323127895cf7",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "lgd": {
+          "value": 0.52,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "DIGITAL-SERVICE/lgd",
+              "fragment_sha256": "992abb505241f0007bbb9abd4da8794bf482cf28c195e49f63239fbb0a1bceae",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "ccf": {
+          "value": 1,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "DIGITAL-SERVICE/ccf",
+              "fragment_sha256": "6934a6c85cce6d635e8bbbe3c195432149f10e5e515b8e1dc6949e9ab967885d",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "import_share": {
+          "value": 0.03,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "DIGITAL-SERVICE/import_share",
+              "fragment_sha256": "25d8a47c890117fa9f69543c3ca4facb79b0a93abdc3838c64f22a04b9314d34",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "driver_elasticity": {},
+        "proxy_peer_ids": [],
+        "status": "ok",
+        "flags": []
+      },
+      "schema_version": "1",
+      "model_id": null
+    }
+  ]
+}

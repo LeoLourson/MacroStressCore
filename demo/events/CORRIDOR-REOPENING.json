@@ -1,0 +1,217 @@
+{
+  "event_id": "CORRIDOR-REOPENING",
+  "title": "Очереди рассосались, надбавки за срочность исчезают",
+  "text": "Синтетическая новость для демонстрации. На торговом коридоре запущено предварительное оформление грузов. Автомобили быстрее доходят до покупателей, экспортные партии древесины оплачиваются без прежних задержек. Стоимость перевозки снижается. Автоперевозчики теряют надбавку за срочность, а загрузка временного хранения на холодильных складах нормализуется. Для поставщиков лекарств и внутренней упаковки порядок работы не изменился.",
+  "metadata": {
+    "portfolio_id": "TRADE-CORRIDOR",
+    "synthetic": true,
+    "source": "Вымышленная новость; численные диапазоны — экспертные допущения демо-каталога",
+    "scenario_text": "Самостоятельная альтернатива на том же исходном снимке, не последовательное применение предыдущего события. Горизонт 12 месяцев, эффекты постоянны после лага. Продажи автомобилей +3–8,5 % (мода 5,5 %), лаг 1 месяц; получение денег быстрее на 10–24 дня (17), сразу. Доставка дешевле на 10–22 % (16 %), её доля в переменных затратах 7 %, лаг 1 месяц. Отгрузки древесины +4–11 % (7 %), срок оплаты экспорта короче на 6–18 дней (12) с коэффициентом 0,65; лаг 1 месяц. Выручка перевозчика −11…−4 % (−7,5 %), лаг 1 месяц; маршрутные расходы −20…−8 % (−14 %), доля 20 %, сразу. Выручка складов −8…−3 % (−5,5 %), лаг 2 месяца. Отраслевой шок акций лесопереработки +4–13 % (8 %), перевозчика −14…−6,5 % (−10 %). Лекарства, упаковка и общий индекс без шока.",
+    "horizon_months": 12
+  },
+  "mock_answer": {
+    "event_type": "Очереди рассосались, надбавки за срочность исчезают",
+    "channels": {
+      "car_recovery": "Восстановление продаж автомобилей",
+      "car_release": "Высвобождение оборотного капитала автодилера",
+      "car_freight": "Снижение стоимости доставки автомобилей",
+      "timber_recovery": "Восстановление отгрузок пиломатериалов",
+      "timber_release": "Ускорение оплаты экспортных партий",
+      "freight_normalization": "Отмена срочных надбавок перевозчика",
+      "route_saving": "Экономия перевозчика на маршруте",
+      "storage_normalization": "Снижение выручки временного хранения",
+      "timber_rerating": "Восстановление стоимости акций лесопереработки",
+      "freight_rerating": "Снижение срочной маржи в акциях перевозчика"
+    },
+    "links": [
+      {
+        "channel": "car_recovery",
+        "okved": "45.11",
+        "factor": "credit.revenue",
+        "lag": 1,
+        "elasticity": 1
+      },
+      {
+        "channel": "car_release",
+        "okved": "45.11",
+        "factor": "credit.working_capital",
+        "lag": 0,
+        "elasticity": 1
+      },
+      {
+        "channel": "car_freight",
+        "okved": "45.11",
+        "factor": "credit.logistics",
+        "lag": 1,
+        "elasticity": 0.07
+      },
+      {
+        "channel": "timber_recovery",
+        "okved": "16.10",
+        "factor": "credit.revenue",
+        "lag": 1,
+        "elasticity": 1
+      },
+      {
+        "channel": "timber_release",
+        "okved": "16.10",
+        "factor": "credit.working_capital",
+        "lag": 1,
+        "elasticity": 0.65
+      },
+      {
+        "channel": "freight_normalization",
+        "okved": "49.41",
+        "factor": "credit.revenue",
+        "lag": 1,
+        "elasticity": 1
+      },
+      {
+        "channel": "route_saving",
+        "okved": "49.41",
+        "factor": "credit.logistics",
+        "lag": 0,
+        "elasticity": 0.2
+      },
+      {
+        "channel": "storage_normalization",
+        "okved": "52.10",
+        "factor": "credit.revenue",
+        "lag": 2,
+        "elasticity": 1
+      },
+      {
+        "channel": "timber_rerating",
+        "okved": "16.10",
+        "factor": "equity.sector",
+        "lag": 0,
+        "elasticity": 1
+      },
+      {
+        "channel": "freight_rerating",
+        "okved": "49.41",
+        "factor": "equity.sector",
+        "lag": 0,
+        "elasticity": 1
+      }
+    ],
+    "scenario": {
+      "car_recovery": {
+        "kind": "triangular",
+        "low": 0.03,
+        "mode": 0.055,
+        "high": 0.085,
+        "label": "Восстановление продаж автомобилей",
+        "unit": "fraction",
+        "factor": "credit.revenue",
+        "channel": "car_recovery"
+      },
+      "car_release": {
+        "kind": "triangular",
+        "low": -24,
+        "mode": -17,
+        "high": -10,
+        "label": "Высвобождение оборотного капитала автодилера",
+        "unit": "days",
+        "factor": "credit.working_capital",
+        "channel": "car_release"
+      },
+      "car_freight": {
+        "kind": "triangular",
+        "low": -0.22,
+        "mode": -0.16,
+        "high": -0.1,
+        "label": "Снижение стоимости доставки автомобилей",
+        "unit": "fraction",
+        "factor": "credit.logistics",
+        "channel": "car_freight"
+      },
+      "timber_recovery": {
+        "kind": "triangular",
+        "low": 0.04,
+        "mode": 0.07,
+        "high": 0.11,
+        "label": "Восстановление отгрузок пиломатериалов",
+        "unit": "fraction",
+        "factor": "credit.revenue",
+        "channel": "timber_recovery"
+      },
+      "timber_release": {
+        "kind": "triangular",
+        "low": -18,
+        "mode": -12,
+        "high": -6,
+        "label": "Ускорение оплаты экспортных партий",
+        "unit": "days",
+        "factor": "credit.working_capital",
+        "channel": "timber_release"
+      },
+      "freight_normalization": {
+        "kind": "triangular",
+        "low": -0.11,
+        "mode": -0.075,
+        "high": -0.04,
+        "label": "Отмена срочных надбавок перевозчика",
+        "unit": "fraction",
+        "factor": "credit.revenue",
+        "channel": "freight_normalization"
+      },
+      "route_saving": {
+        "kind": "triangular",
+        "low": -0.2,
+        "mode": -0.14,
+        "high": -0.08,
+        "label": "Экономия перевозчика на маршруте",
+        "unit": "fraction",
+        "factor": "credit.logistics",
+        "channel": "route_saving"
+      },
+      "storage_normalization": {
+        "kind": "triangular",
+        "low": -0.08,
+        "mode": -0.055,
+        "high": -0.03,
+        "label": "Снижение выручки временного хранения",
+        "unit": "fraction",
+        "factor": "credit.revenue",
+        "channel": "storage_normalization"
+      },
+      "timber_rerating": {
+        "kind": "triangular",
+        "low": 0.04,
+        "mode": 0.08,
+        "high": 0.13,
+        "label": "Восстановление стоимости акций лесопереработки",
+        "unit": "fraction",
+        "factor": "equity.sector",
+        "channel": "timber_rerating"
+      },
+      "freight_rerating": {
+        "kind": "triangular",
+        "low": -0.14,
+        "mode": -0.1,
+        "high": -0.065,
+        "label": "Снижение срочной маржи в акциях перевозчика",
+        "unit": "fraction",
+        "factor": "equity.sector",
+        "channel": "freight_rerating"
+      }
+    }
+  },
+  "expect": {
+    "loses": [
+      "LOAN-ROUTE-TRANS",
+      "LOAN-COLD-HUB",
+      "SHARE-ROUTE-TRANS"
+    ],
+    "gains": [
+      "LOAN-EAST-AUTO",
+      "LOAN-NORTH-TIMBER",
+      "SHARE-NORTH-TIMBER"
+    ],
+    "unaffected": [
+      "LOAN-MED-SUPPLY",
+      "BOND-PACKAGING"
+    ]
+  }
+}

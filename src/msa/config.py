@@ -20,8 +20,6 @@ class Settings(BaseModel):
     # Output budget per LLM answer, reasoning included; a cut answer counts as an attempt.
     # Unset, the server decides: vLLM fills the rest of its context window.
     llm_max_tokens: int | None = Field(default=None, gt=0)
-    # Native demonstration only: propose clearly attributed, unapproved scenario assumptions.
-    demo_estimate_scenario: bool = False
 
 
 def settings() -> Settings:

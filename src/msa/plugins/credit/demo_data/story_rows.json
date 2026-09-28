@@ -1,0 +1,1545 @@
+{
+  "TRADE-CORRIDOR": [
+    {
+      "position_id": "LOAN-EAST-AUTO",
+      "party": "EAST-AUTO",
+      "instrument_type": "corp_loan",
+      "values": {
+        "ead": 1350,
+        "lgd": 0.47,
+        "ccf": 1,
+        "import_share": 0.78,
+        "revenue": 18650,
+        "cogs": 15120,
+        "opex": 1840,
+        "fixed_production_cost": 0,
+        "net_debt": 3620,
+        "gross_debt": 4100,
+        "cash": 480,
+        "borrowing_rate": 0.192,
+        "dso": 12,
+        "dio": 84,
+        "dpo": 24,
+        "pass_through": 0.52,
+        "demand_elasticity": -1.25,
+        "capex": 145,
+        "credit_limit": 850,
+        "scheduled_amortisation": 360,
+        "cash_floor": 120,
+        "tax_rate": 0.25,
+        "opex_variable_share": 0.15
+      },
+      "tables": {
+        "covenants": [
+          {
+            "metric": "icr",
+            "operator": "ge",
+            "threshold": 1.4,
+            "test_dates": [
+              "2026-12-31",
+              "2027-03-31",
+              "2027-06-30"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "position_id": "LOAN-NORTH-TIMBER",
+      "party": "NORTH-TIMBER",
+      "instrument_type": "corp_loan",
+      "values": {
+        "ead": 1825,
+        "lgd": 0.44,
+        "ccf": 1,
+        "import_share": 0.08,
+        "revenue": 12840,
+        "cogs": 7460,
+        "opex": 1680,
+        "fixed_production_cost": 1260,
+        "net_debt": 4180,
+        "gross_debt": 4800,
+        "cash": 620,
+        "borrowing_rate": 0.164,
+        "dso": 57,
+        "dio": 43,
+        "dpo": 31,
+        "pass_through": 0.18,
+        "demand_elasticity": -0.65,
+        "capex": 580,
+        "credit_limit": 900,
+        "scheduled_amortisation": 420,
+        "cash_floor": 155,
+        "tax_rate": 0.25,
+        "opex_variable_share": 0.15
+      },
+      "tables": {
+        "covenants": [
+          {
+            "metric": "nd_ebitda",
+            "operator": "le",
+            "threshold": 4.5,
+            "test_dates": [
+              "2026-12-31",
+              "2027-03-31",
+              "2027-06-30"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "position_id": "LOAN-ROUTE-TRANS",
+      "party": "ROUTE-TRANS",
+      "instrument_type": "corp_loan",
+      "values": {
+        "ead": 640,
+        "lgd": 0.49,
+        "ccf": 1,
+        "import_share": 0.12,
+        "revenue": 6740,
+        "cogs": 3830,
+        "opex": 1020,
+        "fixed_production_cost": 640,
+        "net_debt": 1760,
+        "gross_debt": 2005,
+        "cash": 245,
+        "borrowing_rate": 0.181,
+        "dso": 44,
+        "dio": 6,
+        "dpo": 27,
+        "pass_through": 0.35,
+        "demand_elasticity": -0.55,
+        "capex": 430,
+        "credit_limit": 460,
+        "scheduled_amortisation": 180,
+        "cash_floor": 61,
+        "tax_rate": 0.25,
+        "opex_variable_share": 0.15
+      },
+      "tables": {
+        "covenants": []
+      }
+    },
+    {
+      "position_id": "LOAN-COLD-HUB",
+      "party": "COLD-HUB",
+      "instrument_type": "corp_loan",
+      "values": {
+        "ead": 920,
+        "lgd": 0.32,
+        "ccf": 1,
+        "import_share": 0.05,
+        "revenue": 3680,
+        "cogs": 1420,
+        "opex": 510,
+        "fixed_production_cost": 430,
+        "net_debt": 4950,
+        "gross_debt": 5340,
+        "cash": 390,
+        "borrowing_rate": 0.173,
+        "dso": 32,
+        "dio": 0,
+        "dpo": 28,
+        "pass_through": 0.45,
+        "demand_elasticity": -0.25,
+        "capex": 210,
+        "credit_limit": 650,
+        "scheduled_amortisation": 250,
+        "cash_floor": 98,
+        "tax_rate": 0.25,
+        "opex_variable_share": 0.15
+      },
+      "tables": {
+        "covenants": [
+          {
+            "metric": "icr",
+            "operator": "ge",
+            "threshold": 1.3,
+            "test_dates": [
+              "2026-12-31",
+              "2027-03-31",
+              "2027-06-30"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "position_id": "LOAN-MED-SUPPLY",
+      "party": "MED-SUPPLY",
+      "instrument_type": "corp_loan",
+      "values": {
+        "ead": 780,
+        "lgd": 0.38,
+        "ccf": 1,
+        "import_share": 0.55,
+        "revenue": 21900,
+        "cogs": 18140,
+        "opex": 2040,
+        "fixed_production_cost": 0,
+        "net_debt": 2470,
+        "gross_debt": 3030,
+        "cash": 560,
+        "borrowing_rate": 0.169,
+        "dso": 78,
+        "dio": 61,
+        "dpo": 68,
+        "pass_through": 0.62,
+        "demand_elasticity": -0.18,
+        "capex": 95,
+        "credit_limit": 1200,
+        "scheduled_amortisation": 240,
+        "cash_floor": 140,
+        "tax_rate": 0.25,
+        "opex_variable_share": 0.15
+      },
+      "tables": {
+        "covenants": []
+      }
+    },
+    {
+      "position_id": "BOND-PACKAGING",
+      "party": "PACKAGING",
+      "instrument_type": "bond_fixed",
+      "values": {
+        "ead": 430,
+        "lgd": 0.46,
+        "ccf": 1,
+        "import_share": 0.1,
+        "revenue": 5940,
+        "cogs": 3470,
+        "opex": 780,
+        "fixed_production_cost": 590,
+        "net_debt": 1870,
+        "gross_debt": 2180,
+        "cash": 310,
+        "borrowing_rate": 0.161,
+        "dso": 39,
+        "dio": 34,
+        "dpo": 42,
+        "pass_through": 0.48,
+        "demand_elasticity": -0.62,
+        "capex": 240,
+        "credit_limit": 500,
+        "scheduled_amortisation": 170,
+        "cash_floor": 78,
+        "tax_rate": 0.25,
+        "opex_variable_share": 0.15,
+        "face_value": 430,
+        "coupon_rate": 0.169,
+        "coupon_frequency": 4,
+        "maturity_months": 39,
+        "risk_free_rate": 0.14,
+        "credit_spread": 0.029
+      },
+      "tables": {
+        "covenants": []
+      }
+    }
+  ],
+  "REGIONAL-DEVELOPMENT": [
+    {
+      "position_id": "PROJECT-RIVER-QUARTER",
+      "party": "RIVER-QUARTER",
+      "instrument_type": "pf_escrow",
+      "values": {
+        "ead": 1950,
+        "lgd": 0.3,
+        "ccf": 1,
+        "import_share": 0,
+        "credit_limit": 3150,
+        "equity": 340,
+        "capex_month_1_12": 145,
+        "capex_month_13_24": 105,
+        "monthly_sales": 192,
+        "base_rate": 0.184,
+        "subsidized_rate": 0.092,
+        "sales_start_month": 1,
+        "commissioning_month": 18,
+        "debt": 1760,
+        "escrow": 1490
+      },
+      "tables": {
+        "covenants": [
+          {
+            "metric": "escrow_coverage",
+            "operator": "ge",
+            "threshold": 1,
+            "test_dates": [
+              "2026-12-31",
+              "2027-03-31",
+              "2027-06-30"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "position_id": "LOAN-CITY-BUILDER",
+      "party": "CITY-BUILDER",
+      "instrument_type": "corp_loan",
+      "values": {
+        "ead": 720,
+        "lgd": 0.48,
+        "ccf": 1,
+        "import_share": 0.04,
+        "revenue": 8460,
+        "cogs": 5710,
+        "opex": 1080,
+        "fixed_production_cost": 510,
+        "net_debt": 2310,
+        "gross_debt": 2480,
+        "cash": 170,
+        "borrowing_rate": 0.194,
+        "dso": 102,
+        "dio": 26,
+        "dpo": 49,
+        "pass_through": 0.12,
+        "demand_elasticity": -0.75,
+        "capex": 190,
+        "credit_limit": 700,
+        "scheduled_amortisation": 260,
+        "cash_floor": 43,
+        "tax_rate": 0.25,
+        "opex_variable_share": 0.15
+      },
+      "tables": {
+        "covenants": [
+          {
+            "metric": "icr",
+            "operator": "ge",
+            "threshold": 1.4,
+            "test_dates": [
+              "2026-12-31",
+              "2027-03-31",
+              "2027-06-30"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "position_id": "LOAN-PRECAST",
+      "party": "PRECAST",
+      "instrument_type": "corp_loan",
+      "values": {
+        "ead": 560,
+        "lgd": 0.46,
+        "ccf": 1,
+        "import_share": 0.09,
+        "revenue": 5270,
+        "cogs": 2910,
+        "opex": 730,
+        "fixed_production_cost": 840,
+        "net_debt": 1840,
+        "gross_debt": 2055,
+        "cash": 215,
+        "borrowing_rate": 0.183,
+        "dso": 52,
+        "dio": 37,
+        "dpo": 35,
+        "pass_through": 0.32,
+        "demand_elasticity": -0.8,
+        "capex": 270,
+        "credit_limit": 600,
+        "scheduled_amortisation": 180,
+        "cash_floor": 54,
+        "tax_rate": 0.25,
+        "opex_variable_share": 0.15
+      },
+      "tables": {
+        "covenants": []
+      }
+    },
+    {
+      "position_id": "LOAN-HEAT-GRID",
+      "party": "HEAT-GRID",
+      "instrument_type": "corp_loan",
+      "values": {
+        "ead": 1150,
+        "lgd": 0.36,
+        "ccf": 1,
+        "import_share": 0.04,
+        "revenue": 9680,
+        "cogs": 4250,
+        "opex": 1620,
+        "fixed_production_cost": 1480,
+        "net_debt": 5430,
+        "gross_debt": 5910,
+        "cash": 480,
+        "borrowing_rate": 0.157,
+        "dso": 68,
+        "dio": 19,
+        "dpo": 52,
+        "pass_through": 0.1,
+        "demand_elasticity": -0.1,
+        "capex": 940,
+        "credit_limit": 1100,
+        "scheduled_amortisation": 310,
+        "cash_floor": 120,
+        "tax_rate": 0.25,
+        "opex_variable_share": 0.15
+      },
+      "tables": {
+        "covenants": []
+      }
+    },
+    {
+      "position_id": "LOAN-COLD-HUB",
+      "party": "COLD-HUB",
+      "instrument_type": "corp_loan",
+      "values": {
+        "ead": 920,
+        "lgd": 0.32,
+        "ccf": 1,
+        "import_share": 0.05,
+        "revenue": 3680,
+        "cogs": 1420,
+        "opex": 510,
+        "fixed_production_cost": 430,
+        "net_debt": 4950,
+        "gross_debt": 5340,
+        "cash": 390,
+        "borrowing_rate": 0.173,
+        "dso": 32,
+        "dio": 0,
+        "dpo": 28,
+        "pass_through": 0.45,
+        "demand_elasticity": -0.25,
+        "capex": 210,
+        "credit_limit": 650,
+        "scheduled_amortisation": 250,
+        "cash_floor": 98,
+        "tax_rate": 0.25,
+        "opex_variable_share": 0.15
+      },
+      "tables": {
+        "covenants": [
+          {
+            "metric": "icr",
+            "operator": "ge",
+            "threshold": 1.3,
+            "test_dates": [
+              "2026-12-31",
+              "2027-03-31",
+              "2027-06-30"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "position_id": "BOND-HEAT-GRID",
+      "party": "HEAT-GRID",
+      "instrument_type": "bond_floater",
+      "values": {
+        "ead": 380,
+        "lgd": 0.48,
+        "ccf": 1,
+        "import_share": 0.04,
+        "revenue": 9680,
+        "cogs": 4250,
+        "opex": 1620,
+        "fixed_production_cost": 1480,
+        "net_debt": 5430,
+        "gross_debt": 5910,
+        "cash": 480,
+        "borrowing_rate": 0.157,
+        "dso": 68,
+        "dio": 19,
+        "dpo": 52,
+        "pass_through": 0.1,
+        "demand_elasticity": -0.1,
+        "capex": 940,
+        "credit_limit": 1100,
+        "scheduled_amortisation": 310,
+        "cash_floor": 120,
+        "tax_rate": 0.25,
+        "opex_variable_share": 0.15,
+        "face_value": 380,
+        "coupon_rate": 0.167,
+        "coupon_frequency": 4,
+        "maturity_months": 30,
+        "risk_free_rate": 0.14,
+        "credit_spread": 0.027
+      },
+      "tables": {
+        "covenants": []
+      }
+    }
+  ],
+  "EVERYDAY-ECONOMY": [
+    {
+      "position_id": "LOAN-VALUE-MART",
+      "party": "VALUE-MART",
+      "instrument_type": "corp_loan",
+      "values": {
+        "ead": 1275,
+        "lgd": 0.37,
+        "ccf": 1,
+        "import_share": 0.09,
+        "revenue": 24750,
+        "cogs": 19240,
+        "opex": 4060,
+        "fixed_production_cost": 0,
+        "net_debt": 2350,
+        "gross_debt": 3085,
+        "cash": 735,
+        "borrowing_rate": 0.166,
+        "dso": 2,
+        "dio": 24,
+        "dpo": 43,
+        "pass_through": 0.75,
+        "demand_elasticity": -0.35,
+        "capex": 390,
+        "credit_limit": 1000,
+        "scheduled_amortisation": 230,
+        "cash_floor": 184,
+        "tax_rate": 0.25,
+        "opex_variable_share": 0.15
+      },
+      "tables": {
+        "covenants": []
+      }
+    },
+    {
+      "position_id": "LOAN-REGIONAL-DAIRY",
+      "party": "REGIONAL-DAIRY",
+      "instrument_type": "corp_loan",
+      "values": {
+        "ead": 460,
+        "lgd": 0.43,
+        "ccf": 1,
+        "import_share": 0.06,
+        "revenue": 7160,
+        "cogs": 4890,
+        "opex": 870,
+        "fixed_production_cost": 360,
+        "net_debt": 1790,
+        "gross_debt": 2050,
+        "cash": 260,
+        "borrowing_rate": 0.175,
+        "dso": 37,
+        "dio": 12,
+        "dpo": 24,
+        "pass_through": 0.42,
+        "demand_elasticity": -0.45,
+        "capex": 310,
+        "credit_limit": 450,
+        "scheduled_amortisation": 160,
+        "cash_floor": 65,
+        "tax_rate": 0.25,
+        "opex_variable_share": 0.15
+      },
+      "tables": {
+        "covenants": [
+          {
+            "metric": "icr",
+            "operator": "ge",
+            "threshold": 1.5,
+            "test_dates": [
+              "2026-12-31",
+              "2027-03-31",
+              "2027-06-30"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "position_id": "LOAN-CITY-CAFES",
+      "party": "CITY-CAFES",
+      "instrument_type": "corp_loan",
+      "values": {
+        "ead": 285,
+        "lgd": 0.58,
+        "ccf": 1,
+        "import_share": 0.07,
+        "revenue": 3240,
+        "cogs": 1120,
+        "opex": 1510,
+        "fixed_production_cost": 0,
+        "net_debt": 860,
+        "gross_debt": 985,
+        "cash": 125,
+        "borrowing_rate": 0.202,
+        "dso": 2,
+        "dio": 7,
+        "dpo": 18,
+        "pass_through": 0.35,
+        "demand_elasticity": -1.35,
+        "capex": 110,
+        "credit_limit": 240,
+        "scheduled_amortisation": 95,
+        "cash_floor": 31,
+        "tax_rate": 0.25,
+        "opex_variable_share": 0.15
+      },
+      "tables": {
+        "covenants": [
+          {
+            "metric": "nd_ebitda",
+            "operator": "le",
+            "threshold": 3.5,
+            "test_dates": [
+              "2026-12-31",
+              "2027-03-31",
+              "2027-06-30"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "position_id": "LOAN-HOME-APPLIANCES",
+      "party": "HOME-APPLIANCES",
+      "instrument_type": "corp_loan",
+      "values": {
+        "ead": 635,
+        "lgd": 0.51,
+        "ccf": 1,
+        "import_share": 0.72,
+        "revenue": 11380,
+        "cogs": 8670,
+        "opex": 1850,
+        "fixed_production_cost": 0,
+        "net_debt": 2380,
+        "gross_debt": 2720,
+        "cash": 340,
+        "borrowing_rate": 0.195,
+        "dso": 6,
+        "dio": 96,
+        "dpo": 48,
+        "pass_through": 0.5,
+        "demand_elasticity": -1.4,
+        "capex": 130,
+        "credit_limit": 680,
+        "scheduled_amortisation": 220,
+        "cash_floor": 85,
+        "tax_rate": 0.25,
+        "opex_variable_share": 0.15
+      },
+      "tables": {
+        "covenants": []
+      }
+    },
+    {
+      "position_id": "LOAN-MED-SUPPLY",
+      "party": "MED-SUPPLY",
+      "instrument_type": "corp_loan",
+      "values": {
+        "ead": 780,
+        "lgd": 0.38,
+        "ccf": 1,
+        "import_share": 0.55,
+        "revenue": 21900,
+        "cogs": 18140,
+        "opex": 2040,
+        "fixed_production_cost": 0,
+        "net_debt": 2470,
+        "gross_debt": 3030,
+        "cash": 560,
+        "borrowing_rate": 0.169,
+        "dso": 78,
+        "dio": 61,
+        "dpo": 68,
+        "pass_through": 0.62,
+        "demand_elasticity": -0.18,
+        "capex": 95,
+        "credit_limit": 1200,
+        "scheduled_amortisation": 240,
+        "cash_floor": 140,
+        "tax_rate": 0.25,
+        "opex_variable_share": 0.15
+      },
+      "tables": {
+        "covenants": []
+      }
+    },
+    {
+      "position_id": "BOND-DIGITAL-SERVICE",
+      "party": "DIGITAL-SERVICE",
+      "instrument_type": "bond_fixed",
+      "values": {
+        "ead": 325,
+        "lgd": 0.52,
+        "ccf": 1,
+        "import_share": 0.03,
+        "revenue": 4520,
+        "cogs": 1190,
+        "opex": 1900,
+        "fixed_production_cost": 0,
+        "net_debt": 280,
+        "gross_debt": 1200,
+        "cash": 920,
+        "borrowing_rate": 0.149,
+        "dso": 19,
+        "dio": 0,
+        "dpo": 24,
+        "pass_through": 0.2,
+        "demand_elasticity": -0.4,
+        "capex": 160,
+        "credit_limit": 400,
+        "scheduled_amortisation": 120,
+        "cash_floor": 230,
+        "tax_rate": 0.25,
+        "opex_variable_share": 0.15,
+        "face_value": 325,
+        "coupon_rate": 0.16,
+        "coupon_frequency": 2,
+        "maturity_months": 27,
+        "risk_free_rate": 0.14,
+        "credit_spread": 0.02
+      },
+      "tables": {
+        "covenants": []
+      }
+    }
+  ],
+  "CORPORATE-LOANS": [
+    {
+      "position_id": "LOAN-EAST-AUTO",
+      "party": "EAST-AUTO",
+      "instrument_type": "corp_loan",
+      "values": {
+        "ead": 1350,
+        "lgd": 0.47,
+        "ccf": 1,
+        "import_share": 0.78,
+        "revenue": 18650,
+        "cogs": 15120,
+        "opex": 1840,
+        "fixed_production_cost": 0,
+        "net_debt": 3620,
+        "gross_debt": 4100,
+        "cash": 480,
+        "borrowing_rate": 0.192,
+        "dso": 12,
+        "dio": 84,
+        "dpo": 24,
+        "pass_through": 0.52,
+        "demand_elasticity": -1.25,
+        "capex": 145,
+        "credit_limit": 850,
+        "scheduled_amortisation": 360,
+        "cash_floor": 120,
+        "tax_rate": 0.25,
+        "opex_variable_share": 0.15
+      },
+      "tables": {
+        "covenants": [
+          {
+            "metric": "icr",
+            "operator": "ge",
+            "threshold": 1.4,
+            "test_dates": [
+              "2026-12-31",
+              "2027-03-31",
+              "2027-06-30"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "position_id": "LOAN-CITY-BUILDER",
+      "party": "CITY-BUILDER",
+      "instrument_type": "corp_loan",
+      "values": {
+        "ead": 720,
+        "lgd": 0.48,
+        "ccf": 1,
+        "import_share": 0.04,
+        "revenue": 8460,
+        "cogs": 5710,
+        "opex": 1080,
+        "fixed_production_cost": 510,
+        "net_debt": 2310,
+        "gross_debt": 2480,
+        "cash": 170,
+        "borrowing_rate": 0.194,
+        "dso": 102,
+        "dio": 26,
+        "dpo": 49,
+        "pass_through": 0.12,
+        "demand_elasticity": -0.75,
+        "capex": 190,
+        "credit_limit": 700,
+        "scheduled_amortisation": 260,
+        "cash_floor": 43,
+        "tax_rate": 0.25,
+        "opex_variable_share": 0.15
+      },
+      "tables": {
+        "covenants": [
+          {
+            "metric": "icr",
+            "operator": "ge",
+            "threshold": 1.4,
+            "test_dates": [
+              "2026-12-31",
+              "2027-03-31",
+              "2027-06-30"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "position_id": "LOAN-MED-SUPPLY",
+      "party": "MED-SUPPLY",
+      "instrument_type": "corp_loan",
+      "values": {
+        "ead": 780,
+        "lgd": 0.38,
+        "ccf": 1,
+        "import_share": 0.55,
+        "revenue": 21900,
+        "cogs": 18140,
+        "opex": 2040,
+        "fixed_production_cost": 0,
+        "net_debt": 2470,
+        "gross_debt": 3030,
+        "cash": 560,
+        "borrowing_rate": 0.169,
+        "dso": 78,
+        "dio": 61,
+        "dpo": 68,
+        "pass_through": 0.62,
+        "demand_elasticity": -0.18,
+        "capex": 95,
+        "credit_limit": 1200,
+        "scheduled_amortisation": 240,
+        "cash_floor": 140,
+        "tax_rate": 0.25,
+        "opex_variable_share": 0.15
+      },
+      "tables": {
+        "covenants": []
+      }
+    },
+    {
+      "position_id": "LOAN-NORTH-TIMBER",
+      "party": "NORTH-TIMBER",
+      "instrument_type": "corp_loan",
+      "values": {
+        "ead": 1825,
+        "lgd": 0.44,
+        "ccf": 1,
+        "import_share": 0.08,
+        "revenue": 12840,
+        "cogs": 7460,
+        "opex": 1680,
+        "fixed_production_cost": 1260,
+        "net_debt": 4180,
+        "gross_debt": 4800,
+        "cash": 620,
+        "borrowing_rate": 0.164,
+        "dso": 57,
+        "dio": 43,
+        "dpo": 31,
+        "pass_through": 0.18,
+        "demand_elasticity": -0.65,
+        "capex": 580,
+        "credit_limit": 900,
+        "scheduled_amortisation": 420,
+        "cash_floor": 155,
+        "tax_rate": 0.25,
+        "opex_variable_share": 0.15
+      },
+      "tables": {
+        "covenants": [
+          {
+            "metric": "nd_ebitda",
+            "operator": "le",
+            "threshold": 4.5,
+            "test_dates": [
+              "2026-12-31",
+              "2027-03-31",
+              "2027-06-30"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "position_id": "LOAN-DIGITAL-SERVICE",
+      "party": "DIGITAL-SERVICE",
+      "instrument_type": "corp_loan",
+      "values": {
+        "ead": 270,
+        "lgd": 0.52,
+        "ccf": 1,
+        "import_share": 0.03,
+        "revenue": 4520,
+        "cogs": 1190,
+        "opex": 1900,
+        "fixed_production_cost": 0,
+        "net_debt": 280,
+        "gross_debt": 1200,
+        "cash": 920,
+        "borrowing_rate": 0.149,
+        "dso": 19,
+        "dio": 0,
+        "dpo": 24,
+        "pass_through": 0.2,
+        "demand_elasticity": -0.4,
+        "capex": 160,
+        "credit_limit": 400,
+        "scheduled_amortisation": 120,
+        "cash_floor": 230,
+        "tax_rate": 0.25,
+        "opex_variable_share": 0.15
+      },
+      "tables": {
+        "covenants": []
+      }
+    }
+  ],
+  "FIXED-BONDS": [
+    {
+      "position_id": "BOND-PACKAGING",
+      "party": "PACKAGING",
+      "instrument_type": "bond_fixed",
+      "values": {
+        "ead": 430,
+        "lgd": 0.46,
+        "ccf": 1,
+        "import_share": 0.1,
+        "revenue": 5940,
+        "cogs": 3470,
+        "opex": 780,
+        "fixed_production_cost": 590,
+        "net_debt": 1870,
+        "gross_debt": 2180,
+        "cash": 310,
+        "borrowing_rate": 0.161,
+        "dso": 39,
+        "dio": 34,
+        "dpo": 42,
+        "pass_through": 0.48,
+        "demand_elasticity": -0.62,
+        "capex": 240,
+        "credit_limit": 500,
+        "scheduled_amortisation": 170,
+        "cash_floor": 78,
+        "tax_rate": 0.25,
+        "opex_variable_share": 0.15,
+        "face_value": 430,
+        "coupon_rate": 0.169,
+        "coupon_frequency": 4,
+        "maturity_months": 39,
+        "risk_free_rate": 0.14,
+        "credit_spread": 0.029
+      },
+      "tables": {
+        "covenants": []
+      }
+    },
+    {
+      "position_id": "BOND-DIGITAL-SERVICE",
+      "party": "DIGITAL-SERVICE",
+      "instrument_type": "bond_fixed",
+      "values": {
+        "ead": 325,
+        "lgd": 0.52,
+        "ccf": 1,
+        "import_share": 0.03,
+        "revenue": 4520,
+        "cogs": 1190,
+        "opex": 1900,
+        "fixed_production_cost": 0,
+        "net_debt": 280,
+        "gross_debt": 1200,
+        "cash": 920,
+        "borrowing_rate": 0.149,
+        "dso": 19,
+        "dio": 0,
+        "dpo": 24,
+        "pass_through": 0.2,
+        "demand_elasticity": -0.4,
+        "capex": 160,
+        "credit_limit": 400,
+        "scheduled_amortisation": 120,
+        "cash_floor": 230,
+        "tax_rate": 0.25,
+        "opex_variable_share": 0.15,
+        "face_value": 325,
+        "coupon_rate": 0.16,
+        "coupon_frequency": 2,
+        "maturity_months": 27,
+        "risk_free_rate": 0.14,
+        "credit_spread": 0.02
+      },
+      "tables": {
+        "covenants": []
+      }
+    },
+    {
+      "position_id": "BOND-HEAT-LONG",
+      "party": "HEAT-GRID",
+      "instrument_type": "bond_fixed",
+      "values": {
+        "ead": 520,
+        "lgd": 0.36,
+        "ccf": 1,
+        "import_share": 0.04,
+        "revenue": 9680,
+        "cogs": 4250,
+        "opex": 1620,
+        "fixed_production_cost": 1480,
+        "net_debt": 5430,
+        "gross_debt": 5910,
+        "cash": 480,
+        "borrowing_rate": 0.157,
+        "dso": 68,
+        "dio": 19,
+        "dpo": 52,
+        "pass_through": 0.1,
+        "demand_elasticity": -0.1,
+        "capex": 940,
+        "credit_limit": 1100,
+        "scheduled_amortisation": 310,
+        "cash_floor": 120,
+        "tax_rate": 0.25,
+        "opex_variable_share": 0.15,
+        "face_value": 520,
+        "maturity_months": 72,
+        "coupon_rate": 0.174,
+        "coupon_frequency": 4,
+        "risk_free_rate": 0.14,
+        "credit_spread": 0.034
+      },
+      "tables": {
+        "covenants": []
+      }
+    },
+    {
+      "position_id": "BOND-HEAT-SHORT",
+      "party": "HEAT-GRID",
+      "instrument_type": "bond_fixed",
+      "values": {
+        "ead": 260,
+        "lgd": 0.36,
+        "ccf": 1,
+        "import_share": 0.04,
+        "revenue": 9680,
+        "cogs": 4250,
+        "opex": 1620,
+        "fixed_production_cost": 1480,
+        "net_debt": 5430,
+        "gross_debt": 5910,
+        "cash": 480,
+        "borrowing_rate": 0.157,
+        "dso": 68,
+        "dio": 19,
+        "dpo": 52,
+        "pass_through": 0.1,
+        "demand_elasticity": -0.1,
+        "capex": 940,
+        "credit_limit": 1100,
+        "scheduled_amortisation": 310,
+        "cash_floor": 120,
+        "tax_rate": 0.25,
+        "opex_variable_share": 0.15,
+        "face_value": 260,
+        "maturity_months": 15,
+        "coupon_rate": 0.158,
+        "coupon_frequency": 4,
+        "risk_free_rate": 0.14,
+        "credit_spread": 0.018
+      },
+      "tables": {
+        "covenants": []
+      }
+    }
+  ],
+  "FLOATING-BONDS": [
+    {
+      "position_id": "BOND-HEAT-GRID",
+      "party": "HEAT-GRID",
+      "instrument_type": "bond_floater",
+      "values": {
+        "ead": 380,
+        "lgd": 0.48,
+        "ccf": 1,
+        "import_share": 0.04,
+        "revenue": 9680,
+        "cogs": 4250,
+        "opex": 1620,
+        "fixed_production_cost": 1480,
+        "net_debt": 5430,
+        "gross_debt": 5910,
+        "cash": 480,
+        "borrowing_rate": 0.157,
+        "dso": 68,
+        "dio": 19,
+        "dpo": 52,
+        "pass_through": 0.1,
+        "demand_elasticity": -0.1,
+        "capex": 940,
+        "credit_limit": 1100,
+        "scheduled_amortisation": 310,
+        "cash_floor": 120,
+        "tax_rate": 0.25,
+        "opex_variable_share": 0.15,
+        "face_value": 380,
+        "coupon_rate": 0.167,
+        "coupon_frequency": 4,
+        "maturity_months": 30,
+        "risk_free_rate": 0.14,
+        "credit_spread": 0.027
+      },
+      "tables": {
+        "covenants": []
+      }
+    },
+    {
+      "position_id": "FRN-PACKAGING",
+      "party": "PACKAGING",
+      "instrument_type": "bond_floater",
+      "values": {
+        "ead": 480,
+        "lgd": 0.46,
+        "ccf": 1,
+        "import_share": 0.1,
+        "revenue": 5940,
+        "cogs": 3470,
+        "opex": 780,
+        "fixed_production_cost": 590,
+        "net_debt": 1870,
+        "gross_debt": 2180,
+        "cash": 310,
+        "borrowing_rate": 0.161,
+        "dso": 39,
+        "dio": 34,
+        "dpo": 42,
+        "pass_through": 0.48,
+        "demand_elasticity": -0.62,
+        "capex": 240,
+        "credit_limit": 500,
+        "scheduled_amortisation": 170,
+        "cash_floor": 78,
+        "tax_rate": 0.25,
+        "opex_variable_share": 0.15,
+        "face_value": 480,
+        "coupon_rate": 0.167,
+        "coupon_frequency": 4,
+        "maturity_months": 36,
+        "risk_free_rate": 0.14,
+        "credit_spread": 0.027
+      },
+      "tables": {
+        "covenants": []
+      }
+    },
+    {
+      "position_id": "FRN-DAIRY",
+      "party": "REGIONAL-DAIRY",
+      "instrument_type": "bond_floater",
+      "values": {
+        "ead": 350,
+        "lgd": 0.43,
+        "ccf": 1,
+        "import_share": 0.06,
+        "revenue": 7160,
+        "cogs": 4890,
+        "opex": 870,
+        "fixed_production_cost": 360,
+        "net_debt": 1790,
+        "gross_debt": 2050,
+        "cash": 260,
+        "borrowing_rate": 0.175,
+        "dso": 37,
+        "dio": 12,
+        "dpo": 24,
+        "pass_through": 0.42,
+        "demand_elasticity": -0.45,
+        "capex": 310,
+        "credit_limit": 450,
+        "scheduled_amortisation": 160,
+        "cash_floor": 65,
+        "tax_rate": 0.25,
+        "opex_variable_share": 0.15,
+        "face_value": 350,
+        "maturity_months": 24,
+        "coupon_rate": 0.187,
+        "coupon_frequency": 4,
+        "risk_free_rate": 0.14,
+        "credit_spread": 0.047
+      },
+      "tables": {
+        "covenants": []
+      }
+    },
+    {
+      "position_id": "FRN-DIGITAL",
+      "party": "DIGITAL-SERVICE",
+      "instrument_type": "bond_floater",
+      "values": {
+        "ead": 290,
+        "lgd": 0.52,
+        "ccf": 1,
+        "import_share": 0.03,
+        "revenue": 4520,
+        "cogs": 1190,
+        "opex": 1900,
+        "fixed_production_cost": 0,
+        "net_debt": 280,
+        "gross_debt": 1200,
+        "cash": 920,
+        "borrowing_rate": 0.149,
+        "dso": 19,
+        "dio": 0,
+        "dpo": 24,
+        "pass_through": 0.2,
+        "demand_elasticity": -0.4,
+        "capex": 160,
+        "credit_limit": 400,
+        "scheduled_amortisation": 120,
+        "cash_floor": 230,
+        "tax_rate": 0.25,
+        "opex_variable_share": 0.15,
+        "face_value": 290,
+        "coupon_rate": 0.161,
+        "coupon_frequency": 4,
+        "maturity_months": 48,
+        "risk_free_rate": 0.14,
+        "credit_spread": 0.021
+      },
+      "tables": {
+        "covenants": []
+      }
+    }
+  ],
+  "PROJECT-FINANCE": [
+    {
+      "position_id": "PROJECT-RIVER-QUARTER",
+      "party": "RIVER-QUARTER",
+      "instrument_type": "pf_escrow",
+      "values": {
+        "ead": 1950,
+        "lgd": 0.3,
+        "ccf": 1,
+        "import_share": 0,
+        "credit_limit": 3150,
+        "equity": 340,
+        "capex_month_1_12": 145,
+        "capex_month_13_24": 105,
+        "monthly_sales": 192,
+        "base_rate": 0.184,
+        "subsidized_rate": 0.092,
+        "sales_start_month": 1,
+        "commissioning_month": 18,
+        "debt": 1760,
+        "escrow": 1490
+      },
+      "tables": {
+        "covenants": [
+          {
+            "metric": "escrow_coverage",
+            "operator": "ge",
+            "threshold": 1,
+            "test_dates": [
+              "2026-12-31",
+              "2027-03-31",
+              "2027-06-30"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "position_id": "PROJECT-PARK-QUARTER",
+      "party": "PARK-QUARTER",
+      "instrument_type": "pf_escrow",
+      "values": {
+        "ead": 1480,
+        "lgd": 0.27,
+        "ccf": 1,
+        "import_share": 0,
+        "credit_limit": 2650,
+        "equity": 410,
+        "capex_month_1_12": 88,
+        "capex_month_13_24": 0,
+        "monthly_sales": 135,
+        "base_rate": 0.125,
+        "sales_start_month": 1,
+        "commissioning_month": 9,
+        "debt": 1540,
+        "escrow": 2110
+      },
+      "tables": {
+        "covenants": [
+          {
+            "metric": "escrow_coverage",
+            "operator": "ge",
+            "threshold": 1,
+            "test_dates": [
+              "2026-12-31",
+              "2027-03-31",
+              "2027-06-30"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "position_id": "PROJECT-STATION-HOMES",
+      "party": "STATION-HOMES",
+      "instrument_type": "pf_escrow",
+      "values": {
+        "ead": 1120,
+        "lgd": 0.37,
+        "ccf": 1,
+        "import_share": 0,
+        "credit_limit": 2950,
+        "equity": 270,
+        "capex_month_1_12": 165,
+        "capex_month_13_24": 125,
+        "monthly_sales": 188,
+        "base_rate": 0.189,
+        "sales_start_month": 4,
+        "commissioning_month": 22,
+        "debt": 520,
+        "escrow": 120
+      },
+      "tables": {
+        "covenants": [
+          {
+            "metric": "escrow_coverage",
+            "operator": "ge",
+            "threshold": 1,
+            "test_dates": [
+              "2026-12-31",
+              "2027-03-31",
+              "2027-06-30"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "position_id": "PROJECT-GARDEN-INFILL",
+      "party": "GARDEN-INFILL",
+      "instrument_type": "pf_escrow",
+      "values": {
+        "ead": 640,
+        "lgd": 0.23,
+        "ccf": 1,
+        "import_share": 0,
+        "credit_limit": 1400,
+        "equity": 230,
+        "capex_month_1_12": 44,
+        "capex_month_13_24": 0,
+        "monthly_sales": 63,
+        "base_rate": 0.112,
+        "sales_start_month": 1,
+        "commissioning_month": 6,
+        "debt": 780,
+        "escrow": 1390
+      },
+      "tables": {
+        "covenants": [
+          {
+            "metric": "escrow_coverage",
+            "operator": "ge",
+            "threshold": 1,
+            "test_dates": [
+              "2026-12-31",
+              "2027-03-31",
+              "2027-06-30"
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "LEASING-BOOK": [
+    {
+      "position_id": "LEASE-FLEET-LEASE",
+      "party": "FLEET-LEASE",
+      "instrument_type": "leasing",
+      "values": {
+        "ead": 1230,
+        "lgd": 0.5,
+        "ccf": 1,
+        "import_share": 0,
+        "net_investment_leases": 8600,
+        "new_business": 4200,
+        "debt": 6550,
+        "equity": 1800,
+        "portfolio_yield": 0.255,
+        "amortization_rate": 0.3,
+        "borrowing_rate": 0.173,
+        "opex": 310,
+        "prepayment_share": 0.04,
+        "advance_rate": 0.18,
+        "tax_rate": 0.25
+      },
+      "tables": {
+        "covenants": [
+          {
+            "metric": "icr",
+            "operator": "ge",
+            "threshold": 1.3,
+            "test_dates": [
+              "2026-12-31",
+              "2027-03-31",
+              "2027-06-30"
+            ]
+          },
+          {
+            "metric": "debt_equity",
+            "operator": "le",
+            "threshold": 5,
+            "test_dates": [
+              "2026-12-31",
+              "2027-03-31",
+              "2027-06-30"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "position_id": "LEASE-AGRO-LEASE",
+      "party": "AGRO-LEASE",
+      "instrument_type": "leasing",
+      "values": {
+        "ead": 760,
+        "lgd": 0.4,
+        "ccf": 1,
+        "import_share": 0,
+        "net_investment_leases": 5200,
+        "new_business": 1350,
+        "debt": 2500,
+        "equity": 2700,
+        "portfolio_yield": 0.24,
+        "amortization_rate": 0.22,
+        "borrowing_rate": 0.154,
+        "opex": 225,
+        "prepayment_share": 0.025,
+        "advance_rate": 0.28,
+        "tax_rate": 0.25
+      },
+      "tables": {
+        "covenants": [
+          {
+            "metric": "icr",
+            "operator": "ge",
+            "threshold": 1.3,
+            "test_dates": [
+              "2026-12-31",
+              "2027-03-31",
+              "2027-06-30"
+            ]
+          },
+          {
+            "metric": "debt_equity",
+            "operator": "le",
+            "threshold": 5,
+            "test_dates": [
+              "2026-12-31",
+              "2027-03-31",
+              "2027-06-30"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "position_id": "LEASE-EQUIP-LEASE",
+      "party": "EQUIP-LEASE",
+      "instrument_type": "leasing",
+      "values": {
+        "ead": 940,
+        "lgd": 0.48,
+        "ccf": 1,
+        "import_share": 0,
+        "net_investment_leases": 7100,
+        "new_business": 3600,
+        "debt": 5470,
+        "equity": 1440,
+        "portfolio_yield": 0.228,
+        "amortization_rate": 0.26,
+        "borrowing_rate": 0.183,
+        "opex": 265,
+        "prepayment_share": 0.035,
+        "advance_rate": 0.12,
+        "tax_rate": 0.25
+      },
+      "tables": {
+        "covenants": [
+          {
+            "metric": "icr",
+            "operator": "ge",
+            "threshold": 1.3,
+            "test_dates": [
+              "2026-12-31",
+              "2027-03-31",
+              "2027-06-30"
+            ]
+          },
+          {
+            "metric": "debt_equity",
+            "operator": "le",
+            "threshold": 5,
+            "test_dates": [
+              "2026-12-31",
+              "2027-03-31",
+              "2027-06-30"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "position_id": "LEASE-REGION-LEASE",
+      "party": "REGION-LEASE",
+      "instrument_type": "leasing",
+      "values": {
+        "ead": 410,
+        "lgd": 0.42,
+        "ccf": 1,
+        "import_share": 0,
+        "net_investment_leases": 3950,
+        "new_business": 480,
+        "debt": 1840,
+        "equity": 2110,
+        "portfolio_yield": 0.231,
+        "amortization_rate": 0.33,
+        "borrowing_rate": 0.158,
+        "opex": 205,
+        "prepayment_share": 0.09,
+        "advance_rate": 0.22,
+        "tax_rate": 0.25
+      },
+      "tables": {
+        "covenants": [
+          {
+            "metric": "icr",
+            "operator": "ge",
+            "threshold": 1.3,
+            "test_dates": [
+              "2026-12-31",
+              "2027-03-31",
+              "2027-06-30"
+            ]
+          },
+          {
+            "metric": "debt_equity",
+            "operator": "le",
+            "threshold": 5,
+            "test_dates": [
+              "2026-12-31",
+              "2027-03-31",
+              "2027-06-30"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

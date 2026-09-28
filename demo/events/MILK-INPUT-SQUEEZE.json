@@ -1,0 +1,145 @@
+{
+  "event_id": "MILK-INPUT-SQUEEZE",
+  "title": "Сырое молоко дорожает, сети не сразу принимают новые цены",
+  "text": "Синтетическая новость для демонстрации. После слабого урожая кормовых культур поставщики сырого молока пересмотрели отпускные цены. Молочный завод сохраняет объём поставок, но переносит в цену лишь часть дополнительных затрат. Торговые сети потребовали более длинную отсрочку оплаты и получили приток покупателей из более дорогих форматов. Кафе столкнулись с подорожанием молочных ингредиентов. Поставки бытовой техники, лекарств и договоры на программное обеспечение напрямую не затронуты.",
+  "metadata": {
+    "portfolio_id": "EVERYDAY-ECONOMY",
+    "synthetic": true,
+    "source": "Вымышленная новость; численные диапазоны — экспертные допущения демо-каталога",
+    "scenario_text": "Горизонт 12 месяцев. Сырое молоко +12–28 % (мода 19 %), доля 62 % переменных затрат завода, лаг 1 месяц. Завод переносит 42 % прироста затрат в цену по своей исходной настройке; отдельный шок цены готового продукта ему не добавляется. Оплата сетями удлиняется на 7–19 дней (12), лаг 1 месяц. Закупки молочной продукции магазинами +5–12 % (8 %), доля молочной полки в затратах 16 %, лаг 2 месяца; приток покупателей +1–3,5 % (2 %) к выручке с тем же лагом. Молочные ингредиенты кафе +7–17 % (11 %), доля 18 %, лаг 1 месяц. Отраслевой шок акций продуктового ритейла −5,5…+2,5 % (−2 %). Знак результата магазинов заранее не фиксируется. Техника, лекарства и ПО вне графа. Эффекты сохраняются до конца горизонта; сезонность отдельно не моделируется.",
+    "horizon_months": 12
+  },
+  "mock_answer": {
+    "event_type": "Сырое молоко дорожает, сети не сразу принимают новые цены",
+    "channels": {
+      "raw_milk": "Подорожание сырого молока",
+      "retail_terms": "Удлинение оплаты сетями молочной продукции",
+      "retail_inputs": "Подорожание молочной полки для магазинов",
+      "retail_switch": "Приток покупателей в магазины низких цен",
+      "cafe_inputs": "Молочные ингредиенты кафе",
+      "retail_margin": "Неопределённость маржи продуктового ритейла"
+    },
+    "links": [
+      {
+        "channel": "raw_milk",
+        "okved": "10.51",
+        "factor": "credit.cogs",
+        "lag": 1,
+        "elasticity": 0.62
+      },
+      {
+        "channel": "retail_terms",
+        "okved": "10.51",
+        "factor": "credit.working_capital",
+        "lag": 1,
+        "elasticity": 1
+      },
+      {
+        "channel": "retail_inputs",
+        "okved": "47.11",
+        "factor": "credit.cogs",
+        "lag": 2,
+        "elasticity": 0.16
+      },
+      {
+        "channel": "retail_switch",
+        "okved": "47.11",
+        "factor": "credit.revenue",
+        "lag": 2,
+        "elasticity": 1
+      },
+      {
+        "channel": "cafe_inputs",
+        "okved": "56.10",
+        "factor": "credit.cogs",
+        "lag": 1,
+        "elasticity": 0.18
+      },
+      {
+        "channel": "retail_margin",
+        "okved": "47.11",
+        "factor": "equity.sector",
+        "lag": 0,
+        "elasticity": 1
+      }
+    ],
+    "scenario": {
+      "raw_milk": {
+        "kind": "triangular",
+        "low": 0.12,
+        "mode": 0.19,
+        "high": 0.28,
+        "label": "Подорожание сырого молока",
+        "unit": "fraction",
+        "factor": "credit.cogs",
+        "channel": "raw_milk"
+      },
+      "retail_terms": {
+        "kind": "triangular",
+        "low": 7,
+        "mode": 12,
+        "high": 19,
+        "label": "Удлинение оплаты сетями молочной продукции",
+        "unit": "days",
+        "factor": "credit.working_capital",
+        "channel": "retail_terms"
+      },
+      "retail_inputs": {
+        "kind": "triangular",
+        "low": 0.05,
+        "mode": 0.08,
+        "high": 0.12,
+        "label": "Подорожание молочной полки для магазинов",
+        "unit": "fraction",
+        "factor": "credit.cogs",
+        "channel": "retail_inputs"
+      },
+      "retail_switch": {
+        "kind": "triangular",
+        "low": 0.01,
+        "mode": 0.02,
+        "high": 0.035,
+        "label": "Приток покупателей в магазины низких цен",
+        "unit": "fraction",
+        "factor": "credit.revenue",
+        "channel": "retail_switch"
+      },
+      "cafe_inputs": {
+        "kind": "triangular",
+        "low": 0.07,
+        "mode": 0.11,
+        "high": 0.17,
+        "label": "Молочные ингредиенты кафе",
+        "unit": "fraction",
+        "factor": "credit.cogs",
+        "channel": "cafe_inputs"
+      },
+      "retail_margin": {
+        "kind": "triangular",
+        "low": -0.055,
+        "mode": -0.02,
+        "high": 0.025,
+        "label": "Неопределённость маржи продуктового ритейла",
+        "unit": "fraction",
+        "factor": "equity.sector",
+        "channel": "retail_margin"
+      }
+    }
+  },
+  "expect": {
+    "loses": [
+      "LOAN-REGIONAL-DAIRY",
+      "LOAN-CITY-CAFES"
+    ],
+    "reached": [
+      "LOAN-VALUE-MART",
+      "SHARE-VALUE-MART"
+    ],
+    "unaffected": [
+      "LOAN-HOME-APPLIANCES",
+      "SHARE-HOME-APPLIANCES",
+      "LOAN-MED-SUPPLY",
+      "BOND-DIGITAL-SERVICE"
+    ]
+  }
+}

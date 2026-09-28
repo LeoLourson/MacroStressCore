@@ -9,7 +9,6 @@ from pydantic import BaseModel
 from msa import activity
 from msa.agents import build_agents
 from msa.agents.ingest import IngestAgent
-from msa.config import settings
 from msa.contracts import PortfolioBundle, SourceDocument
 from msa.db.repositories.demo import DemoRepository
 from msa.db.repositories.portfolios import PortfoliosRepository
@@ -87,7 +86,6 @@ class AgentService:
             original_store=OriginalStore(self.storage_root / scope),
             options=self.options(scope),
             tools=tools,
-            estimate_scenario=scope == "demo" and settings().demo_estimate_scenario and not mock,
         )
 
     def llm_client(self, scope, model=None):
