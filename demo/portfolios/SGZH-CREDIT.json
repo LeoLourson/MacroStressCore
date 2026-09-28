@@ -1,0 +1,15 @@
+{
+  "portfolio": {
+    "portfolio_id": "SGZH-CREDIT",
+    "name": "Кредит ГК «SGZH»",
+    "base_currency": "RUB",
+    "as_of": "2026-09-11",
+    "snapshot_id": "SYNTHETIC-SGZH-2026-09-11",
+    "builtin": true,
+    "metadata": {
+      "synthetic": true,
+      "description": "Один корпоративный кредит целлюлозно-бумажного холдинга с тонкой маржой, возобновляемой линией и ковенантами ICR и ND/EBITDA на конец каждого квартала.",
+      "generated_by": "demo/build_catalog.py"
+    }
+  }
+}

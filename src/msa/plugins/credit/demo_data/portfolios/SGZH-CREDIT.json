@@ -1,0 +1,153 @@
+{
+  "parties": [
+    {
+      "party_id": "SGZH",
+      "name": "ГК «SGZH»",
+      "kind": "company",
+      "okved": "17.11",
+      "country": "RU",
+      "description": "Целлюлозно-бумажный холдинг: три комбината, большая часть целлюлозы идёт на экспорт",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "demo:companies",
+          "locator": "SGZH",
+          "fragment_sha256": "8eb17592c7ba928a0797d246bc965234eb360bdf2aaec9fed1a1651fd86e4c70",
+          "author": "demo:catalog",
+          "as_of": "2026-09-11"
+        }
+      ]
+    }
+  ],
+  "instruments": [
+    {
+      "instrument_id": "LOAN-SGZH",
+      "instrument_type": "corp_loan",
+      "name": "Корпоративный кредит: ГК «SGZH»",
+      "currency": "RUB",
+      "issuer_id": "SGZH",
+      "terms": {
+        "covenants": [
+          {
+            "covenant_id": "LOAN-SGZH-icr",
+            "metric": "icr",
+            "operator": "ge",
+            "threshold": 1.5,
+            "unit": "ratio",
+            "test_dates": [
+              "2026-12-31",
+              "2027-03-31",
+              "2027-06-30",
+              "2027-09-30"
+            ],
+            "evidence": [
+              {
+                "kind": "expert_assumption",
+                "source_id": "demo:companies",
+                "locator": "SGZH/covenant/icr",
+                "fragment_sha256": "511fbfb84d89fdb0fbac5d42dd21e13738dd5307bf4d4a03d3c750af87ca8d3b",
+                "author": "demo:catalog",
+                "as_of": "2026-09-11"
+              }
+            ]
+          },
+          {
+            "covenant_id": "LOAN-SGZH-nd_ebitda-2",
+            "metric": "nd_ebitda",
+            "operator": "le",
+            "threshold": 4.0,
+            "unit": "ratio",
+            "test_dates": [
+              "2026-12-31",
+              "2027-03-31",
+              "2027-06-30",
+              "2027-09-30"
+            ],
+            "evidence": [
+              {
+                "kind": "expert_assumption",
+                "source_id": "demo:companies",
+                "locator": "SGZH/covenant/nd_ebitda",
+                "fragment_sha256": "a9cb512565757cbd85f4912ede14a1a916f810906fe01ef78cacb0af35e47731",
+                "author": "demo:catalog",
+                "as_of": "2026-09-11"
+              }
+            ]
+          }
+        ],
+        "collateral": []
+      },
+      "schema_version": "1"
+    }
+  ],
+  "positions": [
+    {
+      "position_id": "LOAN-SGZH",
+      "instrument_id": "LOAN-SGZH",
+      "params": {
+        "ead": {
+          "value": 40000.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "SGZH/ead",
+              "fragment_sha256": "ce6e22e49cca89f8b4b1cab549683460076e1d0875d768f59cee4821a47b7dc8",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "lgd": {
+          "value": 0.55,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "SGZH/lgd",
+              "fragment_sha256": "eadb355b89368a64e1c2cead9aa973ae568f8c519295abdafb04ee00dcb8331b",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "ccf": {
+          "value": 1.0,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "SGZH/ccf",
+              "fragment_sha256": "41fa5f3a214565fc7c20f50a20f7cb8d4aba6b16b6d46e57ca3d14c3b838406c",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "import_share": {
+          "value": 0.0,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "SGZH/import_share",
+              "fragment_sha256": "e2e793054b44f49da04ad9813f47bdae611eb68e0a8ebf169c428eafec2c2ca3",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "driver_elasticity": {},
+        "proxy_peer_ids": [],
+        "status": "ok",
+        "flags": []
+      },
+      "schema_version": "1",
+      "model_id": null
+    }
+  ]
+}

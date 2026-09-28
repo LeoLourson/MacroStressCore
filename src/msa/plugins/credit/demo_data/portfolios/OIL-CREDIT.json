@@ -1,0 +1,106 @@
+{
+  "parties": [
+    {
+      "party_id": "OIL-MAJOR",
+      "name": "Нефтяная компания",
+      "kind": "company",
+      "okved": "06.10",
+      "country": "RU",
+      "description": "Добыча нефти",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "demo:companies",
+          "locator": "OIL-MAJOR",
+          "fragment_sha256": "61d6f648d6f8af31186253c136206dc1816bd246eec6363a1f3322537b49f0d3",
+          "author": "demo:catalog",
+          "as_of": "2026-09-11"
+        }
+      ]
+    }
+  ],
+  "instruments": [
+    {
+      "instrument_id": "LOAN-OIL-MAJOR",
+      "instrument_type": "corp_loan",
+      "name": "Корпоративный кредит: Нефтяная компания",
+      "currency": "RUB",
+      "issuer_id": "OIL-MAJOR",
+      "terms": {
+        "covenants": [],
+        "collateral": []
+      },
+      "schema_version": "1"
+    }
+  ],
+  "positions": [
+    {
+      "position_id": "LOAN-OIL-MAJOR",
+      "instrument_id": "LOAN-OIL-MAJOR",
+      "params": {
+        "ead": {
+          "value": 5000.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "OIL-MAJOR/ead",
+              "fragment_sha256": "6dcd316f695d53faed279bdce64f257b49a1f3f45cac9e3c8178c51f5f4d1aee",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "lgd": {
+          "value": 0.45,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "OIL-MAJOR/lgd",
+              "fragment_sha256": "0ccb212fcd2fe4a2573342aefc064961e24f46ab6aae54c4528037cfaefc1dab",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "ccf": {
+          "value": 1.0,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "OIL-MAJOR/ccf",
+              "fragment_sha256": "4835f12b88df14c817fc56d0dc389ef4b55810ffd662d4522836fb3245809688",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "import_share": {
+          "value": 0.0,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "OIL-MAJOR/import_share",
+              "fragment_sha256": "03a960feda33c65eedffc085d18ddcd9cdf0fd30719539b71f5803a61c2a10d7",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "driver_elasticity": {},
+        "proxy_peer_ids": [],
+        "status": "ok",
+        "flags": []
+      },
+      "schema_version": "1",
+      "model_id": null
+    }
+  ]
+}

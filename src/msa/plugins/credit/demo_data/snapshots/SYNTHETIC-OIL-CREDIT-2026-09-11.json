@@ -1,0 +1,199 @@
+{
+  "items": [
+    {
+      "item_id": "financial_statement:OIL-MAJOR",
+      "kind": "financial_statement",
+      "subject": "OIL-MAJOR",
+      "observed_on": "2026-09-11",
+      "values": {
+        "revenue": {
+          "value": 120000.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "OIL-MAJOR/revenue",
+              "fragment_sha256": "e21809e3bcfa25c402b68a7a2a61b64328bf06eb0c99cfeb56bd8647b311428d",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "cogs": {
+          "value": 78000.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "OIL-MAJOR/cogs",
+              "fragment_sha256": "979d60586e23c98fea650acf5b972bbce213fa582f98ae9dae6b5b36cec046a0",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "net_debt": {
+          "value": 60000.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "OIL-MAJOR/net_debt",
+              "fragment_sha256": "68709190b61e8f6ea3810013041646d80b65021b5c9486a682cdde30a737cc03",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "borrowing_rate": {
+          "value": 0.12,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "OIL-MAJOR/borrowing_rate",
+              "fragment_sha256": "f2c901287b1a066ae3d05ae984a664475444ae3ec542ac738a1bb65fc0c0d455",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "opex": {
+          "value": 13000.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "OIL-MAJOR/opex",
+              "fragment_sha256": "37631677d0411d582d860f94b4df32d42f1545baa9b33e7c8763beffbaee4190",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "cash": {
+          "value": 8000.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "OIL-MAJOR/cash",
+              "fragment_sha256": "8107cdb6974aa6ecd93b4429cd018193df65049aa1b430ca5d9dbaef05d2bcb8",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "dso": {
+          "value": 40.0,
+          "unit": "days",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "OIL-MAJOR/dso",
+              "fragment_sha256": "247965bd39aaa1d9fabf54d998e54006f37971445b316359d041194014a99faf",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "dio": {
+          "value": 30.0,
+          "unit": "days",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "OIL-MAJOR/dio",
+              "fragment_sha256": "b81509e51b50ada0b4b040a5ac089e63fab0ca77b300c5f461522be3c7a93d23",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "dpo": {
+          "value": 40.0,
+          "unit": "days",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "OIL-MAJOR/dpo",
+              "fragment_sha256": "26417e749eda79dad6dad4319e814284c0d613b6a1dd4c20ca42e8b9b54d69fa",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "tax_rate": {
+          "value": 0.2,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "OIL-MAJOR/tax_rate",
+              "fragment_sha256": "3b6925d1b296e983cf7c28f7bb88ec8008d8acc8146c57851ada7fdafa1731fa",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "demand_elasticity": {
+          "value": -0.6,
+          "unit": "ratio",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "OIL-MAJOR/demand_elasticity",
+              "fragment_sha256": "c5e45dc715452c316815c7ffc813832eb11f1c50c2e2e8dd5669023ab49dc78d",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "pass_through": {
+          "value": 0.0,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "OIL-MAJOR/pass_through",
+              "fragment_sha256": "934647f4783fde0ee4c4b3455097ee79c06b9f96aa48c873d2b016500a1ae803",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "capex": {
+          "value": 15000.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "OIL-MAJOR/capex",
+              "fragment_sha256": "e1c854c60e563802830422751993fd51c7b065cb9c65d6b5626a2462a1209be9",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "standard": "management",
+        "entered_by": "demo:catalog"
+      },
+      "evidence": []
+    }
+  ]
+}

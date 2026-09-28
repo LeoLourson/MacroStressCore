@@ -115,7 +115,12 @@ export function GraphCanvas({
         id: `e${index}`,
         source: edge.src,
         target: edge.dst,
-        label: `${problem ? '⚠ ' : ''}${descriptiveEdge(graph, edge) ? 'Влияние на фактор' : edgeCaption(edge.sign, elasticityText(edge.elasticity), edge.lag_months)}`,
+        // A direct shock's size is in the scenario, not on the arrow: only a problem marks it.
+        label: descriptiveEdge(graph, edge)
+          ? problem
+            ? '⚠'
+            : undefined
+          : `${problem ? '⚠ ' : ''}${edgeCaption(edge.sign, elasticityText(edge.elasticity), edge.lag_months)}`,
         labelStyle: { fontSize: 11, fill: 'var(--mantine-color-dark-6)' },
         labelBgStyle: { fill: 'white' },
         labelBgPadding: [4, 2],
@@ -163,7 +168,7 @@ export function GraphCanvas({
       <Text size="xs" c="dimmed" mt={6}>
         На стрелках: знак (+ усиливает, − ослабляет), сила связи (эластичность) и задержка. Связи с
         проблемами — пунктиром со знаком ⚠. Нажмите на стрелку, чтобы открыть связь и её источники.
-        «Влияние на фактор» показывает причину прямого шока; его величина задаётся в сценарии.
+        Стрелка без подписи ведёт к фактору прямого шока; его величина задаётся в сценарии.
       </Text>
     </Box>
   );

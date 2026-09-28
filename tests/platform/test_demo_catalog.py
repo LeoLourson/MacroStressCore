@@ -335,3 +335,179 @@ def test_every_library_event_names_a_catalog_portfolio_and_what_must_follow():
         positions = {p.position_id for p in bundle(event["metadata"]["portfolio_id"]).positions}
         named = {pid for ids in event["expect"].values() for pid in ids}
         assert named <= positions, path.stem
+
+
+# -- a portfolio with a snapshot of its own ------------------------------------------------
+
+OIL_SNAPSHOT = "SYNTHETIC-OIL-CREDIT-2026-09-11"
+SGZH_SNAPSHOT = "SYNTHETIC-SGZH-2026-09-11"
+
+
+def test_oil_credit_holds_one_corporate_loan_on_its_own_snapshot():
+    oil = bundle("OIL-CREDIT")
+    assert [p.position_id for p in oil.positions] == ["LOAN-OIL-MAJOR"]
+    assert [i.instrument_type for i in oil.instruments] == ["corp_loan"]
+    assert oil.portfolio.snapshot_id == OIL_SNAPSHOT == build_catalog.OWN_SNAPSHOTS["OIL-CREDIT"][0]
+
+
+def test_the_seeded_themed_snapshot_does_not_gain_the_oil_company():
+    # A seeded snapshot never changes: the company of a later portfolio goes to its own.
+    themed = snapshot(build_catalog.SNAPSHOT_ID)
+    assert not [item for item in themed.items if item.subject == "OIL-MAJOR"]
+    statements = [
+        item
+        for item in snapshot(OIL_SNAPSHOT).items
+        if item.subject == "OIL-MAJOR" and item.kind == "financial_statement"
+    ]
+    assert len(statements) == 1
+    assert statements[0].values["capex"].value > 0
+
+
+def test_each_snapshot_gets_a_header_with_its_label():
+    headers = {
+        path.stem: json.loads(text)
+        for path, text in build_catalog.outputs().items()
+        if path.parent == build_catalog.CATALOG / "snapshots"
+    }
+    labels = {build_catalog.SNAPSHOT_ID: build_catalog.SNAPSHOT_LABEL} | dict(
+        build_catalog.OWN_SNAPSHOTS.values()
+    )
+    assert {sid: header["label"] for sid, header in headers.items()} == labels
+
+
+def test_seeding_the_same_database_twice_keeps_the_own_snapshot(tmp_path):
+    bind = engine(f"sqlite:///{tmp_path / 'msa.db'}")
+    try:
+        migrate(bind)
+        seed_demo(bind)
+        counts = seed_demo(bind)
+    finally:
+        bind.dispose()
+    assert counts["OIL-CREDIT"] == 1
+    assert counts[OIL_SNAPSHOT] > 0
+    assert counts["SGZH-CREDIT"] == 1
+    assert counts[SGZH_SNAPSHOT] > 0
+
+
+# -- a library event with monthly lags ---------------------------------------------------
+
+
+OIL_FACTORS = ["credit.revenue", "credit.cogs", "credit.capex"]
+
+
+def _answer(event_id, factors) -> dict:
+    """The prepared answer of a library event as the causal step returns it."""
+    from msa.agents.causal import _prepared_response
+    from msa.agents.ingest import fragment
+    from msa.contracts import SourceDocument
+
+    event = json.loads((build_catalog.CATALOG / "events" / f"{event_id}.json").read_text("utf-8"))
+    context = {
+        "positions": [{"factors": [{"factor_id": f, "key": None} for f in factors]}],
+        "factors": [
+            {"factor_id": f, "label": f, "scope": "graph", "unit": "fraction"} for f in factors
+        ],
+    }
+    part = fragment(event["text"], "event")
+    document = SourceDocument(
+        doc_id=event_id.lower(), sha256=part.sha256, mime="text/plain", fragments=[part]
+    )
+    return _prepared_response(document, event["mock_answer"], context)
+
+
+def test_the_oil_event_reaches_its_factors_after_different_months():
+    graph = _answer("OIL-SUPPLY-DRONE-RISK", OIL_FACTORS)["graph"]
+    kinds = {node["id"]: node["kind"] for node in graph["nodes"]}
+    lags = sorted(
+        edge["lag_months"]
+        for edge in graph["edges"]
+        if kinds[edge["src"]] == "sector" and kinds[edge["dst"]] == "factor"
+    )
+    # Price and security costs after a month, lost output after three, repairs after five.
+    assert lags == [1, 1, 3, 5]
+
+
+def test_the_oil_event_keeps_all_four_scenario_parameters():
+    scenario = _answer("OIL-SUPPLY-DRONE-RISK", OIL_FACTORS)["scenario"]
+    assert set(scenario) == {"oil_price", "platform_damage", "security_cost", "platform_repair"}
+    assert scenario["platform_damage"]["high"] < 0 < scenario["oil_price"]["low"]
+
+
+# -- a portfolio with covenants -----------------------------------------------------------
+
+
+def test_sgzh_credit_holds_one_corporate_loan_on_its_own_snapshot():
+    sgzh = bundle("SGZH-CREDIT")
+    assert [p.position_id for p in sgzh.positions] == ["LOAN-SGZH"]
+    assert [i.instrument_type for i in sgzh.instruments] == ["corp_loan"]
+    assert sgzh.portfolio.snapshot_id == SGZH_SNAPSHOT
+    assert SGZH_SNAPSHOT == build_catalog.OWN_SNAPSHOTS["SGZH-CREDIT"][0]
+
+
+def test_the_sgzh_loan_carries_its_two_covenants():
+    covenants = bundle("SGZH-CREDIT").instruments[0].terms["covenants"]
+    by_metric = {c["metric"]: c for c in covenants}
+    assert set(by_metric) == {"icr", "nd_ebitda"}
+    assert by_metric["icr"]["operator"] == "ge"
+    assert by_metric["icr"]["threshold"] == 1.5
+    assert by_metric["nd_ebitda"]["operator"] == "le"
+    assert by_metric["nd_ebitda"]["threshold"] == 4.0
+    for covenant in covenants:
+        assert covenant["unit"] == "ratio"
+        assert covenant["test_dates"] == build_catalog.QUARTER_ENDS
+
+
+def test_a_loan_written_without_covenants_has_an_empty_covenant_list():
+    assert bundle("OIL-CREDIT").instruments[0].terms["covenants"] == []
+
+
+def test_the_themed_snapshot_does_not_gain_the_sgzh_company():
+    # A seeded snapshot never changes: SGZH's data goes to its own snapshot instead.
+    themed = snapshot(build_catalog.SNAPSHOT_ID)
+    assert not [item for item in themed.items if item.subject == "SGZH"]
+    statements = [
+        item
+        for item in snapshot(SGZH_SNAPSHOT).items
+        if item.subject == "SGZH" and item.kind == "financial_statement"
+    ]
+    assert len(statements) == 1
+    assert statements[0].values["credit_limit"].value > 0
+    assert statements[0].values["cash_floor"].value > 0
+
+
+# -- a library event through one sector per factor -----------------------------------------
+
+PULP_FACTORS = ["credit.logistics", "credit.cogs", "credit.working_capital", "credit.interest"]
+
+
+def test_the_pulp_event_reaches_each_factor_with_its_own_lag_and_elasticity():
+    graph = _answer("PULP-MILL-SQUEEZE", PULP_FACTORS)["graph"]
+    kinds = {node["id"]: node["kind"] for node in graph["nodes"]}
+    factor_of = {node["id"]: node.get("factor") for node in graph["nodes"]}
+    by_factor = {
+        factor_of[edge["dst"]]: edge
+        for edge in graph["edges"]
+        if kinds[edge["src"]] == "sector" and kinds[edge["dst"]] == "factor"
+    }
+    assert {factor: edge["lag_months"] for factor, edge in by_factor.items()} == {
+        "credit.logistics": 2,
+        "credit.cogs": 1,
+        "credit.working_capital": 1,
+        "credit.interest": 0,
+    }
+    assert {factor: edge["elasticity"]["value"] for factor, edge in by_factor.items()} == {
+        "credit.logistics": 0.15,
+        "credit.cogs": 0.2,
+        "credit.working_capital": 0.6,
+        "credit.interest": 0.75,
+    }
+
+
+def test_the_pulp_event_keeps_its_four_scenario_parameters_with_their_units():
+    scenario = _answer("PULP-MILL-SQUEEZE", PULP_FACTORS)["scenario"]
+    assert {name: spec["unit"] for name, spec in scenario.items()} == {
+        "wood_freight": "fraction",
+        "pulping_chemicals": "fraction",
+        "export_payment_delay": "days",
+        "key_rate": "fraction",
+    }

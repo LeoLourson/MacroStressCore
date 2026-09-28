@@ -37,7 +37,7 @@ function Slice({ item, artifacts, entries }: { item: SliceResult; artifacts: Art
                 'Потери позиций среза суммируются внутри каждого общего сценария; квантили берутся от суммы.'}
             </Text>
           </Stack>
-          <ResultStatus status={item.status} />
+          {item.status !== 'ok' && <ResultStatus status={item.status} />}
         </Group>
         {q ? (
           <Stack gap="xs">

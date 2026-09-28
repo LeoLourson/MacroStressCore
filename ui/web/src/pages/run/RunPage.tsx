@@ -6,23 +6,24 @@ import {
   CopyButton,
   Group,
   Loader,
+  ScrollArea,
+  SegmentedControl,
   Spoiler,
   Stack,
-  Tabs,
   Text,
   Title,
   Tooltip,
 } from '@mantine/core';
 import { IconArrowLeft, IconCheck, IconCopy } from '@tabler/icons-react';
-import { useQueryClient } from '@tanstack/react-query';
-import { lazy, Suspense, useEffect } from 'react';
+import { Fragment, lazy, Suspense, useEffect, type ReactNode } from 'react';
 import { Link, useParams, useSearchParams } from 'react-router';
-import { useArtifacts, useRunStatus } from '../../api/queries';
-import type { Artifacts, RunRow, RunStatus } from '../../api/types';
+import { useArtifacts, usePortfolios, useRuns, useRunStatus } from '../../api/queries';
+import type { Artifacts, RunStatus } from '../../api/types';
 import { useSession } from '../../auth/session';
 import { ErrorAlert } from '../../components/ErrorAlert';
 import { RunArtifacts } from '../../components/Provenance';
-import { day, shorten, timestamp } from '../../lib/format';
+import { Hint } from '../../components/Term';
+import { day, timestamp } from '../../lib/format';
 import { TABS, available, defaultTab, steps, type Tab } from '../../lib/stages';
 import { ActivityTab } from './ActivityTab';
 import { ExplainTab } from './ExplainTab';
@@ -41,12 +42,22 @@ export interface RunTabProps {
   artifacts: Artifacts;
 }
 
+/** The event in two lines, the rest on request; the line height sets where the text is cut. */
+const EVENT_LINE = 28;
+
 function Masthead({ status, artifacts }: RunTabProps) {
-  const { mode } = useSession();
-  const row = useQueryClient()
-    .getQueryData<RunRow[]>(['runs', mode])
-    ?.find((r) => r.run_id === status.run_id);
+  // Who started the run and when come from the list, loaded once when the page opens by a link.
+  const row = useRuns(false).data?.find((r) => r.run_id === status.run_id);
+  const portfolioId = artifacts.portfolio_id;
+  const portfolio = usePortfolios(!!portfolioId).data?.find((p) => p.portfolio_id === portfolioId);
   const event = (artifacts.event_text ?? '').trim();
+  const snapshot = artifacts.snapshot;
+  // Where the run stands is the step bar below; the header only says what it is.
+  const facts: ReactNode[] = [
+    portfolioId && `Портфель «${portfolio?.name || portfolioId}»`,
+    snapshot && <Hint text={snapshot.label}>данные на {day(snapshot.as_of)}</Hint>,
+    row && `запущен ${timestamp(row.created_at)}${row.created_by ? `, ${row.created_by}` : ''}`,
+  ].filter(Boolean);
   return (
     <Stack gap="xs">
       <Anchor component={Link} to="/" size="sm" w="fit-content">
@@ -54,47 +65,61 @@ function Masthead({ status, artifacts }: RunTabProps) {
           <IconArrowLeft size={14} /> Все стресс-тесты
         </Group>
       </Anchor>
-      <Title order={3} fw={600} style={{ lineHeight: 1.35 }}>
-        {shorten(event, 180) || 'Стресс-тест'}
-      </Title>
-      {event.length > 180 && (
-        <Spoiler maxHeight={0} showLabel="Показать текст события полностью" hideLabel="Скрыть">
-          <Text size="sm" c="dark.6" maw="80ch" style={{ whiteSpace: 'pre-wrap' }}>
-            {event}
-          </Text>
-        </Spoiler>
-      )}
-      {/* Where the run stands is the step bar below; the header only says what it is. */}
-      <Group gap="md" c="dark.3">
-        <Text size="sm">Портфель {artifacts.portfolio_id ?? '—'}</Text>
-        {artifacts.snapshot && (
-          <Text size="sm">
-            Данные: {artifacts.snapshot.label}, на {day(artifacts.snapshot.as_of)}
-          </Text>
-        )}
-        {row && (
-          <Text size="sm">
-            Запущен {timestamp(row.created_at)}
-            {row.created_by ? ` · ${row.created_by}` : ''}
-          </Text>
-        )}
-        <Group gap={2}>
-          <Text size="xs" ff="monospace">
-            {status.run_id}
-          </Text>
-          <CopyButton value={status.run_id}>
-            {({ copied, copy }) => (
-              <Tooltip label={copied ? 'Скопировано' : 'Скопировать номер'}>
-                <ActionIcon variant="subtle" color="gray" size="sm" onClick={copy} aria-label="Скопировать номер">
-                  {copied ? <IconCheck size={14} /> : <IconCopy size={14} />}
-                </ActionIcon>
-              </Tooltip>
-            )}
-          </CopyButton>
-        </Group>
+      <Spoiler maxHeight={2 * EVENT_LINE} showLabel="Показать текст события полностью" hideLabel="Свернуть">
+        <Title order={2} fz={20} lh={`${EVENT_LINE}px`} maw="90ch" style={{ whiteSpace: 'pre-wrap' }}>
+          {event || 'Стресс-тест'}
+        </Title>
+      </Spoiler>
+      <Group gap={4} wrap="nowrap" align="center">
+        <Text size="sm" c="dimmed">
+          {facts.map((fact, index) => (
+            <Fragment key={index}>
+              {index > 0 && ' · '}
+              {fact}
+            </Fragment>
+          ))}
+        </Text>
+        <CopyButton value={status.run_id}>
+          {({ copied, copy }) => (
+            <Tooltip label={copied ? 'Номер скопирован' : `Скопировать номер стресс-теста ${status.run_id}`}>
+              <ActionIcon variant="subtle" color="gray" size="sm" onClick={copy} aria-label="Скопировать номер стресс-теста">
+                {copied ? <IconCheck size={14} /> : <IconCopy size={14} />}
+              </ActionIcon>
+            </Tooltip>
+          )}
+        </CopyButton>
       </Group>
     </Stack>
   );
+}
+
+function Panel({ tab, ...data }: RunTabProps & { tab: Tab }) {
+  switch (tab) {
+    case 'scenario':
+      return (
+        <Suspense
+          fallback={
+            <Center py="xl">
+              <Loader />
+            </Center>
+          }
+        >
+          <ScenarioTab {...data} />
+        </Suspense>
+      );
+    case 'positions':
+      return <PositionsTab {...data} />;
+    case 'portfolio':
+      return <PortfolioTab {...data} />;
+    case 'report':
+      return <ReportTab {...data} />;
+    case 'provenance':
+      return <ProvenanceTab {...data} />;
+    case 'explain':
+      return <ExplainTab {...data} />;
+    case 'activity':
+      return <ActivityTab {...data} />;
+  }
 }
 
 export function RunPage() {
@@ -148,54 +173,28 @@ export function RunPage() {
       )}
       <RunSteps steps={steps(data.status, data.artifacts, me)} />
       <NextAction {...data} me={me} tab={tab} onTab={setTab} />
-      <Tabs value={tab} onChange={(value) => value && setTab(value as Tab)} keepMounted={false}>
-        <Tabs.List>
-          {TABS.map(({ value, title, empty }) => {
+      {/* The same switch as the filter of the stress-test list; on a narrow screen it scrolls. */}
+      <ScrollArea type="auto" scrollbars="x" offsetScrollbars>
+        <SegmentedControl
+          value={tab}
+          onChange={(value) => setTab(value as Tab)}
+          data={TABS.map(({ value, title, empty }) => {
             const ready = available(value, data.status, data.artifacts);
-            const item = (
-              <Tabs.Tab key={value} value={value} disabled={!ready}>
-                {title}
-              </Tabs.Tab>
-            );
-            return ready ? (
-              item
-            ) : (
-              <Tooltip key={value} label={empty}>
-                <span>{item}</span>
-              </Tooltip>
-            );
+            return {
+              value,
+              disabled: !ready,
+              label: ready ? (
+                title
+              ) : (
+                <Tooltip label={empty}>
+                  <span>{title}</span>
+                </Tooltip>
+              ),
+            };
           })}
-        </Tabs.List>
-        <Tabs.Panel value="scenario" pt="lg">
-          <Suspense
-            fallback={
-              <Center py="xl">
-                <Loader />
-              </Center>
-            }
-          >
-            <ScenarioTab {...data} />
-          </Suspense>
-        </Tabs.Panel>
-        <Tabs.Panel value="positions" pt="lg">
-          <PositionsTab {...data} />
-        </Tabs.Panel>
-        <Tabs.Panel value="portfolio" pt="lg">
-          <PortfolioTab {...data} />
-        </Tabs.Panel>
-        <Tabs.Panel value="report" pt="lg">
-          <ReportTab {...data} />
-        </Tabs.Panel>
-        <Tabs.Panel value="provenance" pt="lg">
-          <ProvenanceTab {...data} />
-        </Tabs.Panel>
-        <Tabs.Panel value="explain" pt="lg">
-          <ExplainTab {...data} />
-        </Tabs.Panel>
-        <Tabs.Panel value="activity" pt="lg">
-          <ActivityTab {...data} />
-        </Tabs.Panel>
-      </Tabs>
+        />
+      </ScrollArea>
+      <Panel tab={tab} {...data} />
     </Stack>
     </RunArtifacts.Provider>
   );

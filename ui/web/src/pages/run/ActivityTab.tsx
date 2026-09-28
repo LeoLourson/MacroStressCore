@@ -2,11 +2,10 @@ import { Badge, Center, Group, Loader, Paper, SimpleGrid, Stack, Table, Text, Ti
 import { IconCheck, IconX } from '@tabler/icons-react';
 import { useActivity } from '../../api/queries';
 import type { ActivityItem, WorkflowView } from '../../api/types';
-import { useSession } from '../../auth/session';
 import { Elapsed } from '../../components/Elapsed';
 import { ErrorAlert } from '../../components/ErrorAlert';
 import { number, timestamp } from '../../lib/format';
-import { PROVIDERS, label } from '../../lib/labels';
+import { label } from '../../lib/labels';
 import type { RunTabProps } from './RunPage';
 
 // What each MCP tool does, in words; the machine name stays beside it.
@@ -71,7 +70,6 @@ function node(item: ActivityItem, workflow: WorkflowView | null | undefined): st
 /** Every LLM answer and MCP tool call of the run: who asked, what for, how long it took. */
 export function ActivityTab({ status, artifacts }: RunTabProps) {
   const activity = useActivity(status);
-  const { me } = useSession();
   if (activity.error) return <ErrorAlert error={activity.error} />;
   if (!activity.data) {
     return (
@@ -81,18 +79,13 @@ export function ActivityTab({ status, artifacts }: RunTabProps) {
     );
   }
   const { llm, tools, items } = activity.data;
-  const provider = me?.llm;
+  // Which model works is in the header; the cards count its calls.
   return (
     <Stack gap="lg">
       <SimpleGrid cols={{ base: 1, sm: 2 }}>
         <Paper p="md">
           <Stack gap={4}>
-            <Title order={5}>Языковая модель</Title>
-            <Text size="sm">
-              {label(PROVIDERS, provider?.provider)}
-              {provider?.model && provider.provider !== 'mock' ? ` · ${provider.model}` : ''}
-              {provider?.external ? ' · внешняя, только демо-данные' : ''}
-            </Text>
+            <Title order={5}>LLM</Title>
             <Text size="sm">
               Ответов: <b>{llm.calls}</b>
               {llm.failed ? `, из них с ошибкой ${llm.failed}` : ''} · время {seconds(llm.duration_ms)}
@@ -104,14 +97,14 @@ export function ActivityTab({ status, artifacts }: RunTabProps) {
         </Paper>
         <Paper p="md">
           <Stack gap={4}>
-            <Title order={5}>Инструменты MCP</Title>
+            <Title order={5}>MCP</Title>
             <Text size="sm">
               Вызовов: <b>{tools.calls}</b>
               {tools.failed ? `, из них с ошибкой ${tools.failed}` : ''} · время {seconds(tools.duration_ms)}
             </Text>
             {!!tools.by_llm && (
               <Text size="sm">
-                По выбору языковой модели: <b>{tools.by_llm}</b>
+                По выбору LLM: <b>{tools.by_llm}</b>
               </Text>
             )}
           </Stack>

@@ -1,0 +1,10 @@
+{
+  "snapshot_id": "SYNTHETIC-OIL-CREDIT-2026-09-11",
+  "as_of": "2026-09-11",
+  "label": "Синтетические данные нефтяной компании на 11.09.2026",
+  "kind": "demo",
+  "metadata": {
+    "synthetic": true,
+    "generated_by": "demo/build_catalog.py"
+  }
+}

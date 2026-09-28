@@ -69,11 +69,6 @@ export function currentStep(status: Pick<RunStatus, 'status' | 'node' | 'next'>,
   }
 }
 
-/** The stage a run stands on: `report` means its numbers are ready and the report is being written. */
-export function currentStage(status: Pick<RunStatus, 'status' | 'node' | 'next'>, workflow: WorkflowView | null | undefined): string | undefined {
-  return stagesOf(workflow)[currentStep(status, workflow)]?.stage_id;
-}
-
 /** What the language model is busy with, in words: «пишет текст отчёта». */
 export function llmDoing(waiting: LlmWaiting): string {
   if (waiting.purpose === 'repair') return 'исправляет свой ответ';
@@ -95,6 +90,8 @@ export interface StepView {
   title: string;
   state: StepState;
   note: string;
+  /** While the model answers: when it started, for a live timer beside the note. */
+  since?: string;
 }
 
 export function stopOf(status: RunStatus): FixGraphStop | null {
@@ -116,8 +113,13 @@ export function steps(status: RunStatus, artifacts: Artifacts | undefined, me: M
     switch (status.status) {
       case 'queued':
         return { title, state: 'running', note: 'В очереди' };
-      case 'running':
-        return { title, state: 'running', note: nowText(status, workflow) };
+      case 'running': {
+        // The step is the one place that shows the run is working: what the model writes, and for how long.
+        const waiting = status.llm_waiting;
+        return waiting
+          ? { title, state: 'running', note: `LLM ${llmDoing(waiting)}`, since: waiting.started_at }
+          : { title, state: 'running', note: nowText(status, workflow) };
+      }
       case 'human_fix_graph':
         return canFixGraph(me)
           ? { title, state: 'yours', note: 'Ждёт вашей проверки' }
