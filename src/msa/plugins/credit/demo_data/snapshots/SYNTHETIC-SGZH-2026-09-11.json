@@ -1,0 +1,255 @@
+{
+  "items": [
+    {
+      "item_id": "financial_statement:SGZH",
+      "kind": "financial_statement",
+      "subject": "SGZH",
+      "observed_on": "2026-09-11",
+      "values": {
+        "revenue": {
+          "value": 72000.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "SGZH/revenue",
+              "fragment_sha256": "97a99fdfdec33e42e54481d9f38eced209593d459a172e236f56e93525bee64f",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "cogs": {
+          "value": 43200.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "SGZH/cogs",
+              "fragment_sha256": "7298696ed6ffb25f90b364face0ae65216b2a5566d8b0ee90810f5c34aa633fc",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "net_debt": {
+          "value": 36000.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "SGZH/net_debt",
+              "fragment_sha256": "727dff14220c0a60c185ba83c0dbfdf37f116893e500e4bbda593444bdd60695",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "borrowing_rate": {
+          "value": 0.15,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "SGZH/borrowing_rate",
+              "fragment_sha256": "14386ffb6b90dca78bb3d908391003ecffa9be97a9a10227327fc2a658c5bd82",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "opex": {
+          "value": 6000.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "SGZH/opex",
+              "fragment_sha256": "ab772969243580242502ea5c579c970534155dfda01c06edc7401a1b8deef679",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "cash": {
+          "value": 4000.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "SGZH/cash",
+              "fragment_sha256": "cce998fbfcff20bbf99902d68ccbbf5247df53a5be099ae5835a94437e1a66f5",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "dso": {
+          "value": 60.0,
+          "unit": "days",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "SGZH/dso",
+              "fragment_sha256": "e49f296ca19797c3979f04253b5cca5dd6961ad14d1d07dacee6bf8103d9db9d",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "dio": {
+          "value": 45.0,
+          "unit": "days",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "SGZH/dio",
+              "fragment_sha256": "04b731b2e3a0563d139fd1d593477dd93f52d15c63cb610d69b15c512698c126",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "dpo": {
+          "value": 30.0,
+          "unit": "days",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "SGZH/dpo",
+              "fragment_sha256": "0cf36ff1268cf056f56eb95e8cf3cbb982e59331a0bb4bbe7f3d70826f436555",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "tax_rate": {
+          "value": 0.2,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "SGZH/tax_rate",
+              "fragment_sha256": "e51e0aa4622c07543f5771ed1c0ffe107459e6459035f680d048dc78fab958a1",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "demand_elasticity": {
+          "value": -0.6,
+          "unit": "ratio",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "SGZH/demand_elasticity",
+              "fragment_sha256": "b9206a0503ffdb5c96cce6ef1bfca00244636d6136eaab6ede8f6a72566632e2",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "pass_through": {
+          "value": 0.4,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "SGZH/pass_through",
+              "fragment_sha256": "80212c8ed10641e5b6569051acff27a781b67062b0325e32fca1d9c637d554a2",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "gross_debt": {
+          "value": 40000.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "SGZH/gross_debt",
+              "fragment_sha256": "ac86f301523eedefb609bb7a784a26aa8f12dee898adaa09f26554a50a2ea44c",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "credit_limit": {
+          "value": 5000.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "SGZH/credit_limit",
+              "fragment_sha256": "c6f8050452d44b6113c37f4592b8758ab26c393e49f4560cb54729350f76c8a3",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "fixed_production_cost": {
+          "value": 12000.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "SGZH/fixed_production_cost",
+              "fragment_sha256": "69026b14f50e2ae3ddf8a59e8369029ccd93c6e26859e0ab2b613b6802b9c1cd",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "capex": {
+          "value": 2400.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "SGZH/capex",
+              "fragment_sha256": "18121250932fdea33a35eaa858bdf32e9f1685529a11ebe2af97ee0bb2f96ee0",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        },
+        "cash_floor": {
+          "value": 2000.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "demo:companies",
+              "locator": "SGZH/cash_floor",
+              "fragment_sha256": "d72d82c62513e985bafab35c70e9fb214b9dfad7c87858fa8565713b96b8edba",
+              "author": "demo:catalog",
+              "as_of": "2026-09-11"
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "standard": "management",
+        "entered_by": "demo:catalog"
+      },
+      "evidence": []
+    }
+  ]
+}

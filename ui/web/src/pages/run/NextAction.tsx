@@ -1,21 +1,12 @@
-import { Alert, Anchor, Button, Collapse, Group, List, Loader, Stack, Text } from '@mantine/core';
+import { Alert, Anchor, Button, Collapse, Group, List, Stack, Text } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import {
-  IconAlertTriangle,
-  IconArrowRight,
-  IconCircleCheck,
-  IconClock,
-  IconInfoCircle,
-  IconRefresh,
-} from '@tabler/icons-react';
+import { IconAlertTriangle, IconArrowRight, IconInfoCircle, IconRefresh } from '@tabler/icons-react';
 import type { ReactNode } from 'react';
 import { useNavigate } from 'react-router';
-import type { Artifacts, LlmWaiting, Me, RunStatus } from '../../api/types';
+import type { Artifacts, Me, RunStatus } from '../../api/types';
 import { canApprove, canFixGraph } from '../../auth/session';
-import { Elapsed } from '../../components/Elapsed';
-import { approver, lowerFirst, timestamp } from '../../lib/format';
 import { reasonText } from '../../lib/labels';
-import { currentStage, llmDoing, nowText, stopOf, type Tab } from '../../lib/stages';
+import { stopOf, type Tab } from '../../lib/stages';
 import type { RerunState } from '../NewRun';
 
 function Banner({
@@ -76,18 +67,6 @@ function Failure({ status, rerun }: { status: RunStatus; rerun: ReactNode }) {
   );
 }
 
-/** The model is working: shown while it answers, not only once it has answered. */
-function Waiting({ waiting }: { waiting: LlmWaiting }) {
-  return (
-    <Group gap={8} wrap="nowrap">
-      <Loader size={14} color="steel" />
-      <Text size="sm">
-        Языковая модель {llmDoing(waiting)} · <Elapsed since={waiting.started_at} />
-      </Text>
-    </Group>
-  );
-}
-
 /** One message about what happens next, and the one move forward for this person. */
 export function NextAction({
   status,
@@ -125,47 +104,17 @@ export function NextAction({
   );
 
   switch (status.status) {
+    // The step bar already shows the stage under way, whom the run waits for and who approved
+    // the report; a banner is only for a move this person can make.
     case 'queued':
-    case 'running': {
-      const waiting = status.llm_waiting && <Waiting waiting={status.llm_waiting} />;
-      // The numbers are ready before the report: they are not held back while it is written.
-      if (status.status === 'running' && currentStage(status, artifacts?.workflow) === 'report') {
-        return (
-          <Banner
-            color="steel"
-            icon={<IconClock />}
-            title="Расчёт готов, пишется отчёт"
-            action={go('portfolio', 'Открыть итоги')}
-          >
-            <Text size="sm">
-              Итоги по позициям и срезам портфеля уже можно смотреть. Отчёт появится, когда модель допишет текст.
-            </Text>
-            {waiting}
-          </Banner>
-        );
-      }
-      const doing = nowText(status, artifacts?.workflow);
-      return (
-        <Banner color="steel" icon={<IconClock />} title="Идёт расчёт">
-          <Text size="sm">
-            Сейчас: {lowerFirst(doing)}. Страница обновляется сама; результаты появляются по мере готовности.
-          </Text>
-          {waiting}
-        </Banner>
-      );
-    }
+    case 'running':
+    case 'completed':
+      return null;
     case 'human_fix_graph': {
       const decision = stopOf(status)?.decision;
       const returned = decision?.outcome === 'returned';
       // On the graph tab the stop explains itself; a second banner would repeat it.
-      if (canFixGraph(me) && tab === 'scenario') return null;
-      if (!canFixGraph(me)) {
-        return (
-          <Banner color="gray" icon={<IconInfoCircle />} title="Аналитик проверяет граф и сценарий">
-            <Text size="sm">Отчёт появится после расчёта по позициям.</Text>
-          </Banner>
-        );
-      }
+      if (!canFixGraph(me) || tab === 'scenario') return null;
       return (
         <Banner
           color="yellow"
@@ -183,14 +132,7 @@ export function NextAction({
     }
     case 'human_approval':
       // On the report the decision panel is the move forward; a banner would repeat it.
-      if (canApprove(me) && tab === 'report') return null;
-      if (!canApprove(me)) {
-        return (
-          <Banner color="gray" icon={<IconInfoCircle />} title="Отчёт на утверждении">
-            <Text size="sm">Решение принимает риск-менеджер.</Text>
-          </Banner>
-        );
-      }
+      if (!canApprove(me) || tab === 'report') return null;
       return (
         <Banner
           color="yellow"
@@ -201,16 +143,6 @@ export function NextAction({
           <Text size="sm">
             Прочитайте отчёт и примите решение: утвердить, вернуть аналитику на доработку или отклонить.
             Граф, позиции и срезы портфеля доступны на соседних вкладках.
-          </Text>
-        </Banner>
-      );
-    case 'completed':
-      // On the report the stamp says it; the banner is for the other tabs.
-      if (tab === 'report') return null;
-      return (
-        <Banner color="teal" icon={<IconCircleCheck />} title="Отчёт утверждён">
-          <Text size="sm">
-            {approver(artifacts?.approved_by)}, {timestamp(artifacts?.approved_at)}.
           </Text>
         </Banner>
       );

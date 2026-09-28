@@ -15,13 +15,14 @@ async function unlessNotReady<T>(load: () => Promise<T>): Promise<T | null> {
   }
 }
 
-export function useRuns() {
+/** The stress-test list; `poll` keeps it fresh while a run works, as the list page needs. */
+export function useRuns(poll = true) {
   const client = useClient();
   return useQuery({
     queryKey: ['runs', client.mode],
     queryFn: () => client.runs(),
     refetchInterval: (query) =>
-      (query.state.data ?? []).some((row) => !FINAL.includes(row.status)) ? 4000 : 30000,
+      !poll ? false : (query.state.data ?? []).some((row) => !FINAL.includes(row.status)) ? 4000 : 30000,
   });
 }
 

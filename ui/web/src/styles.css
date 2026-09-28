@@ -15,34 +15,6 @@ body {
   min-width: 0;
 }
 
-.field-label {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  min-height: 28px;
-  line-height: 1.4;
-}
-
-.field-help-trigger {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  width: 28px;
-  height: 28px;
-  padding: 0;
-  border: 0;
-  border-radius: 4px;
-  background: transparent;
-  color: var(--mantine-color-steel-7);
-  cursor: help;
-}
-
-.field-help-trigger:hover {
-  background: var(--mantine-color-steel-0);
-}
-
-.field-help-trigger:focus-visible,
 .answer-details summary:focus-visible {
   outline: 2px solid var(--mantine-color-steel-7);
   outline-offset: 2px;

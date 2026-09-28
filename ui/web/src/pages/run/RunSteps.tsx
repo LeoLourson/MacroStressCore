@@ -1,5 +1,6 @@
 import { Box, Group, Loader, SimpleGrid, Stack, Text, ThemeIcon } from '@mantine/core';
 import { IconCheck, IconClock, IconExclamationMark, IconX } from '@tabler/icons-react';
+import { Elapsed } from '../../components/Elapsed';
 import type { StepState, StepView } from '../../lib/stages';
 
 function Mark({ state, index }: { state: StepState; index: number }) {
@@ -73,6 +74,12 @@ export function RunSteps({ steps }: { steps: StepView[] }) {
                 {step.note && (
                   <Text size="xs" c={step.state === 'yours' ? 'dark.8' : 'dimmed'} fw={step.state === 'yours' ? 600 : 400}>
                     {step.note}
+                    {step.since && (
+                      <>
+                        {' · '}
+                        <Elapsed since={step.since} />
+                      </>
+                    )}
                   </Text>
                 )}
               </Stack>

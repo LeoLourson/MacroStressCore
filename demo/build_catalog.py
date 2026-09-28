@@ -1,12 +1,13 @@
 """The generated part of the demo catalog: the themed portfolios and the mock answers.
 
-The four themed portfolios hold loans, bonds and shares of synthetic companies. Each is
+The themed portfolios hold loans, bonds and shares of synthetic companies. Each is
 written below as editor rows and goes the path of a portfolio typed in the editor
 (``msa.api.portfolio_draft.build``). The records then get their catalog names: a company is
 one party and a security one instrument, shared by every portfolio that holds it, with
 sources that name the company or the security. The parts are laid out as ``demo.catalog``
 reads them: the headers in demo/, the positions and the snapshot items of each plugin in its
-``demo_data``, one snapshot for all four portfolios.
+``demo_data``, one snapshot for the four themed portfolios and one for each portfolio in
+``OWN_SNAPSHOTS``.
 
 The mock profile's answers (``src/msa/agents/mock_events.json``) are collected from the
 analyst's prepared answer (``mock_answer``) of every library event and of the pilot event.
@@ -36,6 +37,18 @@ AUTHOR = "demo:catalog"
 SOURCE = "demo:companies"
 SNAPSHOT_ID = "SYNTHETIC-THEMES-2026-09-11"
 SNAPSHOT_LABEL = "Синтетические данные тематических портфелей на 11.09.2026"
+#: A portfolio added after the themed snapshot was seeded keeps its data in a snapshot of its
+#: own: a seeded snapshot never changes. Portfolio id -> (snapshot id, label).
+OWN_SNAPSHOTS = {
+    "OIL-CREDIT": (
+        "SYNTHETIC-OIL-CREDIT-2026-09-11",
+        "Синтетические данные нефтяной компании на 11.09.2026",
+    ),
+    "SGZH-CREDIT": (
+        "SYNTHETIC-SGZH-2026-09-11",
+        "Синтетические данные ГК «SGZH» на 11.09.2026",
+    ),
+}
 MOCK_EVENTS = REPOSITORY / "src" / "msa" / "agents" / "mock_events.json"
 
 
@@ -84,6 +97,11 @@ COMPANIES = {
     "APPAREL-RETAILER": Company("Сеть магазинов одежды", "47.71", "Розничная продажа одежды"),
     "COMMERCIAL-BANK": Company("Коммерческий банк", "64.19", "Кредитование и расчётные услуги"),
     "OIL-MAJOR": Company("Нефтяная компания", "06.10", "Добыча нефти"),
+    "SGZH": Company(
+        "ГК «SGZH»",
+        "17.11",
+        "Целлюлозно-бумажный холдинг: три комбината, большая часть целлюлозы идёт на экспорт",
+    ),
     "IT-DEVELOPER": Company(
         "Разработчик программного обеспечения", "62.01", "Разработка корпоративных программ"
     ),
@@ -273,6 +291,38 @@ STATEMENTS = {
         demand_elasticity=-1.4,
         pass_through=0.3,
     ),
+    "OIL-MAJOR": dict(
+        revenue=120000.0,
+        cogs=78000.0,
+        opex=13000.0,
+        net_debt=60000.0,
+        cash=8000.0,
+        borrowing_rate=0.12,
+        dso=40.0,
+        dio=30.0,
+        dpo=40.0,
+        demand_elasticity=-0.6,
+        pass_through=0.0,
+        capex=15000.0,
+    ),
+    "SGZH": dict(
+        revenue=72000.0,
+        cogs=43200.0,
+        fixed_production_cost=12000.0,
+        opex=6000.0,
+        net_debt=36000.0,
+        gross_debt=40000.0,
+        cash=4000.0,
+        cash_floor=2000.0,
+        borrowing_rate=0.15,
+        credit_limit=5000.0,
+        capex=2400.0,
+        dso=60.0,
+        dio=45.0,
+        dpo=30.0,
+        demand_elasticity=-0.6,
+        pass_through=0.4,
+    ),
 }
 COMMON_STATEMENT = {"tax_rate": 0.2}
 #: The share of a borrower's costs bought abroad, the part a currency shock moves.
@@ -285,8 +335,8 @@ IMPORT_SHARES = {
 }
 
 
-def loan(company, *, ead, lgd, kind="corp_loan", prefix="LOAN", **terms) -> dict:
-    """A credit position in ``company``; its statement, import share and the terms."""
+def loan(company, *, ead, lgd, kind="corp_loan", prefix="LOAN", covenants=(), **terms) -> dict:
+    """A credit position in ``company``; its statement, import share, terms and covenants."""
     return {
         "position_id": f"{prefix}-{company}",
         "party": company,
@@ -300,7 +350,12 @@ def loan(company, *, ead, lgd, kind="corp_loan", prefix="LOAN", **terms) -> dict
             **STATEMENTS[company],
             **terms,
         },
+        "tables": {"covenants": list(covenants)},
     }
+
+
+#: The quarter ends inside the 12-month horizon from ``AS_OF``: the covenant test dates.
+QUARTER_ENDS = ["2026-12-31", "2027-03-31", "2027-06-30", "2027-09-30"]
 
 
 def share(company, *, ticker, price, beta, sector, residual, dividend, quantity, **market):
@@ -473,6 +528,39 @@ PORTFOLIOS = {
             SHARES["US-PHARMA"],
         ],
     ),
+    "OIL-CREDIT": (
+        "Кредит нефтяной компании",
+        "Один корпоративный кредит нефтедобывающей компании с морскими платформами.",
+        [
+            loan("OIL-MAJOR", ead=5000.0, lgd=0.45),
+        ],
+    ),
+    "SGZH-CREDIT": (
+        "Кредит ГК «SGZH»",
+        "Один корпоративный кредит целлюлозно-бумажного холдинга с тонкой маржой, "
+        "возобновляемой линией и ковенантами ICR и ND/EBITDA на конец каждого квартала.",
+        [
+            loan(
+                "SGZH",
+                ead=40000.0,
+                lgd=0.55,
+                covenants=[
+                    {
+                        "metric": "icr",
+                        "operator": "ge",
+                        "threshold": 1.5,
+                        "test_dates": QUARTER_ENDS,
+                    },
+                    {
+                        "metric": "nd_ebitda",
+                        "operator": "le",
+                        "threshold": 4.0,
+                        "test_dates": QUARTER_ENDS,
+                    },
+                ],
+            ),
+        ],
+    ),
 }
 
 
@@ -537,6 +625,7 @@ def portfolio(portfolio_id, registry) -> tuple[dict, list[dict]]:
                 "okved": COMPANIES[row["party"]].okved,
                 "currency": row.get("currency", "RUB"),
                 "values": row["values"],
+                "tables": row.get("tables", {}),
             }
             for row in rows
         ],
@@ -576,17 +665,18 @@ def outputs(registry=None) -> dict[Path, str]:
     """Every generated file and its text."""
     registry = registry or current()
     files: dict[Path, str] = {}
-    parts: dict[str, dict[str, dict]] = {}
-    items: dict[str, dict] = {}
+    #: snapshot id -> item id -> item
+    items: dict[str, dict[str, dict]] = {}
     for portfolio_id, (name, description, _) in PORTFOLIOS.items():
         data, found = portfolio(portfolio_id, registry)
+        snapshot_id = OWN_SNAPSHOTS.get(portfolio_id, (SNAPSHOT_ID,))[0]
         header = {
             "portfolio": {
                 "portfolio_id": portfolio_id,
                 "name": name,
                 "base_currency": "RUB",
                 "as_of": AS_OF.isoformat(),
-                "snapshot_id": SNAPSHOT_ID,
+                "snapshot_id": snapshot_id,
                 "builtin": True,
                 "metadata": {
                     "synthetic": True,
@@ -618,23 +708,26 @@ def outputs(registry=None) -> dict[Path, str]:
             files[folder / f"{portfolio_id}.json"] = _json(
                 {name: list(records.values()) for name, records in part.items()}
             )
-        _merge(items, found, "item_id", portfolio_id)
-    for item in items.values():
-        parts.setdefault(registry.plugin_of(item["kind"]).plugin_id, {})[item["item_id"]] = item
-    files[CATALOG / "snapshots" / f"{SNAPSHOT_ID}.json"] = _json(
-        {
-            "snapshot_id": SNAPSHOT_ID,
-            "as_of": AS_OF.isoformat(),
-            "label": SNAPSHOT_LABEL,
-            "kind": "demo",
-            "metadata": {"synthetic": True, "generated_by": "demo/build_catalog.py"},
-        }
-    )
-    for plugin_id, found in parts.items():
-        folder = _demo_data(registry, plugin_id) / "snapshots"
-        files[folder / f"{SNAPSHOT_ID}.json"] = _json(
-            {"items": [found[key] for key in sorted(found)]}
+        _merge(items.setdefault(snapshot_id, {}), found, "item_id", portfolio_id)
+    labels = {SNAPSHOT_ID: SNAPSHOT_LABEL} | dict(OWN_SNAPSHOTS.values())
+    for snapshot_id, snapshot_items in items.items():
+        parts: dict[str, dict[str, dict]] = {}
+        for item in snapshot_items.values():
+            parts.setdefault(registry.plugin_of(item["kind"]).plugin_id, {})[item["item_id"]] = item
+        files[CATALOG / "snapshots" / f"{snapshot_id}.json"] = _json(
+            {
+                "snapshot_id": snapshot_id,
+                "as_of": AS_OF.isoformat(),
+                "label": labels[snapshot_id],
+                "kind": "demo",
+                "metadata": {"synthetic": True, "generated_by": "demo/build_catalog.py"},
+            }
         )
+        for plugin_id, found in parts.items():
+            folder = _demo_data(registry, plugin_id) / "snapshots"
+            files[folder / f"{snapshot_id}.json"] = _json(
+                {"items": [found[key] for key in sorted(found)]}
+            )
     files[MOCK_EVENTS] = _json(mock_answers())
     return files
 

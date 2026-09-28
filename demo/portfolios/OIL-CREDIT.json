@@ -1,0 +1,15 @@
+{
+  "portfolio": {
+    "portfolio_id": "OIL-CREDIT",
+    "name": "Кредит нефтяной компании",
+    "base_currency": "RUB",
+    "as_of": "2026-09-11",
+    "snapshot_id": "SYNTHETIC-OIL-CREDIT-2026-09-11",
+    "builtin": true,
+    "metadata": {
+      "synthetic": true,
+      "description": "Один корпоративный кредит нефтедобывающей компании с морскими платформами.",
+      "generated_by": "demo/build_catalog.py"
+    }
+  }
+}

@@ -28,7 +28,7 @@ import { useCreatePortfolio } from '../api/queries';
 import type { DraftPosition, PortfolioDraft } from '../api/types';
 import { canRun, useClient, useSession } from '../auth/session';
 import { ErrorAlert } from '../components/ErrorAlert';
-import { Explained, useExplanation } from '../components/FieldHelp';
+import { FieldHelp } from '../components/FieldHelp';
 import { typeName } from '../lib/format';
 import {
   allowsNegative,
@@ -62,7 +62,7 @@ function FieldInput({
   automatic?: string;
   onChange: (value: unknown) => void;
 }) {
-  const help = useExplanation(field.label, fieldHelp(field));
+  const fieldLabel = <FieldHelp label={field.label} help={fieldHelp(field)} />;
   const choices = field.options.map(([value, label]) => ({ value, label }));
   if (typeof value === 'string' && value && value !== '__automatic__' && !choices.some((option) => option.value === value)) {
     choices.push({ value, label: value });
@@ -71,13 +71,13 @@ function FieldInput({
     case 'text':
     case 'date':
       return field.kind === 'text' && field.options.length ? (
-        <Autocomplete {...help} withAsterisk={field.required}
+        <Autocomplete label={fieldLabel} withAsterisk={field.required}
           data={field.options.map(([value, label]) => ({ value, label }))}
           value={typeof value === 'string' ? value : ''}
           onChange={(v) => onChange(v.trim() || undefined)} />
       ) : (
         <TextInput
-          {...help}
+          label={fieldLabel}
           withAsterisk={field.required}
           placeholder={field.kind === 'date' ? 'ГГГГ-ММ-ДД' : field.default != null ? String(field.default) : undefined}
           value={(value as string | undefined) ?? ''}
@@ -87,7 +87,7 @@ function FieldInput({
     case 'dates':
       return (
         <TextInput
-          {...help}
+          label={fieldLabel}
           withAsterisk={field.required}
           value={((value as string[] | undefined) ?? []).join(', ')}
           onChange={(e) =>
@@ -103,7 +103,7 @@ function FieldInput({
     case 'enum':
       return (
         <Select
-          {...help}
+          label={fieldLabel}
           withAsterisk={field.required}
           data={field.derive_from ? [
             { value: '__automatic__', label: automatic ? `По ОКВЭД: ${choices.find((c) => c.value === automatic)?.label ?? automatic}` : 'По ОКВЭД — выберите отрасль' },
@@ -117,8 +117,7 @@ function FieldInput({
     case 'boolean':
       return (
         <Checkbox
-          label={help.label}
-          description={help.description}
+          label={fieldLabel}
           checked={value === true}
           onChange={(e) => onChange(e.currentTarget.checked)}
         />
@@ -126,7 +125,7 @@ function FieldInput({
     default:
       return (
         <NumberInput
-          {...help}
+          label={fieldLabel}
           withAsterisk={field.required}
           rightSection={
             <Text size="xs" c="dimmed" pr={6}>
@@ -158,22 +157,14 @@ function TableInput({
   base: string;
   onChange: (rows: Record<string, unknown>[]) => void;
 }) {
-  const help = useExplanation(field.label, fieldHelp(field));
   const set = (index: number, name: string, value: unknown) =>
     onChange(rows.map((row, i) => (i === index ? { ...row, [name]: value } : row)));
   return (
     <Stack gap="xs">
       <Group justify="space-between" align="flex-start">
-        <Stack gap={2}>
-          <Text size="sm" fw={600}>
-            {help.label}
-          </Text>
-          {help.description && (
-            <Text size="xs" c="dimmed">
-              {help.description}
-            </Text>
-          )}
-        </Stack>
+        <Text size="sm" fw={600}>
+          <FieldHelp label={field.label} help={fieldHelp(field)} />
+        </Text>
         <Button size="xs" variant="default" leftSection={<IconPlus size={14} />} onClick={() => onChange([...rows, newRow(field)])}>
           Добавить строку
         </Button>
@@ -285,62 +276,42 @@ function PositionEditor({
   return (
     <Stack gap="lg">
       <SimpleGrid cols={{ base: 1, sm: 2, md: 3 }} className="portfolio-field-grid">
-        <Explained label="Код позиции" text="Уникальный код позиции в портфеле: латиница, цифры, дефис, например P1">
-          {(help) => (
-            <TextInput
-              {...help}
-              withAsterisk
-              value={position.position_id}
-              onChange={(e) => onChange({ ...position, position_id: e.currentTarget.value.trim() })}
-            />
-          )}
-        </Explained>
-        <Explained label="Эмитент или название" text="Как позиция называется в списке и в отчёте">
-          {(help) => (
-            <TextInput
-              {...help}
-              withAsterisk
-              value={position.name}
-              onChange={(e) => onChange({ ...position, name: e.currentTarget.value })}
-            />
-          )}
-        </Explained>
-        <Explained label="Тип инструмента" text={spec?.description || 'Вид инструмента: от него зависят поля и модель расчёта'}>
-          {(help) => (
-            <Select
-              {...help}
-              withAsterisk
-              data={instrumentTypes().map((item) => ({ value: item.asset_type, label: item.label }))}
-              value={position.instrument_type}
-              onChange={(v) => v && onChange(retype(position, v))}
-              allowDeselect={false}
-            />
-          )}
-        </Explained>
-        <Explained label="ОКВЭД 2 эмитента" text="Основной вид деятельности эмитента, например 46.63: по нему событие находит позицию">
-          {(help) => (
-            <TextInput
-              {...help}
-              withAsterisk={spec?.issuer_required}
-              value={position.okved ?? ''}
-              onChange={(e) => onChange({ ...position, okved: e.currentTarget.value.trim() })}
-            />
-          )}
-        </Explained>
-        <Explained label="Валюта инструмента" text="Валюта договора или котировки акции">
-          {(help) => (
-            <Select
-              {...help}
-              data={currencies.length ? currencies : [base]}
-              value={position.currency}
-              onChange={(v) => v && onChange({ ...position, currency: v })}
-              allowDeselect={false}
-            />
-          )}
-        </Explained>
+        <TextInput
+          label={<FieldHelp label="Код позиции" help="Уникальный код позиции в портфеле: латиница, цифры, дефис, например P1" />}
+          withAsterisk
+          value={position.position_id}
+          onChange={(e) => onChange({ ...position, position_id: e.currentTarget.value.trim() })}
+        />
+        <TextInput
+          label={<FieldHelp label="Эмитент или название" help="Как позиция называется в списке и в отчёте" />}
+          withAsterisk
+          value={position.name}
+          onChange={(e) => onChange({ ...position, name: e.currentTarget.value })}
+        />
+        <Select
+          label={<FieldHelp label="Тип инструмента" help={spec?.description || 'Вид инструмента: от него зависят поля и модель расчёта'} />}
+          withAsterisk
+          data={instrumentTypes().map((item) => ({ value: item.asset_type, label: item.label }))}
+          value={position.instrument_type}
+          onChange={(v) => v && onChange(retype(position, v))}
+          allowDeselect={false}
+        />
+        <TextInput
+          label={<FieldHelp label="ОКВЭД 2 эмитента" help="Основной вид деятельности эмитента, например 46.63: по нему событие находит позицию" />}
+          withAsterisk={spec?.issuer_required}
+          value={position.okved ?? ''}
+          onChange={(e) => onChange({ ...position, okved: e.currentTarget.value.trim() })}
+        />
+        <Select
+          label={<FieldHelp label="Валюта инструмента" help="Валюта договора или котировки акции" />}
+          data={currencies.length ? currencies : [base]}
+          value={position.currency}
+          onChange={(v) => v && onChange({ ...position, currency: v })}
+          allowDeselect={false}
+        />
       </SimpleGrid>
       <Text size="sm" c="dimmed">
-        * Обязательные поля. Значок ? у названия поля открывает короткое пояснение.
+        * Обязательные поля. Пояснение к полю появляется при наведении на его название.
       </Text>
       {groupsOf(position.instrument_type).map((group) => (
         <Group_ key={`${position.instrument_type}:${group.group_id}`} group={group} position={position} base={base} onChange={onChange} />
@@ -456,30 +427,22 @@ export function PortfolioEditor() {
       <Paper p="lg">
         <Group align="flex-end" justify="space-between" gap="md">
           <Group align="flex-end" gap="md">
-            <Explained label="Название портфеля" text="Под этим названием портфель виден при запуске стресс-теста">
-              {(help) => (
-                <TextInput
-                  {...help}
-                  withAsterisk
-                  value={draft.name}
-                  onChange={(e) => setDraft({ ...draft, name: e.currentTarget.value })}
-                  w={{ base: '100%', sm: 320 }}
-                  maxLength={80}
-                />
-              )}
-            </Explained>
-            <Explained label="Базовая валюта" text="Валюта, в которой считаются итоги портфеля">
-              {(help) => (
-                <Select
-                  {...help}
-                  data={getCatalog().units.currencies.length ? getCatalog().units.currencies : ['RUB']}
-                  value={draft.base_currency}
-                  onChange={(v) => v && setDraft({ ...draft, base_currency: v })}
-                  allowDeselect={false}
-                  w={180}
-                />
-              )}
-            </Explained>
+            <TextInput
+              label={<FieldHelp label="Название портфеля" help="Под этим названием портфель виден при запуске стресс-теста" />}
+              withAsterisk
+              value={draft.name}
+              onChange={(e) => setDraft({ ...draft, name: e.currentTarget.value })}
+              w={{ base: '100%', sm: 320 }}
+              maxLength={80}
+            />
+            <Select
+              label={<FieldHelp label="Базовая валюта" help="Валюта, в которой считаются итоги портфеля" />}
+              data={getCatalog().units.currencies.length ? getCatalog().units.currencies : ['RUB']}
+              value={draft.base_currency}
+              onChange={(v) => v && setDraft({ ...draft, base_currency: v })}
+              allowDeselect={false}
+              w={180}
+            />
           </Group>
           <Group gap="xs">
             <FileButton

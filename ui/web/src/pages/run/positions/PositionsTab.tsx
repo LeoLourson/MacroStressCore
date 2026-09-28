@@ -1,10 +1,10 @@
 import { Badge, Group, Paper, Stack, Table, Text, Title, Tooltip } from '@mantine/core';
 import { IconAlertTriangle, IconCheck } from '@tabler/icons-react';
-import { useMemo, useState } from 'react';
+import { useMemo, useState, type ReactNode } from 'react';
 import { metricLabel, metricSpec, sliceSpec, viewFor } from '../../../api/catalog';
 import type { CalculationResult, PortfolioResult, PositionContext } from '../../../api/types';
 import { Interval, scaleOf } from '../../../components/Interval';
-import { ExecutionBadge } from '../../../components/RiskModel';
+import { ExecutionBadge, ResultStatus } from '../../../components/RiskModel';
 import { Term } from '../../../components/Term';
 import { formatter, instrumentLine, positionName, positionTitle, typeName } from '../../../lib/format';
 import { shockLabels, translateFlags } from '../../../lib/labels';
@@ -13,44 +13,52 @@ import { useOrigins } from '../useOrigins';
 import { PositionDrawer } from './PositionDrawer';
 
 /**
- * Whether the position's result entered the totals of its slices: included, admitted by an
- * approved rule, or left out with the reason. Every result waits for the same human
- * decision, so the table shows only what sets a position apart.
+ * What sets a position apart: not calculated, a result the model flags, or left out of a
+ * slice's totals or admitted by a rule. A calculated and counted position shows nothing:
+ * that is almost every row, and a column of the same mark tells nothing.
  */
-function InSlices({ result, portfolio }: { result: CalculationResult; portfolio: PortfolioResult | null | undefined }) {
-  if (result.execution !== 'completed') return null;
-  if (!result.contributions.length) {
+function Exceptions({ result, portfolio }: { result: CalculationResult; portfolio: PortfolioResult | null | undefined }) {
+  if (result.execution !== 'completed') {
     return (
-      <Text size="sm" c="dark.3">
-        вне срезов
-      </Text>
+      <Group mt={4}>
+        <ExecutionBadge result={result} />
+      </Group>
     );
   }
+  const pieces: ReactNode[] = [];
+  if (result.status !== 'ok') pieces.push(<ResultStatus key="status" status={result.status} />);
+  if (!result.contributions.length) {
+    pieces.push(
+      <Text key="none" size="xs" c="dark.3">
+        вне срезов
+      </Text>,
+    );
+  }
+  for (const c of result.contributions) {
+    const slice = sliceSpec(c.slice_id)?.label ?? c.slice_id;
+    const excluded = portfolio?.slices[c.slice_id]?.excluded.find((e) => e.position_id === result.position_id);
+    if (excluded || c.admission.startsWith('excluded')) {
+      pieces.push(
+        <Tooltip key={c.slice_id} label={translateFlags(excluded?.reason ?? c.admission)} multiline maw={420}>
+          <Badge color="orange" c="orange.9" variant="light" tt="none" fw={500} leftSection={<IconAlertTriangle size={12} />}>
+            {slice}: не учтена
+          </Badge>
+        </Tooltip>,
+      );
+    } else if (c.admission.startsWith('admitted')) {
+      pieces.push(
+        <Group key={c.slice_id} gap={4} c="dark.3" wrap="nowrap">
+          <IconCheck size={14} />
+          <Text size="xs">{slice}: по правилу</Text>
+        </Group>,
+      );
+    }
+  }
+  if (!pieces.length) return null;
   return (
-    <Stack gap={2}>
-      {result.contributions.map((c) => {
-        const slice = sliceSpec(c.slice_id)?.label ?? c.slice_id;
-        const excluded = portfolio?.slices[c.slice_id]?.excluded.find((e) => e.position_id === result.position_id);
-        if (excluded || c.admission.startsWith('excluded')) {
-          return (
-            <Tooltip key={c.slice_id} label={translateFlags(excluded?.reason ?? c.admission)} multiline maw={420}>
-              <Badge color="orange" c="orange.9" variant="light" tt="none" fw={500} leftSection={<IconAlertTriangle size={12} />}>
-                {slice}: не учтена
-              </Badge>
-            </Tooltip>
-          );
-        }
-        return (
-          <Group key={c.slice_id} gap={4} c="dark.3" wrap="nowrap">
-            <IconCheck size={14} />
-            <Text size="sm">
-              {slice}
-              {c.admission.startsWith('admitted') ? ': по правилу' : ''}
-            </Text>
-          </Group>
-        );
-      })}
-    </Stack>
+    <Group gap="xs" mt={4}>
+      {pieces}
+    </Group>
   );
 }
 
@@ -92,7 +100,7 @@ function TypeTable({
   });
   return (
     <Paper>
-      <Table.ScrollContainer minWidth={720 + 280 * group.metrics.length}>
+      <Table.ScrollContainer minWidth={330 + 280 * group.metrics.length}>
         <Table verticalSpacing="sm" horizontalSpacing="md" highlightOnHover>
           <Table.Thead>
             <Table.Tr>
@@ -102,8 +110,6 @@ function TypeTable({
                   {metricLabel(m)}
                 </Table.Th>
               ))}
-              <Table.Th w={190}>Расчёт</Table.Th>
-              <Table.Th w={200}>В итогах срезов</Table.Th>
             </Table.Tr>
           </Table.Thead>
           <Table.Tbody>
@@ -128,6 +134,7 @@ function TypeTable({
                   <Text size="xs" c="dimmed">
                     {r.position_id} · {instrumentLine(contexts[r.position_id])}
                   </Text>
+                  <Exceptions result={r} portfolio={portfolio} />
                 </Table.Td>
                 {group.metrics.map((m) => {
                   const value = r.metrics[m];
@@ -155,12 +162,6 @@ function TypeTable({
                     </Table.Td>
                   );
                 })}
-                <Table.Td>
-                  <ExecutionBadge result={r} />
-                </Table.Td>
-                <Table.Td>
-                  <InSlices result={r} portfolio={portfolio} />
-                </Table.Td>
               </Table.Tr>
             ))}
           </Table.Tbody>

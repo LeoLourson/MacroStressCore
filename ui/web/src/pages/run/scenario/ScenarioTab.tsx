@@ -154,13 +154,10 @@ function ScenarioTable({
   return (
     <Stack gap="xs">
       <Group justify="space-between">
-        <Stack gap={0}>
-          <Title order={4}>Сценарий: насколько сильным может быть событие</Title>
-          <Text size="sm" c="dimmed">
-            По этим диапазонам строятся тысячи сценариев{' '}
-            <Term name="Монте-Карло">Монте-Карло</Term>, одинаковых для всех позиций.
-          </Text>
-        </Stack>
+        <Text size="sm" c="dimmed">
+          По этим диапазонам строятся тысячи сценариев{' '}
+          <Term name="Монте-Карло">Монте-Карло</Term>, одинаковых для всех позиций.
+        </Text>
         {editing && graph?.nodes.length ? (
           <Button variant="light" size="xs" leftSection={<IconPlus size={14} />} onClick={onAdd}>
             Добавить параметр
@@ -383,6 +380,8 @@ function Body({
   const [editingName, setEditingName] = useState<string | null>(null);
   const [newOne, setNewOne] = useState<[string, ScenarioParameter] | null>(null);
   const [jsonOpen, setJsonOpen] = useState(false);
+  // The scenario opens on request; a problem in it opens it by itself.
+  const [scenarioOpen, setScenarioOpen] = useState(() => split(failing(stop?.violations)).scenario.length > 0);
 
   const violations = useMemo(() => {
     if (refused) return refused;
@@ -440,6 +439,13 @@ function Body({
   const modalName = newOne ? newOne[0] : editingName;
   const modalParameter = newOne ? newOne[1] : editingName ? parameters[editingName] : null;
   const blocking = violations.length > 0;
+  const pending = !hasGraph && ACTIVE.includes(status.status);
+  const count = Object.keys(parameters).length;
+  const scenarioSummary = count
+    ? `${plural(count, 'параметр', 'параметра', 'параметров')}${!draft && plan.confirmed ? ', подтверждён аналитиком' : ''}`
+    : pending
+      ? 'появится, когда модель разберёт событие'
+      : 'не задан';
 
   return (
     <Stack gap="xl" pb={draft ? 96 : 0}>
@@ -456,23 +462,46 @@ function Body({
       )}
 
       <Paper p="lg">
-        <Stack gap="lg">
-          <ScenarioTable
-            plan={plan}
-            parameters={parameters}
-            graph={graph}
-            document={document}
-            editing={!!draft}
-            pending={!hasGraph && ACTIVE.includes(status.status)}
-            onEdit={setEditingName}
-            onAdd={() => graph && setNewOne(newParameter(parameters, graph, factors))}
-          />
-          <Effects effects={check.data?.effects ?? []} />
-          {!draft && plan.confirmed && (
-            <Text size="sm" c="dimmed">
-              Сценарий подтверждён аналитиком.
-            </Text>
-          )}
+        <Stack gap="md">
+          <Group justify="space-between" gap="xs">
+            <Title order={4}>
+              <Anchor
+                component="button"
+                type="button"
+                inherit
+                c="dark.7"
+                aria-expanded={scenarioOpen}
+                onClick={() => setScenarioOpen(!scenarioOpen)}
+              >
+                {scenarioOpen ? '▾' : '▸'} Сценарий: насколько сильным может быть событие
+              </Anchor>
+            </Title>
+            {!scenarioOpen && (
+              <Text size="sm" c="dimmed">
+                {scenarioSummary}
+              </Text>
+            )}
+          </Group>
+          <Collapse in={scenarioOpen}>
+            <Stack gap="lg">
+              <ScenarioTable
+                plan={plan}
+                parameters={parameters}
+                graph={graph}
+                document={document}
+                editing={!!draft}
+                pending={pending}
+                onEdit={setEditingName}
+                onAdd={() => graph && setNewOne(newParameter(parameters, graph, factors))}
+              />
+              <Effects effects={check.data?.effects ?? []} />
+              {!draft && plan.confirmed && (
+                <Text size="sm" c="dimmed">
+                  Сценарий подтверждён аналитиком.
+                </Text>
+              )}
+            </Stack>
+          </Collapse>
         </Stack>
       </Paper>
 

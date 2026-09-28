@@ -1,0 +1,10 @@
+{
+  "snapshot_id": "SYNTHETIC-SGZH-2026-09-11",
+  "as_of": "2026-09-11",
+  "label": "Синтетические данные ГК «SGZH» на 11.09.2026",
+  "kind": "demo",
+  "metadata": {
+    "synthetic": true,
+    "generated_by": "demo/build_catalog.py"
+  }
+}
