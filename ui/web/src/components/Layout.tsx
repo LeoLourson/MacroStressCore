@@ -21,16 +21,9 @@ import { MODES, PROVIDERS, ROLES, label } from '../lib/labels';
 
 function Logo() {
   return (
-    <Group gap={10} wrap="nowrap">
-      <Box w={28} h={28} bg="mts.6" style={{ borderRadius: 6, display: 'grid', placeItems: 'center' }}>
-        <Text c="white" fw={700} size="sm" lh={1}>
-          M
-        </Text>
-      </Box>
-      <Text fw={600} size="lg" c="dark.8">
-        MacroStress
-      </Text>
-    </Group>
+    <Text fw={600} size="lg" c="dark.8">
+      MacroStress
+    </Text>
   );
 }
 
@@ -150,7 +143,7 @@ export function SignedInLayout() {
   }
   return (
     <AppShell header={{ height: 60 }} padding={0}>
-      <AppShell.Header style={{ borderTop: '3px solid var(--msa-mts)' }}>
+      <AppShell.Header>
         <Header />
       </AppShell.Header>
       <AppShell.Main>
