@@ -31,7 +31,7 @@ export function Login() {
   };
 
   return (
-    <Center mih="100vh" p="md" style={{ borderTop: '3px solid var(--msa-mts)' }}>
+    <Center mih="100vh" p="md">
       <Stack w="100%" maw={440} gap="lg">
         <Stack gap={4}>
           <Title order={2}>MacroStress</Title>
