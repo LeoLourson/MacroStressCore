@@ -31,7 +31,7 @@ $$
 где $d_t$ — число дней в месяце $t$. Коэффициент дисконтирования на конец месяца:
 
 $$
-DF_t = \exp\Bigl(-\sum_{k \le t} r_k \, \delta_k\Bigr).
+DF_t = \exp\Bigl(-\sum_{k \le t} r_k \thinspace\delta_k\Bigr).
 $$
 
 **Деньги** — в миллионах базовой валюты портфеля (`RUB_million`). **Знак потерь:**
@@ -40,7 +40,7 @@ $$
 **Реализации.** Сценарий представлен матрицей из $R$ независимых реплик по $N$ точек:
 
 $$
-M = R \cdot N, \qquad R = 8, \qquad M \in \{8192,\ 16384,\ 32768\}.
+M = R \cdot N, \qquad R = 8, \qquad M \in \lbrace8192,\ 16384,\ 32768\rbrace.
 $$
 
 По умолчанию $M = 8192$ ($N = 1024$). Индекс реализации — $j = 1, \dots, M$.
@@ -49,7 +49,7 @@ $$
 `method="linear"`): для выборки $x_{(1)} \le \dots \le x_{(M)}$ и уровня $p$
 
 $$
-h = (M - 1)\,p, \qquad Q_p = x_{(\lfloor h \rfloor + 1)} + \bigl(h - \lfloor h \rfloor\bigr)\bigl(x_{(\lfloor h \rfloor + 2)} - x_{(\lfloor h \rfloor + 1)}\bigr).
+h = (M - 1)\thinspace p, \qquad Q_p = x_{(\lfloor h \rfloor + 1)} + \bigl(h - \lfloor h \rfloor\bigr)\bigl(x_{(\lfloor h \rfloor + 2)} - x_{(\lfloor h \rfloor + 1)}\bigr).
 $$
 
 P5, P50, P95 — это $Q_{0.05}$, $Q_{0.5}$, $Q_{0.95}$; они всегда показываются вместе.
@@ -76,7 +76,7 @@ $$
 $$
 F^{-1}(u) =
 \begin{cases}
-a + \sqrt{u\,(b - a)(c - a)}, & u < \dfrac{c - a}{b - a},\\[2mm]
+a + \sqrt{u\thinspace(b - a)(c - a)}, & u < \dfrac{c - a}{b - a},\cr
 b - \sqrt{(1 - u)(b - a)(b - c)}, & u \ge \dfrac{c - a}{b - a}.
 \end{cases}
 $$
@@ -84,27 +84,27 @@ $$
 Равномерное на $[a, b]$:
 
 $$
-F^{-1}(u) = a + (b - a)\,u.
+F^{-1}(u) = a + (b - a)\thinspace u.
 $$
 
 Усечённое нормальное со средним $\mu$, отклонением $\sigma$ и границами $[a, b]$, где
 $\alpha = (a - \mu)/\sigma$, $\beta = (b - \mu)/\sigma$:
 
 $$
-F^{-1}(u) = \mu + \sigma\,\Phi^{-1}\bigl(\Phi(\alpha) + u\,(\Phi(\beta) - \Phi(\alpha))\bigr).
+F^{-1}(u) = \mu + \sigma\thinspace\Phi^{-1}\bigl(\Phi(\alpha) + u\thinspace(\Phi(\beta) - \Phi(\alpha))\bigr).
 $$
 
 Логнормальное (используется для эластичностей рёбер графа), $\mu$ и $\sigma$ — параметры
 логарифма:
 
 $$
-F^{-1}(u) = \exp\bigl(\mu + \sigma\,\Phi^{-1}(u)\bigr).
+F^{-1}(u) = \exp\bigl(\mu + \sigma\thinspace\Phi^{-1}(u)\bigr).
 $$
 
 Эмпирическое по выборке $s_{(1)} \le \dots \le s_{(n)}$:
 
 $$
-F^{-1}(u) = s_{(\min(\lfloor u n \rfloor + 1,\; n))}.
+F^{-1}(u) = s_{(\min(\lfloor u n \rfloor + 1,\  n))}.
 $$
 
 Аргумент $\Phi^{-1}$ ограничивается отрезком $[\varepsilon, 1 - \varepsilon]$,
@@ -118,11 +118,11 @@ $\varepsilon = 2^{-53}$.
 $$
 x^{c} =
 \begin{cases}
-v, & \text{точка},\\
-c, & \text{треугольное (мода)},\\
-(a + b)/2, & \text{равномерное},\\
-\mu, & \text{усечённое нормальное},\\
-\exp(\mu + \sigma^2/2), & \text{логнормальное},\\
+v, & \text{точка},\cr
+c, & \text{треугольное (мода)},\cr
+(a + b)/2, & \text{равномерное},\cr
+\mu, & \text{усечённое нормальное},\cr
+\exp(\mu + \sigma^2/2), & \text{логнормальное},\cr
 \mathrm{median}(s), & \text{эмпирическое}.
 \end{cases}
 $$
@@ -146,7 +146,7 @@ $$
 диагонали) точки пропускаются через гауссову копулу:
 
 $$
-C = L L^{\top}, \qquad u' = \Phi\bigl(\Phi^{-1}(u)\,L^{\top}\bigr).
+C = L L^{\top}, \qquad u' = \Phi\bigl(\Phi^{-1}(u)\thinspace L^{\top}\bigr).
 $$
 
 Матрица, не являющаяся положительно определённой, отклоняется без «ремонта».
@@ -167,7 +167,7 @@ $$
 Остаточный шок со стандартным отклонением $\sigma$:
 
 $$
-\varepsilon_{r,i} = \sigma\,\Phi^{-1}(u_{r,i}).
+\varepsilon_{r,i} = \sigma\thinspace\Phi^{-1}(u_{r,i}).
 $$
 
 Эластичность ребра — $F_e^{-1}(u_{r,i})$ по его распределению (треугольное, равномерное
@@ -180,15 +180,15 @@ $$
 
 $$
 \bar\theta = \frac{1}{R}\sum_{r=1}^{R}\theta_r, \qquad
-SE = \sqrt{\frac{\sum_{r=1}^{R}(\theta_r - \bar\theta)^2}{R\,(R - 1)}}, \qquad
-w = t_{(1+\gamma)/2,\;R-1}\cdot SE,
+SE = \sqrt{\frac{\sum_{r=1}^{R}(\theta_r - \bar\theta)^2}{R\thinspace(R - 1)}}, \qquad
+w = t_{(1+\gamma)/2,\ R-1}\cdot SE,
 $$
 
 где $t$ — квантиль распределения Стьюдента, $\gamma = 0.95$, $w$ — полуширина
 доверительного интервала. Точность достигнута, если
 
 $$
-w \le \max\bigl(\text{abs\_tol},\; \text{rel\_tol}\cdot\max(|\bar\theta|,\ \text{scale})\bigr).
+w \le \max\bigl(\text{tol}_{\text{abs}},\  \text{tol}_{\text{rel}}\cdot\max(|\bar\theta|,\ \text{scale})\bigr).
 $$
 
 Допуски по умолчанию:
@@ -213,7 +213,7 @@ $$
 ### 3.1. Граф и координаты
 
 Граф события — ациклический граф с узлами «событие», «канал», «отрасль» (с кодом ОКВЭД) и
-«фактор». Ребро $e = (s \to v)$ несёт знак $\sigma_e \in \{-1, +1\}$, эластичность
+«фактор». Ребро $e = (s \to v)$ несёт знак $\sigma_e \in \lbrace-1, +1\rbrace$, эластичность
 $\eta_e \ge 0$ (число или распределение) и лаг $\ell_e \in [0, 36]$ месяцев.
 
 Сигнал фактора с относительным применением (выручка, себестоимость, отрасль акций)
@@ -228,7 +228,7 @@ $\eta_e \ge 0$ (число или распределение) и лаг $\ell_e 
 $$
 d_c(t) =
 \begin{cases}
-\ln(1 + \xi), & \text{относительный фактор},\ \xi > -1,\\
+\ln(1 + \xi), & \text{относительный фактор},\ \xi > -1,\cr
 \xi, & \text{аддитивный фактор},
 \end{cases}
 \qquad t = 1, \dots, H.
@@ -240,7 +240,7 @@ $$
 ребра фиксированное: весь эффект приходит через $\ell_e$ месяцев. Сигнал узла:
 
 $$
-y_v(t) = d_v(t) + \sum_{e = (s \to v)} g_e \, y_s(t - \ell_e), \qquad g_e = \sigma_e\,|\eta_e|.
+y_v(t) = d_v(t) + \sum_{e = (s \to v)} g_e \thinspace y_s(t - \ell_e), \qquad g_e = \sigma_e\thinspace|\eta_e|.
 $$
 
 Сигнал до начала горизонта равен нулю:
@@ -257,7 +257,7 @@ $$
 пятого месяца. Общее ядро двух рёбер — свёртка их ядер:
 
 $$
-K_{e_1 e_2}(l) = \sum_{k} K_{e_1}(k)\,K_{e_2}(l - k).
+K_{e_1 e_2}(l) = \sum_{k} K_{e_1}(k)\thinspace K_{e_2}(l - k).
 $$
 
 В центральном расчёте $\eta_e$ — центральное значение распределения ребра (раздел 2.2); в
@@ -271,7 +271,7 @@ $$
 $$
 \Delta x(t) =
 \begin{cases}
-e^{\,y_f(t)} - 1, & \text{относительный фактор},\\
+e^{\thinspace y_f(t)} - 1, & \text{относительный фактор},\cr
 y_f(t), & \text{аддитивный фактор},
 \end{cases}
 $$
@@ -291,7 +291,7 @@ $b$ — код эмитента, $n = \min(|a|, |b|)$ после усечени�
 $$
 \mathrm{cov}(a, b) =
 \begin{cases}
-n, & n \ge 2 \ \text{и}\ a_{1..n} = b_{1..n},\\
+n, & n \ge 2 \ \text{и}\ a_{1..n} = b_{1..n},\cr
 0, & \text{иначе}.
 \end{cases}
 $$
@@ -336,14 +336,14 @@ $$
 $s_{imp}$:
 
 $$
-u_t = \mathrm{comp}\bigl(\rho^{C}_t,\ \rho^{L}_t,\ s_{imp}\,\rho^{FX}_t\bigr).
+u_t = \mathrm{comp}\bigl(\rho^{C}_t,\ \rho^{L}_t,\ s_{imp}\thinspace\rho^{FX}_t\bigr).
 $$
 
 Перенос затрат в цену с долей переноса $\rho^{pt} \in [0, 1]$ и долей переменных затрат в
 выручке $s_c$:
 
 $$
-s_c = \frac{C_0}{R_0}, \qquad 1 + \pi_t = 1 + \rho^{pt}\, s_c\, u_t.
+s_c = \frac{C_0}{R_0}, \qquad 1 + \pi_t = 1 + \rho^{pt}\thinspace s_c\thinspace u_t.
 $$
 
 Реакция спроса на цену с эластичностью $\varepsilon < 0$ и итоговое изменение объёма:
@@ -359,13 +359,13 @@ $$
 переменная части операционных расходов; $I^{oth}$ — прочие операционные доходы):
 
 $$
-R_t = R_0\,(1 + \pi_t)(1 + D_t), \qquad
-C_t = C_0\,(1 + u_t)(1 + D_t), \qquad
+R_t = R_0\thinspace(1 + \pi_t)(1 + D_t), \qquad
+C_t = C_0\thinspace(1 + u_t)(1 + D_t), \qquad
 F_t = F_0,
 $$
 
 $$
-O_t = O^{fix}_0 + O^{var}_0\,(1 + D_t), \qquad
+O_t = O^{fix}_0 + O^{var}_0\thinspace(1 + D_t), \qquad
 EBITDA_t = R_t - C_t - F_t - O_t + I^{oth}.
 $$
 
@@ -381,9 +381,9 @@ $$
 `out_of_domain:dso` и статус «ошибка» (значения не обрезаются).
 
 $$
-AR_t = \frac{R_t}{d_t}\,DSO_t, \qquad
-INV_t = \frac{C_t}{d_t}\,DIO_t, \qquad
-AP_t = \frac{C_t}{d_t}\,DPO_t,
+AR_t = \frac{R_t}{d_t}\thinspace DSO_t, \qquad
+INV_t = \frac{C_t}{d_t}\thinspace DIO_t, \qquad
+AP_t = \frac{C_t}{d_t}\thinspace DPO_t,
 $$
 
 $$
@@ -396,7 +396,7 @@ $$
 ### 4.4. Денежный поток до обслуживания долга
 
 $$
-Tax_t = \tau\,\max(EBITDA_t, 0), \qquad
+Tax_t = \tau\thinspace\max(EBITDA_t, 0), \qquad
 CAPEX_t = (K^{maint}_0 + K^{growth}_0)(1 + \rho^{K}_t),
 $$
 
@@ -419,11 +419,11 @@ $$
 Остаток транша на конец месяца и проценты на средний остаток:
 
 $$
-B_{k,t} = B_{k,t-1} + Draw_{k,t} - Repay_{k,t} + x_t\,[k = \text{линия}],
+B_{k,t} = B_{k,t-1} + Draw_{k,t} - Repay_{k,t} + x_t\thinspace[k = \text{линия}],
 $$
 
 $$
-Int_t = \sum_k \Bigl(r_{k,t}\,\delta_t\,\frac{B_{k,t-1} + B_{k,t}}{2} + Fee_{k,t}\Bigr).
+Int_t = \sum_k \Bigl(r_{k,t}\thinspace\delta_t\thinspace\frac{B_{k,t-1} + B_{k,t}}{2} + Fee_{k,t}\Bigr).
 $$
 
 Деньги на конец месяца:
@@ -469,7 +469,7 @@ $$
 $$
 LTM_t(z) =
 \begin{cases}
-\dfrac{12}{t}\displaystyle\sum_{k=1}^{t} z_k, & t < 12,\\[3mm]
+\dfrac{12}{t}\displaystyle\sum_{k=1}^{t} z_k, & t < 12,\cr
 \displaystyle\sum_{k=t-11}^{t} z_k, & t \ge 12.
 \end{cases}
 $$
@@ -479,8 +479,8 @@ $$
 $$
 ICR_t =
 \begin{cases}
-\dfrac{LTM_t(EBITDA)}{LTM_t(Int)}, & LTM_t(Int) > 0,\\[2mm]
-+\infty, & LTM_t(Int) \le 0,\ LTM_t(EBITDA) > 0,\\
+\dfrac{LTM_t(EBITDA)}{LTM_t(Int)}, & LTM_t(Int) > 0,\cr
++\infty, & LTM_t(Int) \le 0,\ LTM_t(EBITDA) > 0,\cr
 \text{не определён}, & \text{иначе},
 \end{cases}
 \qquad
@@ -496,7 +496,7 @@ $\Delta r_t$. Ставка проекта — субсидированная, е
 `project_rate_subsidy_simplified`), иначе базовая.
 
 $$
-CAPEX_t = K_t\,(1 + \rho^{K}_t), \qquad Sales_t = S_t\,(1 + \rho^{R}_t),
+CAPEX_t = K_t\thinspace(1 + \rho^{K}_t), \qquad Sales_t = S_t\thinspace(1 + \rho^{R}_t),
 $$
 
 где $K_t$ — затраты месяца по графику (1–12 и 13–24 месяцы), $S_t$ — продажи начиная с
@@ -518,7 +518,7 @@ $$
 Проценты капитализируются:
 
 $$
-Int_t = (r_t + \Delta r_t)\,\delta_t\,\frac{B_{t-1} + (B_{t-1} + Draw_t)}{2} + Fee_t, \qquad
+Int_t = (r_t + \Delta r_t)\thinspace\delta_t\thinspace\frac{B_{t-1} + (B_{t-1} + Draw_t)}{2} + Fee_t, \qquad
 B'_t = B_{t-1} + Draw_t + Int_t.
 $$
 
@@ -527,7 +527,7 @@ $$
 
 $$
 Avail_t = Escrow_{t-1} + Sales_t - Refunds_t, \qquad
-Release_t = \phi\,Avail_t\,[t \ge t_c + 1], \qquad Escrow_t = Avail_t - Release_t,
+Release_t = \phi\thinspace Avail_t\thinspace[t \ge t_c + 1], \qquad Escrow_t = Avail_t - Release_t,
 $$
 
 $$
@@ -561,12 +561,12 @@ $\mathrm{comp}(\rho^{C}_t, \rho^{L}_t)$. Чистые инвестиции в л
 плановой амортизацией $a$, досрочными погашениями $p$ и долей аванса $\alpha$:
 
 $$
-NIL_t = NIL_{t-1} - \frac{a\,NIL_0}{12} - \frac{p\,NIL_0}{12} - WO_t + \frac{NB}{12}(1 + \rho^{R}_t)(1 - \alpha),
+NIL_t = NIL_{t-1} - \frac{a\thinspace NIL_0}{12} - \frac{p\thinspace NIL_0}{12} - WO_t + \frac{NB}{12}(1 + \rho^{R}_t)(1 - \alpha),
 $$
 
 $$
-FI_t = y\,\delta_t\,\frac{NIL_{t-1} + NIL_t}{2}, \qquad
-FC_t = (r^{f} + \Delta r_t)\,\delta_t\,\frac{Debt_{t-1} + Debt_t}{2} + Fee_t,
+FI_t = y\thinspace\delta_t\thinspace\frac{NIL_{t-1} + NIL_t}{2}, \qquad
+FC_t = (r^{f} + \Delta r_t)\thinspace\delta_t\thinspace\frac{Debt_{t-1} + Debt_t}{2} + Fee_t,
 $$
 
 $$
@@ -600,20 +600,20 @@ $$
 $$
 r^{icr}_t =
 \begin{cases}
-0, & ICR_t = +\infty,\\
-\ln\bigl(1 + 1/ICR_t\bigr), & ICR_t\ \text{определён и}\ > 0,\\
+0, & ICR_t = +\infty,\cr
+\ln\bigl(1 + 1/ICR_t\bigr), & ICR_t\ \text{определён и}\ > 0,\cr
 \bar c_{icr}, & \text{иначе},
 \end{cases}
 \qquad
 r^{lev}_t =
 \begin{cases}
-\ln\bigl(1 + \max(L_t, 0)\bigr), & L_t\ \text{определён},\\
+\ln\bigl(1 + \max(L_t, 0)\bigr), & L_t\ \text{определён},\cr
 \bar c_{lev}, & \text{иначе},
 \end{cases}
 $$
 
 $$
-n_t = [\,LTM_t(EBITDA) \le 0\,],
+n_t = [\thinspace LTM_t(EBITDA) \le 0\thinspace],
 $$
 
 где $L_t$ — $ND/EBITDA$ (операционная компания) или $D/E$ (лизинг). Для проектного
@@ -625,7 +625,7 @@ $Cov_t$ вместо $ICR_t$.
 Линейный предиктор и логистическая функция на каждом месяце:
 
 $$
-z_t = \beta_0 + \sum_j \beta_j\,x_{j,t}, \qquad PD_t = \frac{1}{1 + e^{-z_t}}.
+z_t = \beta_0 + \sum_j \beta_j\thinspace x_{j,t}, \qquad PD_t = \frac{1}{1 + e^{-z_t}}.
 $$
 
 $PD_t$ читается как 12-месячная вероятность дефолта, если для сегмента заемщика есть
@@ -668,7 +668,7 @@ $t$:
 
 $$
 h_t = -\ln(1 - PD_t), \qquad
-S_t = \exp\Bigl(-\sum_{k \le t} h_k\,\delta_k\Bigr), \qquad
+S_t = \exp\Bigl(-\sum_{k \le t} h_k\thinspace\delta_k\Bigr), \qquad
 q_t = S_{t-1}\bigl(1 - e^{-h_t \delta_t}\bigr),\ S_0 = 1.
 $$
 
@@ -694,7 +694,7 @@ $$
 Приведённая стоимость взыскания по предмету залога и LGD с очерёдностью требований:
 
 $$
-RecPV_i = p_i\,V_i(1 + \Delta V)(1 - hc_i)(1 - c_i)\,e^{-r\,\tau_i},
+RecPV_i = p_i\thinspace V_i(1 + \Delta V)(1 - hc_i)(1 - c_i)\thinspace e^{-r\thinspace\tau_i},
 $$
 
 $$
@@ -711,18 +711,18 @@ $t_i = i/f$ лет до погашения, в последний момент �
 риск-нейтральная интенсивность и ставка дисконтирования:
 
 $$
-h^{Q} = \frac{s}{LGD}, \qquad z = \ln(1 + r_f), \qquad Rec = 100\,(1 - LGD).
+h^{Q} = \frac{s}{LGD}, \qquad z = \ln(1 + r_f), \qquad Rec = 100\thinspace(1 - LGD).
 $$
 
 Цена при сдвиге спреда $b$:
 
 $$
-S^{Q}_i = \exp\Bigl(-\sum_{k \le i} h^{Q}\,\Delta t_k\Bigr), \qquad
+S^{Q}_i = \exp\Bigl(-\sum_{k \le i} h^{Q}\thinspace\Delta t_k\Bigr), \qquad
 q^{Q}_i = S^{Q}_{i-1}\bigl(1 - e^{-h^{Q}\Delta t_i}\bigr),
 $$
 
 $$
-P(b) = \sum_i S^{Q}_i\,CF_i\,e^{-(z + b)\,t_i} + \sum_i q^{Q}_i\,Rec\,e^{-(z + b)\,t_i}.
+P(b) = \sum_i S^{Q}_i\thinspace CF_i\thinspace e^{-(z + b)\thinspace t_i} + \sum_i q^{Q}_i\thinspace Rec\thinspace e^{-(z + b)\thinspace t_i}.
 $$
 
 Изменение спреда в сценарии пропорционально отношению PD (флаг
@@ -737,19 +737,19 @@ $$
 Изменение стоимости позиции с номиналом $FV$ (центральное и в каждой реализации):
 
 $$
-\Delta V = \frac{P(\Delta s) - P(0)}{100}\,FV.
+\Delta V = \frac{P(\Delta s) - P(0)}{100}\thinspace FV.
 $$
 
 Спредовая дюрация и выпуклость — центральными разностями с шагом $\epsilon = 10^{-4}$;
 локальное приближение показывается рядом с полной переоценкой:
 
 $$
-D = -\frac{P(+\epsilon) - P(-\epsilon)}{2\epsilon\,P(0)}, \qquad
-C = \frac{P(+\epsilon) - 2P(0) + P(-\epsilon)}{\epsilon^2\,P(0)},
+D = -\frac{P(+\epsilon) - P(-\epsilon)}{2\epsilon\thinspace P(0)}, \qquad
+C = \frac{P(+\epsilon) - 2P(0) + P(-\epsilon)}{\epsilon^2\thinspace P(0)},
 $$
 
 $$
-\Delta P^{loc} = P(0)\Bigl(-D\,\Delta s + \tfrac{1}{2}\,C\,\Delta s^2\Bigr).
+\Delta P^{loc} = P(0)\Bigl(-D\thinspace\Delta s + \tfrac{1}{2}\thinspace C\thinspace\Delta s^2\Bigr).
 $$
 
 При $|\Delta s| > 0{,}01$ ставится флаг `duration_approximation_gap`: приближение вне
@@ -763,7 +763,7 @@ $$
 $$
 \text{hr}_t =
 \begin{cases}
-m_t - \kappa, & \text{операторы}\ \ge,\ >,\\
+m_t - \kappa, & \text{операторы}\ \ge,\ >,\cr
 \kappa - m_t, & \text{операторы}\ \le,\ <.
 \end{cases}
 $$
@@ -773,7 +773,7 @@ $$
 метрика соблюдена в одном из следующих $w$ месяцев:
 
 $$
-B_j = \bigvee_{t \in T_{check}} \Bigl(\lnot\,\text{ok}_{j,t} \wedge \lnot \bigvee_{k=1}^{w} \text{ok}_{j,t+k}\Bigr), \qquad
+B_j = \bigvee_{t \in T_{check}} \Bigl(\lnot\thinspace\text{ok}_{j,t} \wedge \lnot \bigvee_{k=1}^{w} \text{ok}_{j,t+k}\Bigr), \qquad
 P(\text{нарушение}) = \frac{1}{M}\sum_{j=1}^{M} B_j.
 $$
 
@@ -787,7 +787,7 @@ $$
 путь стресса и норма направления:
 
 $$
-d = (x^{c}_1, \dots, x^{c}_n), \qquad x(\lambda) = \lambda\,d, \qquad \|d\| = \sqrt{\textstyle\sum_i d_i^2}.
+d = (x^{c}_1, \dots, x^{c}_n), \qquad x(\lambda) = \lambda\thinspace d, \qquad \Vert d\Vert = \sqrt{\textstyle\sum_i d_i^2}.
 $$
 
 Верхняя граница $\lambda$ сохраняет каждый отрицательный относительный шок больше
@@ -819,7 +819,7 @@ $v(S)$ — ожидаемые потери (или балл риска на ко
 — база. Точный расчёт при $m \le 8$ игроков:
 
 $$
-\varphi_i = \sum_{S \subseteq N \setminus \{i\}} \frac{|S|!\,(m - |S| - 1)!}{m!}\bigl(v(S \cup \{i\}) - v(S)\bigr).
+\varphi_i = \sum_{S \subseteq N \setminus \lbrace i\rbrace} \frac{|S|!\thinspace(m - |S| - 1)!}{m!}\bigl(v(S \cup \lbrace i\rbrace) - v(S)\bigr).
 $$
 
 Проверяется эффективность: сумма вкладов равна объяснённому эффекту,
@@ -834,7 +834,7 @@ $$
 игрока $i$, $n$ — число перестановок:
 
 $$
-1{,}96\,\frac{\hat\sigma_i}{\sqrt{n}} \le \max\Bigl(10^{-3},\ 0{,}01\max\bigl(|v(N) - v(\varnothing)|,\ \text{scale}\bigr)\Bigr);
+1{,}96\thinspace\frac{\hat\sigma_i}{\sqrt{n}} \le \max\Bigl(10^{-3},\ 0{,}01\max\bigl(|v(N) - v(\varnothing)|,\ \text{scale}\bigr)\Bigr);
 $$
 
 иначе флаг `shapley_not_converged`. Вклад Шепли описывает разложение выхода модели, а не
@@ -845,7 +845,7 @@ $$
 Балл качества данных кредитной позиции:
 
 $$
-dq = 0{,}4\,c + 0{,}3\,e^{-a/365} + 0{,}3\,w, \qquad dq \le 1\ \ (\le 0{,}5\ \text{при ограниченном раскрытии}),
+dq = 0{,}4\thinspace c + 0{,}3\thinspace e^{-a/365} + 0{,}3\thinspace w, \qquad dq \le 1\ \ (\le 0{,}5\ \text{при ограниченном раскрытии}),
 $$
 
 где $c$ — доля заполненных полей раскрытия семейства, $a$ — возраст отчётности в днях на
@@ -892,7 +892,7 @@ $$
 $$
 \text{R1: } ICR_{P50} < 1{,}0, \qquad
 \text{R2: } \max_k P_k(\text{нарушение}) \ge 0{,}5, \qquad
-\text{R3: } 100\,\Delta PD_{P50} \ge 5,
+\text{R3: } 100\thinspace\Delta PD_{P50} \ge 5,
 $$
 
 $$
@@ -904,7 +904,7 @@ $$
 положительна):
 
 $$
-\rho_{r,fx} = \min\Bigl(1,\ \max\Bigl(0,\ \frac{\sum_{i \in \{\text{ставка},\,\text{курс}\}} \varphi_i}{\sum_i \varphi_i}\Bigr)\Bigr).
+\rho_{r,fx} = \min\Bigl(1,\ \max\Bigl(0,\ \frac{\sum_{i \in \lbrace\text{ставка},\thinspace\text{курс}\rbrace} \varphi_i}{\sum_i \varphi_i}\Bigr)\Bigr).
 $$
 
 ### 4.19. Оси риска
@@ -916,11 +916,11 @@ $c_m < c_h < c_c$ присваивает уровень:
 $$
 \text{band}(v) =
 \begin{cases}
-\text{critical}, & v \ge c_c,\\
-\text{high}, & c_h \le v < c_c,\\
-\text{medium}, & c_m \le v < c_h,\\
-\text{low}, & v < c_m,\\
-\text{not\_assessed}, & v\ \text{не измерено}.
+\text{critical}, & v \ge c_c,\cr
+\text{high}, & c_h \le v < c_c,\cr
+\text{medium}, & c_m \le v < c_h,\cr
+\text{low}, & v < c_m,\cr
+\text{не оценено}, & v\ \text{не измерено}.
 \end{cases}
 $$
 
@@ -959,18 +959,18 @@ $Q$ — число акций, $P_0$ — цена на дату оценки, $X
 
 $$
 r = \beta_m f_m + \beta_s f_s + \varepsilon, \qquad
-P_H = P_0\,e^{r}, \qquad X_H = X_0\,e^{f_{fx}},
+P_H = P_0\thinspace e^{r}, \qquad X_H = X_0\thinspace e^{f_{fx}},
 $$
 
 $$
-V_0 = \frac{Q\,P_0\,X_0}{10^6}, \qquad V_H = \frac{Q\,P_H\,X_H}{10^6}, \qquad
-D_H = \frac{Q\,d\,X_H}{10^6}, \qquad D_0 = \frac{Q\,d\,X_0}{10^6}.
+V_0 = \frac{Q\thinspace P_0\thinspace X_0}{10^6}, \qquad V_H = \frac{Q\thinspace P_H\thinspace X_H}{10^6}, \qquad
+D_H = \frac{Q\thinspace d\thinspace X_H}{10^6}, \qquad D_0 = \frac{Q\thinspace d\thinspace X_0}{10^6}.
 $$
 
 Результат относительно текущей стоимости, относительно базы (без шоков) и потери:
 
 $$
-PnL = V_H + D_H - V_0, \qquad PnL^{vs\,base} = PnL - D_0, \qquad Loss = -PnL.
+PnL = V_H + D_H - V_0, \qquad PnL^{vs\thinspace base} = PnL - D_0, \qquad Loss = -PnL.
 $$
 
 Дивиденды пересчитываются по курсу конца горизонта (флаг `dividends_at_horizon_fx`).
@@ -987,7 +987,7 @@ $V_0$.
 ### 5.4. Качество данных
 
 $$
-dq = 0{,}5\,e^{-a_p/30} + 0{,}5\,w_s,
+dq = 0{,}5\thinspace e^{-a_p/30} + 0{,}5\thinspace w_s,
 $$
 
 где $a_p$ — возраст цены в днях, $w_s = 1$, если все чувствительности — исторические
@@ -1001,7 +1001,7 @@ $$
 | E2 | медианный результат отрицателен, если E1 не сработало | список наблюдения |
 
 $$
-\text{E1: } 100\,\frac{Loss_{P95}}{V_0} \ge 20, \qquad \text{E2: } PnL_{P50} < 0.
+\text{E1: } 100\thinspace\frac{Loss_{P95}}{V_0} \ge 20, \qquad \text{E2: } PnL_{P50} < 0.
 $$
 
 ---
@@ -1034,7 +1034,7 @@ $$
 Определение при уровне $\alpha = 0{,}95$:
 
 $$
-ES_\alpha = \frac{1}{1-\alpha}\int_\alpha^1 VaR_u\,du.
+ES_\alpha = \frac{1}{1-\alpha}\int_\alpha^1 VaR_u\thinspace du.
 $$
 
 Дискретная форма: каждая порядковая статистика $L_{(k)}$ несёт массу $1/M$, в хвост
@@ -1042,7 +1042,7 @@ $$
 
 $$
 \omega_k = \max\Bigl(\frac{k}{M} - \max\Bigl(\frac{k-1}{M},\ \alpha\Bigr),\ 0\Bigr), \qquad
-ES_{95} = \max\Bigl(\frac{1}{1 - \alpha}\sum_{k=1}^{M}\omega_k\,L_{(k)},\ VaR_{95}\Bigr).
+ES_{95} = \max\Bigl(\frac{1}{1 - \alpha}\sum_{k=1}^{M}\omega_k\thinspace L_{(k)},\ VaR_{95}\Bigr).
 $$
 
 ### 6.3. Вклады позиций в хвост
@@ -1051,7 +1051,7 @@ $$
 $j$, делённый на $1 - \alpha$). Вклад позиции в ES95 и сумма вкладов:
 
 $$
-ES_i = \sum_{j=1}^{M}\tilde\omega_j\,L_{ij}, \qquad \sum_{i \in I} ES_i = \frac{1}{1-\alpha}\sum_k \omega_k L_{(k)}.
+ES_i = \sum_{j=1}^{M}\tilde\omega_j\thinspace L_{ij}, \qquad \sum_{i \in I} ES_i = \frac{1}{1-\alpha}\sum_k \omega_k L_{(k)}.
 $$
 
 Эффект диверсификации — разница суммы отдельных P95 и P95 портфеля (сумма P95
@@ -1099,7 +1099,7 @@ $$
 округления до показанных знаков или, для долей в процентах, после умножения на 100:
 
 $$
-x_{answer} \in \bigl\{\,x,\ \mathrm{round}_n(x),\ \mathrm{round}_n(100\,x)\,\bigr\}.
+x_{answer} \in \bigl\lbrace\thinspace x,\ \mathrm{round}_n(x),\ \mathrm{round}_n(100\thinspace x)\thinspace\bigr\rbrace.
 $$
 
 Неподтверждённые числа получают одну попытку исправления; затем ответ собирается из
