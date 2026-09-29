@@ -123,7 +123,7 @@ c, & \text{треугольное (мода)},\\
 (a + b)/2, & \text{равномерное},\\
 \mu, & \text{усечённое нормальное},\\
 \exp(\mu + \sigma^2/2), & \text{логнормальное},\\
-\operatorname{median}(s), & \text{эмпирическое}.
+\mathrm{median}(s), & \text{эмпирическое}.
 \end{cases}
 $$
 
@@ -155,8 +155,8 @@ $$
 
 Остаточный шок позиции и неопределённая эластичность ребра графа генерируются из
 отдельного детерминированного потока. Ключ потока — первые 8 байт
-$\operatorname{SHA256}(\text{seed}:\text{subject}:\text{name})$ для шока и
-$\operatorname{SHA256}(\text{seed}:\text{edge}:\text{src}\to\text{dst})$ для ребра. Для
+$\mathrm{SHA256}(\text{seed}:\text{subject}:\text{name})$ для шока и
+$\mathrm{SHA256}(\text{seed}:\text{edge}:\text{src}\to\text{dst})$ для ребра. Для
 реплики $r$ берётся генератор с ключом $(\text{key}, r)$, случайная перестановка $\pi_r$
 чисел $0, \dots, N - 1$ и равномерные $U_{r,i}$. Стратифицированная выборка:
 
@@ -289,7 +289,7 @@ $$
 $b$ — код эмитента, $n = \min(|a|, |b|)$ после усечения до четырёх цифр. Глубина покрытия:
 
 $$
-\operatorname{cov}(a, b) =
+\mathrm{cov}(a, b) =
 \begin{cases}
 n, & n \ge 2 \ \text{и}\ a_{1..n} = b_{1..n},\\
 0, & \text{иначе}.
@@ -326,7 +326,7 @@ $$
 Изменения, применяемые друг за другом, перемножаются:
 
 $$
-\operatorname{comp}(a_1, \dots, a_n) = \prod_{i=1}^{n}(1 + a_i) - 1.
+\mathrm{comp}(a_1, \dots, a_n) = \prod_{i=1}^{n}(1 + a_i) - 1.
 $$
 
 ### 4.2. Операционная компания: цены, спрос, затраты
@@ -336,7 +336,7 @@ $$
 $s_{imp}$:
 
 $$
-u_t = \operatorname{comp}\bigl(\rho^{C}_t,\ \rho^{L}_t,\ s_{imp}\,\rho^{FX}_t\bigr).
+u_t = \mathrm{comp}\bigl(\rho^{C}_t,\ \rho^{L}_t,\ s_{imp}\,\rho^{FX}_t\bigr).
 $$
 
 Перенос затрат в цену с долей переноса $\rho^{pt} \in [0, 1]$ и долей переменных затрат в
@@ -349,7 +349,7 @@ $$
 Реакция спроса на цену с эластичностью $\varepsilon < 0$ и итоговое изменение объёма:
 
 $$
-1 + q_t = (1 + \pi_t)^{\varepsilon}, \qquad D_t = \operatorname{comp}(\rho^{R}_t,\ q_t).
+1 + q_t = (1 + \pi_t)^{\varepsilon}, \qquad D_t = \mathrm{comp}(\rho^{R}_t,\ q_t).
 $$
 
 Если выручка базы не положительна, $\pi_t = 0$ и $D_t = \rho^{R}_t$.
@@ -557,7 +557,7 @@ $$
 ### 4.8. Лизинговая компания
 
 Шоки: новый бизнес $\rho^{R}_t$, стоимость фондирования $\Delta r_t$, операционные расходы
-$\operatorname{comp}(\rho^{C}_t, \rho^{L}_t)$. Чистые инвестиции в лизинг (NIL) с
+$\mathrm{comp}(\rho^{C}_t, \rho^{L}_t)$. Чистые инвестиции в лизинг (NIL) с
 плановой амортизацией $a$, досрочными погашениями $p$ и долей аванса $\alpha$:
 
 $$
@@ -571,7 +571,7 @@ $$
 
 $$
 PPOP_t = FI_t + FeeInc_t - Opex_t - FC_t, \qquad
-Opex_t = \frac{Opex}{12}\bigl(1 + \operatorname{comp}(\rho^{C}_t, \rho^{L}_t)\bigr),
+Opex_t = \frac{Opex}{12}\bigl(1 + \mathrm{comp}(\rho^{C}_t, \rho^{L}_t)\bigr),
 $$
 
 $$
@@ -647,7 +647,7 @@ $PD_t$ читается как 12-месячная вероятность деф
 $p^{ext}$ в базовой точке $z^{base}$ (якорение) меняет только свободный член:
 
 $$
-\beta_0' = \beta_0 + \operatorname{logit}(p^{ext}) - z^{base}, \qquad \operatorname{logit}(p) = \ln\frac{p}{1-p}.
+\beta_0' = \beta_0 + \mathrm{logit}(p^{ext}) - z^{base}, \qquad \mathrm{logit}(p) = \ln\frac{p}{1-p}.
 $$
 
 Если EBITDA не положительна уже в базе, все признаки на потолках и PD не может
@@ -1089,7 +1089,7 @@ $$
 округления до показанного числа знаков $n$ по правилу «к ближайшему чётному»:
 
 $$
-\operatorname{round}_n(x_{tree}) = \operatorname{round}_n(x_{text}).
+\mathrm{round}_n(x_{tree}) = \mathrm{round}_n(x_{text}).
 $$
 
 Число без такой ссылки отклоняет отчёт.
@@ -1099,7 +1099,7 @@ $$
 округления до показанных знаков или, для долей в процентах, после умножения на 100:
 
 $$
-x_{answer} \in \bigl\{\,x,\ \operatorname{round}_n(x),\ \operatorname{round}_n(100\,x)\,\bigr\}.
+x_{answer} \in \bigl\{\,x,\ \mathrm{round}_n(x),\ \mathrm{round}_n(100\,x)\,\bigr\}.
 $$
 
 Неподтверждённые числа получают одну попытку исправления; затем ответ собирается из
