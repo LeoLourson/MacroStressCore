@@ -133,7 +133,8 @@ plugin = Plugin(
             view_id="equity.position",
             instrument_types=TYPES,
             component="equity.position",
-            summary_metrics=("equity.pnl", "equity.loss"),
+            # The loss is the result with the opposite sign: a second column would mirror it.
+            summary_metrics=("equity.pnl",),
             blocks=(
                 ViewBlock(
                     kind="metrics",
@@ -147,7 +148,12 @@ plugin = Plugin(
                         "equity.dividends",
                     ),
                 ),
-                ViewBlock(kind="histogram", title="Распределение потерь", path="/loss_histogram"),
+                ViewBlock(
+                    kind="histogram",
+                    title="Распределение потерь",
+                    path="/loss_histogram",
+                    metric_ids=("equity.loss",),
+                ),
                 ViewBlock(
                     kind="table",
                     title="Вклад факторов в центральном сценарии",

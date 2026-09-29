@@ -26,6 +26,9 @@ export const RULES: Record<string, string> = {};
 /** Filled from the catalog: flag code (or «prefix:» with {}) -> words, as the server words it. */
 export const FLAG_TABLE: Record<string, string> = {};
 
+/** Filled from the catalog: factor id -> its name, for the flags that name a factor. */
+export const FACTORS: Record<string, string> = {};
+
 /** Filled from the catalog: where the numbers of the demo data come from, and who stands behind them. */
 export const SOURCES: Record<string, string> = {};
 export const AUTHORS: Record<string, string> = { 'demo:auto': 'автоматически (демо-режим)' };
@@ -135,6 +138,13 @@ export function reasonText(message: string): string | null {
 
 const DIGITS = /\d/;
 
+// «equity.market:SPX» -> «Рынок акций (SPX)»: a factor a flag names, with its key.
+function factorName(text: string): string | undefined {
+  const [id, ...key] = text.split(':');
+  const name = FACTORS[id];
+  return name && (key.length ? `${name} (${key.join(':')})` : name);
+}
+
 /**
  * A flag in words, worded as the server words it (reporting/wording.py): an exact entry,
  * else «prefix:>» for a flag carried inside another, else «prefix:» with its argument.
@@ -149,7 +159,7 @@ export function flagOne(flag: string, shocks?: Record<string, string>): string {
   const phrase = FLAG_TABLE[`${prefix}:`];
   if (phrase !== undefined) {
     if (!phrase.includes('{}')) return phrase;
-    const argument = shocks?.[rest] ?? rest;
+    const argument = shocks?.[rest] ?? factorName(rest) ?? rest;
     if (DIGITS.test(argument)) return phrase.replace('«{}»', '').replace('{}', '').replace(/\s+/g, ' ').trim();
     return phrase.replace('{}', argument);
   }

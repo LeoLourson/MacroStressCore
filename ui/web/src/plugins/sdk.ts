@@ -15,6 +15,13 @@ import type { ResultView } from '../api/catalog';
 import type { Artifacts, CalculationResult, PositionContext } from '../api/types';
 import type { Entries } from '../lib/provenance';
 
+/**
+ * What a view component of a position gets. The panel frames the view the same for every
+ * type: above it the position, its status with the flags that sent it to review, the flags
+ * that limit the reading and the view's summary metrics on the list's scale; below it the
+ * method's simplifications (Plugin.informational_flags) and the model's limits. A view shows
+ * the rest and leaves the summary metrics out (MetricsBlock `exclude`).
+ */
 export interface PositionViewProps {
   result: CalculationResult;
   context: PositionContext | undefined;

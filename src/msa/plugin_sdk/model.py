@@ -203,7 +203,8 @@ class CalculationModel(ABC):
     details_schema: Any = None
     description: str = ""
     limits: ApplicabilityLimits = ApplicabilityLimits()
-    #: Flags of this model that send a result to review, and those that make it invalid.
+    #: Flags of this model that send a result to review, and those that make it invalid; a
+    #: code ending in ``:`` covers a prefix. The screens name them as the reason of a status.
     review_flags: frozenset[str] = frozenset()
 
     @abstractmethod

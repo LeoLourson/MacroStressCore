@@ -1227,7 +1227,7 @@
         "early_warning",
         "manual_review_ranking"
        ],
-       "note": "Shadow calculation until empirical calibration and independent validation.",
+       "note": "Теневой расчёт: до эмпирической калибровки и независимой валидации модели.",
        "prohibited_uses": [
         "automatic_credit_decision",
         "regulatory_pd_lgd_ead",
@@ -2316,7 +2316,7 @@
         "early_warning",
         "manual_review_ranking"
        ],
-       "note": "Shadow calculation until empirical calibration and independent validation.",
+       "note": "Теневой расчёт: до эмпирической калибровки и независимой валидации модели.",
        "prohibited_uses": [
         "automatic_credit_decision",
         "regulatory_pd_lgd_ead",
@@ -3398,7 +3398,7 @@
         "early_warning",
         "manual_review_ranking"
        ],
-       "note": "Shadow calculation until empirical calibration and independent validation.",
+       "note": "Теневой расчёт: до эмпирической калибровки и независимой валидации модели.",
        "prohibited_uses": [
         "automatic_credit_decision",
         "regulatory_pd_lgd_ead",
@@ -4439,7 +4439,7 @@
         "early_warning",
         "manual_review_ranking"
        ],
-       "note": "Shadow calculation until empirical calibration and independent validation.",
+       "note": "Теневой расчёт: до эмпирической калибровки и независимой валидации модели.",
        "prohibited_uses": [
         "automatic_credit_decision",
         "regulatory_pd_lgd_ead",
@@ -5509,7 +5509,7 @@
         "early_warning",
         "manual_review_ranking"
        ],
-       "note": "Shadow calculation until empirical calibration and independent validation.",
+       "note": "Теневой расчёт: до эмпирической калибровки и независимой валидации модели.",
        "prohibited_uses": [
         "automatic_credit_decision",
         "regulatory_pd_lgd_ead",
@@ -6603,7 +6603,7 @@
         "early_warning",
         "manual_review_ranking"
        ],
-       "note": "Shadow calculation until empirical calibration and independent validation.",
+       "note": "Теневой расчёт: до эмпирической калибровки и независимой валидации модели.",
        "prohibited_uses": [
         "automatic_credit_decision",
         "regulatory_pd_lgd_ead",
@@ -8993,7 +8993,7 @@
         "early_warning",
         "manual_review_ranking"
        ],
-       "note": "Shadow calculation until empirical calibration and independent validation.",
+       "note": "Теневой расчёт: до эмпирической калибровки и независимой валидации модели.",
        "prohibited_uses": [
         "automatic_credit_decision",
         "regulatory_pd_lgd_ead",
@@ -10018,7 +10018,7 @@
         "early_warning",
         "manual_review_ranking"
        ],
-       "note": "Shadow calculation until empirical calibration and independent validation.",
+       "note": "Теневой расчёт: до эмпирической калибровки и независимой валидации модели.",
        "prohibited_uses": [
         "automatic_credit_decision",
         "regulatory_pd_lgd_ead",
@@ -10912,7 +10912,7 @@
         "early_warning",
         "manual_review_ranking"
        ],
-       "note": "Shadow calculation until empirical calibration and independent validation.",
+       "note": "Теневой расчёт: до эмпирической калибровки и независимой валидации модели.",
        "prohibited_uses": [
         "automatic_credit_decision",
         "regulatory_pd_lgd_ead",
@@ -11845,7 +11845,7 @@
         "early_warning",
         "manual_review_ranking"
        ],
-       "note": "Shadow calculation until empirical calibration and independent validation.",
+       "note": "Теневой расчёт: до эмпирической калибровки и независимой валидации модели.",
        "prohibited_uses": [
         "automatic_credit_decision",
         "regulatory_pd_lgd_ead",
@@ -12741,7 +12741,7 @@
         "early_warning",
         "manual_review_ranking"
        ],
-       "note": "Shadow calculation until empirical calibration and independent validation.",
+       "note": "Теневой расчёт: до эмпирической калибровки и независимой валидации модели.",
        "prohibited_uses": [
         "automatic_credit_decision",
         "regulatory_pd_lgd_ead",

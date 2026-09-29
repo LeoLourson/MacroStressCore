@@ -85,6 +85,12 @@ def asset_types(registry=None) -> dict:
         "rules": {key: _plain(spec) for key, spec in registry.rules.items()},
         # The platform's own flags first; a plugin's wording of the same code wins, as in reports.
         "flags": {**wording.PLATFORM_FLAGS, **registry.flag_wording()},
+        # Which flags send a result to review (the reason of its status) and which only say
+        # how the numbers were reached; a code ending in ":" covers a prefix.
+        "review_flags": sorted(registry.review_flags()),
+        "informational_flags": sorted(
+            set().union(*(p.informational_flags for p in registry.plugins.values()))
+        ),
         "units": {"plain": sorted(PLAIN_UNITS), "currencies": sorted(CURRENCIES)},
         "sources": registry.source_wording(),
         "authors": registry.author_wording(),
