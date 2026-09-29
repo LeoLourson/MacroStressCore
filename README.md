@@ -135,3 +135,5 @@ uv run msa-plugin ui-manifest          # манифест UI-плагинов (n
 
 Подробнее: [платформа](docs/platform.md), [расширение плагинами](docs/plugins.md),
 [архитектура](docs/architecture.md), [проверка на здравый смысл](docs/sanity-report.md).
+Техническое задание: [для разработчика](docs/tz/developer.md),
+[обзорная версия](docs/tz/overview.md), [математика расчётов](docs/tz/math.md).
