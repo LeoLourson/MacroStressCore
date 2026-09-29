@@ -2,11 +2,10 @@
 // path, the channels' contributions, covenants with the reverse stress, risk axes; and the
 // calibration note beside the money figures. Reads CalculationResult.details, which is the
 // credit model's RiskResult (plugins/credit/contracts.py).
-import { Alert, Anchor, Box, Collapse, Group, List, SimpleGrid, Stack, Table, Text } from '@mantine/core';
+import { Alert, Anchor, Collapse, Group, List, SimpleGrid, Stack, Table, Text } from '@mantine/core';
 import { IconAlertTriangle, IconInfoCircle } from '@tabler/icons-react';
 import { useState } from 'react';
-import { TracedNumber } from '../../components/Provenance';
-import { Fact, MetricsBlock, Section, SourcesBlock } from '../../components/ResultBlocks';
+import { ContributionsBlock, Fact, MetricsBlock, Section, SourcesBlock } from '../../components/ResultBlocks';
 import { Term } from '../../components/Term';
 import { change, compact, day, metricValue, nodeLabels, number, percent, positionPath, positionTitle } from '../../lib/format';
 import { AUTHORS, label } from '../../lib/labels';
@@ -148,7 +147,7 @@ function Credit({ risk, result }: { risk: RiskDetails; result: CalculationResult
       title="Кредитный риск"
       hint={
         c.calibrated
-          ? `LGD и сумма под риском взяты из позиции.${pdShown ? ' PD до и после события — в строке «Рост PD» выше.' : ''}`
+          ? `LGD и сумма под риском взяты из позиции.${pdShown ? ' PD до и после события — в ключевых показателях выше.' : ''}`
           : 'Калибровки PD нет: показан сценарный индекс риска, его нельзя читать как вероятность дефолта.'
       }
     >
@@ -186,7 +185,10 @@ function Liquidity({ risk }: { risk: RiskDetails }) {
   const l = risk.liquidity;
   if (!l) return null;
   return (
-    <Section title="Ликвидность" hint="Центральный сценарий, худший месяц горизонта.">
+    <Section
+      title="Ликвидность в центральном сценарии"
+      hint="Худший месяц горизонта при наиболее вероятных значениях шоков. Дефицит на конец горизонта по всем сценариям — в показателях выше."
+    >
       <SimpleGrid cols={{ base: 2, sm: 3 }}>
         <Fact name="Минимальный запас денежных средств" value={metricValue(l.min_cash_headroom, 'RUB_million')} />
         <Fact name="Максимальный дефицит финансирования" value={metricValue(l.max_funding_gap, 'RUB_million')} />
@@ -197,16 +199,31 @@ function Liquidity({ risk }: { risk: RiskDetails }) {
 }
 
 function Trajectories({ risk, labels }: { risk: RiskDetails; labels: Record<string, string> }) {
+  const [all, setAll] = useState(false);
   const base = risk.base;
   const stress = risk.stress;
   if (!base || !stress) return null;
-  const names = Object.keys(base.series).filter((n) => stress.series[n]);
-  if (!names.length) return null;
+  // In the order the plugin declares its series (revenue, costs, debt, liquidity, ratios);
+  // the stored details keep no order of their own.
+  const declared = Object.keys(labels);
+  const rank = (n: string) => (n === 'risk_score' ? -1 : declared.includes(n) ? declared.indexOf(n) : declared.length);
   const end = base.month_ends.length - 1;
+  const rows = Object.keys(base.series)
+    .filter((n) => stress.series[n])
+    .sort((a, b) => rank(a) - rank(b))
+    .map((n) => {
+      const unit = base.series[n].unit;
+      const b = base.series[n].values[end];
+      const s = stress.series[n].values[end];
+      return { n, unit, b, s, moved: metricValue(b, unit) !== metricValue(s, unit) };
+    });
+  if (!rows.length) return null;
+  const still = rows.filter((r) => !r.moved).length;
+  const shown = all ? rows : rows.filter((r) => r.moved);
   return (
     <Section
-      title="Помесячная траектория"
-      hint={`Горизонт ${base.horizon} мес.; значения на ${day(base.month_ends[end])} — до события и в центральном стрессе.`}
+      title="Показатели компании на конец горизонта"
+      hint={`На ${day(base.month_ends[end])}: до события и в центральном сценарии — одна траектория при наиболее вероятных значениях шоков. Медианы и диапазоны по всем сценариям — в показателях выше.`}
     >
       <Table.ScrollContainer minWidth={560}>
         <Table withTableBorder fz="sm" verticalSpacing={6}>
@@ -215,70 +232,54 @@ function Trajectories({ risk, labels }: { risk: RiskDetails; labels: Record<stri
               <Table.Th>Показатель</Table.Th>
               <Table.Th className="num-right">До события</Table.Th>
               <Table.Th className="num-right">
-                <Term name="Стресс">Стресс</Term>
+                <Term name="Стресс">Центральный сценарий</Term>
               </Table.Th>
               <Table.Th className="num-right">Изменение</Table.Th>
             </Table.Tr>
           </Table.Thead>
           <Table.Tbody>
-            {names.map((n) => {
-              const b = base.series[n].values[end];
-              const s = stress.series[n].values[end];
-              const unit = base.series[n].unit;
-              return (
-                <Table.Tr key={n}>
-                  <Table.Td>{n === 'risk_score' ? 'PD / индекс риска' : (labels[n] ?? n)}</Table.Td>
-                  <Table.Td className="num-right">{metricValue(b, unit)}</Table.Td>
-                  <Table.Td className="num-right">{metricValue(s, unit)}</Table.Td>
-                  <Table.Td className="num-right" c="dimmed">
-                    {b == null || s == null ? '—' : change(s - b, unit)}
-                  </Table.Td>
-                </Table.Tr>
-              );
-            })}
+            {shown.map(({ n, unit, b, s }) => (
+              <Table.Tr key={n}>
+                <Table.Td>{n === 'risk_score' ? 'PD / индекс риска' : (labels[n] ?? n)}</Table.Td>
+                <Table.Td className="num-right">{metricValue(b, unit)}</Table.Td>
+                <Table.Td className="num-right">{metricValue(s, unit)}</Table.Td>
+                <Table.Td className="num-right" c="dimmed">
+                  {b == null || s == null ? '—' : change(s - b, unit)}
+                </Table.Td>
+              </Table.Tr>
+            ))}
           </Table.Tbody>
         </Table>
       </Table.ScrollContainer>
+      {still > 0 && (
+        <Anchor component="button" size="xs" w="fit-content" onClick={() => setAll((v) => !v)} aria-expanded={all}>
+          {all ? 'Скрыть показатели без изменений' : `Показать без изменений: ${still}`}
+        </Anchor>
+      )}
     </Section>
   );
 }
 
 function Channels({ risk, props }: { risk: RiskDetails; props: PositionViewProps }) {
-  // A channel that does not reach the position contributes nothing and is left out.
-  const items = [...(risk.shapley ?? [])]
-    .filter((s) => s.contribution !== 0)
-    .sort((a, b) => Math.abs(b.contribution) - Math.abs(a.contribution));
-  if (!items.length) return null;
   const names = nodeLabels(props.artifacts.graph);
-  const top = Math.max(...items.map((s) => Math.abs(s.contribution))) || 1;
   const inMoney = !!risk.quantiles?.delta_expected_loss;
   return (
-    <Section
+    <ContributionsBlock
+      items={(risk.shapley ?? []).map((s) => ({
+        key: s.channel,
+        label: names[s.channel] ?? props.shocks[s.channel] ?? s.channel,
+        value: s.contribution,
+      }))}
+      metricId={inMoney ? 'credit.delta_expected_loss' : 'credit.delta_risk_score'}
+      format={(v) => (inMoney ? metricValue(v, 'RUB_million') : number(v, 4))}
       title={<Term name="Вклад канала">Вклад каналов</Term>}
       hint={
         inMoney
-          ? 'Значения Шепли: сумма вкладов равна росту ожидаемых потерь в центральном сценарии.'
+          ? 'Значения Шепли в центральном сценарии: сумма вкладов равна росту ожидаемых потерь в нём.'
           : 'Значения Шепли для индекса риска: PD не откалибрована, вклад в деньгах не считается.'
       }
-    >
-      <Stack gap={6}>
-        {items.map((s) => (
-          <Group key={s.channel} gap="sm" wrap="nowrap">
-            <Text size="sm" w={220} lineClamp={2}>
-              {names[s.channel] ?? props.shocks[s.channel] ?? s.channel}
-            </Text>
-            <Box style={{ flex: 1 }} h={10} bg="gray.1">
-              <Box h={10} bg={s.contribution < 0 ? 'gray.5' : 'steel.5'} w={`${(Math.abs(s.contribution) / top) * 100}%`} />
-            </Box>
-            <Text size="sm" w={130} className="num-right">
-              <TracedNumber entry={props.entries.get(positionPath(props.result.position_id, 'shapley', s.channel, 'contribution'))}>
-                {inMoney ? metricValue(s.contribution, 'RUB_million') : number(s.contribution, 4)}
-              </TracedNumber>
-            </Text>
-          </Group>
-        ))}
-      </Stack>
-    </Section>
+      origin={(channel) => props.entries.get(positionPath(props.result.position_id, 'shapley', channel, 'contribution'))}
+    />
   );
 }
 
@@ -404,9 +405,10 @@ function CreditPosition(props: PositionViewProps) {
           result={result}
           metricIds={metrics.metric_ids}
           entries={entries}
-          title="Решающие показатели"
-          hint="По ним срабатывают правила кредитного плагина: медиана по всем сценариям на конец горизонта и диапазон P5–P95. Для роста — уровень до события → медиана после."
+          title="Другие показатели на конец горизонта"
+          hint="Медиана по всем сценариям и диапазон P5–P95. По ним и по ключевым показателям срабатывают правила рекомендаций."
           baseline={levels}
+          exclude={view.summary_metrics}
         />
       )}
       <Credit risk={risk} result={result} />

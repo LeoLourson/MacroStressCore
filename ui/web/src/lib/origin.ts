@@ -2,9 +2,10 @@
 // words of the event document it cites and the position data it used, by source. The
 // scenario itself is not repeated here: it is on the scenario tab. The trace names sources
 // by locator and hash; they are matched here to the inputs of the run's positions.
-import { metricLabel, sliceSpec } from '../api/catalog';
+import { metricLabel, modelLabel, sliceSpec } from '../api/catalog';
 import type { Artifacts, CalculationResult, TraceNumber } from '../api/types';
-import { positionTitle, shorten, unescapeToken } from './format';
+import { positionPath, positionTitle, shorten, unescapeToken } from './format';
+import type { Entries } from './provenance';
 import { bySource, positionInputs, sourceKey, type SourceView } from './sources';
 
 export interface OriginQuote {
@@ -62,7 +63,7 @@ export function howObtained(path: string, artifacts?: Artifacts): string {
   }
   if (p[0] === 'positions') {
     const result = artifacts?.results?.find((r) => r.position_id === p[1]);
-    const model = result ? `Модель ${result.model_id}` : 'Модель';
+    const model = result ? `Модель «${modelLabel(result.instrument_type, result.model_id)}»` : 'Модель';
     // A distribution over the shared scenarios: a declared metric or a plugin's own quantiles.
     const metric = p[2] === 'metrics' || p[2] === 'quantiles' ? metricOf(result, p[3]) : null;
     if (metric) {
@@ -74,6 +75,40 @@ export function howObtained(path: string, artifacts?: Artifacts): string {
     return `${model} рассчитала это значение по сценарию события.`;
   }
   return 'Результат расчёта модели позиции по сценарию события.';
+}
+
+/**
+ * The origin of a metric of a position (`field`: p05, p50, p95, es95 or value). The report's
+ * trace when the report cites the number, by the metric's path or by its plugin's own key for
+ * it («quantiles/delta_pd» of «credit.delta_pd»); else the result's own account: its model,
+ * the shared scenarios and the data of the position.
+ */
+export function metricOrigin(
+  entries: Entries,
+  result: CalculationResult,
+  metricId: string,
+  field: string,
+): TraceNumber | undefined {
+  const path = positionPath(result.position_id, 'metrics', metricId, field);
+  const cited = entries.get(path);
+  if (cited) return cited;
+  for (const [other, entry] of entries) {
+    const p = parts(other);
+    if (p[0] === 'positions' && p[1] === result.position_id && p.length === 5 && p[4] === field && metricOf(result, p[3]) === metricId) {
+      return entry;
+    }
+  }
+  const metric = result.metrics[metricId];
+  const value = field === 'value' ? metric?.value : metric?.quantiles?.[field as 'p05' | 'p50' | 'p95' | 'es95'];
+  if (value == null) return undefined;
+  return {
+    metric_path: path,
+    value,
+    node: result.model_id,
+    number_ref: { value, metric_path: path, rounding: 2 },
+    lineage: [],
+    sources: result.sources,
+  };
 }
 
 /** A fragment of the analyst's scenario: «scenario/s2», or «scenario» of older runs. */

@@ -19,7 +19,13 @@ from .contracts import RiskResult
 from .factors import FACTORS
 from .families import family_for
 from .families.corporate import OperatingCompany
-from .position_risk import MODEL_VERSION, AssetRiskInput, review_flags, run_asset
+from .position_risk import (
+    MODEL_VERSION,
+    REVIEW_PREFIXES,
+    AssetRiskInput,
+    review_flags,
+    run_asset,
+)
 
 PLUGIN_ID = "credit"
 PLUGIN_VERSION = "3.3.0"
@@ -75,7 +81,7 @@ class CreditModel(CalculationModel):
                 "credit.revenue: этот фактор задаёт только независимое изменение спроса "
                 "или продаж."
             )
-        self.review_flags = review_flags()
+        self.review_flags = review_flags() | set(REVIEW_PREFIXES)
 
     def requirements(self, position, options):
         return profile.requirements(position)

@@ -367,7 +367,7 @@ def run_asset(
                 "accounting_or_regulatory_reporting",
                 "market_fair_value",
             ],
-            note="Shadow calculation until empirical calibration and independent validation.",
+            note="Теневой расчёт: до эмпирической калибровки и независимой валидации модели.",
         ),
     )
 

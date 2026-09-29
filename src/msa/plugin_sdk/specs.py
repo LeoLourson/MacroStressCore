@@ -156,6 +156,7 @@ class ViewBlock:
 
     kind: Literal["metric", "metrics", "series", "table", "sources", "histogram", "text"]
     title: str = ""
+    #: Metrics the block shows; a histogram marks the P5, P50 and P95 of its metric.
     metric_ids: tuple[str, ...] = ()
     #: JSON Pointer into ``CalculationResult.details``.
     path: str = ""

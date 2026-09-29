@@ -29,6 +29,73 @@ def notes(options: dict) -> dict:
     return calibration.load(str(options.get(REGISTRY_OPTION) or calibration.NONE)).describe()
 
 
+def series_labels() -> dict[str, str]:
+    """Series in the order the families declare them, the order the screens show them in. A
+    name shared by families keeps its first, general label: a borrower's cash is not a
+    project's."""
+    labels: dict[str, str] = {}
+    for family in FAMILIES:
+        for series in family.series:
+            labels.setdefault(series.name, series.label)
+    return labels
+
+
+BONDS = ("bond_fixed", "bond_floater")
+
+CREDIT_SUMMARY = ("credit.delta_expected_loss", "credit.delta_pd", "credit.delta_risk_score")
+
+LABELS = {
+    **series_labels(),
+    **{f"covenant:{m.name}": m.label for f in FAMILIES for m in f.covenant_metrics},
+    "risk_score": "Индекс риска",
+    # Keys of the report tree (report.tree) and of the data locators; "" leaves a
+    # grouping key out of a path's description.
+    "quantiles": "",
+    "derived": "",
+    "covenants": "",
+    "contribution": "",
+    "delta_expected_loss": "Рост ожидаемых потерь",
+    "delta_pd": "Рост PD",
+    "delta_risk_score": "Рост индекса риска",
+    "impact_score": "Степень воздействия",
+    "delta_pd_p50_pp": "Рост PD по медиане",
+    "breach_probability": "вероятность нарушения",
+    "min_headroom": "минимальный запас",
+    "shapley": "вклад канала",
+    "covenant": "Ковенант",
+    "dq": "Качество данных",
+}
+
+BLOCKS = (
+    ViewBlock(
+        kind="metrics",
+        title="Итог на конец горизонта",
+        metric_ids=(
+            "credit.delta_expected_loss",
+            "credit.delta_pd",
+            "credit.delta_risk_score",
+            "credit.icr",
+            "credit.funding_gap",
+            "credit.escrow_coverage",
+            "credit.debt_equity",
+            "credit.position_price_change",
+        ),
+    ),
+    ViewBlock(kind="series", title="Помесячная траектория", path="/stress/series"),
+    ViewBlock(
+        kind="table",
+        title="Ковенанты",
+        path="/covenants",
+        columns=(
+            ("covenant_id", "Ковенант"),
+            ("breach_probability", "Вероятность нарушения"),
+            ("min_headroom", "Минимальный запас"),
+        ),
+    ),
+    ViewBlock(kind="sources", title="Источники данных"),
+)
+
+
 plugin = Plugin(
     plugin_id=PLUGIN_ID,
     version=PLUGIN_VERSION,
@@ -61,62 +128,20 @@ plugin = Plugin(
     views=(
         ResultView(
             view_id="credit.position",
-            instrument_types=TYPES,
+            instrument_types=tuple(t for t in TYPES if t not in BONDS),
             component="credit.position",
-            labels={
-                **{series.name: series.label for f in FAMILIES for series in f.series},
-                **{f"covenant:{m.name}": m.label for f in FAMILIES for m in f.covenant_metrics},
-                "risk_score": "Индекс риска",
-                # Keys of the report tree (report.tree) and of the data locators; "" leaves a
-                # grouping key out of a path's description.
-                "quantiles": "",
-                "derived": "",
-                "covenants": "",
-                "contribution": "",
-                "delta_expected_loss": "Рост ожидаемых потерь",
-                "delta_pd": "Рост PD",
-                "delta_risk_score": "Рост индекса риска",
-                "impact_score": "Степень воздействия",
-                "delta_pd_p50_pp": "Рост PD по медиане",
-                "breach_probability": "вероятность нарушения",
-                "min_headroom": "минимальный запас",
-                "shapley": "вклад канала",
-                "covenant": "Ковенант",
-                "dq": "Качество данных",
-            },
-            summary_metrics=(
-                "credit.delta_expected_loss",
-                "credit.delta_pd",
-                "credit.delta_risk_score",
-            ),
-            blocks=(
-                ViewBlock(
-                    kind="metrics",
-                    title="Итог на конец горизонта",
-                    metric_ids=(
-                        "credit.delta_expected_loss",
-                        "credit.delta_pd",
-                        "credit.delta_risk_score",
-                        "credit.icr",
-                        "credit.funding_gap",
-                        "credit.escrow_coverage",
-                        "credit.debt_equity",
-                        "credit.position_price_change",
-                    ),
-                ),
-                ViewBlock(kind="series", title="Помесячная траектория", path="/stress/series"),
-                ViewBlock(
-                    kind="table",
-                    title="Ковенанты",
-                    path="/covenants",
-                    columns=(
-                        ("covenant_id", "Ковенант"),
-                        ("breach_probability", "Вероятность нарушения"),
-                        ("min_headroom", "Минимальный запас"),
-                    ),
-                ),
-                ViewBlock(kind="sources", title="Источники данных"),
-            ),
+            labels=LABELS,
+            summary_metrics=CREDIT_SUMMARY,
+            blocks=BLOCKS,
+        ),
+        ResultView(
+            view_id="credit.bond",
+            instrument_types=BONDS,
+            component="credit.position",
+            labels=LABELS,
+            # A bond is revalued as well: the change of its value comes first.
+            summary_metrics=("credit.position_price_change", *CREDIT_SUMMARY),
+            blocks=BLOCKS,
         ),
     ),
     report_sections=SECTIONS,

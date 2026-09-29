@@ -2,7 +2,7 @@
 // with their schemas, editor forms and result views; metrics, factors and portfolio slices;
 // flags, actions and rules in words. The screens are built from it, so a new plugin on the
 // server needs no change in this app; a UI plugin (src/plugins) only adds a richer view.
-import { ACTIONS, AUTHORS, FLAG_TABLE, INSTRUMENT_TYPES, RULES, SOURCES } from '../lib/labels';
+import { ACTIONS, AUTHORS, FACTORS, FLAG_TABLE, INSTRUMENT_TYPES, RULES, SOURCES } from '../lib/labels';
 
 export type FieldKind = 'number' | 'text' | 'date' | 'dates' | 'enum' | 'boolean' | 'table';
 
@@ -130,6 +130,10 @@ export interface Catalog {
   actions: Record<string, string>;
   rules: Record<string, RuleSpec>;
   flags: Record<string, string>;
+  /** Flags that send a result to review: the reason of its status. A code ending in «:» covers a prefix. */
+  review_flags: string[];
+  /** Flags that say how the numbers were reached rather than limit them. */
+  informational_flags: string[];
   units: { plain: string[]; currencies: string[] };
   sources: Record<string, string>;
   authors: Record<string, string>;
@@ -145,6 +149,8 @@ let catalog: Catalog = {
   actions: {},
   rules: {},
   flags: {},
+  review_flags: [],
+  informational_flags: [],
   units: { plain: [], currencies: [] },
   sources: {},
   authors: {},
@@ -166,6 +172,7 @@ export function setCatalog(value: Catalog): void {
   Object.assign(ACTIONS, value.actions);
   for (const [id, rule] of Object.entries(value.rules)) RULES[id] = rule.label;
   Object.assign(FLAG_TABLE, value.flags);
+  for (const [id, factor] of Object.entries(value.factors)) FACTORS[id] = factor.label;
   Object.assign(SOURCES, value.sources);
   Object.assign(AUTHORS, value.authors);
 }
@@ -215,4 +222,25 @@ export function sliceSpec(sliceId: string): SliceSpec | undefined {
 
 export function viewFor(typeId: string): ResultView | null {
   return typeSpec(typeId)?.view ?? null;
+}
+
+/** The model's name as its plugin declares it, else its id. */
+export function modelLabel(typeId: string, modelId: string): string {
+  return typeSpec(typeId)?.models.find((m) => m.model_id === modelId)?.label ?? modelId;
+}
+
+// A flag is among codes exactly or by its prefix («factor_not_reached:»), as the server matches it.
+function flagIn(flag: string, codes: string[] | undefined): boolean {
+  const prefix = flag.split(':')[0];
+  return !!codes && (codes.includes(flag) || codes.includes(`${prefix}:`) || codes.includes(prefix));
+}
+
+/**
+ * What a flag of a result tells its reader: why the result went to review, how its numbers
+ * were reached (a method's simplification), or a limit on reading them.
+ */
+export function flagKind(flag: string): 'review' | 'informational' | 'limit' {
+  if (flagIn(flag, catalog.review_flags)) return 'review';
+  if (flagIn(flag, catalog.informational_flags)) return 'informational';
+  return 'limit';
 }
