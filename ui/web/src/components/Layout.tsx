@@ -40,7 +40,7 @@ function LlmBadge({ external }: { external: boolean }) {
   const llm = me?.llm;
   if (!llm) return null;
   const name = label(PROVIDERS, llm.provider);
-  const text = external ? `${name} · только демо-данные` : llm.provider === 'mock' ? name : `${name} · ${llm.model}`;
+  const text = external ? `${name} · для демонстрации` : llm.provider === 'mock' ? name : `${name} · ${llm.model}`;
   const tip = external
     ? `Внешняя языковая модель ${llm.model} (${llm.base_url}): работа только на синтетических демо-портфелях.`
     : llm.provider === 'mock'

@@ -35,7 +35,7 @@ export function Login() {
       <Stack w="100%" maw={440} gap="lg">
         <Stack gap={4}>
           <Title order={2}>MacroStress</Title>
-          <Text c="dimmed">Оценка влияния макро- и регуляторных событий на кредитный портфель банка.</Text>
+          <Text c="dimmed">Оценка влияния макро- и регуляторных событий на кредитный и инвестиционныйпортфель.</Text>
         </Stack>
         {meError && (
           <Alert color="orange" variant="light">
@@ -69,7 +69,7 @@ export function Login() {
               );
             })}
             <Text size="xs" c="dimmed">
-              Демо-режим: роль можно сменить в любой момент в меню пользователя.
+              Демонстрационный режим: роль можно сменить в любой момент, данные синтетические.
             </Text>
           </Stack>
         ) : (
