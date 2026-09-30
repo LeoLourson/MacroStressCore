@@ -35,7 +35,7 @@ export function Login() {
       <Stack w="100%" maw={440} gap="lg">
         <Stack gap={4}>
           <Title order={2}>MacroStress</Title>
-          <Text c="dimmed">Оценка влияния макро- и регуляторных событий на кредитный и инвестиционныйпортфель.</Text>
+          <Text c="dimmed">Оценка влияния макро- и регуляторных событий на кредитный или инвестиционный портфель.</Text>
         </Stack>
         {meError && (
           <Alert color="orange" variant="light">

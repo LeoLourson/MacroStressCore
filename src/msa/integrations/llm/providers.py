@@ -66,7 +66,7 @@ _PROFILES = {
         # deepseek-v4-pro answers a causal prompt in two to four minutes.
         "timeout": 420.0,
         # deepseek-flash reasons for 7-8k tokens before an ~4k-token causal answer.
-        "max_tokens": 32768,
+        "max_tokens": 64000,
         "external": True,
         "tool_calling": True,
         "strong_model": "deepseek-v4-pro",
