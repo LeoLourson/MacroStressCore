@@ -1,0 +1,31 @@
+{
+  "baseUrl": "http://127.0.0.1:5173",
+  "login": {
+    "url": "/login",
+    "actions": [{ "click": "text=Войти как аналитик" }, { "wait": 1500 }],
+    "failIfUrlContains": "/login"
+  },
+  "audit": {
+    "lang": "ru",
+    "contentSelector": ".react-flow__node, [data-user-content], code, pre",
+    "secondaryTextSelector": "time",
+    "protect": ["button[type=submit]"],
+    "allowOver": "[role=tooltip], .mantine-Notifications-root",
+    "allowEnglish": ["MacroStress", "LLM", "MCP", "P5", "P50", "P95", "PD", "LGD", "EAD", "VaR", "ES", "RUB", "DeepSeek"],
+    "radiusScale": [0, 2, 4, 6, 8, 12, 16, 32]
+  },
+  "screens": [
+    { "name": "runs-list", "url": "/" },
+    { "name": "user-menu", "url": "/", "actions": [{ "click": "button[aria-label='Меню пользователя']" }], "after": [{ "press": "Escape" }] },
+    { "name": "new-run", "url": "/new", "actions": [{ "wait": 1500 }] },
+    { "name": "portfolios", "url": "/portfolios", "actions": [{ "wait": 1000 }] },
+    { "name": "portfolio-new", "url": "/portfolios/new", "actions": [{ "wait": 1000 }] },
+    { "name": "run-scenario", "url": "/runs/3ef099d6-52a2-4970-94fc-c0857601fb0d?tab=scenario", "actions": [{ "wait": 2500 }] },
+    { "name": "run-positions", "url": "/runs/3ef099d6-52a2-4970-94fc-c0857601fb0d?tab=positions", "actions": [{ "wait": 1500 }] },
+    { "name": "run-portfolio", "url": "/runs/3ef099d6-52a2-4970-94fc-c0857601fb0d?tab=portfolio", "actions": [{ "wait": 1500 }] },
+    { "name": "run-report", "url": "/runs/3ef099d6-52a2-4970-94fc-c0857601fb0d?tab=report", "actions": [{ "wait": 1500 }] },
+    { "name": "run-sources", "url": "/runs/3ef099d6-52a2-4970-94fc-c0857601fb0d?tab=sources", "actions": [{ "wait": 1500 }] },
+    { "name": "run-explain", "url": "/runs/3ef099d6-52a2-4970-94fc-c0857601fb0d?tab=explain", "actions": [{ "wait": 1500 }] },
+    { "name": "run-activity", "url": "/runs/3ef099d6-52a2-4970-94fc-c0857601fb0d?tab=activity", "actions": [{ "wait": 1500 }] }
+  ]
+}

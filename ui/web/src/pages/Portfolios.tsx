@@ -88,94 +88,96 @@ export function Portfolios() {
         </Center>
       ) : (
         <Paper>
-          <Table verticalSpacing="sm" horizontalSpacing="md">
-            <Table.Thead>
-              <Table.Tr>
-                <Table.Th>Портфель</Table.Th>
-                <Table.Th>Вид</Table.Th>
-                <Table.Th />
-              </Table.Tr>
-            </Table.Thead>
-            <Table.Tbody>
-              {portfolios.data.map((p) => (
-                <Fragment key={p.portfolio_id}>
-                  <Table.Tr>
-                    <Table.Td>
-                      <Anchor component="button" type="button" onClick={() => setOpen(open === p.portfolio_id ? null : p.portfolio_id)}>
-                        {p.name && p.name !== p.portfolio_id ? p.name : p.portfolio_id}
-                      </Anchor>
-                      <Text size="xs" c="dimmed" ff="monospace">
-                        {p.portfolio_id}
-                      </Text>
-                    </Table.Td>
-                    <Table.Td>
-                      {!demo ? (
-                        <Badge color="gray">
-                          Портфель банка
-                        </Badge>
-                      ) : p.builtin ? (
-                        <Badge color="gray">
-                          Демо-портфель
-                        </Badge>
-                      ) : (
-                        <Stack gap={0}>
-                          <Badge color="steel" w="fit-content">
-                            Свой
+          <Table.ScrollContainer minWidth={760}>
+            <Table verticalSpacing="sm" horizontalSpacing="md">
+              <Table.Thead>
+                <Table.Tr>
+                  <Table.Th>Портфель</Table.Th>
+                  <Table.Th>Вид</Table.Th>
+                  <Table.Th />
+                </Table.Tr>
+              </Table.Thead>
+              <Table.Tbody>
+                {portfolios.data.map((p) => (
+                  <Fragment key={p.portfolio_id}>
+                    <Table.Tr>
+                      <Table.Td>
+                        <Anchor component="button" type="button" ta="left" onClick={() => setOpen(open === p.portfolio_id ? null : p.portfolio_id)}>
+                          {p.name && p.name !== p.portfolio_id ? p.name : p.portfolio_id}
+                        </Anchor>
+                        <Text size="xs" c="dimmed" ff="monospace">
+                          {p.portfolio_id}
+                        </Text>
+                      </Table.Td>
+                      <Table.Td>
+                        {!demo ? (
+                          <Badge color="gray">
+                            Портфель банка
                           </Badge>
-                          {p.expires_at && (
-                            <Text size="xs" c="dimmed">
-                              хранится до {timestamp(p.expires_at)}
-                            </Text>
-                          )}
-                        </Stack>
-                      )}
-                    </Table.Td>
-                    <Table.Td>
-                      <Group gap="xs" justify="flex-end" wrap="nowrap">
-                        <Button
-                          size="xs"
-                          component={Link}
-                          to={`/new?portfolio=${encodeURIComponent(p.portfolio_id)}`}
-                          leftSection={<IconPlayerPlay size={14} />}
-                        >
-                          Стресс-тест
-                        </Button>
-                        {demo && (
+                        ) : p.builtin ? (
+                          <Badge color="gray">
+                            Демо-портфель
+                          </Badge>
+                        ) : (
+                          <Stack gap={0}>
+                            <Badge color="steel" w="fit-content">
+                              Свой
+                            </Badge>
+                            {p.expires_at && (
+                              <Text size="xs" c="dimmed">
+                                хранится до {timestamp(p.expires_at)}
+                              </Text>
+                            )}
+                          </Stack>
+                        )}
+                      </Table.Td>
+                      <Table.Td>
+                        <Group gap="xs" justify="flex-end" wrap="nowrap">
                           <Button
                             size="xs"
-                            variant="default"
                             component={Link}
-                            to={`/portfolios/new?from=${encodeURIComponent(p.portfolio_id)}`}
-                            leftSection={<IconCopy size={14} />}
+                            to={`/new?portfolio=${encodeURIComponent(p.portfolio_id)}`}
+                            leftSection={<IconPlayerPlay size={14} />}
                           >
-                            Скопировать и изменить
+                            Стресс-тест
                           </Button>
-                        )}
-                        {demo && !p.builtin && (
-                          <Button
-                            size="xs"
-                            variant="subtle"
-                            color="gray"
-                            leftSection={<IconTrash size={14} />}
-                            onClick={() => setDeleting(p)}
-                          >
-                            Удалить
-                          </Button>
-                        )}
-                      </Group>
-                    </Table.Td>
-                  </Table.Tr>
-                  <Table.Tr style={{ display: open === p.portfolio_id ? undefined : 'none' }}>
-                    <Table.Td colSpan={3} bg="gray.0">
-                      <Collapse in={open === p.portfolio_id}>
-                        {open === p.portfolio_id && <Composition portfolioId={p.portfolio_id} />}
-                      </Collapse>
-                    </Table.Td>
-                  </Table.Tr>
-                </Fragment>
-              ))}
-            </Table.Tbody>
-          </Table>
+                          {demo && (
+                            <Button
+                              size="xs"
+                              variant="default"
+                              component={Link}
+                              to={`/portfolios/new?from=${encodeURIComponent(p.portfolio_id)}`}
+                              leftSection={<IconCopy size={14} />}
+                            >
+                              Скопировать и изменить
+                            </Button>
+                          )}
+                          {demo && !p.builtin && (
+                            <Button
+                              size="xs"
+                              variant="subtle"
+                              color="gray"
+                              leftSection={<IconTrash size={14} />}
+                              onClick={() => setDeleting(p)}
+                            >
+                              Удалить
+                            </Button>
+                          )}
+                        </Group>
+                      </Table.Td>
+                    </Table.Tr>
+                    <Table.Tr style={{ display: open === p.portfolio_id ? undefined : 'none' }}>
+                      <Table.Td colSpan={3} bg="gray.0">
+                        <Collapse in={open === p.portfolio_id}>
+                          {open === p.portfolio_id && <Composition portfolioId={p.portfolio_id} />}
+                        </Collapse>
+                      </Table.Td>
+                    </Table.Tr>
+                  </Fragment>
+                ))}
+              </Table.Tbody>
+            </Table>
+          </Table.ScrollContainer>
         </Paper>
       )}
       <Modal opened={!!deleting} onClose={() => setDeleting(null)} title="Удалить портфель?" centered>
