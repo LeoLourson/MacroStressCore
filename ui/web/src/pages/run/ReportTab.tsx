@@ -1,12 +1,13 @@
-import { Anchor, Center, Group, Loader, Paper, Stack, Table, Text, ThemeIcon, Title } from '@mantine/core';
-import { IconArrowDown, IconRosetteDiscountCheck } from '@tabler/icons-react';
+import { Center, Group, Loader, Paper, Stack, Table, Text, ThemeIcon, Title } from '@mantine/core';
+import { IconRosetteDiscountCheck } from '@tabler/icons-react';
 import { useMemo } from 'react';
 import { useReport } from '../../api/queries';
 import type { Artifacts, Evidence } from '../../api/types';
 import { canApprove, useSession } from '../../auth/session';
 import { ErrorAlert } from '../../components/ErrorAlert';
-import { OriginNote } from '../../components/Provenance';
-import { approver, day, timestamp } from '../../lib/format';
+import { ResultSummary } from '../../components/ResultSummary';
+import { sliceSpec } from '../../api/catalog';
+import { approver, day, percent, timestamp } from '../../lib/format';
 import { AUTHORS, SOURCES, label } from '../../lib/labels';
 import { hasReport } from '../../lib/stages';
 import { pluginNotes } from '../../plugins';
@@ -24,7 +25,7 @@ function Stamp({ artifacts }: { artifacts: Artifacts }) {
           <IconRosetteDiscountCheck size={24} />
         </ThemeIcon>
         <Stack gap={0}>
-          <Text fw={700}>Отчёт утверждён</Text>
+          <Text fw={600}>Отчёт утверждён</Text>
           <Text size="sm" c="dimmed">
             {approver(artifacts.approved_by)} · {timestamp(artifacts.approved_at)}
           </Text>
@@ -55,7 +56,7 @@ function Assumptions({ items }: { items: Evidence[] }) {
           Допущений экспертов нет: все параметры взяты из документа или исторических оценок.
         </Text>
       ) : (
-        <Table withTableBorder fz="sm">
+        <Table withTableBorder>
           <Table.Thead>
             <Table.Tr>
               <Table.Th>Автор</Table.Th>
@@ -98,32 +99,34 @@ export function ReportTab({ status, artifacts }: RunTabProps) {
   }
   if (!report.data) return <Text c="dimmed">Отчёт появится, когда расчёт будет завершён.</Text>;
   const data = report.data;
+  const headline = Object.values(artifacts.portfolio?.slices ?? {})
+    .sort((a, b) => a.slice_id.localeCompare(b.slice_id))
+    .find((item) => item.loss_quantiles);
 
   return (
     <Stack gap="lg">
       {status.status === 'completed' && <Stamp artifacts={artifacts} />}
-      {deciding && canApprove(me) && (
-        <Anchor href="#decision" size="sm">
-          <Group gap={4}>
-            <IconArrowDown size={14} /> К решению по отчёту
-          </Group>
-        </Anchor>
+      {headline && (
+        <Paper p={{ base: 'md', sm: 'xl' }}>
+          <Stack gap="sm">
+            <Title order={3}>Итог</Title>
+            <ResultSummary
+              item={headline}
+              artifacts={artifacts}
+              entries={entries}
+              conclusion={`${sliceSpec(headline.slice_id)?.label ?? headline.slice_id}: в итог вошли позиций — ${headline.included.length}, расчётом охвачено ${percent(headline.coverage.covered_share)}.`}
+            />
+          </Stack>
+        </Paper>
       )}
       <Paper p={{ base: 'md', sm: 'xl' }}>
         <Stack gap="xs">
-          <Title order={3}>Отчёт по стресс-тесту</Title>
-          <Text size="sm" c="dimmed" mb="xs">
-            {status.status === 'completed' ? 'Утверждённая версия.' : 'Эта версия текста будет подписана при утверждении.'}
-          </Text>
           <ReportText
             summary={data.summary}
             numbers={data.numbers}
             entries={entries}
             names={names}
           />
-          {entries.size > 0 && (
-            <OriginNote>Подчёркнутые числа открывают своё происхождение: как получены и на каких данных основаны.</OriginNote>
-          )}
         </Stack>
       </Paper>
       <Assumptions items={data.assumptions} />

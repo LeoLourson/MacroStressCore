@@ -30,13 +30,10 @@ export function StatusBadge({ state, size = 'md' }: { state: RunState; size?: 's
   return (
     <Badge
       className="status-badge"
-      variant="light"
       color={color}
       c={color === 'yellow' ? 'dark.7' : `${color}.9`}
       size={size}
       radius="sm"
-      tt="none"
-      fw={500}
       leftSection={<Icon size={14} stroke={2} />}
     >
       <span className="status-badge-text">

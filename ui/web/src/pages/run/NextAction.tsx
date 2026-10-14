@@ -23,7 +23,7 @@ function Banner({
   action?: ReactNode;
 }) {
   return (
-    <Alert color={color} variant="light" icon={icon} title={title} styles={{ title: { fontSize: 'var(--mantine-font-size-md)' } }}>
+    <Alert color={color} icon={icon} title={title} styles={{ title: { fontSize: 'var(--mantine-font-size-md)' } }}>
       <Group justify="space-between" align="flex-end" gap="md">
         <Stack gap={4} style={{ flex: 1, minWidth: 240 }}>
           {children}
@@ -45,7 +45,7 @@ function Failure({ status, rerun }: { status: RunStatus; rerun: ReactNode }) {
         запустите стресс-тест заново.
       </Text>
       {human.length > 0 && (
-        <List size="sm" spacing={2}>
+        <List size="sm" spacing={4}>
           {human.map((text) => (
             <List.Item key={text}>{text}</List.Item>
           ))}

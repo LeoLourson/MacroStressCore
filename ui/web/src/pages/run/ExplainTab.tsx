@@ -1,5 +1,5 @@
 import { Alert, Badge, Button, Center, CopyButton, Group, List, Loader, Paper, Select, Stack, Text, Textarea, Title } from '@mantine/core';
-import { IconCheck, IconCopy, IconRefresh, IconSend } from '@tabler/icons-react';
+import { IconCheck, IconCopy, IconRefresh, IconSend, IconAlertTriangle, IconInfoCircle } from '@tabler/icons-react';
 import { Fragment, useRef, useState, type ReactNode } from 'react';
 import { useExplain, useExplanations } from '../../api/queries';
 import type { Explanation } from '../../api/types';
@@ -66,7 +66,7 @@ function Answer({ item, onRetry, busy, ...props }: { item: Explanation; onRetry:
           <Loader size="xs" />
           <Text size="sm" c="dimmed">{item.status === 'queued' ? 'Вопрос принят. Ожидаем начала обработки…' : 'Изучаем результаты и проверяем числа…'}</Text>
         </Group>}
-        {item.status === 'failed' && <Alert color="orange" title="Не удалось подготовить ответ">
+        {item.status === 'failed' && <Alert icon={<IconAlertTriangle />} color="orange" title="Не удалось подготовить ответ">
           <Stack gap="sm">
             <Text size="sm">Повторите запрос. Текст вопроса сохранён.</Text>
             <Button variant="default" size="sm" w="fit-content" leftSection={<IconRefresh size={15} />} onClick={() => onRetry(item.question)} disabled={busy}>Повторить вопрос</Button>
@@ -74,18 +74,18 @@ function Answer({ item, onRetry, busy, ...props }: { item: Explanation; onRetry:
           </Stack>
         </Alert>}
         {answer && <>
-          {answer.mode === 'structured' && <Alert variant="light" color="gray" title="Доступна сводка вместо ответа">
+          {answer.mode === 'structured' && <Alert icon={<IconInfoCircle />} color="gray" title="Доступна сводка вместо ответа">
             <Text size="sm">{REASONS[(answer.fallback_reason ?? '').split(':')[0]] ?? 'Не удалось сформировать ответ на вопрос.'} Ниже — сохранённые результаты стресс-теста.</Text>
           </Alert>}
           {answer.mode === 'llm' ? <AnswerText text={answer.text} {...props} /> : <Stack gap="md">
-            {answer.sections.map((section, index) => <Stack key={index} gap={6}>
+            {answer.sections.map((section, index) => <Stack key={index} gap={4}>
               <Title order={5}>{section.title}</Title>
-              <List size="sm" spacing={6}>{section.lines.map((line, i) => <List.Item key={i}>{line}</List.Item>)}</List>
+              <List size="sm" spacing={4}>{section.lines.map((line, i) => <List.Item key={i}>{line}</List.Item>)}</List>
             </Stack>)}
             <Button variant="subtle" size="sm" w="fit-content" leftSection={<IconRefresh size={15} />} onClick={() => onRetry(item.question)} disabled={busy}>Попробовать получить ответ</Button>
           </Stack>}
           <Group justify="space-between" gap="sm">
-            <Badge variant="light" color={answer.mode === 'llm' ? 'teal' : 'gray'} tt="none" fw={500}>
+            <Badge color={answer.mode === 'llm' ? 'teal' : 'gray'}>
               {answer.mode === 'llm' ? 'Числа сверены с расчётом' : 'Сводка из данных расчёта'}
             </Badge>
           </Group>
@@ -136,7 +136,7 @@ export function ExplainTab(props: RunTabProps) {
   ];
   return (
     <Stack gap="lg" maw={920}>
-      <Stack gap={6}>
+      <Stack gap={4}>
         <Title order={3}>Разбор результатов</Title>
         <Text size="sm" c="dimmed" maw="72ch">Спросите о причинах потерь, конкретной позиции или допущениях. Ответ использует данные этого стресс-теста; числа проходят проверку.</Text>
       </Stack>
@@ -154,7 +154,7 @@ export function ExplainTab(props: RunTabProps) {
             {examples.map((example) => <Button key={example} type="button" className="question-example" size="sm" variant="default"
               onClick={() => { setQuestion(example); input.current?.focus(); }}>{example}</Button>)}
           </Group>}
-          {!ready && <Alert color="gray">Вопросы станут доступны после расчёта позиций. Проверьте сценарий и недостающие данные.</Alert>}
+          {!ready && <Alert icon={<IconInfoCircle />} color="gray">Вопросы станут доступны после расчёта позиций. Проверьте сценарий и недостающие данные.</Alert>}
           {waiting && <Text size="sm" c="dimmed" role="status">Ответ готовится. Следующий вопрос можно написать сейчас и отправить после завершения.</Text>}
           {ask.error && <ErrorAlert error={ask.error} />}
           <Group justify="space-between" gap="sm">

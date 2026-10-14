@@ -1,5 +1,5 @@
 import { Alert, Button, Center, Paper, PasswordInput, Stack, Text, Title } from '@mantine/core';
-import { IconChartLine, IconSignature } from '@tabler/icons-react';
+import { IconChartLine, IconSignature, IconAlertTriangle } from '@tabler/icons-react';
 import { useState, type FormEvent } from 'react';
 import { Navigate, useLocation } from 'react-router';
 import { useSession } from '../auth/session';
@@ -38,7 +38,7 @@ export function Login() {
           <Text c="dimmed">Оценка влияния макро- и регуляторных событий на кредитный или инвестиционный портфель.</Text>
         </Stack>
         {meError && (
-          <Alert color="orange" variant="light">
+          <Alert icon={<IconAlertTriangle />} color="orange">
             {meError.userMessage}
           </Alert>
         )}
@@ -58,7 +58,7 @@ export function Login() {
                     leftSection={<view.Icon size={28} stroke={1.6} />}
                     onClick={() => signIn(value)}
                   >
-                    <Stack gap={2} align="flex-start">
+                    <Stack gap={4} align="flex-start">
                       <Text fw={600}>{view.title}</Text>
                       <Text size="sm" c="dimmed" fw={400} style={{ whiteSpace: 'normal', textAlign: 'left' }}>
                         {view.text}

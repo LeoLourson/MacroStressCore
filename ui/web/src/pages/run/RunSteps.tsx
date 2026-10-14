@@ -7,38 +7,38 @@ function Mark({ state, index }: { state: StepState; index: number }) {
   switch (state) {
     case 'done':
       return (
-        <ThemeIcon size={28} radius="xl" color="teal" variant="light">
-          <IconCheck size={16} />
+        <ThemeIcon size={20} radius="xl" color="gray" variant="light">
+          <IconCheck size={12} />
         </ThemeIcon>
       );
     case 'running':
       return (
-        <ThemeIcon size={28} radius="xl" color="steel" variant="light">
-          <Loader size={14} color="steel" />
+        <ThemeIcon size={20} radius="xl" color="gray" variant="light">
+          <Loader size={10} color="gray" />
         </ThemeIcon>
       );
     case 'yours':
       return (
-        <ThemeIcon size={28} radius="xl" color="yellow" variant="filled" c="dark.8">
-          <IconExclamationMark size={16} />
+        <ThemeIcon size={20} radius="xl" color="yellow" variant="filled" c="dark.8">
+          <IconExclamationMark size={12} />
         </ThemeIcon>
       );
     case 'others':
       return (
-        <ThemeIcon size={28} radius="xl" color="gray" variant="light">
-          <IconClock size={16} />
+        <ThemeIcon size={20} radius="xl" color="gray" variant="light">
+          <IconClock size={12} />
         </ThemeIcon>
       );
     case 'failed':
     case 'rejected':
       return (
-        <ThemeIcon size={28} radius="xl" color="dark" variant="light">
-          <IconX size={16} />
+        <ThemeIcon size={20} radius="xl" color="dark" variant="light">
+          <IconX size={12} />
         </ThemeIcon>
       );
     default:
       return (
-        <ThemeIcon size={28} radius="xl" color="gray" variant="outline" c="gray.6">
+        <ThemeIcon size={20} radius="xl" color="gray" variant="outline" c="gray.6">
           <Text size="xs" fw={600}>
             {index + 1}
           </Text>
@@ -57,18 +57,13 @@ export function RunSteps({ steps }: { steps: StepView[] }) {
           <Box
             component="li"
             key={step.title}
-            p="sm"
+            py={4}
             aria-current={current ? 'step' : undefined}
-            style={{
-              borderTop: `3px solid var(--mantine-color-${
-                step.state === 'done' ? 'teal-4' : current ? 'steel-6' : 'gray-3'
-              })`,
-            }}
           >
             <Group gap="sm" wrap="nowrap" align="flex-start">
               <Mark state={step.state} index={index} />
-              <Stack gap={2} miw={0}>
-                <Text size="sm" fw={current ? 700 : 500} c={step.state === 'todo' ? 'dimmed' : undefined}>
+              <Stack gap={4} miw={0}>
+                <Text size="sm" fw={current ? 600 : 400} c={step.state === 'todo' ? 'dimmed' : undefined}>
                   {step.title}
                 </Text>
                 {step.note && (

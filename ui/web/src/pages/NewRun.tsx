@@ -5,6 +5,7 @@ import {
   Button,
   Checkbox,
   Collapse,
+  Divider,
   FileInput,
   Group,
   Paper,
@@ -18,7 +19,7 @@ import {
   Title,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { IconArrowLeft, IconFileText, IconPlayerPlay } from '@tabler/icons-react';
+import { IconArrowLeft, IconChevronDown, IconChevronRight, IconFileText, IconPlayerPlay } from '@tabler/icons-react';
 import { useEffect, useState, type FormEvent } from 'react';
 import { Link, Navigate, useLocation, useNavigate, useSearchParams } from 'react-router';
 import { useLibraryEvents, usePortfolio, usePortfolios, useStartRun, useWorkflows, type StartInput } from '../api/queries';
@@ -44,28 +45,16 @@ export interface RerunState {
   strongModel?: boolean;
 }
 
-function Section({ step, title, children }: { step: number; title: string; children: React.ReactNode }) {
+/** One part of the form: a quiet heading, separated from the previous part by a rule. */
+function Section({ title, first, children }: { title: string; first?: boolean; children: React.ReactNode }) {
   return (
-    <Paper p="lg">
+    <>
+      {!first && <Divider />}
       <Stack gap="md">
-        <Group gap="sm">
-          <Text
-            fw={600}
-            c="steel.8"
-            bg="steel.0"
-            w={28}
-            h={28}
-            ta="center"
-            lh="28px"
-            style={{ borderRadius: '50%' }}
-          >
-            {step}
-          </Text>
-          <Title order={4}>{title}</Title>
-        </Group>
+        <Title order={5}>{title}</Title>
         {children}
       </Stack>
-    </Paper>
+    </>
   );
 }
 
@@ -103,7 +92,7 @@ function PortfolioPositions({ portfolioId }: { portfolioId: string | null }) {
         </Anchor>
       </Group>
       <Collapse in={open}>
-        <Table withTableBorder striped fz="sm">
+        <Table withTableBorder>
           <Table.Thead>
             <Table.Tr>
               <Table.Th>Позиция</Table.Th>
@@ -148,9 +137,13 @@ function OptionalAgents({ chosen, onChange }: { chosen: string[]; onChange: (ids
   const [opened, { toggle }] = useDisclosure(chosen.length > 0);
   if (!agents.length) return null;
   return (
-    <Section step={4} title="Дополнительные агенты">
-      <Anchor component="button" type="button" size="sm" w="fit-content" onClick={toggle}>
-        {opened ? 'Скрыть' : `Добавить к стресс-тесту (${agents.length} на выбор)`}
+    <>
+      <Divider />
+      <Anchor component="button" type="button" size="sm" w="fit-content" c="dimmed" onClick={toggle}>
+        <Group gap={4}>
+          {opened ? <IconChevronDown size={14} /> : <IconChevronRight size={14} />}
+          Дополнительные агенты (необязательно, {agents.length} на выбор)
+        </Group>
       </Anchor>
       <Collapse in={opened}>
         <Stack gap="xs">
@@ -166,7 +159,7 @@ function OptionalAgents({ chosen, onChange }: { chosen: string[]; onChange: (ids
           </Checkbox.Group>
         </Stack>
       </Collapse>
-    </Section>
+    </>
   );
 }
 
@@ -287,7 +280,9 @@ export function NewRun() {
           <Title order={2}>Новый стресс-тест</Title>
         </Stack>
 
-        <Section step={1} title="Портфель">
+        <Paper p="lg">
+        <Stack gap="lg">
+        <Section first title="Портфель">
           {demo || portfolios.data?.length ? (
             <Select
               label={<FieldHelp label="Какой портфель проверяем" help="Выберите сохранённый портфель. Ниже можно проверить его состав перед запуском." />}
@@ -316,7 +311,7 @@ export function NewRun() {
           )}
         </Section>
 
-        <Section step={2} title="Событие">
+        <Section title="Событие">
           <SegmentedControl
             value={source}
             onChange={(v) => setSource(v as Source)}
@@ -383,7 +378,7 @@ export function NewRun() {
           )}
         </Section>
 
-        <Section step={3} title="Сценарий">
+        <Section title="Сценарий">
           <Textarea
             label={<FieldHelp label="Изменения в сценарии" help="Опишите силу события числом или диапазоном. Для акций отдельно укажите изменение рыночного индекса или отрасли: рост затрат не равен падению цены акции. Все допущения проверяются до расчёта." />}
             placeholder="Например: сбор поднимет стоимость техники примерно на 10 %, не меньше 6 % и не больше 14 %; платежи задержатся на 30–60 дней"
@@ -414,6 +409,7 @@ export function NewRun() {
           </Text>
         )}
         {start.error && <ErrorAlert error={start.error} />}
+        <Divider />
         <Group>
           <Button type="submit" size="md" leftSection={<IconPlayerPlay size={18} />} loading={start.isPending}>
             Запустить стресс-тест
@@ -422,6 +418,8 @@ export function NewRun() {
             Отмена
           </Button>
         </Group>
+        </Stack>
+        </Paper>
       </Stack>
     </form>
   );

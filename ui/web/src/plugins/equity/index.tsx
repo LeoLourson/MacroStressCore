@@ -92,7 +92,7 @@ function EquityPosition({ result, view, entries }: PositionViewProps) {
       />
       {d.conventions?.length > 0 && (
         <Section title="Соглашения модели">
-          <List size="sm" spacing={2}>
+          <List size="sm" spacing={4}>
             {d.conventions.map((line) => (
               <List.Item key={line}>{line}</List.Item>
             ))}

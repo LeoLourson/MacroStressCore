@@ -36,14 +36,45 @@ export const theme = createTheme({
   colors: { steel, mts },
   fontFamily: sans,
   fontFamilyMonospace: 'ui-monospace, "Cascadia Mono", Consolas, monospace',
-  headings: { fontFamily: sans, fontWeight: '600' },
+  fontSizes: { xs: '12px', sm: '14px', md: '16px', lg: '20px', xl: '28px' },
+  spacing: { xs: '8px', sm: '12px', md: '16px', lg: '24px', xl: '32px' },
+  headings: {
+    fontFamily: sans,
+    fontWeight: '600',
+    sizes: {
+      h2: { fontSize: '20px', lineHeight: '1.3' },
+      h3: { fontSize: '16px' },
+      h4: { fontSize: '16px' },
+      h5: { fontSize: '14px' },
+    },
+  },
   defaultRadius: 'md',
   cursorType: 'pointer',
   components: {
     Tooltip: { defaultProps: { multiline: true, maw: 320, withArrow: true, openDelay: 150 } },
     Paper: { defaultProps: { withBorder: true, radius: 'md' } },
     // Tinted alerts keep their colour in the icon and background; the title stays ink for contrast.
-    Alert: { styles: { title: { color: 'var(--mantine-color-dark-8)' } } },
+    Alert: {
+      defaultProps: { variant: 'light' },
+      styles: {
+        title: {
+          color: 'var(--mantine-color-dark-8)',
+          fontSize: 'var(--mantine-font-size-sm)',
+          fontWeight: 600,
+        },
+      },
+    },
+    Table: {
+      defaultProps: { fz: 'sm', verticalSpacing: 'xs', horizontalSpacing: 'sm' },
+      styles: {
+        th: {
+          fontSize: 'var(--mantine-font-size-xs)',
+          fontWeight: 500,
+          color: 'var(--mantine-color-dimmed)',
+        },
+      },
+    },
+    Badge: { defaultProps: { variant: 'light', tt: 'none', fw: 500, radius: 'sm' } },
   },
 });
 

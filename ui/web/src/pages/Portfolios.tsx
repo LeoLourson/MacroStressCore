@@ -22,7 +22,7 @@ function Composition({ portfolioId }: { portfolioId: string }) {
         {portfolio.as_of ? `; дата оценки ${day(portfolio.as_of)}` : ''}
         {portfolio.snapshot_id ? `; данные — снимок ${portfolio.snapshot_id}` : ''}
       </Text>
-      <Table withTableBorder fz="sm">
+      <Table withTableBorder>
         <Table.Thead>
           <Table.Tr>
             <Table.Th>Позиция</Table.Th>
@@ -67,7 +67,7 @@ export function Portfolios() {
   return (
     <Stack gap="lg">
       <Group justify="space-between">
-        <Stack gap={2}>
+        <Stack gap={4}>
           <Title order={2}>Портфели</Title>
           <Text size="sm" c="dimmed" maw="80ch">
             {demo
@@ -110,16 +110,16 @@ export function Portfolios() {
                     </Table.Td>
                     <Table.Td>
                       {!demo ? (
-                        <Badge variant="light" color="gray" tt="none" fw={500}>
+                        <Badge color="gray">
                           Портфель банка
                         </Badge>
                       ) : p.builtin ? (
-                        <Badge variant="light" color="gray" tt="none" fw={500}>
+                        <Badge color="gray">
                           Демо-портфель
                         </Badge>
                       ) : (
                         <Stack gap={0}>
-                          <Badge variant="light" color="steel" tt="none" fw={500} w="fit-content">
+                          <Badge color="steel" w="fit-content">
                             Свой
                           </Badge>
                           {p.expires_at && (

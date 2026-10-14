@@ -1,4 +1,4 @@
-import { Code } from '@mantine/core';
+import { Code, Tooltip } from '@mantine/core';
 import { Fragment, useMemo, type ReactNode } from 'react';
 import type { Artifacts, NumberRef } from '../../api/types';
 import { TracedNumber } from '../../components/Provenance';
@@ -50,7 +50,12 @@ function glossed(text: string, names: Map<string, string>): ReactNode {
     const gloss = glossOf(match[0], names);
     if (!gloss) continue;
     const end = match.index + match[0].length;
-    out.push(text.slice(at, end), <span key={match.index} className="gloss"> ({gloss})</span>);
+    out.push(
+      text.slice(at, match.index),
+      <Tooltip key={match.index} label={gloss}>
+        <span style={{ textDecoration: 'underline dotted', cursor: 'help' }}>{match[0]}</span>
+      </Tooltip>,
+    );
     at = end;
   }
   if (!out.length) return text;
@@ -117,10 +122,9 @@ export function ReportText({
         if (run.code) {
           const gloss = glossOf(run.text, names);
           return (
-            <Fragment key={i}>
-              <Code>{run.text}</Code>
-              {gloss && <span className="gloss"> ({gloss})</span>}
-            </Fragment>
+            <Tooltip key={i} label={gloss} disabled={!gloss}>
+              <Code style={gloss ? { cursor: 'help' } : undefined}>{run.text}</Code>
+            </Tooltip>
           );
         }
         const marked = marker.mark(run.text).map((segment, j) =>

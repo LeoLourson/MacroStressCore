@@ -13,7 +13,7 @@ export const RunArtifacts = createContext<Artifacts | null>(null);
 function Part({ title, children }: { title: string; children: ReactNode }) {
   return (
     <Stack gap={4}>
-      <Text size="xs" c="dark.4" fw={600}>
+      <Text size="xs" c="dimmed" fw={600}>
         {title}
       </Text>
       {children}
@@ -26,22 +26,22 @@ export function SourceInputs({ source, meta = true }: { source: SourceView; meta
   return (
     <Stack gap={4}>
       {meta && (
-        <Text size="xs" c="dark.3">
+        <Text size="xs" c="dimmed">
           {sourceMeta(source)}
         </Text>
       )}
       {source.positions.map((position) => (
-        <Stack key={position.positionId} gap={2}>
+        <Stack key={position.positionId} gap={4}>
           {position.groups.map((group) => (
             <Text key={group.title} size="sm">
-              <Text span c="dark.4" inherit>
+              <Text span c="dimmed" inherit>
                 {group.title}:
               </Text>{' '}
               {group.items.join(', ')}
             </Text>
           ))}
           {position.unnamed > 0 && (
-            <Text size="xs" c="dark.3">
+            <Text size="xs" c="dimmed">
               и ещё {plural(position.unnamed, 'показатель', 'показателя', 'показателей')} без названия
             </Text>
           )}
@@ -61,7 +61,7 @@ export function OriginBody({ entry }: { entry: TraceNumber }) {
   const positionId = view.positionId;
   return (
     <Stack gap="sm">
-      <Text size="xs" c="dark.3">
+      <Text size="xs" c="dimmed">
         {describePath(entry.metric_path, {
           names: artifacts.position_names,
           types,
@@ -84,7 +84,7 @@ export function OriginBody({ entry }: { entry: TraceNumber }) {
       {view.positions.length > 0 && (
         <Part title="Позиции в итоге среза">
           <Text size="sm">{view.positions.join(', ')}</Text>
-          <Text size="xs" c="dark.3">
+          <Text size="xs" c="dimmed">
             Исходные данные каждой позиции — в её разборе на вкладке «Позиции».
           </Text>
         </Part>
@@ -124,7 +124,7 @@ export function TracedNumber({ entry, children }: { entry: TraceNumber | undefin
 
 export function OriginNote({ children }: { children: ReactNode }) {
   return (
-    <Group gap={4} c="dark.3">
+    <Group gap={4} c="dimmed">
       <IconInfoCircle size={14} />
       <Text size="xs">{children}</Text>
     </Group>

@@ -14,7 +14,7 @@ import {
 import { IconArrowRight, IconPlus, IconSearch } from '@tabler/icons-react';
 import { useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router';
-import { useRuns } from '../api/queries';
+import { usePortfolios, useRuns } from '../api/queries';
 import type { Me, RunRow } from '../api/types';
 import { canApprove, canFixGraph, canRun, useSession } from '../auth/session';
 import { ErrorAlert } from '../components/ErrorAlert';
@@ -50,7 +50,26 @@ function matches(row: RunRow, filter: Filter): boolean {
   }
 }
 
+function usePortfolioName(): (id: string) => string | undefined {
+  const portfolios = usePortfolios(true).data;
+  return (id) => portfolios?.find((p) => p.portfolio_id === id)?.name || undefined;
+}
+
+function PortfolioCell({ id, name }: { id: string; name?: string }) {
+  return (
+    <>
+      <Text size="sm">{name ?? id}</Text>
+      {name && (
+        <Text size="xs" c="dimmed" ff="monospace">
+          {id}
+        </Text>
+      )}
+    </>
+  );
+}
+
 function Attention({ rows, me }: { rows: RunRow[]; me: Me | null }) {
+  const nameOf = usePortfolioName();
   const navigate = useNavigate();
   const waiting = rows.filter((row) => waitsFor(row, me));
   if (!waiting.length) return null;
@@ -66,15 +85,16 @@ function Attention({ rows, me }: { rows: RunRow[]; me: Me | null }) {
             p="md"
             style={index ? { borderTop: '1px solid var(--mantine-color-gray-3)' } : undefined}
           >
-            <Stack gap={2} miw={0}>
+            <Stack gap={4} miw={0}>
               <Text fw={500} lineClamp={1}>
                 {shorten(row.event_text, 160)}
               </Text>
               <Text size="sm" c="dimmed">
-                Портфель {row.portfolio_id} · запущен {timestamp(row.created_at)}
+                Портфель «{nameOf(row.portfolio_id) ?? row.portfolio_id}» · запущен {timestamp(row.created_at)}
               </Text>
             </Stack>
             <Button
+              variant="light"
               rightSection={<IconArrowRight size={16} />}
               onClick={() => navigate(`/runs/${row.run_id}`)}
               style={{ flexShrink: 0 }}
@@ -94,6 +114,7 @@ export function RunsList() {
   const runs = useRuns();
   const [filter, setFilter] = useState<Filter>('all');
   const [search, setSearch] = useState('');
+  const nameOf = usePortfolioName();
 
   const rows = useMemo(() => {
     const needle = search.trim().toLowerCase();
@@ -102,26 +123,23 @@ export function RunsList() {
         matches(row, filter) &&
         (!needle ||
           row.event_text.toLowerCase().includes(needle) ||
-          row.portfolio_id.toLowerCase().includes(needle)),
+          row.portfolio_id.toLowerCase().includes(needle) ||
+          (nameOf(row.portfolio_id) ?? '').toLowerCase().includes(needle)),
     );
-  }, [runs.data, filter, search]);
+  }, [runs.data, filter, search, nameOf]);
 
   return (
     <Stack gap="xl">
       <Group justify="space-between" align="flex-end">
         <Stack gap={4}>
           <Title order={2}>Стресс-тесты</Title>
-          <Text c="dimmed" maw={640}>
-            Стресс-тест оценивает, как одно событие повлияет на портфель: система строит граф влияния,
-            считает каждую затронутую позицию моделью её типа и готовит отчёт с рекомендациями.
-          </Text>
+          <Text c="dimmed">Как одно событие повлияет на портфель: граф влияния, расчёт позиций, отчёт.</Text>
         </Stack>
         {canRun(me) && (
           <Button
             component={Link}
             to="/new"
             leftSection={<IconPlus size={18} />}
-            w={{ base: '100%', sm: 320 }}
           >
             Новый стресс-тест
           </Button>
@@ -149,7 +167,7 @@ export function RunsList() {
             </Group>
             <Paper>
               {rows.length === 0 ? (
-                <Text c="dimmed" p="xl" ta="center">
+                <Text className="empty">
                   {(runs.data ?? []).length === 0
                     ? 'Стресс-тестов пока нет.'
                     : 'Под выбранные условия ничего не подходит.'}
@@ -159,9 +177,9 @@ export function RunsList() {
                   <Table verticalSpacing="sm" horizontalSpacing="md" highlightOnHover>
                     <Table.Thead>
                       <Table.Tr>
-                        <Table.Th w={170}>Статус</Table.Th>
                         <Table.Th>Событие</Table.Th>
-                        <Table.Th w={110}>Портфель</Table.Th>
+                        <Table.Th w={170}>Статус</Table.Th>
+                        <Table.Th w={180}>Портфель</Table.Th>
                         <Table.Th w={190}>Запущен</Table.Th>
                         <Table.Th w={200}>Решение</Table.Th>
                       </Table.Tr>
@@ -174,14 +192,16 @@ export function RunsList() {
                           onClick={() => navigate(`/runs/${row.run_id}`)}
                         >
                           <Table.Td>
-                            <StatusBadge state={row.status} />
-                          </Table.Td>
-                          <Table.Td>
-                            <Text size="sm" lineClamp={2}>
+                            <Text size="sm" fw={500} lineClamp={2}>
                               {row.event_text}
                             </Text>
                           </Table.Td>
-                          <Table.Td>{row.portfolio_id}</Table.Td>
+                          <Table.Td>
+                            <StatusBadge state={row.status} />
+                          </Table.Td>
+                          <Table.Td>
+                            <PortfolioCell id={row.portfolio_id} name={nameOf(row.portfolio_id)} />
+                          </Table.Td>
                           <Table.Td>
                             <Text size="sm">{timestamp(row.created_at)}</Text>
                             {row.created_by && (

@@ -16,14 +16,14 @@ export function statusReasons(result: CalculationResult, shocks?: Record<string,
 export function ResultStatus({ status, reasons = [], size = 'sm' }: { status: string; reasons?: string[]; size?: 'xs' | 'sm' }) {
   const ok = status === 'ok';
   return (
-    <Group gap={4} wrap="nowrap" align="flex-start" c={ok ? 'teal.9' : 'dark.6'}>
+    <Group gap={4} wrap="nowrap" align="flex-start" c={ok ? 'teal.9' : undefined}>
       {ok ? <IconCheck size={14} style={{ flexShrink: 0, marginTop: 3 }} /> : <IconAlertTriangle size={14} style={{ flexShrink: 0, marginTop: 3 }} />}
       <Text size={size}>
-        <Text span inherit fw={ok ? 400 : 600} style={{ whiteSpace: 'nowrap' }}>
+        <Text span inherit fw={ok ? 400 : 600} className="nowrap">
           {label(RESULT_STATUS, status)}
         </Text>
         {reasons.length > 0 && (
-          <Text span inherit c="dark.4">
+          <Text span inherit c="dimmed">
             {': '}
             {reasons.join('; ')}
           </Text>
@@ -42,7 +42,7 @@ export function ExecutionBadge({ result }: { result: CalculationResult }) {
   ];
   return (
     <Tooltip label={[...new Set(why)].join('; ') || 'Расчёт не выполнен'} multiline maw={420}>
-      <Badge color="gray" c="gray.9" variant="light" tt="none" fw={500} leftSection={<IconX size={12} />}>
+      <Badge color="gray" c="gray.9" leftSection={<IconX size={12} />}>
         {label(EXECUTION, result.execution)}
       </Badge>
     </Tooltip>

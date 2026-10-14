@@ -81,7 +81,7 @@ function marksOf(
     marks.push({
       key: 'no-slice',
       node: (
-        <Text size="xs" c="dark.3">
+        <Text size="xs" c="dimmed">
           вне срезов
         </Text>
       ),
@@ -95,11 +95,11 @@ function marksOf(
       marks.push({
         key: `excluded:${c.slice_id}:${reason}`,
         node: (
-          <Group gap={6} wrap="nowrap" align="flex-start">
-            <Badge color="orange" c="orange.9" variant="light" tt="none" fw={500} leftSection={<IconAlertTriangle size={12} />}>
+          <Group gap={4} wrap="nowrap" align="flex-start">
+            <Badge color="orange" c="orange.9" leftSection={<IconAlertTriangle size={12} />}>
               {slice}: не учтена
             </Badge>
-            <Text size="xs" c="dark.4">
+            <Text size="xs" c="dimmed">
               {reason}
             </Text>
           </Group>
@@ -109,7 +109,7 @@ function marksOf(
       marks.push({
         key: `admitted:${c.slice_id}`,
         node: (
-          <Group gap={4} c="dark.3" wrap="nowrap">
+          <Group gap={4} c="dimmed" wrap="nowrap">
             <IconCheck size={14} />
             <Text size="xs">{slice}: по правилу</Text>
           </Group>
@@ -160,7 +160,7 @@ function SortHeader({ label, by, sort, onSort }: { label: string; by: string | n
       onClick={() => onSort(next)}
       aria-label={`${label}: упорядочить ${orderWords(by !== null, next.reverse)}${now}`}
       title={`Упорядочить ${orderWords(by !== null, next.reverse)}`}
-      style={{ display: 'inline-flex', alignItems: 'center', gap: 4, font: 'inherit', fontWeight: 700 }}
+      style={{ display: 'inline-flex', alignItems: 'center', gap: 4, font: 'inherit', fontWeight: 600 }}
     >
       {label}
       <Icon size={14} color={active ? undefined : 'var(--mantine-color-dark-2)'} />
@@ -226,7 +226,7 @@ function PositionTable({
     <Stack gap="xs">
       {common.length > 0 && (
         <Group gap="xs" align="flex-start" wrap="nowrap">
-          <Text size="xs" c="dark.4" style={{ whiteSpace: 'nowrap', marginTop: 1 }}>
+          <Text size="xs" c="dimmed" className="nowrap" mt={1}>
             У всех {plural(rows.length, 'позиции', 'позиций', 'позиций')}:
           </Text>
           <Stack gap={4}>
@@ -410,8 +410,8 @@ export function PositionsTab({ status, artifacts }: RunTabProps) {
 
   return (
     <Stack gap="lg">
-      <Stack gap={6}>
-        <Text size="sm" c="dark.3" maw={760}>
+      <Stack gap={4}>
+        <Text size="sm" c="dimmed" maw={760}>
           {levels
             ? 'Показатели роста — уровень до события → медиана после, ниже рост и его диапазон '
             : 'Медиана и диапазон '}
@@ -442,7 +442,7 @@ export function PositionsTab({ status, artifacts }: RunTabProps) {
           )}
         </Group>
       )}
-      {shown.length === 0 && <Text c="dimmed">Нет позиций по этому условию.</Text>}
+      {shown.length === 0 && <Text className="empty">Нет позиций по этому условию.</Text>}
       {shown.map(({ group, sort, rows }) => (
         <Stack key={group.key} gap="xs">
           <Title order={5}>
@@ -462,7 +462,7 @@ export function PositionsTab({ status, artifacts }: RunTabProps) {
         </Stack>
       ))}
       {untouched.length > 0 && (
-        <Text size="sm" c="dark.3">
+        <Text size="sm" c="dimmed">
           Не затронуты событием: {untouched.sort().map((id) => positionTitle(id, names)).join(', ')}.
         </Text>
       )}

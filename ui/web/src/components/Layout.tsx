@@ -1,7 +1,6 @@
 import {
   AppShell,
   Avatar,
-  Badge,
   Box,
   Center,
   Container,
@@ -14,7 +13,7 @@ import {
   UnstyledButton,
 } from '@mantine/core';
 import { IconChevronDown, IconLogout, IconUserCircle } from '@tabler/icons-react';
-import { Link, Navigate, Outlet, useLocation } from 'react-router';
+import { Link, NavLink, Navigate, Outlet, useLocation } from 'react-router';
 import type { Mode } from '../api/types';
 import { externalLlm, useSession } from '../auth/session';
 import { MODES, PROVIDERS, ROLES, label } from '../lib/labels';
@@ -41,9 +40,9 @@ function LlmBadge({ external }: { external: boolean }) {
       : `Модель ${llm.model} на ${llm.base_url}, внутри периметра.`;
   return (
     <Tooltip label={tip} multiline maw={360}>
-      <Badge variant="outline" color="gray" c="gray.8" tt="none" fw={500} visibleFrom="md">
+      <Text size="xs" c="dimmed" visibleFrom="md">
         LLM: {text}
-      </Badge>
+      </Text>
     </Tooltip>
   );
 }
@@ -93,6 +92,24 @@ function UserMenu() {
   );
 }
 
+/** A section of the app; the current one is marked in steel, the others stay quiet. */
+function NavItem({ to, label: text, match }: { to: string; label: string; match: (path: string) => boolean }) {
+  const active = match(useLocation().pathname);
+  return (
+    <Text
+      component={NavLink}
+      to={to}
+      size="sm"
+      fw={active ? 600 : 500}
+      c={active ? 'steel.8' : 'gray.7'}
+      td="none"
+      aria-current={active ? 'page' : undefined}
+    >
+      {text}
+    </Text>
+  );
+}
+
 function Header() {
   const { me, mode, modes, setMode } = useSession();
   const external = externalLlm(me);
@@ -103,12 +120,10 @@ function Header() {
           <Link to="/" style={{ textDecoration: 'none' }}>
             <Logo />
           </Link>
-          <Text component={Link} to="/" size="sm" fw={500} c="dark.6" visibleFrom="sm" td="none">
-            Стресс-тесты
-          </Text>
-          <Text component={Link} to="/portfolios" size="sm" fw={500} c="dark.6" visibleFrom="sm" td="none">
-            Портфели
-          </Text>
+          <Group gap="lg" wrap="nowrap" visibleFrom="sm">
+            <NavItem to="/" label="Стресс-тесты" match={(path) => !path.startsWith('/portfolios')} />
+            <NavItem to="/portfolios" label="Портфели" match={(path) => path.startsWith('/portfolios')} />
+          </Group>
         </Group>
         <Group gap="md" wrap="nowrap">
           <LlmBadge external={!!external} />

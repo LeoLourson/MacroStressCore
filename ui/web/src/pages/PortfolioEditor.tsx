@@ -20,7 +20,7 @@ import {
   Title,
 } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
-import { IconArrowLeft, IconDownload, IconPlus, IconTrash, IconUpload } from '@tabler/icons-react';
+import { IconArrowLeft, IconDownload, IconPlus, IconTrash, IconUpload, IconAlertTriangle } from '@tabler/icons-react';
 import { useEffect, useState } from 'react';
 import { Link, Navigate, useNavigate, useSearchParams } from 'react-router';
 import { getCatalog, instrumentTypes, typeSpec, type EditorField, type EditorGroup } from '../api/catalog';
@@ -231,7 +231,7 @@ function Group_({
   );
   return (
     <Stack gap="xs">
-      <Anchor component="button" type="button" onClick={() => setOpen(!open)} w="fit-content" c="dark.7">
+      <Anchor component="button" type="button" onClick={() => setOpen(!open)} w="fit-content">
         <Title order={5}>
           {open ? '▾' : '▸'} {group.title}
         </Title>
@@ -470,7 +470,7 @@ export function PortfolioEditor() {
           </Group>
         </Group>
         {importError && (
-          <Alert color="orange" variant="light" mt="md">
+          <Alert icon={<IconAlertTriangle />} color="orange" mt="md">
             {importError}
           </Alert>
         )}
@@ -478,7 +478,7 @@ export function PortfolioEditor() {
 
       <Paper>
         <Table.ScrollContainer minWidth={620}>
-        <Table highlightOnHover verticalSpacing="xs">
+        <Table highlightOnHover>
           <Table.Thead>
             <Table.Tr>
               <Table.Th>Позиция</Table.Th>
@@ -512,11 +512,11 @@ export function PortfolioEditor() {
                   <Table.Td>{p.currency}</Table.Td>
                   <Table.Td>
                     {missing ? (
-                      <Badge variant="light" color="orange" c="orange.9" tt="none" fw={500}>
+                      <Badge color="orange" c="orange.9">
                         не хватает {missing}
                       </Badge>
                     ) : (
-                      <Badge variant="light" color="teal" c="teal.9" tt="none" fw={500}>
+                      <Badge color="teal" c="teal.9">
                         ✓ готова
                       </Badge>
                     )}
@@ -567,8 +567,8 @@ export function PortfolioEditor() {
       )}
 
       {touched && issues.length > 0 && (
-        <Alert color="orange" variant="light" title="Портфель ещё не готов">
-          <Stack gap={2}>
+        <Alert icon={<IconAlertTriangle />} color="orange" title="Портфель ещё не готов">
+          <Stack gap={4}>
             {issues.map((issue) => (
               <Text key={issue} size="sm">
                 {issue}

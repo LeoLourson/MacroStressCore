@@ -133,7 +133,7 @@ function Gate({
   const icon =
     words.tone === 'problem' ? <IconAlertTriangle /> : words.tone === 'task' ? <IconMessageReport /> : <IconInfoCircle />;
   return (
-    <Alert color={color} variant="light" icon={icon} title={words.title} styles={{ title: { fontSize: 'var(--mantine-font-size-md)' } }}>
+    <Alert color={color} icon={icon} title={words.title} styles={{ title: { fontSize: 'var(--mantine-font-size-md)' } }}>
       <Stack gap="xs">
         <Text size="sm">{words.text}</Text>
         {built && assumed > 0 && (
@@ -220,15 +220,15 @@ function ScenarioTable({
           Параметры появятся, когда модель разберёт событие.
         </Text>
       ) : entries.length === 0 ? (
-        <Alert color="gray" variant="light">
+        <Text className="empty">
           {plan.text
             ? 'Сценарий не задан: модель не извлекла параметры из описания силы события.'
             : 'Сценарий не задан: при запуске не описали силу события.'}
           {editing && graph?.nodes.length ? ' Добавьте параметры вручную.' : ''}
-        </Alert>
+        </Text>
       ) : (
         <Table.ScrollContainer minWidth={720}>
-          <Table withTableBorder verticalSpacing="xs" fz="sm">
+          <Table withTableBorder>
             <Table.Thead>
               <Table.Tr>
                 <Table.Th>Параметр</Table.Th>
@@ -280,7 +280,7 @@ function Effects({ effects }: { effects: { label: string; sector: string; okved:
       <Text size="sm" c="dimmed">
         Значение параметра, пересчитанное через связи графа. Расчёт по позициям разыгрывает весь диапазон.
       </Text>
-      <Table withTableBorder fz="sm">
+      <Table withTableBorder>
         <Table.Thead>
           <Table.Tr>
             <Table.Th>Параметр</Table.Th>
@@ -330,7 +330,7 @@ function EdgesTable({
       </Anchor>
       <Collapse in={opened}>
       <Table.ScrollContainer minWidth={720}>
-        <Table withTableBorder highlightOnHover fz="sm">
+        <Table withTableBorder highlightOnHover>
           <Table.Thead>
             <Table.Tr>
               <Table.Th>Связь</Table.Th>
@@ -357,7 +357,7 @@ function EdgesTable({
                 </Table.Td>
                 <Table.Td>
                   {flagged.has(i) ? (
-                    <Badge color="orange" c="orange.9" variant="light" tt="none" leftSection={<IconAlertTriangle size={12} />}>
+                    <Badge color="orange" c="orange.9" leftSection={<IconAlertTriangle size={12} />}>
                       есть проблема
                     </Badge>
                   ) : (
@@ -536,7 +536,6 @@ function Body({
                 component="button"
                 type="button"
                 inherit
-                c="dark.7"
                 aria-expanded={scenarioOpen}
                 onClick={() => setScenarioOpen(!scenarioOpen)}
               >
@@ -603,7 +602,7 @@ function Body({
               <EdgesTable graph={graph!} document={document} flagged={flagged} onSelect={setSelected} />
             </>
           ) : draft ? (
-            <Alert color="orange" variant="light" title="Модель не смогла построить граф">
+            <Alert icon={<IconAlertTriangle />} color="orange" title="Модель не смогла построить граф">
               <Stack gap="xs">
                 <Text size="sm">
                   {stronger

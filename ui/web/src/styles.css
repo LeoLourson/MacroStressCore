@@ -179,3 +179,14 @@ table,
     animation-duration: 0.01ms !important;
   }
 }
+
+.nowrap {
+  white-space: nowrap;
+}
+
+.empty {
+  padding-block: var(--mantine-spacing-xl);
+  text-align: center;
+  color: var(--mantine-color-dimmed);
+  font-size: var(--mantine-font-size-sm);
+}

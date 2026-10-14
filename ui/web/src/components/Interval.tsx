@@ -93,9 +93,9 @@ export function IntervalBar({
 /** What the marks of the bars mean, once above the bars that use them. */
 export function IntervalLegend({ base = false, tail = false, note }: { base?: boolean; tail?: boolean; note?: string }) {
   const item = (mark: ReactNode, text: string) => (
-    <Group gap={6} wrap="nowrap">
+    <Group gap={4} wrap="nowrap">
       {mark}
-      <Text size="xs" c="dark.3">
+      <Text size="xs" c="dimmed">
         {text}
       </Text>
     </Group>
@@ -107,7 +107,7 @@ export function IntervalLegend({ base = false, tail = false, note }: { base?: bo
       {item(<Box w={3} h={12} bg="steel.8" style={{ borderRadius: 2 }} />, base ? 'медиана после события' : 'медиана')}
       {tail && item(<Box h={12} style={{ borderLeft: '2px dotted var(--mantine-color-dark-4)' }} />, 'средние потери в худших 5 % (ES95)')}
       {note && (
-        <Text size="xs" c="dark.3">
+        <Text size="xs" c="dimmed">
           {note}
         </Text>
       )}
@@ -131,10 +131,10 @@ export function IntervalText({
 }) {
   return (
     <Stack gap={0} align={align === 'right' ? 'flex-end' : 'flex-start'} className="num">
-      <Text fw={600} size="sm" style={{ whiteSpace: 'nowrap' }}>
+      <Text fw={600} size="sm" className="nowrap">
         {format(p50)}
       </Text>
-      <Text size="xs" c="dimmed" style={{ whiteSpace: 'nowrap' }}>
+      <Text size="xs" c="dimmed" className="nowrap">
         {format(p05)} … {format(p95)}
       </Text>
     </Stack>
@@ -158,12 +158,12 @@ export interface ShiftValues {
 export function ShiftText({ base, p05, p50, p95, unit, align = 'right' }: ShiftValues & { align?: 'left' | 'right' }) {
   return (
     <Stack gap={0} align={align === 'right' ? 'flex-end' : 'flex-start'} className="num">
-      <Text fw={600} size="sm" style={{ whiteSpace: 'nowrap' }}>
+      <Text fw={600} size="sm" className="nowrap">
         {bareValue(base, unit)} → {metricValue(base + p50, unit)}
       </Text>
       <Text size="xs" c="dimmed" ta={align}>
-        <span style={{ whiteSpace: 'nowrap' }}>{change(p50, unit)}</span>{' '}
-        <span style={{ whiteSpace: 'nowrap' }}>
+        <span className="nowrap">{change(p50, unit)}</span>{' '}
+        <span className="nowrap">
           (P5–P95: {bareChange(p05, unit)} … {bareChange(p95, unit)})
         </span>
       </Text>
@@ -175,7 +175,7 @@ export function ShiftText({ base, p05, p50, p95, unit, align = 'right' }: ShiftV
 export function Shift({ scale, width = '100%', ...values }: ShiftValues & { scale: Scale; width?: number | string }) {
   const { base, p05, p50, p95 } = values;
   return (
-    <Stack gap={6} align="flex-end">
+    <Stack gap={4} align="flex-end">
       <ShiftText {...values} />
       <IntervalBar base={base} p05={base + p05} p50={base + p50} p95={base + p95} scale={scale} width={width} />
     </Stack>

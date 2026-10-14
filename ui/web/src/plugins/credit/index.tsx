@@ -226,7 +226,7 @@ function Trajectories({ risk, labels }: { risk: RiskDetails; labels: Record<stri
       hint={`На ${day(base.month_ends[end])}: до события и в центральном сценарии — одна траектория при наиболее вероятных значениях шоков. Медианы и диапазоны по всем сценариям — в показателях выше.`}
     >
       <Table.ScrollContainer minWidth={560}>
-        <Table withTableBorder fz="sm" verticalSpacing={6}>
+        <Table withTableBorder>
           <Table.Thead>
             <Table.Tr>
               <Table.Th>Показатель</Table.Th>
@@ -292,7 +292,7 @@ function Covenants({ risk, covenants, labels }: { risk: RiskDetails; covenants: 
       hint="Вероятность — доля сценариев с нарушением хотя бы в одну дату проверки. Запас меньше нуля — порог пробит в центральном сценарии."
     >
       <Table.ScrollContainer minWidth={620}>
-        <Table withTableBorder fz="sm" verticalSpacing={6}>
+        <Table withTableBorder>
           <Table.Thead>
             <Table.Tr>
               <Table.Th>Ковенант</Table.Th>
@@ -363,7 +363,7 @@ function Axes({ risk }: { risk: RiskDetails }) {
   if (!(risk.axes ?? []).some((axis) => axis.band !== 'not_assessed')) return null;
   return (
     <Section title="Оценка по осям риска">
-      <Table withTableBorder fz="sm">
+      <Table withTableBorder>
         <Table.Thead>
           <Table.Tr>
             <Table.Th>Ось риска</Table.Th>
@@ -445,7 +445,7 @@ function CalibrationNote({ artifacts }: { artifacts: Artifacts }) {
     .map((f) => f.slice('included_by_rule:'.length));
   if (calibration.registry_id === 'none') {
     return (
-      <Alert variant="light" color="orange" icon={<IconAlertTriangle />} title="Калибровка PD не загружена">
+      <Alert color="orange" icon={<IconAlertTriangle />} title="Калибровка PD не загружена">
         <Text size="sm">
           Вероятностный выход модели — индекс риска, а не PD: денежные потери и итог кредитного среза не считаются.
         </Text>
@@ -454,7 +454,7 @@ function CalibrationNote({ artifacts }: { artifacts: Artifacts }) {
   }
   return (
     <Stack gap={4}>
-      <Group gap={6} wrap="nowrap" align="flex-start" c="dark.3">
+      <Group gap={4} wrap="nowrap" align="flex-start" c="dimmed">
         <IconInfoCircle size={14} style={{ flexShrink: 0, marginTop: 2 }} />
         <Text size="xs">
           {calibration.kind === 'synthetic_demo'
@@ -467,11 +467,11 @@ function CalibrationNote({ artifacts }: { artifacts: Artifacts }) {
       </Group>
       <Collapse in={open}>
         <Stack gap={4} pl={20} maw="90ch">
-          <Text size="xs" c="dark.3">
+          <Text size="xs" c="dimmed">
             {calibration.note}
           </Text>
           {admitted.length > 0 && calibration.inclusion_rule && (
-            <Text size="xs" c="dark.3">
+            <Text size="xs" c="dimmed">
               По правилу включения (утвердил: {label(AUTHORS, calibration.inclusion_rule.approved_by)},{' '}
               {day(calibration.inclusion_rule.approved_on)}) в итог кредитного среза вошли:{' '}
               {admitted.map((id) => positionTitle(id, artifacts.position_names)).join(', ')}. {calibration.inclusion_rule.text}

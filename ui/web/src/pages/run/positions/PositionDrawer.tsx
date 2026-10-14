@@ -1,11 +1,11 @@
 import { ActionIcon, Alert, Anchor, Collapse, Drawer, Group, List, Stack, Table, Text, Title, Tooltip } from '@mantine/core';
 import { useHotkeys } from '@mantine/hooks';
-import { IconAlertTriangle, IconChevronDown, IconChevronUp } from '@tabler/icons-react';
+import { IconAlertTriangle, IconChevronDown, IconChevronUp, IconInfoCircle } from '@tabler/icons-react';
 import { useEffect, useRef, useState } from 'react';
 import { flagKind, metricLabel, modelLabel, viewFor, type ResultView } from '../../../api/catalog';
 import type { Artifacts, CalculationResult, PositionContext } from '../../../api/types';
 import { IntervalBar } from '../../../components/Interval';
-import { ExecutionBadge, ResultStatus, statusReasons } from '../../../components/RiskModel';
+import { ExecutionBadge, statusReasons } from '../../../components/RiskModel';
 import { MetricCell, Section, StandardView } from '../../../components/ResultBlocks';
 import { positionName, typeName } from '../../../lib/format';
 import { DATA_QUALITY, flagList, flagOne, label } from '../../../lib/labels';
@@ -34,7 +34,7 @@ function KeyMetrics({ result, columns, entries }: { result: CalculationResult; c
   if (!shown.length) return null;
   return (
     <Section title="Ключевые показатели" hint="Те же, что в списке позиций; полоса — на общей шкале столбца, рядом с остальными позициями.">
-      <Table withTableBorder fz="sm" verticalSpacing={6}>
+      <Table withTableBorder>
         <Table.Tbody>
           {shown.map((column) => {
             const metric = result.metrics[column.metric];
@@ -118,7 +118,7 @@ export function PositionDrawer({
   const methods = flagList(flags.filter((f) => flagKind(f) === 'informational'), shocks);
   const blocking = result?.diagnostics.filter((d) => d.severity === 'error') ?? [];
   const warnings = result?.diagnostics.filter((d) => d.severity === 'warning') ?? [];
-  const important = [...new Set([...warnings.map((d) => d.message || d.code), ...limits])];
+  const important = [...new Set([...(result ? statusReasons(result, shocks) : []), ...warnings.map((d) => d.message || d.code), ...limits])];
   const meta = result
     ? [
         typeName(result.instrument_type),
@@ -140,14 +140,17 @@ export function PositionDrawer({
         result && (
           <Group justify="space-between" wrap="nowrap" align="flex-start" gap="md">
             <Stack gap={0} style={{ minWidth: 0 }}>
-              <Title order={4}>{positionName(result.position_id, names)}</Title>
+              <Group gap="sm" wrap="nowrap" align="center">
+                <Title order={4}>{positionName(result.position_id, names)}</Title>
+                <ExecutionBadge result={result} />
+              </Group>
               <Text size="xs" c="dimmed" ff="monospace">
                 {result.position_id}
               </Text>
             </Stack>
             {at >= 0 && order.length > 1 && (
               <Group gap={4} wrap="nowrap">
-                <Text size="xs" c="dark.3" style={{ whiteSpace: 'nowrap' }}>
+                <Text size="xs" c="dimmed" className="nowrap">
                   {at + 1} из {order.length}
                 </Text>
                 <Tooltip label="Предыдущая позиция (Alt+↑)">
@@ -174,19 +177,13 @@ export function PositionDrawer({
     >
       {result && view && (
         <Stack gap="lg" ref={top}>
-          <Stack gap={6}>
-            <Text size="sm" c="dark.3">
-              {meta.join(' · ')}
-            </Text>
-            {result.execution === 'completed' ? (
-              <ResultStatus status={result.status} reasons={statusReasons(result, shocks)} />
-            ) : (
-              <ExecutionBadge result={result} />
-            )}
-          </Stack>
+          <Text size="sm" c="dimmed">
+            {meta.join(' · ')}
+          </Text>
+          {result.execution === 'completed' && <KeyMetrics result={result} columns={columns} entries={entries} />}
           {result.execution !== 'completed' ? (
-            <Alert color="gray" variant="light" icon={<IconAlertTriangle />} title="Позиция не рассчитана">
-              <List size="sm" spacing={2}>
+            <Alert color="gray" icon={<IconInfoCircle />} title="Позиция не рассчитана">
+              <List size="sm" spacing={4}>
                 {[...new Set([...blocking.map((d) => d.message || d.code), ...flags.map((f) => flagOne(f, shocks))])].map((line) => (
                   <List.Item key={line}>{line}</List.Item>
                 ))}
@@ -194,8 +191,8 @@ export function PositionDrawer({
             </Alert>
           ) : (
             important.length > 0 && (
-              <Alert color="orange" variant="light" icon={<IconAlertTriangle />} title="Важно для чтения результата">
-                <List size="sm" spacing={2}>
+              <Alert color="orange" icon={<IconAlertTriangle />} title="Важно для чтения результата">
+                <List size="sm" spacing={4}>
                   {important.map((line) => (
                     <List.Item key={line}>{line}</List.Item>
                   ))}
@@ -204,15 +201,12 @@ export function PositionDrawer({
             )
           )}
           {result.execution === 'completed' && (
-            <>
-              <KeyMetrics result={result} columns={columns} entries={entries} />
-              <View result={result} context={context} view={view} artifacts={artifacts} entries={entries} shocks={shocks} />
-            </>
+            <View result={result} context={context} view={view} artifacts={artifacts} entries={entries} shocks={shocks} />
           )}
           {(methods.length > 0 || result.limits?.note) && (
             <Stack gap={4}>
               {result.limits?.note && (
-                <Text size="xs" c="dark.3">
+                <Text size="xs" c="dimmed">
                   Границы модели: {result.limits.note}
                 </Text>
               )}
@@ -222,7 +216,7 @@ export function PositionDrawer({
                     {method ? 'Скрыть упрощения метода' : `Упрощения метода: ${methods.length}`}
                   </Anchor>
                   <Collapse in={method}>
-                    <List size="xs" spacing={2} c="dark.4">
+                    <List size="xs" spacing={4} c="dimmed">
                       {methods.map((line) => (
                         <List.Item key={line}>{line}</List.Item>
                       ))}

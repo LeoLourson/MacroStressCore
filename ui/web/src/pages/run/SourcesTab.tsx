@@ -28,20 +28,20 @@ export function SourcesTab({ artifacts }: RunTabProps) {
 
   return (
     <Stack gap="lg">
-      <Text size="sm" c="dark.3" maw="80ch">
+      <Text size="sm" c="dimmed" maw="80ch">
         На каких данных построен расчёт: кто и на какую дату их внёс и какие показатели каких позиций из них взяты.
         Сценарий построен по тексту события — его основания на вкладке «Сценарий и граф». Откуда конкретное число отчёта,
         видно по клику на подчёркнутое число.
       </Text>
       {snapshot && (
         <Paper p="md">
-          <Stack gap={2}>
-            <Text size="xs" c="dark.3">
+          <Stack gap={4}>
+            <Text size="xs" c="dimmed">
               Снимок данных
             </Text>
             <Text fw={600}>{snapshot.label}</Text>
-            <Group gap={6}>
-              <Text size="xs" c="dark.3">
+            <Group gap={4}>
+              <Text size="xs" c="dimmed">
                 на {day(snapshot.as_of)} · {SNAPSHOT_KINDS[snapshot.kind] ?? snapshot.kind} · контрольная сумма
               </Text>
               <Code fz="xs">{snapshot.sha256.slice(0, 12)}</Code>
@@ -56,15 +56,15 @@ export function SourcesTab({ artifacts }: RunTabProps) {
       )}
       {sources.map((source) => (
         <Stack key={source.key} gap="xs">
-          <Stack gap={2}>
+          <Stack gap={4}>
             <Title order={5}>{source.name}</Title>
-            <Text size="xs" c="dark.3">
+            <Text size="xs" c="dimmed">
               {sourceMeta(source)} · {plural(source.count, 'значение', 'значения', 'значений')}
             </Text>
           </Stack>
           <Paper>
             <Table.ScrollContainer minWidth={560}>
-              <Table fz="sm" verticalSpacing="xs">
+              <Table>
                 <Table.Thead>
                   <Table.Tr>
                     <Table.Th w="28%">Позиция</Table.Th>

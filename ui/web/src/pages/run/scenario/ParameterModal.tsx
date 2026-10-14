@@ -1,6 +1,6 @@
 import { FieldHelp } from '../../../components/FieldHelp';
 import { Alert, Button, Group, Modal, NumberInput, SegmentedControl, Select, SimpleGrid, Stack, Text, TextInput } from '@mantine/core';
-import { IconTrash } from '@tabler/icons-react';
+import { IconTrash, IconAlertTriangle } from '@tabler/icons-react';
 import { useEffect, useState } from 'react';
 import { directFactors, factorSpec, graphFactors } from '../../../api/catalog';
 import type { Graph, ScenarioKind, ScenarioParameter } from '../../../api/types';
@@ -223,7 +223,7 @@ export function ParameterModal({
           Сейчас: {scenarioValue(draft)}
         </Text>
         {error && (
-          <Alert color="orange" variant="light">
+          <Alert icon={<IconAlertTriangle />} color="orange">
             {error}
           </Alert>
         )}

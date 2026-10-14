@@ -54,8 +54,8 @@ function Card({ data }: NodeProps<Node<CardData>>) {
     <Box
       w={NODE_WIDTH}
       px="sm"
-      py={6}
-      style={{ background: tone.bg, border: `1px solid ${tone.border}`, borderRadius: 8 }}
+      py="xs"
+      style={{ background: tone.bg, border: `1px solid ${tone.border}`, borderRadius: 'var(--mantine-radius-md)' }}
     >
       {node.kind !== 'event' && <Handle type="target" position={Position.Left} isConnectable={false} />}
       <Text size="sm" fw={500} lineClamp={2} lh={1.3}>
@@ -139,14 +139,14 @@ export function GraphCanvas({
 
   return (
     <Box>
-      <Group gap="xl" mb={6} px={4} wrap="nowrap" style={{ overflow: 'hidden' }}>
+      <Group gap="xl" mb="xs" px={4} wrap="nowrap" style={{ overflow: 'hidden' }}>
         {COLUMNS.map((kind) => (
           <Text key={kind} size="xs" c="dimmed" fw={600} tt="uppercase" w={COLUMN_WIDTH - 32}>
             {NODE_KINDS[kind]}
           </Text>
         ))}
       </Group>
-      <Box h={height} style={{ border: '1px solid var(--mantine-color-gray-3)', borderRadius: 8 }} bg="white">
+      <Box h={height} style={{ border: '1px solid var(--mantine-color-gray-3)', borderRadius: 'var(--mantine-radius-md)' }} bg="white">
         <ReactFlow
           nodes={nodes}
           edges={edges}
@@ -165,7 +165,7 @@ export function GraphCanvas({
           <Controls showInteractive={false} position="bottom-right" />
         </ReactFlow>
       </Box>
-      <Text size="xs" c="dimmed" mt={6}>
+      <Text size="xs" c="dimmed" mt="xs">
         На стрелках: знак (+ усиливает, − ослабляет), сила связи (эластичность) и задержка. Связи с
         проблемами — пунктиром со знаком ⚠. Нажмите на стрелку, чтобы открыть связь и её источники.
         Стрелка без подписи ведёт к фактору прямого шока; его величина задаётся в сценарии.

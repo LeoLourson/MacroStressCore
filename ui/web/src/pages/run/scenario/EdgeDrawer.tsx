@@ -314,7 +314,7 @@ export function EdgeDrawer({
       {edge && (
         <Stack gap="md">
           {problems.length > 0 && (
-            <Alert color="orange" variant="light" icon={<IconAlertTriangle />} title="Что не так">
+            <Alert color="orange" icon={<IconAlertTriangle />} title="Что не так">
               <List size="sm">
                 {problems.map((p, i) => (
                   <List.Item key={i}>{problemText(p, graph)}</List.Item>

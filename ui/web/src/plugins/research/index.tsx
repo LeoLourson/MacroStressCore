@@ -32,7 +32,7 @@ function ConcentrationNotes({ output, artifacts }: AgentViewProps) {
       <Text size="xs" c="dimmed">
         Позиции с долей не меньше четверти в ES95 своего среза, по вкладам позиций этого прогона.
       </Text>
-      <Table withTableBorder fz="sm">
+      <Table withTableBorder>
         <Table.Thead>
           <Table.Tr>
             <Table.Th>Срез</Table.Th>
@@ -62,7 +62,7 @@ function Digest({ output }: AgentViewProps) {
         Посчитано инструментом плагина mcp-research.notes по вкладам позиций в ES95 среза; вызов записан в журнал
         «Вызовы LLM и MCP».
       </Text>
-      <Table withTableBorder fz="sm">
+      <Table withTableBorder>
         <Table.Thead>
           <Table.Tr>
             <Table.Th>Срез</Table.Th>

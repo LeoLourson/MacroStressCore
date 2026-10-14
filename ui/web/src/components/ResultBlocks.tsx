@@ -18,7 +18,7 @@ export function Section({ title, hint, children }: { title: ReactNode; hint?: st
     <Stack gap="xs">
       <Title order={5}>{title}</Title>
       {hint && (
-        <Text size="xs" c="dark.3">
+        <Text size="xs" c="dimmed">
           {hint}
         </Text>
       )}
@@ -30,7 +30,7 @@ export function Section({ title, hint, children }: { title: ReactNode; hint?: st
 export function Fact({ name, value }: { name: ReactNode; value: ReactNode }) {
   return (
     <Stack gap={0}>
-      <Text size="xs" c="dark.3">
+      <Text size="xs" c="dimmed">
         {name}
       </Text>
       {typeof value === 'string' ? (
@@ -118,7 +118,7 @@ export function MetricsBlock({
       title={title}
       hint={hint || 'Распределения — медиана (P50) и диапазон P5 … P95 по общим сценариям; значения без диапазона детерминированы.'}
     >
-      <Table withTableBorder fz="sm" verticalSpacing={6}>
+      <Table withTableBorder>
         <Table.Thead>
           <Table.Tr>
             <Table.Th>Показатель</Table.Th>
@@ -133,7 +133,7 @@ export function MetricsBlock({
               <Table.Td>
                 <Text size="sm">{metricLabel(id)}</Text>
                 {metricSpec(id)?.description && (
-                  <Text size="xs" c="dark.3">
+                  <Text size="xs" c="dimmed">
                     {metricSpec(id)!.description}
                   </Text>
                 )}
@@ -172,7 +172,7 @@ export function TableBlock({ rows, block }: { rows: unknown; block: ViewBlock })
   return (
     <Section title={block.title} hint={block.hint}>
       <Table.ScrollContainer minWidth={480}>
-        <Table withTableBorder fz="sm" verticalSpacing={6}>
+        <Table withTableBorder>
           <Table.Thead>
             <Table.Tr>
               {columns.map(([key, title]) => (
@@ -268,19 +268,19 @@ export function HistogramBlock({
           ))}
         </Box>
         <Group justify="space-between" gap="xs">
-          <Text size="xs" c="dark.3" className="num">
+          <Text size="xs" c="dimmed" className="num">
             {format(lo)}
           </Text>
-          <Text size="xs" c="dark.3" className="num">
+          <Text size="xs" c="dimmed" className="num">
             {format(hi)}
           </Text>
         </Group>
         {marks.length > 0 && (
           <Group gap="md" style={{ rowGap: 4 }}>
             {marks.map((m) => (
-              <Group key={m.name} gap={6} wrap="nowrap">
+              <Group key={m.name} gap={4} wrap="nowrap">
                 <Box h={12} style={{ borderLeft: m.line }} />
-                <Text size="xs" c="dark.4" className="num">
+                <Text size="xs" c="dimmed" className="num">
                   {m.name} {format(m.value)}
                 </Text>
               </Group>
@@ -333,7 +333,7 @@ export function ContributionsBlock({
   const top = Math.max(...moved.map((i) => Math.abs(i.value))) || 1;
   return (
     <Section title={title} hint={hint}>
-      <Stack gap={6}>
+      <Stack gap={4}>
         {moved.map((item) => (
           <Group key={item.key} gap="sm" wrap="nowrap">
             <Text size="sm" w={220} lineClamp={2}>
@@ -345,13 +345,13 @@ export function ContributionsBlock({
             <Text size="sm" w={130} className="num-right">
               <TracedNumber entry={origin?.(item.key)}>{signed(format(item.value), item.value)}</TracedNumber>
             </Text>
-            <Text size="xs" w={70} c="dark.4">
+            <Text size="xs" w={70} c="dimmed">
               {worse(item.value) ? 'ухудшает' : 'улучшает'}
             </Text>
           </Group>
         ))}
         {still.length > 0 && (
-          <Text size="xs" c="dark.3">
+          <Text size="xs" c="dimmed">
             Не повлияли: {still.map((i) => i.label).join(', ')}.
           </Text>
         )}
@@ -382,7 +382,7 @@ export function SeriesBlock({
   if (!entries.length) return null;
   return (
     <Section title={title} hint={hint}>
-      <Table withTableBorder fz="sm" verticalSpacing={6}>
+      <Table withTableBorder>
         <Table.Thead>
           <Table.Tr>
             <Table.Th>Показатель</Table.Th>
@@ -420,7 +420,7 @@ export function SourcesBlock({
     <Section title={title}>
       <Stack gap="sm">
         {sources.map((source) => (
-          <Stack key={source.key} gap={2}>
+          <Stack key={source.key} gap={4}>
             <Text size="sm" fw={600}>
               {source.name}
             </Text>

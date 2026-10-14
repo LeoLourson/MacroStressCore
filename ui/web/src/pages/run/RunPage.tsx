@@ -7,14 +7,13 @@ import {
   Group,
   Loader,
   ScrollArea,
-  SegmentedControl,
-  Spoiler,
   Stack,
+  Tabs,
   Text,
   Title,
   Tooltip,
 } from '@mantine/core';
-import { IconArrowLeft, IconCheck, IconCopy } from '@tabler/icons-react';
+import { IconArrowLeft, IconCheck, IconCopy, IconAlertTriangle } from '@tabler/icons-react';
 import { Fragment, lazy, Suspense, useEffect, type ReactNode } from 'react';
 import { Link, useParams, useSearchParams } from 'react-router';
 import { useArtifacts, usePortfolios, useRuns, useRunStatus } from '../../api/queries';
@@ -42,9 +41,6 @@ export interface RunTabProps {
   artifacts: Artifacts;
 }
 
-/** The event in two lines, the rest on request; the line height sets where the text is cut. */
-const EVENT_LINE = 28;
-
 function Masthead({ status, artifacts }: RunTabProps) {
   // Who started the run and when come from the list, loaded once when the page opens by a link.
   const row = useRuns(false).data?.find((r) => r.run_id === status.run_id);
@@ -65,11 +61,9 @@ function Masthead({ status, artifacts }: RunTabProps) {
           <IconArrowLeft size={14} /> Все стресс-тесты
         </Group>
       </Anchor>
-      <Spoiler maxHeight={2 * EVENT_LINE} showLabel="Показать текст события полностью" hideLabel="Свернуть">
-        <Title order={2} fz={20} lh={`${EVENT_LINE}px`} maw="90ch" style={{ whiteSpace: 'pre-wrap' }}>
-          {event || 'Стресс-тест'}
-        </Title>
-      </Spoiler>
+      <Title order={2} maw="90ch" lineClamp={2} title={event}>
+        {event || 'Стресс-тест'}
+      </Title>
       <Group gap={4} wrap="nowrap" align="center">
         <Text size="sm" c="dimmed">
           {facts.map((fact, index) => (
@@ -164,35 +158,39 @@ export function RunPage() {
     <Stack gap="lg">
       <Masthead {...data} />
       {!!data.artifacts.scenario_warnings?.length && (
-        <Alert color="orange" title="Сценарий не охватывает затронутые позиции">
-          <Stack gap="xs">
-            {data.artifacts.scenario_warnings.map((warning, index) => <Text size="sm" key={index}>{warning.message}</Text>)}
-            <Anchor component="button" size="sm" onClick={() => setTab('scenario')} w="fit-content">Открыть сценарий</Anchor>
-          </Stack>
+        <Alert icon={<IconAlertTriangle size={16} />} color="orange" py="xs">
+          <Group gap="xs" wrap="nowrap" align="flex-start" justify="space-between">
+            <Text size="sm">
+              Сценарий не охватывает затронутые позиции:{' '}
+              {data.artifacts.scenario_warnings.map((warning) => warning.message).join(' ')}
+            </Text>
+            <Anchor component="button" size="sm" onClick={() => setTab('scenario')} style={{ whiteSpace: 'nowrap' }}>
+              Открыть сценарий
+            </Anchor>
+          </Group>
         </Alert>
       )}
       <RunSteps steps={steps(data.status, data.artifacts, me)} />
       <NextAction {...data} me={me} tab={tab} onTab={setTab} />
-      {/* The same switch as the filter of the stress-test list; on a narrow screen it scrolls. */}
       <ScrollArea type="auto" scrollbars="x" offsetScrollbars>
-        <SegmentedControl
-          value={tab}
-          onChange={(value) => setTab(value as Tab)}
-          data={TABS.map(({ value, title, empty }) => {
-            const ready = available(value, data.status, data.artifacts);
-            return {
-              value,
-              disabled: !ready,
-              label: ready ? (
-                title
+        <Tabs value={tab} onChange={(value) => value && setTab(value as Tab)} color="steel">
+          <Tabs.List style={{ flexWrap: 'nowrap' }}>
+            {TABS.map(({ value, title, empty }) => {
+              const ready = available(value, data.status, data.artifacts);
+              return ready ? (
+                <Tabs.Tab key={value} value={value}>
+                  {title}
+                </Tabs.Tab>
               ) : (
-                <Tooltip label={empty}>
-                  <span>{title}</span>
+                <Tooltip key={value} label={empty}>
+                  <Tabs.Tab value={value} disabled>
+                    {title}
+                  </Tabs.Tab>
                 </Tooltip>
-              ),
-            };
-          })}
-        />
+              );
+            })}
+          </Tabs.List>
+        </Tabs>
       </ScrollArea>
       <Panel tab={tab} {...data} />
     </Stack>

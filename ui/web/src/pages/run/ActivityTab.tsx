@@ -40,7 +40,7 @@ function seconds(ms: number | null | undefined): string {
 function Outcome({ item }: { item: ActivityItem }) {
   if (item.status === 'waiting') {
     return (
-      <Group gap={6} wrap="nowrap" c="steel.8">
+      <Group gap={4} wrap="nowrap" c="steel.8">
         <Loader size={12} color="steel" />
         <Text size="sm">ждёт ответа</Text>
       </Group>
@@ -48,7 +48,7 @@ function Outcome({ item }: { item: ActivityItem }) {
   }
   const ok = item.status === 'completed';
   return (
-    <Group gap={4} wrap="nowrap" c={ok ? 'dimmed' : 'dark.7'}>
+    <Group gap={4} wrap="nowrap" c={ok ? 'dimmed' : undefined}>
       {ok ? <IconCheck size={14} /> : <IconX size={14} />}
       <Text size="sm" fw={ok ? 400 : 600}>
         {ok ? 'выполнен' : 'ошибка'}
@@ -117,7 +117,7 @@ export function ActivityTab({ status, artifacts }: RunTabProps) {
       ) : (
         <Paper>
           <Table.ScrollContainer minWidth={900}>
-            <Table fz="sm" verticalSpacing="xs">
+            <Table>
               <Table.Thead>
                 <Table.Tr>
                   <Table.Th>Время</Table.Th>
@@ -135,9 +135,9 @@ export function ActivityTab({ status, artifacts }: RunTabProps) {
                   const llmCall = item.kind === 'llm';
                   return (
                     <Table.Tr key={index}>
-                      <Table.Td style={{ whiteSpace: 'nowrap' }}>{timestamp(item.at)}</Table.Td>
+                      <Table.Td className="nowrap">{timestamp(item.at)}</Table.Td>
                       <Table.Td>
-                        <Badge variant="light" color={llmCall ? 'steel' : 'gray'} tt="none" fw={500}>
+                        <Badge color={llmCall ? 'steel' : 'gray'}>
                           {llmCall ? 'LLM' : 'MCP'}
                         </Badge>
                         {!llmCall && item.initiator === 'llm' && (
@@ -168,7 +168,7 @@ export function ActivityTab({ status, artifacts }: RunTabProps) {
                           </>
                         )}
                         {d.error && (
-                          <Text size="xs" c="dark.6">
+                          <Text size="xs">
                             {d.error}
                           </Text>
                         )}

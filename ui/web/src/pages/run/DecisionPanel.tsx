@@ -62,7 +62,12 @@ export function DecisionPanel({ runId, me }: { runId: string; me: Me }) {
   };
 
   return (
-    <Paper p="lg" id="decision" style={{ borderColor: 'var(--mantine-color-gray-4)' }}>
+    <Paper
+      p="lg"
+      id="decision"
+      shadow="sm"
+      style={{ position: 'sticky', bottom: 0, zIndex: 10, background: 'white', borderColor: 'var(--mantine-color-gray-4)' }}
+    >
       <Stack gap="md">
         <Stack gap={4}>
           <Title order={4}>Решение по отчёту</Title>
@@ -72,21 +77,16 @@ export function DecisionPanel({ runId, me }: { runId: string; me: Me }) {
           </Text>
         </Stack>
         <Group justify="space-between">
-          <Group>
-            <Button size="md" leftSection={<IconCheck size={18} />} onClick={() => setPending('approve')}>
-              Утвердить отчёт
-            </Button>
-            <Button
-              size="md"
-              variant="default"
-              leftSection={<IconArrowBackUp size={18} />}
-              onClick={() => setPending('return')}
-            >
+          <Group gap="xs">
+            <Button variant="subtle" color="gray" leftSection={<IconArrowBackUp size={16} />} onClick={() => setPending('return')}>
               Вернуть аналитику
             </Button>
+            <Button variant="subtle" color="gray" leftSection={<IconX size={16} />} onClick={() => setPending('reject')}>
+              Отклонить
+            </Button>
           </Group>
-          <Button variant="subtle" color="gray" leftSection={<IconX size={16} />} onClick={() => setPending('reject')}>
-            Отклонить
+          <Button size="md" color="mts" leftSection={<IconCheck size={18} />} onClick={() => setPending('approve')}>
+            Утвердить отчёт
           </Button>
         </Group>
       </Stack>
