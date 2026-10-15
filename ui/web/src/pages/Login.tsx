@@ -1,4 +1,4 @@
-import { Alert, Button, Center, Paper, PasswordInput, Stack, Text, Title } from '@mantine/core';
+import { Alert, Button, Center, Loader, Paper, PasswordInput, Stack, Text, Title } from '@mantine/core';
 import { IconChartLine, IconSignature, IconAlertTriangle } from '@tabler/icons-react';
 import { useState, type FormEvent } from 'react';
 import { Navigate, useLocation } from 'react-router';
@@ -23,7 +23,7 @@ const ROLE_BUTTONS: Record<string, { title: string; text: string; Icon: typeof I
 };
 
 export function Login() {
-  const { apiKey, me, meError, config, signIn } = useSession();
+  const { apiKey, me, meError, config, configPending, configFailed, reloadConfig, signIn } = useSession();
   const location = useLocation();
   const [key, setKey] = useState('');
   const from = (location.state as { from?: string } | null)?.from ?? '/';
@@ -47,7 +47,20 @@ export function Login() {
             {meError.userMessage}
           </Alert>
         )}
-        {presets.length > 0 ? (
+        {configPending ? (
+          <Center py="xl">
+            <Loader />
+          </Center>
+        ) : configFailed ? (
+          <Stack gap="sm">
+            <Alert icon={<IconAlertTriangle />} color="orange">
+              Не удалось получить настройки входа: сервис не ответил.
+            </Alert>
+            <Button variant="light" onClick={reloadConfig}>
+              Повторить
+            </Button>
+          </Stack>
+        ) : presets.length > 0 ? (
           <Stack gap="sm">
             {presets.map(([role, value]) => {
               const view = ROLE_BUTTONS[role] ?? { title: role, text: '', Icon: IconChartLine };

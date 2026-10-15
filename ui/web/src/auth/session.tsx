@@ -59,6 +59,9 @@ interface SessionValue {
   modes: Mode[];
   client: ApiClient | null;
   config: UiConfig;
+  configPending: boolean;
+  configFailed: boolean;
+  reloadConfig: () => void;
   signIn: (key: string) => void;
   signOut: () => void;
   setMode: (mode: Mode) => void;
@@ -71,7 +74,13 @@ export function SessionProvider({ children }: { children: ReactNode }) {
   const [apiKey, setApiKey] = useState(() => read(KEY_STORAGE));
   const [savedMode, setSavedMode] = useState(() => read(MODE_STORAGE));
 
-  const config = useQuery({ queryKey: ['ui-config'], queryFn: fetchUiConfig, staleTime: Infinity });
+  // One retry after a stall; the sign-in page then shows the failure and offers its own retry.
+  const config = useQuery({
+    queryKey: ['ui-config'],
+    queryFn: fetchUiConfig,
+    staleTime: Infinity,
+    retry: 1,
+  });
   const meQuery = useQuery({
     queryKey: ['me', apiKey],
     queryFn: () => new ApiClient(apiKey, 'demo').me(),
@@ -115,6 +124,9 @@ export function SessionProvider({ children }: { children: ReactNode }) {
     modes,
     client,
     config: config.data ?? {},
+    configPending: config.isPending,
+    configFailed: config.isError,
+    reloadConfig: () => void config.refetch(),
     signIn,
     signOut,
     setMode,

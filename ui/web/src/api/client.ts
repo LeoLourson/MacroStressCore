@@ -57,12 +57,24 @@ export interface UiConfig {
   demo_keys?: Record<string, string>;
 }
 
+/** A stalled link must not leave the sign-in page waiting forever. */
+const CONFIG_TIMEOUT_MS = 10_000;
+
+/**
+ * The role presets of the stand. An unreachable service throws, so the sign-in page can say
+ * so and offer a retry instead of silently demanding a key it does not need; an answer
+ * without presets is a production stand, and there the key is the only way in.
+ */
 export async function fetchUiConfig(): Promise<UiConfig> {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), CONFIG_TIMEOUT_MS);
   try {
-    const response = await fetch(apiUrl('/v1/ui/config'));
-    return response.ok ? await response.json() : {};
-  } catch {
-    return {};
+    const response = await fetch(apiUrl('/v1/ui/config'), { signal: controller.signal });
+    // An older stand may not know the endpoint at all: those keep the key form.
+    if (!response.ok) return {};
+    return (await response.json()) as UiConfig;
+  } finally {
+    clearTimeout(timer);
   }
 }
 
