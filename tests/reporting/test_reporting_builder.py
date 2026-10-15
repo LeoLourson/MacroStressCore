@@ -12,8 +12,8 @@ from msa.reporting.builder import build as build_report
 from msa.reporting.numbers import check_refs
 from msa.reporting.tree import metric_tree
 
-from . import engine_helpers as h
-from . import minimal_plugin as mp
+from tests import engine_helpers as h
+from tests import minimal_plugin as mp
 
 DUMMY_PARAMETERS = {"dummy": {"kind": "point", "value": 0.0, "unit": "fraction"}}
 

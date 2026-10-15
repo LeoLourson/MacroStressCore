@@ -8,8 +8,8 @@ from msa.engine.runner import idiosyncratic_shocks, run_batch
 from msa.platform.registry import build
 from msa.plugin_sdk.model import Diagnostics, IdiosyncraticFactor
 
-from . import engine_helpers as h
-from . import minimal_plugin as mp
+from tests import engine_helpers as h
+from tests import minimal_plugin as mp
 
 DUMMY_PARAMETERS = {"dummy": {"kind": "point", "value": 0.0, "unit": "fraction"}}
 

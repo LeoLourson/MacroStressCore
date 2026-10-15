@@ -8,8 +8,8 @@ from msa.engine.dispatch import calculate, not_run, resolved_unit, schema_proble
 from msa.platform.registry import build
 from msa.plugin_sdk.specs import BASE_MONEY
 
-from . import engine_helpers as h
-from . import minimal_plugin as mp
+from tests import engine_helpers as h
+from tests import minimal_plugin as mp
 
 
 @pytest.fixture

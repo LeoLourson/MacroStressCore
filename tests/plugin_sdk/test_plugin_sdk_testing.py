@@ -6,7 +6,7 @@ from msa.plugin_sdk.plugin import Plugin
 from msa.plugin_sdk.specs import EditorField, EditorGroup
 from msa.plugin_sdk.testing import Finding, check_plugin
 
-from . import minimal_plugin as mp
+from tests import minimal_plugin as mp
 
 
 class NoRequiredMetricsModel(mp.CashModel):

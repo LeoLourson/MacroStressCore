@@ -13,7 +13,7 @@ The story portfolios are declared in ``demo/story_catalog.json``. Their editor r
 in each plugin's ``demo_data/story_rows.json``; the builder treats financial values as
 opaque input to the plugin's editor, just like an analyst's draft.
 
-The mock profile's answers (``src/msa/agents/mock_events.json``) are collected from the
+The mock profile's answers (``src/msa/integrations/llm/mock_events.json``) are collected from the
 analyst's prepared answer (``mock_answer``) of every library event and of the pilot event.
 
     uv run --frozen python -m demo.build_catalog           # write the files
@@ -53,7 +53,7 @@ OWN_SNAPSHOTS = {
         "Синтетические данные ГК «SGZH» на 11.09.2026",
     ),
 }
-MOCK_EVENTS = REPOSITORY / "src" / "msa" / "agents" / "mock_events.json"
+MOCK_EVENTS = REPOSITORY / "src" / "msa" / "integrations" / "llm" / "mock_events.json"
 
 
 @dataclass(frozen=True)

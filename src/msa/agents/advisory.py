@@ -14,9 +14,9 @@ from msa.reporting.builder import build
 from msa.reporting.tree import metric_tree
 from msa.validators.v9_numbers import NumbersValidator
 
-from .advisory_output import AdvisoryNarrative
+from msa.contracts.advisory import AdvisoryNarrative
 from .base import AgentFailure
-from .causal_output import ScenarioParameter
+from msa.contracts.causal_answer import ScenarioParameter
 
 
 def channel_factors(parameters) -> dict[str, str]:

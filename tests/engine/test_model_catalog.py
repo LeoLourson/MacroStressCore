@@ -1,8 +1,8 @@
-"""msa.engine.catalog: run_model()/ScenarioMismatch and describe_model()/list_models()."""
+"""msa.engine.model_catalog: run_model()/ScenarioMismatch and describe_model()/list_models()."""
 
 import pytest
 
-from msa.engine.catalog import (
+from msa.engine.model_catalog import (
     ModelRunInput,
     ScenarioMismatch,
     ScenarioPayload,
@@ -13,8 +13,8 @@ from msa.engine.catalog import (
 from msa.engine.scenario_set import Realisations, scenario_set_from_parameters
 from msa.platform.registry import build, registry
 
-from . import engine_helpers as h
-from . import minimal_plugin as mp
+from tests import engine_helpers as h
+from tests import minimal_plugin as mp
 
 
 @pytest.fixture

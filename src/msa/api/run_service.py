@@ -10,7 +10,7 @@ from sqlalchemy import delete, select, update
 
 from msa import activity
 from msa.agents.advisory import channel_factors
-from msa.agents.causal_output import scenario_violations
+from msa.contracts.causal_answer import scenario_violations
 from msa.agents.ingest import SCENARIO, document_text, sentence_fragments
 from msa.contracts import Report
 from msa.contracts.domain import contexts

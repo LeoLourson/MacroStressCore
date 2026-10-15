@@ -11,7 +11,7 @@ from sqlalchemy import select
 from msa.contracts import CalculationResult, PortfolioResult
 from msa.db.models import tables_for
 from msa.db.repositories.runs import ApplicationRunRepository
-from msa.engine.catalog import describe_model as describe
+from msa.engine.model_catalog import describe_model as describe
 from msa.platform.registry import registry as current
 from msa.reporting.numbers import pointer_token, resolve_pointer
 from msa.reporting.tree import metric_tree

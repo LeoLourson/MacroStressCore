@@ -1,6 +1,6 @@
 from langgraph.types import interrupt
 
-from msa.agents.causal_output import scenario_violations
+from msa.contracts.causal_answer import scenario_violations
 
 from .validate_causal import coverage
 

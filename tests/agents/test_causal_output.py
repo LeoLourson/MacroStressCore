@@ -1,6 +1,6 @@
-"""msa.agents.causal_output.scenario_violations: the factor's declared lower bound."""
+"""msa.contracts.causal_answer.scenario_violations: the factor's declared lower bound."""
 
-from msa.agents.causal_output import scenario_violations
+from msa.contracts.causal_answer import scenario_violations
 from msa.plugin_sdk.testing import graph_reaching
 
 GRAPH = graph_reaching("23.61", "credit.revenue")

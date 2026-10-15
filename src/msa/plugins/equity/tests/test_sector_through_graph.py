@@ -16,7 +16,7 @@ from demo import catalog as demo_catalog
 from demo.catalog import CATALOG
 from msa.agents.base import AgentError
 from msa.agents.causal import CausalAgent, _prepared_response
-from msa.agents.causal_output import CausalOutput
+from msa.contracts.causal_answer import CausalOutput
 from msa.agents.ingest import fragment
 from msa.contracts import DataSnapshot, SourceDocument, TransmissionGraph
 from msa.contracts.domain import contexts

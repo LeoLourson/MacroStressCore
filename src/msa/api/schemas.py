@@ -4,7 +4,7 @@ from typing import Annotated
 
 from pydantic import Field, HttpUrl, JsonValue, model_validator
 
-from msa.agents.causal_output import ScenarioParameter
+from msa.contracts.causal_answer import ScenarioParameter
 from msa.contracts import TransmissionGraph
 from msa.contracts.common import Contract, Identifier
 

@@ -6,7 +6,7 @@ import pytest
 
 from msa.agents.base import AgentError
 from msa.agents.causal import CausalAgent
-from msa.agents.causal_output import CausalOutput
+from msa.contracts.causal_answer import CausalOutput
 from msa.platform.registry import registry
 
 EVENT = {"id": "event", "kind": "event", "label": "event"}

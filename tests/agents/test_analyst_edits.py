@@ -3,7 +3,7 @@
 from datetime import date
 from hashlib import sha256
 
-from msa.agents.causal_output import ScenarioParameter
+from msa.contracts.causal_answer import ScenarioParameter
 from msa.api.run_service import ANALYST_SCENARIO, edited_by
 from msa.contracts.evidence import Evidence
 from msa.platform.registry import registry

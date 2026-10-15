@@ -8,7 +8,7 @@ from urllib.request import HTTPRedirectHandler, build_opener
 from msa.contracts import SourceDocument
 from msa.contracts.document import Fragment
 from msa.integrations.docling.parse import parse, tables_to_json
-from msa.storage.originals import OriginalStore
+from msa.db.originals import OriginalStore
 
 
 def fragment(text: str, locator: str) -> Fragment:

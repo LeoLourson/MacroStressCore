@@ -13,7 +13,7 @@ from itertools import count
 from msa.agents import Agents
 from msa.agents.advisory import AdvisoryAgent
 from msa.agents.aggregate import AggregateAgent
-from msa.agents.causal_output import CausalOutput
+from msa.contracts.causal_answer import CausalOutput
 from msa.agents.draw_macro import DrawMacroAgent
 from msa.agents.exposure import ExposureAgent, LocalResolver
 from msa.agents.ingest import fragment

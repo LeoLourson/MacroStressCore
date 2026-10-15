@@ -16,7 +16,7 @@ import numpy as np
 
 from demo import catalog
 from msa.agents.causal import CausalAgent
-from msa.agents.causal_output import sector_effects
+from msa.contracts.causal_answer import sector_effects
 from msa.engine.scenario_set import ScenarioSet, scenario_set_from_parameters
 from msa.prompts.registry import current_version, get
 

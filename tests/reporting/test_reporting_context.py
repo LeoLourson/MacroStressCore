@@ -5,7 +5,7 @@ from datetime import date
 from msa.platform.registry import build
 from msa.reporting.context import ReportContext, display_id, join, plain
 
-from . import minimal_plugin as mp
+from tests import minimal_plugin as mp
 
 
 def registry():
