@@ -132,7 +132,7 @@ export function ParameterModal({
   };
 
   return (
-    <Modal opened onClose={onClose} title="Параметр сценария" size="lg" centered>
+    <Modal opened onClose={onClose} title="Параметр сценария" size="lg" centered withCloseButton={false}>
       <Stack>
         <TextInput label={<FieldHelp label="Название" help="Короткое описание изменения для сценария и отчёта, например Падение индекса." />} value={draft.label} onChange={(e) => setDraft({ ...draft, label: e.currentTarget.value })} />
         {structural ? (

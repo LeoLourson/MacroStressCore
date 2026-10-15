@@ -4,6 +4,7 @@ import { Fragment, useRef, useState, type ReactNode } from 'react';
 import { useExplain, useExplanations } from '../../api/queries';
 import type { Explanation } from '../../api/types';
 import { ErrorAlert } from '../../components/ErrorAlert';
+import { NARROW, PageSection } from '../../components/Page';
 import { FieldHelp } from '../../components/FieldHelp';
 import { TracedNumber } from '../../components/Provenance';
 import { describePath, timestamp } from '../../lib/format';
@@ -135,12 +136,9 @@ export function ExplainTab(props: RunTabProps) {
     results.some((r) => r.execution !== 'completed') ? 'Какие позиции не рассчитаны и чего не хватает?' : 'На каких допущениях основан расчёт?',
   ];
   return (
-    <Stack gap="lg" maw={920}>
-      <Stack gap={4}>
-        <Title order={3}>Разбор результатов</Title>
-        <Text size="sm" c="dimmed" maw="72ch">Спросите о причинах потерь, конкретной позиции или допущениях. Ответ использует данные этого стресс-теста; числа проходят проверку.</Text>
-      </Stack>
-      <Paper component="form" p={{ base: 'md', sm: 'lg' }} onSubmit={(event) => { event.preventDefault(); send(message, question); }}>
+    <Stack gap="lg" maw={NARROW}>
+      <PageSection title="Вопрос по результатам" hint="Спросите о причинах потерь, конкретной позиции или допущениях. Ответ использует данные этого стресс-теста; числа проходят проверку.">
+      <form onSubmit={(event) => { event.preventDefault(); send(message, question); }}>
         <Stack gap="md">
           <Select label={<FieldHelp label="Что разобрать" help="Выберите весь портфель или отдельную позицию. Каждый вопрос рассматривается отдельно с данными этого стресс-теста." />}
             data={[{ value: '__portfolio__', label: 'Весь портфель' }, ...(artifacts.positions ?? []).map((p) => ({ value: p.position.position_id, label: `${names[p.position.position_id] ?? p.instrument.name} · ${p.position.position_id}` }))]}
@@ -150,8 +148,9 @@ export function ExplainTab(props: RunTabProps) {
             autosize minRows={3} maxRows={8} maxLength={2000 - prefix.length} value={question}
             onChange={(e) => { setQuestion(e.currentTarget.value); if (ask.error) ask.reset(); }}
             onKeyDown={(e) => { if (e.key === 'Enter' && (e.ctrlKey || e.metaKey) && !e.nativeEvent.isComposing) { e.preventDefault(); send(message, question); } }} />
-          {!items.length && <Group gap="xs" align="stretch">
-            {examples.map((example) => <Button key={example} type="button" className="question-example" size="sm" variant="default"
+          {!items.length && <Group gap={4} align="center">
+            <Text size="sm" c="dimmed" mr={4}>Например:</Text>
+            {examples.map((example) => <Button key={example} type="button" className="question-example" size="xs" variant="light"
               onClick={() => { setQuestion(example); input.current?.focus(); }}>{example}</Button>)}
           </Group>}
           {!ready && <Alert icon={<IconInfoCircle />} color="gray">Вопросы станут доступны после расчёта позиций. Проверьте сценарий и недостающие данные.</Alert>}
@@ -162,11 +161,12 @@ export function ExplainTab(props: RunTabProps) {
             <Button type="submit" leftSection={<IconSend size={16} />} loading={ask.isPending} disabled={!question.trim() || busy || !ready || message.length > 2000}>Получить объяснение</Button>
           </Group>
         </Stack>
-      </Paper>
+      </form>
+      </PageSection>
       {list.error && <Stack gap="sm"><ErrorAlert error={list.error} /><Button variant="default" w="fit-content" onClick={() => list.refetch()}>Загрузить историю ещё раз</Button></Stack>}
       {list.isPending ? <Center py="md" role="status"><Loader size="sm" /><Text size="sm" ml="sm">Загружаем вопросы…</Text></Center>
         : items.length > 0 && <Stack gap="md">
-          <Title order={4}>Вопросы и ответы</Title>
+          <Title order={3}>Вопросы и ответы</Title>
           {items.map((item) => <Answer key={item.explanation_id} item={item} onRetry={(question) => send(question)} busy={busy} {...props} />)}
         </Stack>}
     </Stack>

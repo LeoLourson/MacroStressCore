@@ -1,10 +1,11 @@
+import { Subsection } from '../../../components/Page';
 import { FieldHelp } from '../../../components/FieldHelp';
 import {
   ActionIcon,
   Alert,
   Blockquote,
   Button,
-  Divider,
+  Input,
   Drawer,
   Group,
   List,
@@ -312,7 +313,7 @@ export function EdgeDrawer({
       }
     >
       {edge && (
-        <Stack gap="md">
+        <Stack gap="lg">
           {problems.length > 0 && (
             <Alert color="orange" icon={<IconAlertTriangle />} title="Что не так">
               <List size="sm">
@@ -328,13 +329,11 @@ export function EdgeDrawer({
               параметром сценария; эластичность и задержка этой стрелки не меняют расчёт.
             </Text>
           ) : editing ? (
-            <Stack gap="sm">
+            <Subsection title="Связь" hint="Правки сразу попадают в черновик и проверяются; на расчёт они уйдут после «Подтвердить».">
               <SimpleGrid cols={2}>
-                <Stack gap={4}>
-                  <Text size="sm" fw={500}>
-                    Направление влияния
-                  </Text>
+                <Input.Wrapper label="Направление влияния">
                   <SegmentedControl
+                    fullWidth
                     value={String(edge.sign)}
                     onChange={(v) => onChange({ ...edge, sign: Number(v) as 1 | -1 })}
                     data={[
@@ -342,7 +341,7 @@ export function EdgeDrawer({
                       { value: '-1', label: 'Ослабляет (−)' },
                     ]}
                   />
-                </Stack>
+                </Input.Wrapper>
                 <NumberInput
                   label={<FieldHelp label="Задержка, мес." help="Через сколько полных месяцев начинает действовать связь. 0 — сразу." />}
                   min={0}
@@ -353,10 +352,7 @@ export function EdgeDrawer({
                 />
               </SimpleGrid>
               <ElasticityInput value={edge.elasticity} onChange={(elasticity) => onChange({ ...edge, elasticity })} />
-              <Text size="xs" c="dimmed">
-                Правки сразу попадают в черновик и проверяются; на расчёт они уйдут после «Подтвердить».
-              </Text>
-            </Stack>
+            </Subsection>
           ) : (
             <SimpleGrid cols={3}>
               <Stack gap={0}>
@@ -380,7 +376,7 @@ export function EdgeDrawer({
             </SimpleGrid>
           )}
 
-          <Divider label="Источники" labelPosition="left" />
+          <Subsection title="Источники">
           {edge.evidence.length === 0 && (
             <Text size="sm" c="orange.9">
               У связи нет источника. Добавьте его, иначе расчёт нельзя продолжить.
@@ -396,15 +392,16 @@ export function EdgeDrawer({
               }
             />
           ))}
+          </Subsection>
           {editing && (
             <>
-              <Divider label="Добавить источник" labelPosition="left" />
-              <NewEvidence
-                document={document}
-                author={author}
-                onAdd={(evidence) => onChange({ ...edge, evidence: [...edge.evidence, evidence] })}
-              />
-              <Divider />
+              <Subsection title="Добавить источник">
+                <NewEvidence
+                  document={document}
+                  author={author}
+                  onAdd={(evidence) => onChange({ ...edge, evidence: [...edge.evidence, evidence] })}
+                />
+              </Subsection>
               <Button
                 variant="subtle"
                 color="gray"

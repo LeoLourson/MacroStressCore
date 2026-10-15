@@ -21,12 +21,12 @@ export function sliceBase(item: SliceResult, artifacts: Artifacts): number | nul
 /** The headline of a slice: P50 large, P5 and P95 beside it, the bar on one scale; every number opens its origin. */
 export function ResultSummary({
   item,
-  artifacts,
   entries,
   conclusion,
 }: {
   item: SliceResult;
-  artifacts: Artifacts;
+  /** Kept for the callers; the headline draws the change alone. */
+  artifacts?: Artifacts;
   entries: Entries;
   conclusion?: ReactNode;
 }) {
@@ -35,9 +35,9 @@ export function ResultSummary({
   const spec = sliceSpec(item.slice_id);
   const format = formatter(item.unit);
   const es = item.expected_shortfall_95;
-  const base = sliceBase(item, artifacts);
-  const shift = base ?? 0;
-  const scale = scaleOf([q.p05, q.p95, item.sum_of_individual_p95, es].map((v) => (v == null ? v : v + shift)).concat(base));
+  // The bar draws what the numbers above it say: the change, from zero. The level before the
+  // event would take most of the width and leave the interval a sliver at its end.
+  const scale = scaleOf([q.p05, q.p95, item.sum_of_individual_p95, es]);
   const traced = (key: string, value: number) => (
     <TracedNumber entry={entries.get(slicePath(item.slice_id, 'loss_quantiles', key))}>{format(value)}</TracedNumber>
   );
@@ -59,7 +59,7 @@ export function ResultSummary({
         </Stack>
         <Stack gap={0}>
           <Text size="xs" c="dimmed">
-            <Term name="P5–P95">P5</Term>
+            P5
           </Text>
           <Text size="lg" className="num">
             {traced('p05', q.p05)}
@@ -85,15 +85,7 @@ export function ResultSummary({
         )}
       </Group>
       <Stack gap={4} mt={4}>
-        <IntervalBar
-          p05={q.p05 + shift}
-          p50={q.p50 + shift}
-          p95={q.p95 + shift}
-          base={base}
-          tail={es == null ? null : es + shift}
-          scale={scale}
-          width="100%"
-        />
+        <IntervalBar p05={q.p05} p50={q.p50} p95={q.p95} tail={es} scale={scale} width="100%" />
         <Group justify="space-between">
           <Text size="xs" c="dimmed" className="num">
             {format(scale.lo)}
@@ -103,7 +95,7 @@ export function ResultSummary({
           </Text>
         </Group>
       </Stack>
-      {(base != null || es != null) && <IntervalLegend base={base != null} tail={es != null} />}
+      <IntervalLegend tail={es != null} />
     </Stack>
   );
 }

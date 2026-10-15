@@ -1,10 +1,11 @@
-import { Button, Group, Modal, Paper, Stack, Text, Textarea, Title } from '@mantine/core';
+import { Button, Group, Modal, Stack, Text, Textarea } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 import { IconArrowBackUp, IconCheck, IconX } from '@tabler/icons-react';
 import { useState } from 'react';
 import { useResumeApproval, type ApprovalDecision } from '../../api/queries';
 import type { Me } from '../../api/types';
 import { ErrorAlert } from '../../components/ErrorAlert';
+import { ActionBar } from '../../components/Page';
 
 const DECISIONS: Record<
   ApprovalDecision,
@@ -12,7 +13,7 @@ const DECISIONS: Record<
 > = {
   approve: {
     title: 'Утвердить отчёт?',
-    text: 'Отчёт будет опубликован от вашего имени. Отменить решение нельзя.',
+    text: 'Отчёт будет опубликован от вашего имени. Подписывается эта версия: если стресс-тест пересчитают, подпись на новую не перейдёт. Отменить решение нельзя.',
     reason: null,
     hint: 'Комментарий к утверждению (необязательно)',
     confirm: 'Утвердить и опубликовать',
@@ -62,36 +63,30 @@ export function DecisionPanel({ runId, me }: { runId: string; me: Me }) {
   };
 
   return (
-    <Paper
-      p="lg"
-      id="decision"
-      shadow="sm"
-      style={{ position: 'sticky', bottom: 0, zIndex: 10, background: 'white', borderColor: 'var(--mantine-color-gray-4)' }}
-    >
-      <Stack gap="md">
-        <Stack gap={4}>
-          <Title order={4}>Решение по отчёту</Title>
-          <Text size="sm" c="dimmed" maw="72ch">
-            Подпишет: <b>{me.actor}</b>. Подписывается именно эта версия отчёта: если стресс-тест
-            пересчитают, подпись на новую версию не перейдёт.
-          </Text>
-        </Stack>
-        <Group justify="space-between">
-          <Group gap="xs">
+    <>
+      <ActionBar
+        id="decision"
+        status={
+          <>
+            Подпишете как <Text span inherit fw={600} c="dark.8">{me.actor}</Text>
+          </>
+        }
+        actions={
+          <>
             <Button variant="subtle" color="gray" leftSection={<IconArrowBackUp size={16} />} onClick={() => setPending('return')}>
               Вернуть аналитику
             </Button>
             <Button variant="subtle" color="gray" leftSection={<IconX size={16} />} onClick={() => setPending('reject')}>
               Отклонить
             </Button>
-          </Group>
-          <Button size="md" color="mts" leftSection={<IconCheck size={18} />} onClick={() => setPending('approve')}>
-            Утвердить отчёт
-          </Button>
-        </Group>
-      </Stack>
+            <Button color="mts" leftSection={<IconCheck size={16} />} onClick={() => setPending('approve')}>
+              Утвердить отчёт
+            </Button>
+          </>
+        }
+      />
 
-      <Modal opened={!!view} onClose={close} title={view?.title} centered size="lg">
+      <Modal opened={!!view} onClose={close} title={view?.title} centered size="lg" withCloseButton={false}>
         {view && (
           <Stack>
             <Text size="sm">{view.text}</Text>
@@ -122,6 +117,6 @@ export function DecisionPanel({ runId, me }: { runId: string; me: Me }) {
           </Stack>
         )}
       </Modal>
-    </Paper>
+    </>
   );
 }

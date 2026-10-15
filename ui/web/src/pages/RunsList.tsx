@@ -9,7 +9,6 @@ import {
   Table,
   Text,
   TextInput,
-  Title,
 } from '@mantine/core';
 import { IconArrowRight, IconPlus, IconSearch } from '@tabler/icons-react';
 import { useMemo, useState } from 'react';
@@ -18,8 +17,9 @@ import { usePortfolios, useRuns } from '../api/queries';
 import type { Me, RunRow } from '../api/types';
 import { canApprove, canFixGraph, canRun, useSession } from '../auth/session';
 import { ErrorAlert } from '../components/ErrorAlert';
+import { PageHeader } from '../components/Page';
 import { StatusBadge } from '../components/StatusBadge';
-import { approver, shorten, timestamp } from '../lib/format';
+import { approver, timestamp } from '../lib/format';
 import { ACTIVE } from '../lib/stages';
 
 function waitsFor(row: RunRow, me: Me | null): string | null {
@@ -68,46 +68,6 @@ function PortfolioCell({ id, name }: { id: string; name?: string }) {
   );
 }
 
-function Attention({ rows, me }: { rows: RunRow[]; me: Me | null }) {
-  const nameOf = usePortfolioName();
-  const navigate = useNavigate();
-  const waiting = rows.filter((row) => waitsFor(row, me));
-  if (!waiting.length) return null;
-  return (
-    <Stack gap="xs">
-      <Title order={4}>Ждут вашего действия</Title>
-      <Paper>
-        {waiting.map((row, index) => (
-          <Group
-            key={row.run_id}
-            justify="space-between"
-            wrap="nowrap"
-            p="md"
-            style={index ? { borderTop: '1px solid var(--mantine-color-gray-3)' } : undefined}
-          >
-            <Stack gap={4} miw={0}>
-              <Text fw={500} lineClamp={1}>
-                {shorten(row.event_text, 160)}
-              </Text>
-              <Text size="sm" c="dimmed">
-                Портфель «{nameOf(row.portfolio_id) ?? row.portfolio_id}» · запущен {timestamp(row.created_at)}
-              </Text>
-            </Stack>
-            <Button
-              variant="light"
-              rightSection={<IconArrowRight size={16} />}
-              onClick={() => navigate(`/runs/${row.run_id}`)}
-              style={{ flexShrink: 0 }}
-            >
-              {waitsFor(row, me)}
-            </Button>
-          </Group>
-        ))}
-      </Paper>
-    </Stack>
-  );
-}
-
 export function RunsList() {
   const { me } = useSession();
   const navigate = useNavigate();
@@ -118,7 +78,7 @@ export function RunsList() {
 
   const rows = useMemo(() => {
     const needle = search.trim().toLowerCase();
-    return (runs.data ?? []).filter(
+    const found = (runs.data ?? []).filter(
       (row) =>
         matches(row, filter) &&
         (!needle ||
@@ -126,25 +86,23 @@ export function RunsList() {
           row.portfolio_id.toLowerCase().includes(needle) ||
           (nameOf(row.portfolio_id) ?? '').toLowerCase().includes(needle)),
     );
-  }, [runs.data, filter, search, nameOf]);
+    // What waits for this person comes first; the order within each part stays the list's.
+    return [...found.filter((row) => waitsFor(row, me)), ...found.filter((row) => !waitsFor(row, me))];
+  }, [runs.data, filter, search, nameOf, me]);
 
   return (
-    <Stack gap="xl">
-      <Group justify="space-between" align="flex-end">
-        <Stack gap={4}>
-          <Title order={2}>Стресс-тесты</Title>
-          <Text c="dimmed">Как одно событие повлияет на портфель: граф влияния, расчёт позиций, отчёт.</Text>
-        </Stack>
-        {canRun(me) && (
-          <Button
-            component={Link}
-            to="/new"
-            leftSection={<IconPlus size={18} />}
-          >
-            Новый стресс-тест
-          </Button>
-        )}
-      </Group>
+    <Stack gap="lg">
+      <PageHeader
+        title="Стресс-тесты"
+        hint="Как одно событие повлияет на портфель: граф влияния, расчёт позиций, отчёт."
+        actions={
+          canRun(me) && (
+            <Button component={Link} to="/new" leftSection={<IconPlus size={16} />}>
+              Новый стресс-тест
+            </Button>
+          )
+        }
+      />
 
       {runs.error && <ErrorAlert error={runs.error} />}
       {runs.isPending ? (
@@ -153,19 +111,18 @@ export function RunsList() {
         </Center>
       ) : (
         <>
-          <Attention rows={runs.data ?? []} me={me} />
-          <Stack gap="sm">
-            <Group justify="space-between">
-              <SegmentedControl value={filter} onChange={(v) => setFilter(v as Filter)} data={FILTERS} />
-              <TextInput
-                placeholder="Поиск по событию или портфелю"
-                leftSection={<IconSearch size={16} />}
-                value={search}
-                onChange={(e) => setSearch(e.currentTarget.value)}
-                w={{ base: '100%', sm: 320 }}
-              />
-            </Group>
-            <Paper>
+          {/* The filters belong to the table: they are the head of its card, on the card's padding. */}
+            <Paper className="flush" style={{ minWidth: 0 }}>
+              <Group justify="space-between" p="lg" pb="sm" gap="sm">
+                <SegmentedControl value={filter} onChange={(v) => setFilter(v as Filter)} data={FILTERS} />
+                <TextInput
+                  placeholder="Поиск по событию или портфелю"
+                  leftSection={<IconSearch size={16} />}
+                  value={search}
+                  onChange={(e) => setSearch(e.currentTarget.value)}
+                  w={{ base: '100%', sm: 320 }}
+                />
+              </Group>
               {rows.length === 0 ? (
                 <Text className="empty">
                   {(runs.data ?? []).length === 0
@@ -181,7 +138,7 @@ export function RunsList() {
                         <Table.Th w={170}>Статус</Table.Th>
                         <Table.Th w={180}>Портфель</Table.Th>
                         <Table.Th w={190}>Запущен</Table.Th>
-                        <Table.Th w={200}>Решение</Table.Th>
+                        <Table.Th w={240}>Решение</Table.Th>
                       </Table.Tr>
                     </Table.Thead>
                     <Table.Tbody>
@@ -211,7 +168,19 @@ export function RunsList() {
                             )}
                           </Table.Td>
                           <Table.Td>
-                            {row.approved_by ? (
+                            {waitsFor(row, me) ? (
+                              <Button
+                                size="xs"
+                                variant="light"
+                                rightSection={<IconArrowRight size={14} />}
+                                onClick={(event) => {
+                                  event.stopPropagation();
+                                  navigate(`/runs/${row.run_id}`);
+                                }}
+                              >
+                                {waitsFor(row, me)}
+                              </Button>
+                            ) : row.approved_by ? (
                               <>
                                 <Text size="sm">Утвердил: {approver(row.approved_by)}</Text>
                                 <Text size="xs" c="dimmed">
@@ -231,7 +200,6 @@ export function RunsList() {
                 </Table.ScrollContainer>
               )}
             </Paper>
-          </Stack>
         </>
       )}
     </Stack>

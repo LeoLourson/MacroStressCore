@@ -1,11 +1,12 @@
-import { Anchor, Badge, Button, Center, Collapse, Group, Loader, Modal, Paper, Stack, Table, Text, Title } from '@mantine/core';
-import { IconCopy, IconPlayerPlay, IconPlus, IconTrash } from '@tabler/icons-react';
+import { Anchor, Badge, Button, Center, Collapse, Group, Loader, Modal, Paper, Stack, Table, Text } from '@mantine/core';
+import { IconChevronDown, IconChevronRight, IconCopy, IconPlayerPlay, IconPlus, IconTrash } from '@tabler/icons-react';
 import { Fragment, useState } from 'react';
 import { Link, Navigate } from 'react-router';
 import { useDeletePortfolio, usePortfolio, usePortfolios } from '../api/queries';
 import type { PortfolioRow } from '../api/types';
 import { canRun, useSession } from '../auth/session';
 import { ErrorAlert } from '../components/ErrorAlert';
+import { PageHeader } from '../components/Page';
 import { day, plural, timestamp, typeName } from '../lib/format';
 
 function Composition({ portfolioId }: { portfolioId: string }) {
@@ -16,13 +17,13 @@ function Composition({ portfolioId }: { portfolioId: string }) {
   const byId = Object.fromEntries(instruments.map((i) => [i.instrument_id, i]));
   const okved = Object.fromEntries(parties.map((p) => [p.party_id, p.okved]));
   return (
-    <Stack gap={4}>
+    <Stack gap="xs" py="xs">
       <Text size="sm" c="dimmed">
         {plural(positions.length, 'позиция', 'позиции', 'позиций')}; базовая валюта {portfolio.base_currency}
         {portfolio.as_of ? `; дата оценки ${day(portfolio.as_of)}` : ''}
         {portfolio.snapshot_id ? `; данные — снимок ${portfolio.snapshot_id}` : ''}
       </Text>
-      <Table withTableBorder>
+      <Table>
         <Table.Thead>
           <Table.Tr>
             <Table.Th>Позиция</Table.Th>
@@ -37,9 +38,9 @@ function Composition({ portfolioId }: { portfolioId: string }) {
             return (
               <Table.Tr key={position.position_id}>
                 <Table.Td>
-                  {position.position_id}
-                  <Text size="xs" c="dimmed">
-                    {instrument?.name}
+                  {instrument?.name ?? position.position_id}
+                  <Text size="xs" c="dimmed" ff="monospace">
+                    {position.position_id}
                   </Text>
                 </Table.Td>
                 <Table.Td>{typeName(instrument?.instrument_type)}</Table.Td>
@@ -66,34 +67,33 @@ export function Portfolios() {
   if (!canRun(me)) return <Navigate to="/" replace />;
   return (
     <Stack gap="lg">
-      <Group justify="space-between">
-        <Stack gap={4}>
-          <Title order={2}>Портфели</Title>
-          <Text size="sm" c="dimmed" maw="80ch">
-            {demo
-              ? 'Предустановленные и собранные в редакторе портфели. Свой портфель хранится семь дней; каждое его число записано как допущение аналитика с автором и датой.'
-              : 'Портфели, загруженные из системы (ops/load_portfolio.py). Свой портфель для проверки можно собрать в демо-контуре.'}
-          </Text>
-        </Stack>
-        {demo && (
-          <Button component={Link} to="/portfolios/new" leftSection={<IconPlus size={16} />}>
-            Новый портфель
-          </Button>
-        )}
-      </Group>
+      <PageHeader
+        title="Портфели"
+        hint={
+          demo
+            ? 'Предустановленные и собранные в редакторе портфели. Свой портфель хранится семь дней; каждое его число записано как допущение аналитика с автором и датой.'
+            : 'Портфели, загруженные из системы. Свой портфель для проверки можно собрать в демо-контуре.'
+        }
+        actions={
+          demo && (
+            <Button component={Link} to="/portfolios/new" leftSection={<IconPlus size={16} />}>
+              Новый портфель
+            </Button>
+          )
+        }
+      />
       {portfolios.error && <ErrorAlert error={portfolios.error} />}
       {!portfolios.data ? (
         <Center py="xl">
           <Loader />
         </Center>
       ) : (
-        <Paper>
-          <Table.ScrollContainer minWidth={760}>
-            <Table verticalSpacing="sm" horizontalSpacing="md">
+        <Paper className="flush">
+          <Table.ScrollContainer minWidth={640}>
+            <Table verticalSpacing="sm">
               <Table.Thead>
                 <Table.Tr>
                   <Table.Th>Портфель</Table.Th>
-                  <Table.Th>Вид</Table.Th>
                   <Table.Th />
                 </Table.Tr>
               </Table.Thead>
@@ -102,39 +102,32 @@ export function Portfolios() {
                   <Fragment key={p.portfolio_id}>
                     <Table.Tr>
                       <Table.Td>
-                        <Anchor component="button" type="button" ta="left" onClick={() => setOpen(open === p.portfolio_id ? null : p.portfolio_id)}>
-                          {p.name && p.name !== p.portfolio_id ? p.name : p.portfolio_id}
-                        </Anchor>
-                        <Text size="xs" c="dimmed" ff="monospace">
+                        <Group gap="xs" wrap="nowrap" align="center">
+                          <Anchor
+                            component="button"
+                            type="button"
+                            ta="left"
+                            aria-expanded={open === p.portfolio_id}
+                            onClick={() => setOpen(open === p.portfolio_id ? null : p.portfolio_id)}
+                          >
+                            <Group gap={4} wrap="nowrap" align="center">
+                              {open === p.portfolio_id ? <IconChevronDown size={14} /> : <IconChevronRight size={14} />}
+                              {p.name && p.name !== p.portfolio_id ? p.name : p.portfolio_id}
+                            </Group>
+                          </Anchor>
+                          {/* Only what sets a portfolio apart is marked: the analyst's own. */}
+                          {demo && !p.builtin && <Badge color="steel">Свой</Badge>}
+                        </Group>
+                        <Text size="xs" c="dimmed" ff="monospace" pl={18}>
                           {p.portfolio_id}
+                          {demo && !p.builtin && p.expires_at ? ` · хранится до ${timestamp(p.expires_at)}` : ''}
                         </Text>
-                      </Table.Td>
-                      <Table.Td>
-                        {!demo ? (
-                          <Badge color="gray">
-                            Портфель банка
-                          </Badge>
-                        ) : p.builtin ? (
-                          <Badge color="gray">
-                            Демо-портфель
-                          </Badge>
-                        ) : (
-                          <Stack gap={0}>
-                            <Badge color="steel" w="fit-content">
-                              Свой
-                            </Badge>
-                            {p.expires_at && (
-                              <Text size="xs" c="dimmed">
-                                хранится до {timestamp(p.expires_at)}
-                              </Text>
-                            )}
-                          </Stack>
-                        )}
                       </Table.Td>
                       <Table.Td>
                         <Group gap="xs" justify="flex-end" wrap="nowrap">
                           <Button
                             size="xs"
+                            variant="subtle"
                             component={Link}
                             to={`/new?portfolio=${encodeURIComponent(p.portfolio_id)}`}
                             leftSection={<IconPlayerPlay size={14} />}
@@ -144,7 +137,8 @@ export function Portfolios() {
                           {demo && (
                             <Button
                               size="xs"
-                              variant="default"
+                              variant="subtle"
+                              color="gray"
                               component={Link}
                               to={`/portfolios/new?from=${encodeURIComponent(p.portfolio_id)}`}
                               leftSection={<IconCopy size={14} />}
@@ -167,7 +161,7 @@ export function Portfolios() {
                       </Table.Td>
                     </Table.Tr>
                     <Table.Tr style={{ display: open === p.portfolio_id ? undefined : 'none' }}>
-                      <Table.Td colSpan={3} bg="gray.0">
+                      <Table.Td colSpan={2} bg="gray.0">
                         <Collapse in={open === p.portfolio_id}>
                           {open === p.portfolio_id && <Composition portfolioId={p.portfolio_id} />}
                         </Collapse>
@@ -180,7 +174,7 @@ export function Portfolios() {
           </Table.ScrollContainer>
         </Paper>
       )}
-      <Modal opened={!!deleting} onClose={() => setDeleting(null)} title="Удалить портфель?" centered>
+      <Modal opened={!!deleting} onClose={() => setDeleting(null)} title="Удалить портфель?" centered withCloseButton={false}>
         <Stack>
           <Text size="sm">
             Портфель «{deleting?.name ?? deleting?.portfolio_id}» будет удалён. Стресс-тесты, уже проведённые на нём,

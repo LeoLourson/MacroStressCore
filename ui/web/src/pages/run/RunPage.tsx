@@ -2,18 +2,18 @@ import {
   ActionIcon,
   Alert,
   Anchor,
+  Box,
   Center,
   CopyButton,
   Group,
   Loader,
   ScrollArea,
   Stack,
-  Tabs,
+  SegmentedControl,
   Text,
-  Title,
   Tooltip,
 } from '@mantine/core';
-import { IconArrowLeft, IconCheck, IconCopy, IconAlertTriangle } from '@tabler/icons-react';
+import { IconCheck, IconCopy, IconAlertTriangle } from '@tabler/icons-react';
 import { Fragment, lazy, Suspense, useEffect, type ReactNode } from 'react';
 import { Link, useParams, useSearchParams } from 'react-router';
 import { useArtifacts, usePortfolios, useRuns, useRunStatus } from '../../api/queries';
@@ -21,6 +21,7 @@ import type { Artifacts, RunStatus } from '../../api/types';
 import { useSession } from '../../auth/session';
 import { ErrorAlert } from '../../components/ErrorAlert';
 import { RunArtifacts } from '../../components/Provenance';
+import { PageHeader } from '../../components/Page';
 import { Hint } from '../../components/Term';
 import { day, timestamp } from '../../lib/format';
 import { TABS, available, defaultTab, steps, type Tab } from '../../lib/stages';
@@ -54,36 +55,39 @@ function Masthead({ status, artifacts }: RunTabProps) {
     snapshot && <Hint text={snapshot.label}>данные на {day(snapshot.as_of)}</Hint>,
     row && `запущен ${timestamp(row.created_at)}${row.created_by ? `, ${row.created_by}` : ''}`,
   ].filter(Boolean);
+  const copy = (
+    <CopyButton value={status.run_id}>
+      {({ copied, copy }) => (
+        <Tooltip label={copied ? 'Номер скопирован' : `Скопировать номер стресс-теста ${status.run_id}`}>
+          <ActionIcon variant="subtle" color="gray" size="sm" onClick={copy} aria-label="Скопировать номер стресс-теста">
+            {copied ? <IconCheck size={14} /> : <IconCopy size={14} />}
+          </ActionIcon>
+        </Tooltip>
+      )}
+    </CopyButton>
+  );
   return (
-    <Stack gap="xs">
-      <Anchor component={Link} to="/" size="sm" w="fit-content">
-        <Group gap={4}>
-          <IconArrowLeft size={14} /> Все стресс-тесты
-        </Group>
-      </Anchor>
-      <Title order={2} maw="90ch" lineClamp={2} title={event}>
-        {event || 'Стресс-тест'}
-      </Title>
-      <Group gap={4} wrap="nowrap" align="center">
-        <Text size="sm" c="dimmed">
-          {facts.map((fact, index) => (
-            <Fragment key={index}>
-              {index > 0 && ' · '}
-              {fact}
-            </Fragment>
-          ))}
+    <PageHeader
+      back={{ to: '/', label: 'Все стресс-тесты' }}
+      title={
+        <Text inherit lineClamp={1} title={event}>
+          {event || 'Стресс-тест'}
         </Text>
-        <CopyButton value={status.run_id}>
-          {({ copied, copy }) => (
-            <Tooltip label={copied ? 'Номер скопирован' : `Скопировать номер стресс-теста ${status.run_id}`}>
-              <ActionIcon variant="subtle" color="gray" size="sm" onClick={copy} aria-label="Скопировать номер стресс-теста">
-                {copied ? <IconCheck size={14} /> : <IconCopy size={14} />}
-              </ActionIcon>
-            </Tooltip>
-          )}
-        </CopyButton>
-      </Group>
-    </Stack>
+      }
+      meta={
+        <Group gap={4} wrap="nowrap" align="center">
+          <span>
+            {facts.map((fact, index) => (
+              <Fragment key={index}>
+                {index > 0 && ' · '}
+                {fact}
+              </Fragment>
+            ))}
+          </span>
+          {copy}
+        </Group>
+      }
+    />
   );
 }
 
@@ -155,7 +159,7 @@ export function RunPage() {
 
   return (
     <RunArtifacts.Provider value={data.artifacts}>
-    <Stack gap="lg">
+    <Stack gap="md">
       <Masthead {...data} />
       {!!data.artifacts.scenario_warnings?.length && (
         <Alert icon={<IconAlertTriangle size={16} />} color="orange" py="xs">
@@ -172,27 +176,21 @@ export function RunPage() {
       )}
       <RunSteps steps={steps(data.status, data.artifacts, me)} />
       <NextAction {...data} me={me} tab={tab} onTab={setTab} />
-      <ScrollArea type="auto" scrollbars="x" offsetScrollbars>
-        <Tabs value={tab} onChange={(value) => value && setTab(value as Tab)} color="steel">
-          <Tabs.List style={{ flexWrap: 'nowrap' }}>
-            {TABS.map(({ value, title, empty }) => {
-              const ready = available(value, data.status, data.artifacts);
-              return ready ? (
-                <Tabs.Tab key={value} value={value}>
-                  {title}
-                </Tabs.Tab>
-              ) : (
-                <Tooltip key={value} label={empty}>
-                  <Tabs.Tab value={value} disabled>
-                    {title}
-                  </Tabs.Tab>
-                </Tooltip>
-              );
-            })}
-          </Tabs.List>
-        </Tabs>
+      {/* The same switch as every other in the app; on a phone it scrolls sideways. */}
+      <ScrollArea mt="xs" type="auto" scrollbars="x" offsetScrollbars>
+        <SegmentedControl
+          value={tab}
+          onChange={(value) => setTab(value as Tab)}
+          aria-label="Разделы стресс-теста"
+          data={TABS.map(({ value, title, empty }) => {
+            const ready = available(value, data.status, data.artifacts);
+            return { value, disabled: !ready, label: ready ? title : <span title={empty}>{title}</span> };
+          })}
+        />
       </ScrollArea>
-      <Panel tab={tab} {...data} />
+      <Box pt="xs">
+        <Panel tab={tab} {...data} />
+      </Box>
     </Stack>
     </RunArtifacts.Provider>
   );

@@ -23,7 +23,7 @@ function Banner({
   action?: ReactNode;
 }) {
   return (
-    <Alert color={color} icon={icon} title={title} styles={{ title: { fontSize: 'var(--mantine-font-size-md)' } }}>
+    <Alert color={color} icon={icon} title={title}>
       <Group justify="space-between" align="flex-end" gap="md">
         <Stack gap={4} style={{ flex: 1, minWidth: 240 }}>
           {children}

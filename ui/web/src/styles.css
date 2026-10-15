@@ -26,8 +26,8 @@ body {
 
 .question-example {
   height: auto;
-  min-height: 44px;
-  padding-block: 8px;
+  min-height: 30px;
+  padding-block: 4px;
   max-width: 100%;
 }
 
@@ -91,10 +91,55 @@ table,
   white-space: nowrap;
 }
 
-.term {
-  text-decoration: underline dotted;
-  text-underline-offset: 3px;
+/* A disabled button stays readable: grey words on grey, not a pale accent. */
+.mantine-Button-root:disabled,
+.mantine-Button-root[data-disabled] {
+  color: var(--mantine-color-gray-7);
+}
+
+/* A hint: the words stay as they are, a small mark after them says an explanation pops up. */
+.hint {
   cursor: help;
+  border-radius: 2px;
+}
+
+.hint-mark {
+  width: 0.95em;
+  height: 0.95em;
+  margin-left: 0.2em;
+  vertical-align: -0.12em;
+  stroke-width: 1.8;
+  color: var(--mantine-color-gray-6);
+}
+
+.hint:hover .hint-mark,
+.hint:focus-visible .hint-mark {
+  color: var(--mantine-color-steel-7);
+}
+
+.hint:focus-visible {
+  outline: 2px solid var(--mantine-color-steel-7);
+  outline-offset: 2px;
+}
+
+/* An unboxed table stands on the text column: its outer cells have no inner padding, so the
+   first column starts where the heading above it starts. */
+table:not([data-with-table-border]) :is(th, td):first-child {
+  padding-inline-start: 0;
+}
+
+table:not([data-with-table-border]) :is(th, td):last-child {
+  padding-inline-end: 0;
+}
+
+/* A table that runs to the edges of its card keeps the card's padding in its outer cells:
+   the first column stands on the same line as the card's heading. */
+.flush table :is(th, td):first-child {
+  padding-inline-start: var(--mantine-spacing-lg);
+}
+
+.flush table :is(th, td):last-child {
+  padding-inline-end: var(--mantine-spacing-lg);
 }
 
 .status-badge .mantine-Badge-label {
@@ -131,17 +176,13 @@ table,
 }
 
 .prose h3 {
-  margin: 1.75em 0 0.5em;
-  padding-top: 1em;
-  border-top: 1px solid var(--mantine-color-gray-3);
+  margin: 1.5em 0 0.4em;
   font-size: var(--mantine-font-size-md);
   font-weight: 600;
 }
 
 .prose h3:first-child {
   margin-top: 0;
-  padding-top: 0;
-  border-top: 0;
 }
 
 .prose p,
@@ -161,14 +202,18 @@ table,
   color: var(--mantine-color-dimmed);
 }
 
-.ref-number {
+/* A number with an origin is steel, the colour of everything that opens. */
+.ref-number.ref-number {
+  font: inherit;
   cursor: pointer;
-  border-bottom: 1px dashed var(--mantine-color-steel-5);
+  color: var(--mantine-color-steel-8);
   font-variant-numeric: tabular-nums;
+  border-radius: 2px;
 }
 
 .ref-number:hover {
-  background: var(--mantine-color-steel-0);
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -189,4 +234,13 @@ table,
   text-align: center;
   color: var(--mantine-color-dimmed);
   font-size: var(--mantine-font-size-sm);
+}
+
+/* A table nested in a flush table's cell stands on that cell's text, not on the card edge. */
+.flush table table :is(th, td):first-child {
+  padding-inline-start: 0;
+}
+
+.flush table table :is(th, td):last-child {
+  padding-inline-end: 0;
 }

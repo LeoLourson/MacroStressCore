@@ -2,30 +2,373 @@
   "baseUrl": "http://127.0.0.1:5173",
   "login": {
     "url": "/login",
-    "actions": [{ "click": "text=Войти как аналитик" }, { "wait": 1500 }],
+    "actions": [
+      {
+        "click": "text=Войти как аналитик"
+      },
+      {
+        "wait": 1500
+      }
+    ],
     "failIfUrlContains": "/login"
   },
   "audit": {
     "lang": "ru",
     "contentSelector": ".react-flow__node, [data-user-content], code, pre",
     "secondaryTextSelector": "time",
-    "protect": ["button[type=submit]"],
+    "protect": [
+      "button[type=submit]"
+    ],
     "allowOver": "[role=tooltip], .mantine-Notifications-root",
-    "allowEnglish": ["MacroStress", "LLM", "MCP", "P5", "P50", "P95", "PD", "LGD", "EAD", "VaR", "ES", "RUB", "DeepSeek"],
-    "radiusScale": [0, 2, 4, 6, 8, 12, 16, 32]
+    "allowEnglish": [
+      "MacroStress",
+      "LLM",
+      "MCP",
+      "P5",
+      "P50",
+      "P95",
+      "PD",
+      "LGD",
+      "EAD",
+      "VaR",
+      "ES",
+      "RUB",
+      "DeepSeek"
+    ],
+    "radiusScale": [
+      0,
+      2,
+      4,
+      6,
+      8,
+      12,
+      16,
+      32
+    ]
   },
   "screens": [
-    { "name": "runs-list", "url": "/" },
-    { "name": "user-menu", "url": "/", "actions": [{ "click": "button[aria-label='Меню пользователя']" }], "after": [{ "press": "Escape" }] },
-    { "name": "new-run", "url": "/new", "actions": [{ "wait": 1500 }] },
-    { "name": "portfolios", "url": "/portfolios", "actions": [{ "wait": 1000 }] },
-    { "name": "portfolio-new", "url": "/portfolios/new", "actions": [{ "wait": 1000 }] },
-    { "name": "run-scenario", "url": "/runs/3ef099d6-52a2-4970-94fc-c0857601fb0d?tab=scenario", "actions": [{ "wait": 2500 }] },
-    { "name": "run-positions", "url": "/runs/3ef099d6-52a2-4970-94fc-c0857601fb0d?tab=positions", "actions": [{ "wait": 1500 }] },
-    { "name": "run-portfolio", "url": "/runs/3ef099d6-52a2-4970-94fc-c0857601fb0d?tab=portfolio", "actions": [{ "wait": 1500 }] },
-    { "name": "run-report", "url": "/runs/3ef099d6-52a2-4970-94fc-c0857601fb0d?tab=report", "actions": [{ "wait": 1500 }] },
-    { "name": "run-sources", "url": "/runs/3ef099d6-52a2-4970-94fc-c0857601fb0d?tab=sources", "actions": [{ "wait": 1500 }] },
-    { "name": "run-explain", "url": "/runs/3ef099d6-52a2-4970-94fc-c0857601fb0d?tab=explain", "actions": [{ "wait": 1500 }] },
-    { "name": "run-activity", "url": "/runs/3ef099d6-52a2-4970-94fc-c0857601fb0d?tab=activity", "actions": [{ "wait": 1500 }] }
+    {
+      "name": "runs-list",
+      "url": "/"
+    },
+    {
+      "name": "user-menu",
+      "url": "/",
+      "actions": [
+        {
+          "click": "button[aria-label='Меню пользователя']"
+        }
+      ],
+      "after": [
+        {
+          "press": "Escape"
+        }
+      ]
+    },
+    {
+      "name": "new-run",
+      "url": "/new",
+      "actions": [
+        {
+          "wait": 1500
+        }
+      ]
+    },
+    {
+      "name": "portfolios",
+      "url": "/portfolios",
+      "actions": [
+        {
+          "wait": 1000
+        }
+      ]
+    },
+    {
+      "name": "portfolio-new",
+      "url": "/portfolios/new",
+      "actions": [
+        {
+          "wait": 1000
+        }
+      ]
+    },
+    {
+      "name": "new-run-own-text",
+      "url": "/new",
+      "actions": [
+        {
+          "wait": 1200
+        },
+        {
+          "click": "text=Свой текст"
+        },
+        {
+          "wait": 400
+        }
+      ]
+    },
+    {
+      "name": "portfolio-expanded",
+      "url": "/portfolios",
+      "actions": [
+        {
+          "wait": 1000
+        },
+        {
+          "click": "text=Нестандартные заёмщики"
+        },
+        {
+          "wait": 600
+        }
+      ]
+    },
+    {
+      "name": "review-scenario",
+      "url": "/runs/bd4aa790-58c4-4971-8d28-34fd647d83cf?tab=scenario",
+      "actions": [
+        {
+          "wait": 2500
+        }
+      ]
+    },
+    {
+      "name": "review-scenario-open",
+      "url": "/runs/bd4aa790-58c4-4971-8d28-34fd647d83cf?tab=scenario",
+      "actions": [
+        {
+          "wait": 2500
+        }
+      ]
+    },
+    {
+      "name": "review-edge",
+      "url": "/runs/bd4aa790-58c4-4971-8d28-34fd647d83cf?tab=scenario",
+      "actions": [
+        {
+          "wait": 2500
+        },
+        {
+          "click": "text=Список связей"
+        },
+        {
+          "wait": 400
+        },
+        {
+          "click": "tr.clickable-row >> nth=0"
+        },
+        {
+          "wait": 800
+        }
+      ],
+      "after": [
+        {
+          "press": "Escape"
+        }
+      ]
+    },
+    {
+      "name": "done-scenario",
+      "url": "/runs/a40214ec-54cb-41ec-a665-16f23133eb99?tab=scenario",
+      "actions": [
+        {
+          "wait": 1800
+        }
+      ]
+    },
+    {
+      "name": "done-positions",
+      "url": "/runs/a40214ec-54cb-41ec-a665-16f23133eb99?tab=positions",
+      "actions": [
+        {
+          "wait": 1800
+        }
+      ]
+    },
+    {
+      "name": "done-portfolio",
+      "url": "/runs/a40214ec-54cb-41ec-a665-16f23133eb99?tab=portfolio",
+      "actions": [
+        {
+          "wait": 1800
+        }
+      ]
+    },
+    {
+      "name": "done-report",
+      "url": "/runs/a40214ec-54cb-41ec-a665-16f23133eb99?tab=report",
+      "actions": [
+        {
+          "wait": 1800
+        }
+      ]
+    },
+    {
+      "name": "done-sources",
+      "url": "/runs/a40214ec-54cb-41ec-a665-16f23133eb99?tab=sources",
+      "actions": [
+        {
+          "wait": 1800
+        }
+      ]
+    },
+    {
+      "name": "done-explain",
+      "url": "/runs/a40214ec-54cb-41ec-a665-16f23133eb99?tab=explain",
+      "actions": [
+        {
+          "wait": 1800
+        }
+      ]
+    },
+    {
+      "name": "done-activity",
+      "url": "/runs/a40214ec-54cb-41ec-a665-16f23133eb99?tab=activity",
+      "actions": [
+        {
+          "wait": 1800
+        }
+      ]
+    },
+    {
+      "name": "done-position-drawer",
+      "url": "/runs/a40214ec-54cb-41ec-a665-16f23133eb99?tab=positions",
+      "actions": [
+        {
+          "wait": 1800
+        },
+        {
+          "click": "tbody tr >> nth=0"
+        },
+        {
+          "wait": 900
+        }
+      ],
+      "after": [
+        {
+          "press": "Escape"
+        }
+      ]
+    },
+    {
+      "name": "done-scroll-report",
+      "url": "/runs/a40214ec-54cb-41ec-a665-16f23133eb99?tab=report",
+      "actions": [
+        {
+          "wait": 1800
+        },
+        {
+          "press": "End"
+        },
+        {
+          "wait": 500
+        }
+      ]
+    },
+    {
+      "name": "done-approved",
+      "url": "/runs/52c6d5b7-7335-48f5-a068-23749f34b47b?tab=report",
+      "actions": [
+        {
+          "wait": 1800
+        }
+      ]
+    },
+    {
+      "name": "failed-run",
+      "url": "/runs/f7322e3b-ee54-4e10-9b0c-9eb34eea2c29",
+      "actions": [
+        {
+          "wait": 1800
+        }
+      ]
+    },
+    {
+      "name": "rm-switch",
+      "url": "/",
+      "actions": [
+        {
+          "click": "button[aria-label='Меню пользователя']"
+        },
+        {
+          "click": "text=Риск-менеджер"
+        },
+        {
+          "wait": 1500
+        }
+      ]
+    },
+    {
+      "name": "rm-runs",
+      "url": "/",
+      "actions": [
+        {
+          "wait": 1200
+        }
+      ]
+    },
+    {
+      "name": "rm-report",
+      "url": "/runs/a40214ec-54cb-41ec-a665-16f23133eb99?tab=report",
+      "actions": [
+        {
+          "wait": 1800
+        }
+      ]
+    },
+    {
+      "name": "rm-approve-modal",
+      "url": "/runs/a40214ec-54cb-41ec-a665-16f23133eb99?tab=report",
+      "actions": [
+        {
+          "wait": 1800
+        },
+        {
+          "click": "button:has-text('Утвердить')"
+        },
+        {
+          "wait": 700
+        }
+      ],
+      "after": [
+        {
+          "press": "Escape"
+        }
+      ]
+    },
+    {
+      "name": "rm-return-modal",
+      "url": "/runs/a40214ec-54cb-41ec-a665-16f23133eb99?tab=report",
+      "actions": [
+        {
+          "wait": 1800
+        },
+        {
+          "click": "button:has-text('Вернуть')"
+        },
+        {
+          "wait": 700
+        }
+      ],
+      "after": [
+        {
+          "press": "Escape"
+        }
+      ]
+    },
+    {
+      "name": "login",
+      "url": "/",
+      "actions": [
+        {
+          "click": "button[aria-label='Меню пользователя']"
+        },
+        {
+          "click": "text=Выйти"
+        },
+        {
+          "wait": 1200
+        }
+      ]
+    }
   ]
 }
