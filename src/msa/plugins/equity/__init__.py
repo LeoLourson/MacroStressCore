@@ -204,10 +204,14 @@ plugin = Plugin(
     sources={
         "demo:market": "рыночные данные демо-снимка",
         "demo:equity-sensitivities": "экспертные чувствительности акций демо-стенда",
+        "PILOT-AFK": "расчёт пилота АФК: бета и остаточная волатильность по котировкам MOEX ISS",
+        "MTS-IR": "раскрытие ПАО «МТС» о дивидендах",
+        "pilot-afk:estimate": "экспертные оценки пилота АФК",
     },
     authors={
         "demo:market-desk": "аналитик рынка демо-стенда",
         "demo:data-desk": "составитель демо-данных",
+        "pilot-afk:analyst": "аналитик пилота АФК",
     },
     tree=tree,
     demo=cases,

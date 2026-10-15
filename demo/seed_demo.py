@@ -4,7 +4,7 @@ The data snapshots go first, then the portfolios that read them (the bundle form
 the event library (demo/events). Portfolios and snapshots are assembled by
 ``demo.catalog``: the headers in demo/portfolios and demo/snapshots, the positions and data
 from each plugin's ``demo_data``. Built-in portfolios and events the catalog no longer has
-are removed; the historical pilot event (``demo.pilot``) stays.
+are removed; the historical pilot events (``demo.pilot``, ``demo.pilot_afk``) stay.
 """
 
 import argparse
@@ -14,6 +14,7 @@ from pathlib import Path
 
 from demo import catalog as demo_catalog
 from demo.pilot import EVENT_ID as PILOT_EVENT_ID
+from demo.pilot_afk import EVENT_ID as PILOT_AFK_EVENT_ID
 from msa.db.repositories.demo import DemoRepository
 from msa.db.session import engine, session_scope
 from msa.platform.registry import registry
@@ -41,7 +42,7 @@ def seed_demo(bind, catalog=CATALOG):
             repository.seed_event(event)
         repository.retire(
             demo_catalog.portfolio_ids(root=catalog),
-            [event["event_id"] for event in events] + [PILOT_EVENT_ID],
+            [event["event_id"] for event in events] + [PILOT_EVENT_ID, PILOT_AFK_EVENT_ID],
         )
         return counts
 

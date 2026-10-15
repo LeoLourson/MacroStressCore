@@ -1,0 +1,224 @@
+{
+  "parties": [
+    {
+      "party_id": "MTSS",
+      "name": "ПАО «МТС»",
+      "kind": "company",
+      "okved": "61.10",
+      "country": "RU",
+      "description": "Эмитент акции SHARE-MTSS: Акция MTSS: ПАО «МТС»",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "pilot-afk:estimate",
+          "locator": "карточка контрагента MTSS",
+          "fragment_sha256": "fe3c13b746a233949375787c1cca3e1482e17c2eeb157e945e82d9551b844ed3",
+          "author": "pilot-afk:analyst",
+          "as_of": "2026-10-15"
+        }
+      ]
+    },
+    {
+      "party_id": "OZON",
+      "name": "ООО «Интернет Решения» (Ozon)",
+      "kind": "company",
+      "okved": "47.91",
+      "country": "RU",
+      "description": "Эмитент акции SHARE-OZON: Акция OZON: ООО «Интернет Решения» (Ozon)",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "pilot-afk:estimate",
+          "locator": "карточка контрагента OZON",
+          "fragment_sha256": "e64320622579d32a9f5f4d9cfbdf090929d6aa9b3d9f7cf21df9713df0a21b3e",
+          "author": "pilot-afk:analyst",
+          "as_of": "2026-10-15"
+        }
+      ]
+    },
+    {
+      "party_id": "SGZH",
+      "name": "ПАО «Сегежа Групп»",
+      "kind": "company",
+      "okved": "17.12",
+      "country": "RU",
+      "description": "Эмитент акции SHARE-SGZH: Акция SGZH: ПАО «Сегежа Групп»",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "pilot-afk:estimate",
+          "locator": "карточка контрагента SGZH",
+          "fragment_sha256": "ead0eda72a4e7978a7d5d01c38f7fc3ba36b35330fbb401d86293a1ea6fd4129",
+          "author": "pilot-afk:analyst",
+          "as_of": "2026-10-15"
+        }
+      ]
+    },
+    {
+      "party_id": "ETLN",
+      "name": "МКПАО «Эталон Груп»",
+      "kind": "company",
+      "okved": "41.20",
+      "country": "RU",
+      "description": "Эмитент акции SHARE-ETLN: Акция ETLN: МКПАО «Эталон Груп»",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "pilot-afk:estimate",
+          "locator": "карточка контрагента ETLN",
+          "fragment_sha256": "00f009cf6f7766a01361993f1098962666a4f7f1242aeb77268e9bb13279525a",
+          "author": "pilot-afk:analyst",
+          "as_of": "2026-10-15"
+        }
+      ]
+    }
+  ],
+  "instruments": [
+    {
+      "instrument_id": "AFK-SYSTEMA-OCT-2024:SHARE-MTSS",
+      "instrument_type": "common_stock",
+      "name": "Акция MTSS: ПАО «МТС»",
+      "currency": "RUB",
+      "issuer_id": "MTSS",
+      "terms": {
+        "ticker": "MTSS",
+        "market_index": "MOEX",
+        "sector": "telecom"
+      },
+      "schema_version": "1"
+    },
+    {
+      "instrument_id": "AFK-SYSTEMA-OCT-2024:SHARE-OZON",
+      "instrument_type": "common_stock",
+      "name": "Акция OZON: ООО «Интернет Решения» (Ozon)",
+      "currency": "RUB",
+      "issuer_id": "OZON",
+      "terms": {
+        "ticker": "OZON",
+        "market_index": "MOEX",
+        "sector": "trade"
+      },
+      "schema_version": "1"
+    },
+    {
+      "instrument_id": "AFK-SYSTEMA-OCT-2024:SHARE-SGZH",
+      "instrument_type": "common_stock",
+      "name": "Акция SGZH: ПАО «Сегежа Групп»",
+      "currency": "RUB",
+      "issuer_id": "SGZH",
+      "terms": {
+        "ticker": "SGZH",
+        "market_index": "MOEX",
+        "sector": "materials"
+      },
+      "schema_version": "1"
+    },
+    {
+      "instrument_id": "AFK-SYSTEMA-OCT-2024:SHARE-ETLN",
+      "instrument_type": "common_stock",
+      "name": "Акция ETLN: МКПАО «Эталон Груп»",
+      "currency": "RUB",
+      "issuer_id": "ETLN",
+      "terms": {
+        "ticker": "ETLN",
+        "market_index": "MOEX",
+        "sector": "real_estate"
+      },
+      "schema_version": "1"
+    }
+  ],
+  "positions": [
+    {
+      "position_id": "SHARE-MTSS",
+      "instrument_id": "AFK-SYSTEMA-OCT-2024:SHARE-MTSS",
+      "params": {
+        "quantity": {
+          "value": 839320000.0,
+          "unit": "shares",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "pilot-afk:estimate",
+              "locator": "число акций в позиции: задание пилота",
+              "fragment_sha256": "9cc04f97283dd74c464bba972bda4831b9cf6af29085b733880685e185849d1d",
+              "author": "pilot-afk:analyst",
+              "as_of": "2026-10-15"
+            }
+          ]
+        },
+        "direction": "long"
+      },
+      "schema_version": "1",
+      "model_id": null
+    },
+    {
+      "position_id": "SHARE-OZON",
+      "instrument_id": "AFK-SYSTEMA-OCT-2024:SHARE-OZON",
+      "params": {
+        "quantity": {
+          "value": 69252000.0,
+          "unit": "shares",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "pilot-afk:estimate",
+              "locator": "число акций в позиции: задание пилота",
+              "fragment_sha256": "4932377ebf03b2349fe72ca854cb8281a8a092a03b4fbf22c7df6b37f0b50233",
+              "author": "pilot-afk:analyst",
+              "as_of": "2026-10-15"
+            }
+          ]
+        },
+        "direction": "long"
+      },
+      "schema_version": "1",
+      "model_id": null
+    },
+    {
+      "position_id": "SHARE-SGZH",
+      "instrument_id": "AFK-SYSTEMA-OCT-2024:SHARE-SGZH",
+      "params": {
+        "quantity": {
+          "value": 9759180000.0,
+          "unit": "shares",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "pilot-afk:estimate",
+              "locator": "число акций в позиции: задание пилота",
+              "fragment_sha256": "7f23d1409fb612ad68526a9abd2ede773afff6491ad1f4822553a21955a0821a",
+              "author": "pilot-afk:analyst",
+              "as_of": "2026-10-15"
+            }
+          ]
+        },
+        "direction": "long"
+      },
+      "schema_version": "1",
+      "model_id": null
+    },
+    {
+      "position_id": "SHARE-ETLN",
+      "instrument_id": "AFK-SYSTEMA-OCT-2024:SHARE-ETLN",
+      "params": {
+        "quantity": {
+          "value": 186992000.0,
+          "unit": "shares",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "pilot-afk:estimate",
+              "locator": "число акций в позиции: задание пилота",
+              "fragment_sha256": "ea41b9b1f07102a545aab9ad833d79331ae5e24132b0ee49d897b4db6f5d7732",
+              "author": "pilot-afk:analyst",
+              "as_of": "2026-10-15"
+            }
+          ]
+        },
+        "direction": "long"
+      },
+      "schema_version": "1",
+      "model_id": null
+    }
+  ]
+}

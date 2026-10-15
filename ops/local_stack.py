@@ -187,6 +187,7 @@ def platform_url(url: str) -> str:
 def database(url):
     """Alembic head and the demo catalog; both are idempotent."""
     from demo.pilot import seed_pilot
+    from demo.pilot_afk import seed_pilot as seed_pilot_afk
     from demo.seed_demo import seed_demo
     from msa.db.migrate import migrate
     from msa.db.session import engine
@@ -197,6 +198,8 @@ def database(url):
         say(f"База: миграции применены, демо-каталог {seed_demo(bind)}")
         seed_pilot(bind)
         say("Стартовый кейс: историческое ипотечное событие, портфель MULTI-ASSET")
+        seed_pilot_afk(bind)
+        say("Пилот АФК: повышение ключевой ставки 25.10.2024, портфель публичных компаний")
     finally:
         bind.dispose()
 

@@ -1,0 +1,82 @@
+{
+  "name": "Публичные дочки АФК системы",
+  "base_currency": "RUB",
+  "positions": [
+    {
+      "position_id": "MTSS",
+      "name": "МТС",
+      "instrument_type": "common_stock",
+      "okved": "61.10",
+      "currency": "RUB",
+      "values": {
+        "quantity": 839320000,
+        "ticker": "MTSS",
+        "market_index": "MOEX",
+        "sector": "telecom",
+        "price": 197.9,
+        "beta_market": 0.76,
+        "beta_sector": 0.95,
+        "residual_volatility": 0.2,
+        "dividend": 35
+      },
+      "tables": {}
+    },
+    {
+      "position_id": "OZON",
+      "name": "Ozon",
+      "instrument_type": "common_stock",
+      "okved": "47.91",
+      "currency": "RUB",
+      "values": {
+        "quantity": 69252000,
+        "ticker": "OZON",
+        "market_index": "MOEX",
+        "sector": "trade",
+        "price": 3015,
+        "beta_market": 1.53,
+        "beta_sector": 0.64,
+        "residual_volatility": 0.27,
+        "dividend": 0
+      },
+      "tables": {}
+    },
+    {
+      "position_id": "SGZH",
+      "name": "Сегежа",
+      "instrument_type": "common_stock",
+      "okved": "17.12",
+      "currency": "RUB",
+      "values": {
+        "quantity": 9759180000,
+        "ticker": "SGZH",
+        "market_index": "MOEX",
+        "sector": "materials",
+        "price": 1.54,
+        "beta_market": 1.48,
+        "beta_sector": 1,
+        "residual_volatility": 0.55,
+        "dividend": 0
+      },
+      "tables": {}
+    },
+    {
+      "position_id": "ETLN",
+      "name": "Эталон",
+      "instrument_type": "common_stock",
+      "okved": "41.20",
+      "currency": "RUB",
+      "values": {
+        "quantity": 186992000,
+        "ticker": "ETLN",
+        "market_index": "MOEX",
+        "sector": "real_estate",
+        "price": 64.6,
+        "beta_market": 1.36,
+        "beta_sector": 1.08,
+        "residual_volatility": 0.26,
+        "dividend": 0
+      },
+      "tables": {}
+    }
+  ]
+}

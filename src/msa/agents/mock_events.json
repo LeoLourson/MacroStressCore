@@ -995,6 +995,106 @@
       }
     }
   },
+  "8781d633cce0c0274449598150e40411f6e6957644fedb123ce04f14481fb7b8": {
+    "event_type": "Повышение ключевой ставки",
+    "channels": {
+      "market_repricing": "Переоценка рынка акций",
+      "real_estate_shares": "Акции застройщиков сверх рынка",
+      "materials_shares": "Акции сырья и лесопромышленности сверх рынка",
+      "telecom_shares": "Акции телекоммуникаций сверх рынка",
+      "trade_shares": "Акции торговли сверх рынка"
+    },
+    "links": [
+      {
+        "channel": "real_estate_shares",
+        "okved": "41.20",
+        "factor": "equity.sector",
+        "lag": 0,
+        "elasticity": 1
+      },
+      {
+        "channel": "materials_shares",
+        "okved": "17.12",
+        "factor": "equity.sector",
+        "lag": 0,
+        "elasticity": 1
+      },
+      {
+        "channel": "telecom_shares",
+        "okved": "61.10",
+        "factor": "equity.sector",
+        "lag": 0,
+        "elasticity": 1
+      },
+      {
+        "channel": "trade_shares",
+        "okved": "47.91",
+        "factor": "equity.sector",
+        "lag": 0,
+        "elasticity": 1
+      }
+    ],
+    "direct": [
+      {
+        "channel": "market_repricing",
+        "factor": "equity.market",
+        "key": "MOEX"
+      }
+    ],
+    "scenario": {
+      "moex": {
+        "kind": "triangular",
+        "low": -0.1625189,
+        "mode": 0.001346,
+        "high": 0.1397619,
+        "label": "Индекс МосБиржи",
+        "unit": "log_return",
+        "factor": "equity.market",
+        "key": "MOEX",
+        "channel": "market_repricing"
+      },
+      "real_estate_shares": {
+        "kind": "triangular",
+        "low": -0.2604178,
+        "mode": -0.1604178,
+        "high": -0.0604178,
+        "label": "Недвижимость и строительство сверх рынка",
+        "unit": "fraction",
+        "factor": "equity.sector",
+        "channel": "real_estate_shares"
+      },
+      "materials_shares": {
+        "kind": "triangular",
+        "low": -0.0789201,
+        "mode": 0.0210799,
+        "high": 0.1210799,
+        "label": "Сырьё, материалы и лесопромышленность сверх рынка",
+        "unit": "fraction",
+        "factor": "equity.sector",
+        "channel": "materials_shares"
+      },
+      "telecom_shares": {
+        "kind": "triangular",
+        "low": -0.1510932,
+        "mode": -0.0510932,
+        "high": 0.0489068,
+        "label": "Телекоммуникации сверх рынка",
+        "unit": "fraction",
+        "factor": "equity.sector",
+        "channel": "telecom_shares"
+      },
+      "trade_shares": {
+        "kind": "triangular",
+        "low": -0.1161289,
+        "mode": -0.0161289,
+        "high": 0.0838711,
+        "label": "Торговля сверх рынка",
+        "unit": "fraction",
+        "factor": "equity.sector",
+        "channel": "trade_shares"
+      }
+    }
+  },
   "e40b7ccaa1a0d77ff01c8dba14c49a104e17f6d3a24846c6482a5fef28d837c7": {
     "event_type": "Льготная ипотека",
     "channels": {

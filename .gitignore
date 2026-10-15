@@ -13,5 +13,7 @@ ui/web/src/plugins/manifest.json
 graphify-out/
 # Машинные выгрузки прогонов пилота: пересобираются demo/pilot-etalon/backtest.py.
 demo/pilot-etalon/runs/
+# То же для пилота АФК: пересобираются demo/pilot-afk/backtest.py.
+demo/pilot-afk/runs/
 CLAUDE.md
 AGENTS.md

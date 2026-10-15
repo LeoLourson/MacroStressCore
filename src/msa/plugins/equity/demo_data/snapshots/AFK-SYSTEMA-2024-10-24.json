@@ -1,0 +1,340 @@
+{
+  "items": [
+    {
+      "item_id": "dividend:AFK-SYSTEMA-OCT-2024:SHARE-ETLN",
+      "kind": "dividend",
+      "subject": "AFK-SYSTEMA-OCT-2024:SHARE-ETLN",
+      "observed_on": "2024-10-24",
+      "values": {
+        "amount": {
+          "value": 0.0,
+          "unit": "RUB_per_unit",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "pilot-afk:estimate",
+              "locator": "дивиденды за горизонт не выплачивались",
+              "fragment_sha256": "4c4c064b0875076f3a30dbeb3b5f78af679ab3d19603edb6d30e77f6093a3a0d",
+              "author": "pilot-afk:analyst",
+              "as_of": "2026-10-15"
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "horizon_months": 12,
+        "entered_by": "pilot-afk:analyst"
+      },
+      "evidence": []
+    },
+    {
+      "item_id": "dividend:AFK-SYSTEMA-OCT-2024:SHARE-MTSS",
+      "kind": "dividend",
+      "subject": "AFK-SYSTEMA-OCT-2024:SHARE-MTSS",
+      "observed_on": "2024-10-24",
+      "values": {
+        "amount": {
+          "value": 35.0,
+          "unit": "RUB_per_unit",
+          "evidence": [
+            {
+              "kind": "historical_estimate",
+              "source_id": "MTS-IR",
+              "locator": "годовые дивиденды ПАО «МТС» за 2024 год, 35,00 ₽ на акцию, выплачены в июле 2025 года",
+              "fragment_sha256": "25c47286ebacdeed1b9680556c2d3697911ab388bdfb8e6a5cf6d833a79ddda4",
+              "author": null,
+              "as_of": null
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "horizon_months": 12,
+        "entered_by": "pilot-afk:analyst"
+      },
+      "evidence": []
+    },
+    {
+      "item_id": "dividend:AFK-SYSTEMA-OCT-2024:SHARE-OZON",
+      "kind": "dividend",
+      "subject": "AFK-SYSTEMA-OCT-2024:SHARE-OZON",
+      "observed_on": "2024-10-24",
+      "values": {
+        "amount": {
+          "value": 0.0,
+          "unit": "RUB_per_unit",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "pilot-afk:estimate",
+              "locator": "дивиденды за горизонт не выплачивались",
+              "fragment_sha256": "4c4c064b0875076f3a30dbeb3b5f78af679ab3d19603edb6d30e77f6093a3a0d",
+              "author": "pilot-afk:analyst",
+              "as_of": "2026-10-15"
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "horizon_months": 12,
+        "entered_by": "pilot-afk:analyst"
+      },
+      "evidence": []
+    },
+    {
+      "item_id": "dividend:AFK-SYSTEMA-OCT-2024:SHARE-SGZH",
+      "kind": "dividend",
+      "subject": "AFK-SYSTEMA-OCT-2024:SHARE-SGZH",
+      "observed_on": "2024-10-24",
+      "values": {
+        "amount": {
+          "value": 0.0,
+          "unit": "RUB_per_unit",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "pilot-afk:estimate",
+              "locator": "дивиденды за горизонт не выплачивались",
+              "fragment_sha256": "4c4c064b0875076f3a30dbeb3b5f78af679ab3d19603edb6d30e77f6093a3a0d",
+              "author": "pilot-afk:analyst",
+              "as_of": "2026-10-15"
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "horizon_months": 12,
+        "entered_by": "pilot-afk:analyst"
+      },
+      "evidence": []
+    },
+    {
+      "item_id": "sensitivity:AFK-SYSTEMA-OCT-2024:SHARE-ETLN",
+      "kind": "sensitivity",
+      "subject": "AFK-SYSTEMA-OCT-2024:SHARE-ETLN",
+      "observed_on": "2024-10-24",
+      "values": {
+        "beta_market": {
+          "value": 1.3810703907423614,
+          "unit": "ratio",
+          "evidence": [
+            {
+              "kind": "historical_estimate",
+              "source_id": "PILOT-AFK",
+              "locator": "бета к MOEXBMI за 2023-10-24–2024-10-24: 256 наблюдений",
+              "fragment_sha256": "dabedcf2c8b53a9f1fea734df5e7108c1d09973873fac1b980b74c13324f3fd6",
+              "author": null,
+              "as_of": null
+            }
+          ]
+        },
+        "beta_sector": {
+          "value": 1.0,
+          "unit": "ratio",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "pilot-afk:estimate",
+              "locator": "отраслевой фактор задан как доходность отрасли сверх рынка; коэффициент 1,0 — допущение, как в пилоте «Эталон»",
+              "fragment_sha256": "a53d2fa513ba4b542c400190479076d87ce46d1cd54ec4f1b662b3145ebaf0f1",
+              "author": "pilot-afk:analyst",
+              "as_of": "2026-10-15"
+            }
+          ]
+        },
+        "residual_volatility": {
+          "value": 0.3134678411116633,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "historical_estimate",
+              "source_id": "PILOT-AFK",
+              "locator": "остаточная σ 0.3135 при β 1.3811 и β_отр 1",
+              "fragment_sha256": "2636019453f3b33796113019f821e9d615f62df410746a545518f7be58f4b97f",
+              "author": null,
+              "as_of": null
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "method": "expert",
+        "market_index": "MOEX",
+        "sector": "real_estate",
+        "entered_by": "pilot-afk:analyst"
+      },
+      "evidence": []
+    },
+    {
+      "item_id": "sensitivity:AFK-SYSTEMA-OCT-2024:SHARE-MTSS",
+      "kind": "sensitivity",
+      "subject": "AFK-SYSTEMA-OCT-2024:SHARE-MTSS",
+      "observed_on": "2024-10-24",
+      "values": {
+        "beta_market": {
+          "value": 0.7736588044525761,
+          "unit": "ratio",
+          "evidence": [
+            {
+              "kind": "historical_estimate",
+              "source_id": "PILOT-AFK",
+              "locator": "бета к MOEXBMI за 2023-10-24–2024-10-24: 256 наблюдений",
+              "fragment_sha256": "2e7ca297e4a46ae2304370c98979449fce88e7a291aaba840e057a6b67fcf014",
+              "author": null,
+              "as_of": null
+            }
+          ]
+        },
+        "beta_sector": {
+          "value": 1.0,
+          "unit": "ratio",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "pilot-afk:estimate",
+              "locator": "отраслевой фактор задан как доходность отрасли сверх рынка; коэффициент 1,0 — допущение, как в пилоте «Эталон»",
+              "fragment_sha256": "a53d2fa513ba4b542c400190479076d87ce46d1cd54ec4f1b662b3145ebaf0f1",
+              "author": "pilot-afk:analyst",
+              "as_of": "2026-10-15"
+            }
+          ]
+        },
+        "residual_volatility": {
+          "value": 0.24548025817198238,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "historical_estimate",
+              "source_id": "PILOT-AFK",
+              "locator": "остаточная σ 0.2455 при β 0.7737 и β_отр 1",
+              "fragment_sha256": "82239475cab596ded2899bc7d30c36b6df1dbeb156a5e8af10c4933655d881f9",
+              "author": null,
+              "as_of": null
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "method": "expert",
+        "market_index": "MOEX",
+        "sector": "telecom",
+        "entered_by": "pilot-afk:analyst"
+      },
+      "evidence": []
+    },
+    {
+      "item_id": "sensitivity:AFK-SYSTEMA-OCT-2024:SHARE-OZON",
+      "kind": "sensitivity",
+      "subject": "AFK-SYSTEMA-OCT-2024:SHARE-OZON",
+      "observed_on": "2024-10-24",
+      "values": {
+        "beta_market": {
+          "value": 1.5396538280159209,
+          "unit": "ratio",
+          "evidence": [
+            {
+              "kind": "historical_estimate",
+              "source_id": "PILOT-AFK",
+              "locator": "бета к MOEXBMI за 2023-10-24–2024-10-24: 256 наблюдений",
+              "fragment_sha256": "90a4fee2e39a07759fd238e879cdf93e89570982e22bada2849e0a066f044450",
+              "author": null,
+              "as_of": null
+            }
+          ]
+        },
+        "beta_sector": {
+          "value": 1.0,
+          "unit": "ratio",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "pilot-afk:estimate",
+              "locator": "отраслевой фактор задан как доходность отрасли сверх рынка; коэффициент 1,0 — допущение, как в пилоте «Эталон»",
+              "fragment_sha256": "a53d2fa513ba4b542c400190479076d87ce46d1cd54ec4f1b662b3145ebaf0f1",
+              "author": "pilot-afk:analyst",
+              "as_of": "2026-10-15"
+            }
+          ]
+        },
+        "residual_volatility": {
+          "value": 0.27565044439895764,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "historical_estimate",
+              "source_id": "PILOT-AFK",
+              "locator": "остаточная σ 0.2757 при β 1.5397 и β_отр 1",
+              "fragment_sha256": "4419028f36667c22ce746af041327b3b0b4b4dc35a25f9c98ade838588dd3362",
+              "author": null,
+              "as_of": null
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "method": "expert",
+        "market_index": "MOEX",
+        "sector": "trade",
+        "entered_by": "pilot-afk:analyst"
+      },
+      "evidence": []
+    },
+    {
+      "item_id": "sensitivity:AFK-SYSTEMA-OCT-2024:SHARE-SGZH",
+      "kind": "sensitivity",
+      "subject": "AFK-SYSTEMA-OCT-2024:SHARE-SGZH",
+      "observed_on": "2024-10-24",
+      "values": {
+        "beta_market": {
+          "value": 1.504038917899904,
+          "unit": "ratio",
+          "evidence": [
+            {
+              "kind": "historical_estimate",
+              "source_id": "PILOT-AFK",
+              "locator": "бета к MOEXBMI за 2023-10-24–2024-10-24: 256 наблюдений",
+              "fragment_sha256": "b6700406fe83eabe9009731dc19c685f41b1f2524da7032fd83b88b5728a2a08",
+              "author": null,
+              "as_of": null
+            }
+          ]
+        },
+        "beta_sector": {
+          "value": 1.0,
+          "unit": "ratio",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "pilot-afk:estimate",
+              "locator": "отраслевой фактор задан как доходность отрасли сверх рынка; коэффициент 1,0 — допущение, как в пилоте «Эталон»",
+              "fragment_sha256": "a53d2fa513ba4b542c400190479076d87ce46d1cd54ec4f1b662b3145ebaf0f1",
+              "author": "pilot-afk:analyst",
+              "as_of": "2026-10-15"
+            }
+          ]
+        },
+        "residual_volatility": {
+          "value": 0.5478542280295886,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "historical_estimate",
+              "source_id": "PILOT-AFK",
+              "locator": "остаточная σ 0.5479 при β 1.5040 и β_отр 1",
+              "fragment_sha256": "829caa5ae9afa8e9ff972c24efba13a993e636af8c639c7a60960195bf8dfeb6",
+              "author": null,
+              "as_of": null
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "method": "expert",
+        "market_index": "MOEX",
+        "sector": "materials",
+        "entered_by": "pilot-afk:analyst"
+      },
+      "evidence": []
+    }
+  ]
+}

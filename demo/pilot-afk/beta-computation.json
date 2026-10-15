@@ -1,0 +1,202 @@
+{
+ "computed": "2026-10-15",
+ "source": "MOEX ISS, режим TQBR и индекс MOEXBMI (SNDX)",
+ "method": "beta = cov(r, r_index) / var(r_index); r = ln(P_t / P_t-1); ddof = 1; остаточная σ — стандартная ошибка регрессии, приведённая к году умножением на sqrt(252)",
+ "sensitivity_window": [
+  "2023-10-24",
+  "2024-10-24"
+ ],
+ "event": "2024-10-24",
+ "horizon": "2025-10-24",
+ "horizon_note": "Последний общий торговый день четырёх бумаг и индекса в окне: бумаги OZON торговались до 22.09.2025 включительно",
+ "sensitivities": {
+  "MTSS": {
+   "first_common_day": "2023-10-24",
+   "last_common_day": "2024-10-24",
+   "prices": 257,
+   "observations": 256,
+   "beta_market": 0.7736588044525761,
+   "beta_95ci": [
+    0.5907417302068528,
+    0.9565758786982993
+   ],
+   "t_beta": 8.289938284766235,
+   "corr": 0.4619383933564747,
+   "r2": 0.21338707925676115,
+   "alpha_daily": -0.0007880234957190056,
+   "alpha_annualised_pct": -19.85819209211894,
+   "sigma_daily_stock_pct": 1.7378546434710647,
+   "sigma_annual_stock_pct": 27.58758720841954,
+   "sigma_annual_index_pct": 16.47207481941107,
+   "residual_volatility": 0.24548025817198238
+  },
+  "OZON": {
+   "first_common_day": "2023-10-24",
+   "last_common_day": "2024-10-24",
+   "prices": 257,
+   "observations": 256,
+   "beta_market": 1.5396538280159209,
+   "beta_95ci": [
+    1.334255751692138,
+    1.7450519043397037
+   ],
+   "t_beta": 14.692063124068254,
+   "corr": 0.6792715694524174,
+   "r2": 0.46140986506635034,
+   "alpha_daily": 0.0015488672792663438,
+   "alpha_annualised_pct": 39.031455437511866,
+   "sigma_daily_stock_pct": 2.3519478300870413,
+   "sigma_annual_stock_pct": 37.336014330049856,
+   "sigma_annual_index_pct": 16.47207481941107,
+   "residual_volatility": 0.27565044439895764
+  },
+  "SGZH": {
+   "first_common_day": "2023-10-24",
+   "last_common_day": "2024-10-24",
+   "prices": 257,
+   "observations": 256,
+   "beta_market": 1.504038917899904,
+   "beta_95ci": [
+    1.0958110088591957,
+    1.9122668269406125
+   ],
+   "t_beta": 7.2212512025723505,
+   "corr": 0.4146979286304017,
+   "r2": 0.17197437201034577,
+   "alpha_daily": -0.00368845197624144,
+   "alpha_annualised_pct": -92.94898980128428,
+   "sigma_daily_stock_pct": 3.7633554871819577,
+   "sigma_annual_stock_pct": 59.74141628528271,
+   "sigma_annual_index_pct": 16.47207481941107,
+   "residual_volatility": 0.5478542280295886
+  },
+  "ETLN": {
+   "first_common_day": "2023-10-24",
+   "last_common_day": "2024-10-24",
+   "prices": 257,
+   "observations": 256,
+   "beta_market": 1.3810703907423614,
+   "beta_95ci": [
+    1.14749307257734,
+    1.6146477089073827
+   ],
+   "t_beta": 11.58887338514015,
+   "corr": 0.5881368768343551,
+   "r2": 0.3459049858924694,
+   "alpha_daily": -0.0002447776919594852,
+   "alpha_annualised_pct": -6.168397837379028,
+   "sigma_daily_stock_pct": 2.436606729064465,
+   "sigma_annual_stock_pct": 38.67993268782667,
+   "sigma_annual_index_pct": 16.47207481941107,
+   "residual_volatility": 0.3134678411116633
+  }
+ },
+ "facts": {
+  "MTSS": {
+   "first_day": "2024-10-24",
+   "last_day": "2025-09-22",
+   "trading_days": 182,
+   "price_start": 197.9,
+   "price_end": 208.45,
+   "log_return": 0.05193735171828571,
+   "simple_return_pct": 5.330975240020197,
+   "index_log_return": 0.0013459738373565722,
+   "index_simple_return_pct": 0.13468800666833758,
+   "excess_log_return": 0.050591377880929135
+  },
+  "OZON": {
+   "first_day": "2024-10-24",
+   "last_day": "2025-09-22",
+   "trading_days": 182,
+   "price_start": 3015.0,
+   "price_end": 4135.0,
+   "log_return": 0.3158874982965059,
+   "simple_return_pct": 37.14759535655059,
+   "index_log_return": 0.0013459738373565722,
+   "index_simple_return_pct": 0.13468800666833758,
+   "excess_log_return": 0.31454152445914935
+  },
+  "SGZH": {
+   "first_day": "2024-10-24",
+   "last_day": "2025-09-22",
+   "trading_days": 182,
+   "price_start": 1.54,
+   "price_end": 1.384,
+   "log_return": -0.10680455923006,
+   "simple_return_pct": -10.129870129870133,
+   "index_log_return": 0.0013459738373565722,
+   "index_simple_return_pct": 0.13468800666833758,
+   "excess_log_return": -0.10815053306741658
+  },
+  "ETLN": {
+   "first_day": "2024-10-24",
+   "last_day": "2025-09-22",
+   "trading_days": 182,
+   "price_start": 64.6,
+   "price_end": 39.8,
+   "log_return": -0.4843474984981641,
+   "simple_return_pct": -38.39009287925697,
+   "index_log_return": 0.0013459738373565722,
+   "index_simple_return_pct": 0.13468800666833758,
+   "excess_log_return": -0.4856934723355207
+  }
+ },
+ "sectors": {
+  "MOEXRE": {
+   "sector": "Недвижимость и строительство",
+   "first_day": "2024-10-24",
+   "last_day": "2025-09-22",
+   "trading_days": 232,
+   "index_start": 6872.06,
+   "index_end": 5777.43,
+   "log_return": -0.17350496860060682,
+   "simple_return_pct": -15.928702601548883,
+   "market_log_return": 0.0013459738373565722,
+   "market_simple_return_pct": 0.13468800666833758,
+   "excess_log_return": -0.1748509424379634,
+   "excess_fraction": -0.160417842487785
+  },
+  "MOEXMM": {
+   "sector": "Сырьё, материалы и лесопромышленность",
+   "first_day": "2024-10-24",
+   "last_day": "2025-09-22",
+   "trading_days": 232,
+   "index_start": 6194.11,
+   "index_end": 6333.2,
+   "log_return": 0.022206797130091663,
+   "simple_return_pct": 2.2455203410982394,
+   "market_log_return": 0.0013459738373565722,
+   "market_simple_return_pct": 0.13468800666833758,
+   "excess_log_return": 0.02086082329273509,
+   "excess_fraction": 0.021079931205151725
+  },
+  "MOEXTL": {
+   "sector": "Телекоммуникации",
+   "first_day": "2024-10-24",
+   "last_day": "2025-09-22",
+   "trading_days": 232,
+   "index_start": 1547.12,
+   "index_end": 1470.05,
+   "log_return": -0.05109872425426838,
+   "simple_return_pct": -4.981514038988566,
+   "market_log_return": 0.0013459738373565722,
+   "market_simple_return_pct": 0.13468800666833758,
+   "excess_log_return": -0.052444698091624956,
+   "excess_fraction": -0.05109320403850659
+  },
+  "MOEXCN": {
+   "sector": "Торговля",
+   "first_day": "2024-10-24",
+   "last_day": "2025-09-22",
+   "trading_days": 232,
+   "index_start": 7175.2,
+   "index_end": 7068.98,
+   "log_return": -0.01491443789133308,
+   "simple_return_pct": -1.4803768536068684,
+   "market_log_return": 0.0013459738373565722,
+   "market_simple_return_pct": 0.13468800666833758,
+   "excess_log_return": -0.016260411728689653,
+   "excess_fraction": -0.016128924875340456
+  }
+ }
+}

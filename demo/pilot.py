@@ -13,6 +13,8 @@ from msa.db.session import session_scope
 ROOT = Path(__file__).resolve().parent / "pilot"
 EVENT_ID = "HIST-MORTGAGE-2023-12"
 PORTFOLIO_ID = "MULTI-ASSET"
+#: Идентификатор пилота в ``demo_data`` плагинов (catalog.py читает части в этом порядке).
+MODULE_ID = "demo"
 
 
 def pilot_event(root=ROOT):

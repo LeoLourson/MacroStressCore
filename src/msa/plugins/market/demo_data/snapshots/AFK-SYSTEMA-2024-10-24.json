@@ -1,0 +1,108 @@
+{
+  "items": [
+    {
+      "item_id": "price:AFK-SYSTEMA-OCT-2024:SHARE-ETLN",
+      "kind": "price",
+      "subject": "AFK-SYSTEMA-OCT-2024:SHARE-ETLN",
+      "observed_on": "2024-10-24",
+      "values": {
+        "price": {
+          "value": 64.6,
+          "unit": "RUB_per_unit",
+          "evidence": [
+            {
+              "kind": "historical_estimate",
+              "source_id": "MOEX-ISS",
+              "locator": "ETLN TQBR, закрытие 2024-10-24",
+              "fragment_sha256": "4840a94efe290511614f27019871bdd8c02e879fe0fcb4058136fad70b20eff0",
+              "author": null,
+              "as_of": null
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "entered_by": "pilot-afk:analyst"
+      },
+      "evidence": []
+    },
+    {
+      "item_id": "price:AFK-SYSTEMA-OCT-2024:SHARE-MTSS",
+      "kind": "price",
+      "subject": "AFK-SYSTEMA-OCT-2024:SHARE-MTSS",
+      "observed_on": "2024-10-24",
+      "values": {
+        "price": {
+          "value": 197.9,
+          "unit": "RUB_per_unit",
+          "evidence": [
+            {
+              "kind": "historical_estimate",
+              "source_id": "MOEX-ISS",
+              "locator": "MTSS TQBR, закрытие 2024-10-24",
+              "fragment_sha256": "b74a3c63518d7fbacdd69c0639432ae23a398076153aa03e8dd772d738dbac9c",
+              "author": null,
+              "as_of": null
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "entered_by": "pilot-afk:analyst"
+      },
+      "evidence": []
+    },
+    {
+      "item_id": "price:AFK-SYSTEMA-OCT-2024:SHARE-OZON",
+      "kind": "price",
+      "subject": "AFK-SYSTEMA-OCT-2024:SHARE-OZON",
+      "observed_on": "2024-10-24",
+      "values": {
+        "price": {
+          "value": 3015.0,
+          "unit": "RUB_per_unit",
+          "evidence": [
+            {
+              "kind": "historical_estimate",
+              "source_id": "MOEX-ISS",
+              "locator": "OZON TQBR, закрытие 2024-10-24",
+              "fragment_sha256": "1c9f84004dc10db53309e0a67ede204e9b602ac4acd2581479fc4fea35fc026b",
+              "author": null,
+              "as_of": null
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "entered_by": "pilot-afk:analyst"
+      },
+      "evidence": []
+    },
+    {
+      "item_id": "price:AFK-SYSTEMA-OCT-2024:SHARE-SGZH",
+      "kind": "price",
+      "subject": "AFK-SYSTEMA-OCT-2024:SHARE-SGZH",
+      "observed_on": "2024-10-24",
+      "values": {
+        "price": {
+          "value": 1.54,
+          "unit": "RUB_per_unit",
+          "evidence": [
+            {
+              "kind": "historical_estimate",
+              "source_id": "MOEX-ISS",
+              "locator": "SGZH TQBR, закрытие 2024-10-24",
+              "fragment_sha256": "c24a4fe781371eb11b8c3eb2685b231a1dd802236206c10481114da391ebf70a",
+              "author": null,
+              "as_of": null
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "entered_by": "pilot-afk:analyst"
+      },
+      "evidence": []
+    }
+  ]
+}
