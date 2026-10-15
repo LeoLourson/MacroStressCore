@@ -11,7 +11,6 @@ from msa.plugin_sdk import ActionSpec, Plugin, RecommendationRule
 from msa.reporting.builder import build as build_report
 from msa.reporting.numbers import check_refs
 from msa.reporting.tree import metric_tree
-
 from tests import engine_helpers as h
 from tests import minimal_plugin as mp
 

@@ -20,6 +20,7 @@ from msa.agents.quant import QuantAgent
 from msa.contracts import SourceDocument, TransmissionGraph
 from msa.contracts.common import Contract
 from msa.contracts.domain import PositionContext
+from msa.core import plugin as core_plugin
 from msa.engine.causal_context import portfolio_context
 from msa.engine.exposure import missing_direct_scenario, reasons
 from msa.graph.interrupts import start_run
@@ -38,7 +39,6 @@ from msa.plugin_sdk import (
 from msa.plugin_sdk.results import envelope, scalar
 from msa.prompts.registry import current_version
 from msa.validators import validate
-from msa.core import plugin as core_plugin
 from tests.support import agents, confirm, positions, run_input, snapshot, stop
 
 

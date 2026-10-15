@@ -1,6 +1,8 @@
 """The historical pilot event of the demo library: the 2023 mortgage-programme change.
 
-It is prepared for the MULTI-ASSET portfolio.
+It is prepared for the synthetic MULTI-ASSET portfolio. The event and its sources live in
+``demo/historical/mortgage-2023``: a historical case without a portfolio or snapshot of its own,
+its event in the pilot's format (``event.json``), not in a collection's ``events/``.
 """
 
 import json
@@ -10,7 +12,7 @@ from msa.db.repositories.demo import DemoRepository
 from msa.db.repositories.portfolios import PortfoliosRepository
 from msa.db.session import session_scope
 
-ROOT = Path(__file__).resolve().parent / "pilot"
+ROOT = Path(__file__).resolve().parent / "historical" / "mortgage-2023"
 EVENT_ID = "HIST-MORTGAGE-2023-12"
 PORTFOLIO_ID = "MULTI-ASSET"
 #: Идентификатор пилота в ``demo_data`` плагинов (catalog.py читает части в этом порядке).
@@ -25,7 +27,8 @@ def pilot_event(root=ROOT):
         "title": event["title"],
         "text": event["text"],
         "metadata": {
-            "dataset": "demo/pilot",
+            "dataset": "demo/historical/mortgage-2023",
+            "synthetic": False,
             "event_date": event["event_date"],
             "default_start": True,
             "portfolio_id": PORTFOLIO_ID,

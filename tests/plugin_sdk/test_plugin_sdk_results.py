@@ -9,7 +9,6 @@ from msa.contracts.domain import Instrument, Position, PositionContext
 from msa.engine.scenario_set import Realisations, scenario_set_from_parameters
 from msa.plugin_sdk.model import CalculationContext, PreparedInputs
 from msa.plugin_sdk.results import distribution, envelope, quantiles, scalar
-
 from tests import minimal_plugin as mp
 
 

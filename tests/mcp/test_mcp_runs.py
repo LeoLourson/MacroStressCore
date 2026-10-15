@@ -20,7 +20,6 @@ from msa.contracts.result import (
 from msa.contracts.risk import Quantiles
 from msa.mcp.runs import position, provenance, summary
 from msa.platform.registry import build
-
 from tests.minimal_plugin import MARKET_PLUGIN, PLUGIN_ID, SLICE_ID, VALUE_METRIC, CashModel, plugin
 
 SHA = "a" * 64

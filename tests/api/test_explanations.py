@@ -18,12 +18,12 @@ import pytest
 from fastapi.testclient import TestClient
 
 from demo.seed_demo import seed_demo
-from msa.graph import activity
 from msa.agents.explain import MAX_ROUNDS, MAX_TOOL_CALLS, verify
 from msa.api.main import create_app
 from msa.db.migrate import migrate
 from msa.db.repositories.runs import MemoryRunRepository
 from msa.db.session import engine
+from msa.graph import activity
 from msa.graph.checkpoint import build_checkpointer, run_config
 from msa.graph.runtime import InputsChanged
 from msa.graph.workflow import build_explanation_graph

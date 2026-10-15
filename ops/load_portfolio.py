@@ -1,8 +1,8 @@
 """Load a portfolio bundle and, optionally, its data snapshot into one namespace.
 
 The working (production) namespace has no other loader: its portfolios come from the bank's
-systems in the bundle format of demo/portfolios/*.json (portfolio, parties, instruments,
-positions), its data in the snapshot format of demo/snapshots/*.json, never through the
+systems in the bundle format of the demo catalog (portfolio, parties, instruments, positions;
+see demo/README.md), its data in the snapshot format of its snapshots, never through the
 demo editor. Instrument terms and position parameters are checked against their plugins'
 schemas before anything is written.
 

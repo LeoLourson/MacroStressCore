@@ -56,7 +56,8 @@ uv run --frozen python -c "import json;from msa.platform.catalog import asset_ty
 Порядок обхода источников: сначала орган раскрытия, потом первоисточник эмитента, потом
 агрегатор — и только потом оценка.
 
-- Даты снимка и список нужных показателей задаёт событие и постановка: см. `demo/pilot/` и
+- Даты снимка и список нужных показателей задаёт событие и постановка: см. события в
+  `demo/historical/<случай>/events/` (и `demo/historical/mortgage-2023/event.json`) и
   `docs/manual-tests/manual-test-*.md`. В постановке прямо сказано, что берётся из декларации, что — из
   отчётности, а что запрашивается у финансистов.
 - Застройщик: проектная декларация, раздел 19.6 (`19.6.1.4` — сумма кредита, `19.6.1.5` —
@@ -109,9 +110,12 @@ uv run --frozen python -c "import json;from msa.platform.catalog import asset_ty
 
 Материализация каталога — генератор, а не рукописный JSON: для портфелей пилота это
 `demo/build_etalon.py` — он собирает `PortfolioDraft`, вызывает `msa.api.portfolio_draft.build`,
-проверяет `check_bundle` и раскладывает результат по путям каталога (заголовок в
-`demo/portfolios/`, части по плагинам в `src/msa/plugins/<плагин>/demo_data/portfolios` и
-`.../snapshots`, снимок в `demo/snapshots/`).
+проверяет `check_bundle` и раскладывает результат по путям исторического случая (заголовки в
+`demo/historical/etalon/{portfolios,snapshots}/`, части по плагинам в
+`src/msa/plugins/<плагин>/demo_data/historical/etalon/{portfolios,snapshots}`). Новый реальный
+случай получает свою папку `demo/historical/<случай>/` того же устройства (`events/`,
+`portfolios/`, `snapshots/`, `sources.json`, `research/`) и `metadata.synthetic: false`; см.
+`demo/README.md`.
 
 ```bash
 uv run --frozen python -m demo.build_etalon --check   # сверить, не меняя; код 1 при расхождении
@@ -130,8 +134,8 @@ uv run --frozen pytest
 
 ## 7. Прочие источники репозитория
 
-Сбор пилота «Эталон» лежит в `demo/pilot-etalon/` и годится как образец: `README.md` — сводка
+Сбор пилота «Эталон» лежит в `demo/historical/etalon/research/` и годится как образец: `README.md` — сводка
 и ограничения, `project-data.md` — что раскрыто по объекту и что закрыто, `group-financials.md`
 и `group-operations.md` — отчётность эмитента и рынок, `portfolio-draft.md` — значения по полям
-платформы, `sources.json` — источники машинно-читаемым списком. Постановки на другие портфели —
+платформы, `demo/historical/etalon/sources.json` — источники машинно-читаемым списком. Постановки на другие портфели —
 в `docs/manual-tests/`.

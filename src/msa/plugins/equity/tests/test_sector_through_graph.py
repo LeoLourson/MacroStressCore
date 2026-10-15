@@ -13,12 +13,12 @@ from datetime import date
 import pytest
 
 from demo import catalog as demo_catalog
-from demo.catalog import CATALOG
+from demo.catalog import CATALOG, SYNTHETIC
 from msa.agents.base import AgentError
 from msa.agents.causal import CausalAgent, _prepared_response
-from msa.contracts.causal_answer import CausalOutput
 from msa.agents.ingest import fragment
 from msa.contracts import DataSnapshot, SourceDocument, TransmissionGraph
+from msa.contracts.causal_answer import CausalOutput
 from msa.contracts.domain import contexts
 from msa.engine.causal_context import portfolio_context
 from msa.engine.exposure import scenario_coverage
@@ -357,7 +357,8 @@ def test_a_graph_scope_factor_node_reached_without_a_sector_is_rejected():
 
 
 def test_rub_appreciation_mock_answer_routes_metals_to_equity_sector():
-    event = json.loads((CATALOG / "events" / "RUB-APPRECIATION.json").read_text("utf-8"))
+    path = CATALOG / SYNTHETIC / "events" / "RUB-APPRECIATION.json"
+    event = json.loads(path.read_text("utf-8"))
     part = fragment(event["text"], "p1")
     document = SourceDocument(
         doc_id=part.sha256, sha256=part.sha256, mime="text/plain", fragments=[part]

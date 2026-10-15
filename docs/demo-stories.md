@@ -116,25 +116,26 @@
 
 ## Исходники и обновление
 
-- [demo/story_catalog.json](../demo/story_catalog.json) — компании, описания книг и версия снимка.
-- [credit/demo_data/story_rows.json](../src/msa/plugins/credit/demo_data/story_rows.json) — исходные строки кредитов, облигаций и проектного финансирования.
-- [equity/demo_data/story_rows.json](../src/msa/plugins/equity/demo_data/story_rows.json) — исходные строки акций.
-- [demo/events](../demo/events) — новости, сценарные допущения, ответы mock и ожидания.
+- [demo/synthetic/story_catalog.json](../demo/synthetic/story_catalog.json) — компании, описания книг и версия снимка.
+- [credit/demo_data/synthetic/story_rows.json](../src/msa/plugins/credit/demo_data/synthetic/story_rows.json) — исходные строки кредитов, облигаций и проектного финансирования.
+- [equity/demo_data/synthetic/story_rows.json](../src/msa/plugins/equity/demo_data/synthetic/story_rows.json) — исходные строки акций.
+- [demo/synthetic/events](../demo/synthetic/events) — новости, сценарные допущения, ответы mock и ожидания.
 
 Генератор пропускает строки через тот же редакторный контракт, что и пользовательский
 портфель. Финансовые поля интерпретируют плагины. Каждое исходное число получает
 `expert_assumption`, источник `demo:companies`, автора `demo:catalog`, дату и хеш.
-Сгенерированные части лежат в обычных `demo_data/portfolios` и `demo_data/snapshots`.
+Сгенерированные части лежат в обычных `demo_data/synthetic/portfolios` и
+`demo_data/synthetic/snapshots`.
 Старые портфели и снимки не переписывались.
 
 ```powershell
 uv run --frozen python -m demo.build_catalog
 uv run --frozen python -m demo.build_catalog --check
 uv run --frozen pytest tests/platform/test_demo_catalog.py tests/platform/test_demo_stories.py
-uv run --frozen python -m sanity M --json .data/demo-catalog-checks.json
+uv run --frozen python -m demo.sanity M --json .data/demo-catalog-checks.json
 ```
 
-`sanity` печатает вердикты, но всегда завершает работу с кодом 0. Pytest проверяет
+`demo.sanity` печатает вердикты, но всегда завершает работу с кодом 0. Pytest проверяет
 `verdict.ok is True` для всех событий, поэтому остановленный или неверный расчёт не
 проходит проверку. Повторное заполнение БД также проверено тестом.
 

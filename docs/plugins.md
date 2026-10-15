@@ -350,12 +350,15 @@ SliceSpec("market.pnl", "Рыночный результат", measure_label="Р
 Чтобы плагин участвовал в демо-стенде, его данные лежат в его папке, а общие файлы
 `demo/` не правятся:
 
-- `demo_data/portfolios/<portfolio_id>.json` — `{"parties", "instruments", "positions"}`
-  плагина в демо-портфеле (так `equity` добавляет `SHARE-OIL` и `SHARE-US-TECH` в MULTI-ASSET);
-- `demo_data/snapshots/<snapshot_id>.json` — `{"items"}`: их данные в демо-снимке.
+- `demo_data/<коллекция>/portfolios/<portfolio_id>.json` — `{"parties", "instruments",
+  "positions"}` плагина в демо-портфеле (так `equity` добавляет `SHARE-OIL` и `SHARE-US-TECH` в
+  MULTI-ASSET: `demo_data/synthetic/portfolios/MULTI-ASSET.json`);
+- `demo_data/<коллекция>/snapshots/<snapshot_id>.json` — `{"items"}`: их данные в демо-снимке.
 
-`demo/catalog.py` собирает портфель из заголовка `demo/synthetic/portfolios/<id>.json` и частей всех
-плагинов в порядке реестра; снимок — из заголовка и элементов, упорядоченных по `item_id`.
+Коллекция — `synthetic` (вымышленные данные) или `historical/<случай>` (настоящие, например
+`historical/etalon`), как у заголовка в `demo/` ([demo/README.md](../demo/README.md)).
+`demo/catalog.py` собирает портфель из заголовка `demo/<коллекция>/portfolios/<id>.json` и частей
+всех плагинов той же коллекции в порядке реестра; снимок — из заголовка и элементов, упорядоченных по `item_id`.
 Один эмитент может прийти от двух плагинов, если записи совпадают; разные записи с одним
 идентификатором — ошибка. Часть с заголовком (`"portfolio"`) добавляет собственный
 демо-портфель плагина. Каталог читают `demo/seed_demo.py`, эталонный тест кредита и тесты
@@ -666,7 +669,7 @@ src/msa/plugins/<id>/
   __init__.py        plugin = Plugin(...)
   *.py               модели, схемы, отчёт, агенты, MCP-серверы
   prompts/           промпты агентов: <name>-v<N>.txt
-  demo_data/         части демо-портфелей и демо-снимка
+  demo_data/         части демо-портфелей и снимков: synthetic/, historical/<случай>/
   tests/             тесты плагина (пакет)
   README.md          что даёт плагин, его ограничения и открытые вопросы
 ui/web/src/plugins/<id>/

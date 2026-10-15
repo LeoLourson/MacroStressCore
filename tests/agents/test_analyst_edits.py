@@ -3,8 +3,8 @@
 from datetime import date
 from hashlib import sha256
 
-from msa.contracts.causal_answer import ScenarioParameter
 from msa.api.run_service import ANALYST_SCENARIO, edited_by
+from msa.contracts.causal_answer import ScenarioParameter
 from msa.contracts.evidence import Evidence
 from msa.platform.registry import registry
 from tests.api.test_platform_api import client, get, post, wait  # noqa: F401

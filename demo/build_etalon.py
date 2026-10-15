@@ -1,16 +1,18 @@
 """The pilot's two real portfolios: ГК «Эталон» on 31.12.2023 and on 30.06.2024.
 
-Assembled by hand from ``demo/pilot-etalon`` (the group's IFRS statements, MOEX quotes, the
-project declaration of ЖК «Зелёная Река»). Each portfolio holds three positions: a corporate
+Assembled by hand from ``demo/historical/etalon/research`` (the group's IFRS statements, MOEX
+quotes, the project declaration of ЖК «Зелёная Река»). Each portfolio holds three positions: a corporate
 loan to the group, the ETLN share and the escrow-backed project loan of the Omsk project.
 
 Every figure the reporting gives carries the document and the section it came from
 (``historical_estimate``); every figure the reporting does not give carries its author and
 the date of the assumption (``expert_assumption``). Which figures are which, and how the
-project inputs were calibrated, is written down in ``demo/pilot-etalon/catalog-notes.md``.
+project inputs were calibrated, is written down in
+``demo/historical/etalon/research/catalog-notes.md``.
 
-The records go the path of the demo catalog: the header into ``demo/portfolios``, the parts
-of each plugin into its ``demo_data``, the snapshot header into ``demo/snapshots``.
+The records go the path of the demo catalog, collection ``historical/etalon``: the headers
+into ``demo/historical/etalon/{portfolios,snapshots}``, the parts of each plugin into its
+``demo_data/historical/etalon``.
 
     uv run --frozen python -m demo.build_etalon           # write the files
     uv run --frozen python -m demo.build_etalon --check   # compare them with the output
@@ -33,6 +35,9 @@ from msa.platform.registry import registry as current
 
 CATALOG = Path(__file__).resolve().parent
 REPOSITORY = CATALOG.parent
+#: The collection of this historical case (``demo.catalog``).
+COLLECTION = "historical/etalon"
+CASE = CATALOG / COLLECTION
 #: An estimated figure is the analyst's; it is dated when the pilot was assembled.
 AUTHOR = "pilot-etalon:analyst"
 ASSUMED_ON = date(2026, 10, 15)
@@ -326,7 +331,7 @@ def portfolio(portfolio_id, registry) -> tuple[dict, dict, list[dict]]:
             "snapshot_id": snapshot_id,
             "builtin": True,
             "metadata": {
-                "source": "demo/pilot-etalon",
+                "source": "demo/historical/etalon",
                 "synthetic": False,
                 "money_unit": "RUB_million",
                 "description": description,
@@ -359,15 +364,15 @@ def outputs(registry=None) -> dict[Path, str]:
         problems = check_bundle(_bundle(header, data), registry)
         if problems:
             raise ValueError(f"{portfolio_id}: " + "; ".join(problems))
-        files[CATALOG / "portfolios" / f"{portfolio_id}.json"] = _json(header)
-        files[CATALOG / "snapshots" / f"{snapshot_id}.json"] = _json(
+        files[CASE / "portfolios" / f"{portfolio_id}.json"] = _json(header)
+        files[CASE / "snapshots" / f"{snapshot_id}.json"] = _json(
             {
                 "snapshot_id": snapshot_id,
                 "as_of": as_of.isoformat(),
                 "label": label,
                 "kind": "demo",
                 "metadata": {
-                    "source": "demo/pilot-etalon",
+                    "source": "demo/historical/etalon",
                     "synthetic": False,
                     "description": description,
                 },
@@ -391,7 +396,7 @@ def outputs(registry=None) -> dict[Path, str]:
             _merge(part["instruments"], [instrument], "instrument_id", portfolio_id)
             _merge(part["positions"], [position], "position_id", portfolio_id)
         for plugin_id, part in parts.items():
-            folder = _demo_data(registry, plugin_id) / "portfolios"
+            folder = _demo_data(registry, plugin_id) / COLLECTION / "portfolios"
             files[folder / f"{portfolio_id}.json"] = _json(
                 {name: list(records.values()) for name, records in part.items()}
             )
@@ -400,7 +405,7 @@ def outputs(registry=None) -> dict[Path, str]:
             plugin_id = registry.plugin_of(item["kind"]).plugin_id
             snapshot_parts.setdefault(plugin_id, {})[item["item_id"]] = item
         for plugin_id, part in snapshot_parts.items():
-            folder = _demo_data(registry, plugin_id) / "snapshots"
+            folder = _demo_data(registry, plugin_id) / COLLECTION / "snapshots"
             files[folder / f"{snapshot_id}.json"] = _json(
                 {"items": [part[key] for key in sorted(part)]}
             )

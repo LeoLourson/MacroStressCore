@@ -94,8 +94,9 @@ contracts ◄── все (и плагины)                                  
 
 - **demo** — синтетические портфели, снимок `SYNTHETIC-2026-09-11`, событийная библиотека, схема
   `demo`, синтетическая калибровка PD `demo-synthetic-2026-09` (каждый результат помечен).
-  Портфели и снимок собирает `demo/catalog.py` из заголовков в `demo/` и частей плагинов
-  (`src/msa/plugins/<id>/demo_data/`).
+  Портфели и снимки собирает `demo/catalog.py` из заголовков в `demo/synthetic/` и
+  `demo/historical/<случай>/` и частей плагинов (`src/msa/plugins/<id>/demo_data/` по тому же
+  пути коллекции).
 - **production** — портфели банка (`ops/load_portfolio.py`, `POST /v1/portfolios`) и его
   снимки; калибровка из `MSA_CALIBRATION_REGISTRY`. Без калибровки результат — индекс
   риска без денежной потери. Внешняя LLM (DeepSeek) в рабочий контур не допускается ни для

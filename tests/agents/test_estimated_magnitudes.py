@@ -5,8 +5,8 @@ from pydantic import ValidationError
 
 from msa.agents.base import AgentError
 from msa.agents.causal import CausalAgent
-from msa.contracts.causal_answer import ScenarioParameter
 from msa.contracts import SourceDocument
+from msa.contracts.causal_answer import ScenarioParameter
 from msa.db.repositories.runs import json_payload
 from tests.support import positions
 

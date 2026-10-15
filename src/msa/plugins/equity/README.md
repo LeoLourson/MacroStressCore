@@ -29,7 +29,7 @@
 | `editor.py`, `sectors.py` | форма редактора, `from_draft`, соответствие ОКВЭД и отраслевых факторов |
 | `report.py` | разделы отчёта, наблюдения и правила, дерево `tree` |
 | `demo.py`, `demo_case.json` | демо-кейс для `msa-plugin check` |
-| `demo_data/` | часть демо-стенда: `SHARE-OIL`, `SHARE-US-TECH` в MULTI-ASSET и их цены, курс, чувствительности, дивиденды в демо-снимке |
+| `demo_data/` | часть демо-стенда по коллекциям `synthetic/` и `historical/<случай>/` (см. `demo/README.md`): `SHARE-OIL`, `SHARE-US-TECH` в MULTI-ASSET и их цены, курс, чувствительности, дивиденды в демо-снимке |
 | `tests/` | тесты плагина, включая приёмочные (`test_equity_acceptance.py`) |
 
 ## Проверка

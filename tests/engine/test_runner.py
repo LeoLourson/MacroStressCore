@@ -7,7 +7,6 @@ from msa.contracts.domain import Instrument, Party, Position, PositionContext
 from msa.engine.runner import idiosyncratic_shocks, run_batch
 from msa.platform.registry import build
 from msa.plugin_sdk.model import Diagnostics, IdiosyncraticFactor
-
 from tests import engine_helpers as h
 from tests import minimal_plugin as mp
 

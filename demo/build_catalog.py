@@ -5,16 +5,17 @@ written below as editor rows and goes the path of a portfolio typed in the edito
 (``msa.api.portfolio_draft.build``). The records then get their catalog names: a company is
 one party and a security one instrument, shared by every portfolio that holds it, with
 sources that name the company or the security. The parts are laid out as ``demo.catalog``
-reads them: the headers in demo/, the positions and the snapshot items of each plugin in its
-``demo_data``, one snapshot for the four themed portfolios and one for each portfolio in
-``OWN_SNAPSHOTS``.
+reads them: the headers in demo/synthetic/, the positions and the snapshot items of each
+plugin in its ``demo_data/synthetic``, one snapshot for the four themed portfolios and one for
+each portfolio in ``OWN_SNAPSHOTS``.
 
-The story portfolios are declared in ``demo/story_catalog.json``. Their editor rows live
-in each plugin's ``demo_data/story_rows.json``; the builder treats financial values as
-opaque input to the plugin's editor, just like an analyst's draft.
+The story portfolios are declared in ``demo/synthetic/story_catalog.json``. Their editor rows
+live in each plugin's ``demo_data/synthetic/story_rows.json``; the builder treats financial
+values as opaque input to the plugin's editor, just like an analyst's draft.
 
 The mock profile's answers (``src/msa/integrations/llm/mock_events.json``) are collected from the
-analyst's prepared answer (``mock_answer``) of every library event and of the pilot event.
+analyst's prepared answer (``mock_answer``) of every library event (synthetic and historical)
+and of the mortgage-2023 pilot event.
 
     uv run --frozen python -m demo.build_catalog           # write the files
     uv run --frozen python -m demo.build_catalog --check   # compare them with the output
@@ -36,6 +37,9 @@ from msa.platform.registry import registry as current
 
 CATALOG = Path(__file__).resolve().parent
 REPOSITORY = CATALOG.parent
+#: The collection this generator writes: invented companies only.
+COLLECTION = "synthetic"
+SYNTHETIC = CATALOG / COLLECTION
 AS_OF = date(2026, 9, 11)
 AUTHOR = "demo:catalog"
 SOURCE = "demo:companies"
@@ -670,7 +674,7 @@ def _merge(target: dict, records: list, key: str, where: str) -> None:
 def outputs(registry=None) -> dict[Path, str]:
     """Every generated file and its text."""
     registry = registry or current()
-    stories = json.loads((CATALOG / "story_catalog.json").read_text("utf-8"))
+    stories = json.loads((SYNTHETIC / "story_catalog.json").read_text("utf-8"))
     companies = dict(COMPANIES)
     for company_id, description in stories["companies"].items():
         if company_id in companies:
@@ -684,7 +688,7 @@ def outputs(registry=None) -> dict[Path, str]:
         portfolios[portfolio_id] = (header["name"], header["description"], [])
         own_snapshots[portfolio_id] = (stories["snapshot_id"], stories["snapshot_label"])
     for plugin_id in registry.plugins:
-        path = _demo_data(registry, plugin_id) / "story_rows.json"
+        path = _demo_data(registry, plugin_id) / COLLECTION / "story_rows.json"
         if path.exists():
             for portfolio_id, rows in json.loads(path.read_text("utf-8")).items():
                 if portfolio_id not in stories["portfolios"]:
@@ -711,7 +715,7 @@ def outputs(registry=None) -> dict[Path, str]:
                 },
             }
         }
-        files[CATALOG / "portfolios" / f"{portfolio_id}.json"] = _json(header)
+        files[SYNTHETIC / "portfolios" / f"{portfolio_id}.json"] = _json(header)
         owner = {
             item["instrument_id"]: registry.plugin_of(item["instrument_type"]).plugin_id
             for item in data["instruments"]
@@ -730,7 +734,7 @@ def outputs(registry=None) -> dict[Path, str]:
             _merge(part["instruments"], [instrument], "instrument_id", portfolio_id)
             _merge(part["positions"], [position], "position_id", portfolio_id)
         for plugin_id, part in by_plugin.items():
-            folder = _demo_data(registry, plugin_id) / "portfolios"
+            folder = _demo_data(registry, plugin_id) / COLLECTION / "portfolios"
             files[folder / f"{portfolio_id}.json"] = _json(
                 {name: list(records.values()) for name, records in part.items()}
             )
@@ -740,7 +744,7 @@ def outputs(registry=None) -> dict[Path, str]:
         parts: dict[str, dict[str, dict]] = {}
         for item in snapshot_items.values():
             parts.setdefault(registry.plugin_of(item["kind"]).plugin_id, {})[item["item_id"]] = item
-        files[CATALOG / "snapshots" / f"{snapshot_id}.json"] = _json(
+        files[SYNTHETIC / "snapshots" / f"{snapshot_id}.json"] = _json(
             {
                 "snapshot_id": snapshot_id,
                 "as_of": AS_OF.isoformat(),
@@ -750,7 +754,7 @@ def outputs(registry=None) -> dict[Path, str]:
             }
         )
         for plugin_id, found in parts.items():
-            folder = _demo_data(registry, plugin_id) / "snapshots"
+            folder = _demo_data(registry, plugin_id) / COLLECTION / "snapshots"
             files[folder / f"{snapshot_id}.json"] = _json(
                 {"items": [found[key] for key in sorted(found)]}
             )
@@ -760,10 +764,11 @@ def outputs(registry=None) -> dict[Path, str]:
 
 def mock_answers() -> dict:
     """The mock profile's answers: the prepared answer of each event, keyed by its text."""
-    events = [
-        json.loads(path.read_text("utf-8")) for path in sorted((CATALOG / "events").glob("*.json"))
-    ]
-    events.append(json.loads((CATALOG / "pilot" / "event.json").read_text("utf-8")))
+    from demo.catalog import events as catalog_events
+    from demo.pilot import ROOT as PILOT
+
+    events = catalog_events(CATALOG)
+    events.append(json.loads((PILOT / "event.json").read_text("utf-8")))
     return {
         sha256(event["text"].encode("utf-8")).hexdigest(): event["mock_answer"]
         for event in sorted(events, key=lambda event: event["event_id"])

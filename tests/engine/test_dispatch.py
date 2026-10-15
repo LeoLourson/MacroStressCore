@@ -7,7 +7,6 @@ import pytest
 from msa.engine.dispatch import calculate, not_run, resolved_unit, schema_problems
 from msa.platform.registry import build
 from msa.plugin_sdk.specs import BASE_MONEY
-
 from tests import engine_helpers as h
 from tests import minimal_plugin as mp
 

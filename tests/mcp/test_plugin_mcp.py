@@ -6,8 +6,8 @@ one tool, ``slice_digest``, with no data access of its own.
 
 import pytest
 
-from msa.graph import activity
 from msa.cli.plugin import ui_manifest
+from msa.graph import activity
 from msa.mcp.gateway import ToolGateway
 from msa.platform.registry import PluginError, build, registry
 from msa.plugin_sdk import McpServerSpec, Plugin

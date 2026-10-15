@@ -28,7 +28,7 @@
 | `report.py`, `wording.py`, `impact.py` | разделы отчёта, правила, дерево `tree`; слова флагов, источников и авторов демо-данных |
 | `calibration.py`, `registries/` | реестры калибровок PD как версионированные файлы данных |
 | `demo.py`, `demo_case.json` | демо-кейс для `msa-plugin check` |
-| `demo_data/` | часть демо-стенда: позиции MULTI-ASSET, ATYPICAL-BORROWERS, LOAD-TEST и отчётность снимка SYNTHETIC-2026-09-11 |
+| `demo_data/` | часть демо-стенда по коллекциям `synthetic/` и `historical/<случай>/` (см. `demo/README.md`): позиции MULTI-ASSET, ATYPICAL-BORROWERS, LOAD-TEST и отчётность снимка SYNTHETIC-2026-09-11 |
 | `tests/` | тесты плагина и эталон кредитной модели |
 
 Плагин импортирует только `msa.plugin_sdk` (включая `calc` и `report`), `msa.contracts` и

@@ -12,7 +12,6 @@ from msa.engine.dispatch import prepare as dispatch_prepare
 from msa.engine.scenario_set import Realisations, scenario_set_from_parameters
 from msa.engine.snapshot import SnapshotIndex
 from msa.plugin_sdk.model import CalculationContext, RunOptions
-
 from tests import minimal_plugin as mp
 
 AS_OF = date(2026, 1, 1)
