@@ -2,6 +2,7 @@
 // with their schemas, editor forms and result views; metrics, factors and portfolio slices;
 // flags, actions and rules in words. The screens are built from it, so a new plugin on the
 // server needs no change in this app; a UI plugin (src/plugins) only adds a richer view.
+import { apiUrl } from './client';
 import { ACTIONS, AUTHORS, FACTORS, FLAG_TABLE, INSTRUMENT_TYPES, RULES, SOURCES } from '../lib/labels';
 
 export type FieldKind = 'number' | 'text' | 'date' | 'dates' | 'enum' | 'boolean' | 'table';
@@ -159,7 +160,7 @@ let catalog: Catalog = {
 /** Read once before the app renders; without it the screens show identifiers. */
 export async function loadCatalog(): Promise<void> {
   try {
-    const response = await fetch('/v1/asset-types');
+    const response = await fetch(apiUrl('/v1/asset-types'));
     if (response.ok) setCatalog((await response.json()) as Catalog);
   } catch {
     // The API is down: the sign-in page says so; nothing here to show.

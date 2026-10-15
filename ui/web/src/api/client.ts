@@ -50,13 +50,16 @@ export class ApiError extends Error {
   }
 }
 
+/** An API path under the app's base: '/' locally, '/p/<token>/' behind a reverse proxy. */
+export const apiUrl = (path: string) => import.meta.env.BASE_URL.replace(/\/$/, '') + path;
+
 export interface UiConfig {
   demo_keys?: Record<string, string>;
 }
 
 export async function fetchUiConfig(): Promise<UiConfig> {
   try {
-    const response = await fetch('/v1/ui/config');
+    const response = await fetch(apiUrl('/v1/ui/config'));
     return response.ok ? await response.json() : {};
   } catch {
     return {};
@@ -81,7 +84,7 @@ export class ApiClient {
   private async call<T>(method: string, path: string, body?: unknown): Promise<T> {
     let response: Response;
     try {
-      response = await fetch(path, {
+      response = await fetch(apiUrl(path), {
         method,
         headers: {
           'X-API-Key': this.apiKey,
@@ -141,7 +144,7 @@ export class ApiClient {
   }
 
   async deletePortfolio(portfolioId: string) {
-    const response = await fetch(`/v1/demo/portfolios/${encodeURIComponent(portfolioId)}`, {
+    const response = await fetch(apiUrl(`/v1/demo/portfolios/${encodeURIComponent(portfolioId)}`), {
       method: 'DELETE',
       headers: { 'X-API-Key': this.apiKey },
     });

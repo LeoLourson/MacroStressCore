@@ -15,6 +15,11 @@ const ROLE_BUTTONS: Record<string, { title: string; text: string; Icon: typeof I
     text: 'Читает отчёт и принимает решение: утвердить, вернуть или отклонить',
     Icon: IconSignature,
   },
+  demo: {
+    title: 'Открыть демонстрацию',
+    text: 'Стресс-тест синтетического портфеля: граф влияния, сценарий, расчёт и отчёт',
+    Icon: IconChartLine,
+  },
 };
 
 export function Login() {
