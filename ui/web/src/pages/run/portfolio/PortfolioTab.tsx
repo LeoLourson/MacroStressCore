@@ -1,20 +1,20 @@
 import { Alert, Box, Code, Group, List, SimpleGrid, Stack, Table, Text, Title } from '@mantine/core';
 import { IconAlertTriangle, IconInfoCircle } from '@tabler/icons-react';
-import { sliceSpec } from '../../api/catalog';
-import { useReport } from '../../api/queries';
-import type { Artifacts, Report, SliceResult } from '../../api/types';
-import { TracedNumber } from '../../components/Provenance';
-import { ResultStatus } from '../../components/RiskModel';
-import { ResultSummary } from '../../components/ResultSummary';
-import { PageSection, Subsection } from '../../components/Page';
-import { capitalize, describePath, formatter, number, pathValue, percent, positionTitle, slicePath } from '../../lib/format';
-import { ACTIONS, RESULT_STATUS, RULES, flagList, label, translateFlags } from '../../lib/labels';
-import type { Entries } from '../../lib/provenance';
-import { hasReport } from '../../lib/stages';
-import { agentComponent, pluginNotes } from '../../plugins';
-import type { RunTabProps } from './RunPage';
-import { glossary } from './ReportText';
-import { useOrigins } from './useOrigins';
+import { sliceSpec } from '../../../api/catalog';
+import { useReport } from '../../../api/queries';
+import type { Artifacts, Report, SliceResult } from '../../../api/types';
+import { TracedNumber } from '../../../components/Provenance';
+import { ResultStatus } from '../../../components/RiskModel';
+import { ResultSummary } from '../../../components/ResultSummary';
+import { PageSection, Subsection } from '../../../components/Page';
+import { capitalize, describePath, formatter, number, pathValue, percent, positionTitle, slicePath } from '../../../lib/format';
+import { ACTIONS, RESULT_STATUS, RULES, flagList, label, translateFlags } from '../../../lib/labels';
+import type { Entries } from '../../../lib/provenance';
+import { hasReport } from '../../../lib/stages';
+import { agentComponent, pluginNotes } from '../../../plugins';
+import type { RunTabProps } from '../RunPage';
+import { glossary } from '../ReportText';
+import { useOrigins } from '../useOrigins';
 
 function Slice({ item, artifacts, entries, several }: { item: SliceResult; artifacts: Artifacts; entries: Entries; several: boolean }) {
   const spec = sliceSpec(item.slice_id);

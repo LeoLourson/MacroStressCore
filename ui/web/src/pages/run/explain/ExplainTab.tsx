@@ -1,16 +1,16 @@
 import { Alert, Anchor, Badge, Button, Center, CopyButton, Group, List, Loader, Paper, Select, Stack, Text, Textarea, Title, Tooltip } from '@mantine/core';
 import { IconCheck, IconCopy, IconRefresh, IconSend, IconAlertTriangle, IconInfoCircle } from '@tabler/icons-react';
 import { Fragment, useRef, useState, type ReactNode } from 'react';
-import { useExplain, useExplanations } from '../../api/queries';
-import type { Explanation } from '../../api/types';
-import { ErrorAlert } from '../../components/ErrorAlert';
-import { NARROW, PageSection } from '../../components/Page';
-import { FieldHelp } from '../../components/FieldHelp';
-import { TracedNumber } from '../../components/Provenance';
-import { describePath, timestamp } from '../../lib/format';
-import { blocks, glossary, runs } from './ReportText';
-import type { RunTabProps } from './RunPage';
-import { useOrigins } from './useOrigins';
+import { useExplain, useExplanations } from '../../../api/queries';
+import type { Explanation } from '../../../api/types';
+import { ErrorAlert } from '../../../components/ErrorAlert';
+import { NARROW, PageSection } from '../../../components/Page';
+import { FieldHelp } from '../../../components/FieldHelp';
+import { TracedNumber } from '../../../components/Provenance';
+import { describePath, timestamp } from '../../../lib/format';
+import { blocks, glossary, runs } from '../ReportText';
+import type { RunTabProps } from '../RunPage';
+import { useOrigins } from '../useOrigins';
 
 const REASONS: Record<string, string> = {
   tool_calling_unsupported: 'Подключённая модель не поддерживает чтение данных расчёта.',

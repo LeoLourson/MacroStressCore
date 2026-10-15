@@ -25,14 +25,14 @@ import { PageHeader } from '../../components/Page';
 import { Hint } from '../../components/Term';
 import { day, timestamp } from '../../lib/format';
 import { TABS, available, defaultTab, steps, type Tab } from '../../lib/stages';
-import { ActivityTab } from './ActivityTab';
-import { ExplainTab } from './ExplainTab';
+import { ActivityTab } from './activity/ActivityTab';
+import { ExplainTab } from './explain/ExplainTab';
 import { NextMove, StopReason } from './NextAction';
-import { PortfolioTab } from './PortfolioTab';
+import { PortfolioTab } from './portfolio/PortfolioTab';
 import { PositionsTab } from './positions/PositionsTab';
-import { ReportTab } from './ReportTab';
+import { ReportTab } from './report/ReportTab';
 import { RunSteps } from './RunSteps';
-import { SourcesTab } from './SourcesTab';
+import { SourcesTab } from './sources/SourcesTab';
 
 // The graph canvas is the heaviest part of the page; it loads with its tab.
 const ScenarioTab = lazy(() => import('./scenario/ScenarioTab').then((m) => ({ default: m.ScenarioTab })));

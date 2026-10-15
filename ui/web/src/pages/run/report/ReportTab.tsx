@@ -1,21 +1,21 @@
 import { Center, Group, Loader, Paper, Stack, Table, Text, ThemeIcon } from '@mantine/core';
 import { IconRosetteDiscountCheck } from '@tabler/icons-react';
 import { useMemo } from 'react';
-import { useReport } from '../../api/queries';
-import type { Artifacts, Evidence } from '../../api/types';
-import { canApprove, useSession } from '../../auth/session';
-import { ErrorAlert } from '../../components/ErrorAlert';
-import { ResultSummary } from '../../components/ResultSummary';
-import { sliceSpec } from '../../api/catalog';
-import { approver, day, percent, plural, timestamp } from '../../lib/format';
-import { PageSection } from '../../components/Page';
-import { AUTHORS, SOURCES, label } from '../../lib/labels';
-import { hasReport } from '../../lib/stages';
-import { pluginNotes } from '../../plugins';
+import { useReport } from '../../../api/queries';
+import type { Artifacts, Evidence } from '../../../api/types';
+import { canApprove, useSession } from '../../../auth/session';
+import { ErrorAlert } from '../../../components/ErrorAlert';
+import { ResultSummary } from '../../../components/ResultSummary';
+import { sliceSpec } from '../../../api/catalog';
+import { approver, day, percent, plural, timestamp } from '../../../lib/format';
+import { PageSection } from '../../../components/Page';
+import { AUTHORS, SOURCES, label } from '../../../lib/labels';
+import { hasReport } from '../../../lib/stages';
+import { pluginNotes } from '../../../plugins';
 import { DecisionPanel } from './DecisionPanel';
-import { glossary, ReportText } from './ReportText';
-import type { RunTabProps } from './RunPage';
-import { useOrigins } from './useOrigins';
+import { glossary, ReportText } from '../ReportText';
+import type { RunTabProps } from '../RunPage';
+import { useOrigins } from '../useOrigins';
 
 /** The seal: the second and last place MTS red appears. */
 function Stamp({ artifacts }: { artifacts: Artifacts }) {

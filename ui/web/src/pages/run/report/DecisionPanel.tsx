@@ -2,10 +2,10 @@ import { Button, Group, Modal, Stack, Text, Textarea } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
 import { IconArrowBackUp, IconCheck, IconX } from '@tabler/icons-react';
 import { useState } from 'react';
-import { useResumeApproval, type ApprovalDecision } from '../../api/queries';
-import type { Me } from '../../api/types';
-import { ErrorAlert } from '../../components/ErrorAlert';
-import { ActionBar } from '../../components/Page';
+import { useResumeApproval, type ApprovalDecision } from '../../../api/queries';
+import type { Me } from '../../../api/types';
+import { ErrorAlert } from '../../../components/ErrorAlert';
+import { ActionBar } from '../../../components/Page';
 
 const DECISIONS: Record<
   ApprovalDecision,

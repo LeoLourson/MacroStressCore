@@ -633,3 +633,12 @@ export interface Explanation {
   created_at: string;
   updated_at: string;
 }
+
+/** What «Запустить заново» carries over from an earlier stress test. */
+export interface RerunState {
+  portfolioId?: string;
+  eventText?: string;
+  scenario?: string;
+  /** Start with the provider's stronger model: the earlier run's model could not build the graph. */
+  strongModel?: boolean;
+}

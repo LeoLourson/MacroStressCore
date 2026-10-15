@@ -1,11 +1,11 @@
 import { Code, Group, Stack, Table, Text } from '@mantine/core';
-import { PageSection } from '../../components/Page';
+import { PageSection } from '../../../components/Page';
 import { useMemo } from 'react';
-import { SourceInputs } from '../../components/Provenance';
-import { day, plural } from '../../lib/format';
-import { bySource, positionInputs, sourceMeta } from '../../lib/sources';
-import { pluginNotes } from '../../plugins';
-import type { RunTabProps } from './RunPage';
+import { SourceInputs } from '../../../components/Provenance';
+import { day, plural } from '../../../lib/format';
+import { bySource, positionInputs, sourceMeta } from '../../../lib/sources';
+import { pluginNotes } from '../../../plugins';
+import type { RunTabProps } from '../RunPage';
 
 const SNAPSHOT_KINDS: Record<string, string> = { demo: 'демо-данные', production: 'рабочие данные' };
 

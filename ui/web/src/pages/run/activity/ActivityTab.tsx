@@ -1,13 +1,13 @@
 import { Badge, Center, Group, Loader, SimpleGrid, Stack, Table, Text } from '@mantine/core';
 import { IconCheck, IconX } from '@tabler/icons-react';
-import { useActivity } from '../../api/queries';
-import type { ActivityItem, WorkflowView } from '../../api/types';
-import { Elapsed } from '../../components/Elapsed';
-import { PageSection } from '../../components/Page';
-import { ErrorAlert } from '../../components/ErrorAlert';
-import { number, plural, timestamp } from '../../lib/format';
-import { label } from '../../lib/labels';
-import type { RunTabProps } from './RunPage';
+import { useActivity } from '../../../api/queries';
+import type { ActivityItem, WorkflowView } from '../../../api/types';
+import { Elapsed } from '../../../components/Elapsed';
+import { PageSection } from '../../../components/Page';
+import { ErrorAlert } from '../../../components/ErrorAlert';
+import { number, plural, timestamp } from '../../../lib/format';
+import { label } from '../../../lib/labels';
+import type { RunTabProps } from '../RunPage';
 
 // What each MCP tool does, in words; the machine name stays beside it.
 const TOOLS: Record<string, string> = {
