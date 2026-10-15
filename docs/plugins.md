@@ -354,7 +354,7 @@ SliceSpec("market.pnl", "Рыночный результат", measure_label="Р
   плагина в демо-портфеле (так `equity` добавляет `SHARE-OIL` и `SHARE-US-TECH` в MULTI-ASSET);
 - `demo_data/snapshots/<snapshot_id>.json` — `{"items"}`: их данные в демо-снимке.
 
-`demo/catalog.py` собирает портфель из заголовка `demo/portfolios/<id>.json` и частей всех
+`demo/catalog.py` собирает портфель из заголовка `demo/synthetic/portfolios/<id>.json` и частей всех
 плагинов в порядке реестра; снимок — из заголовка и элементов, упорядоченных по `item_id`.
 Один эмитент может прийти от двух плагинов, если записи совпадают; разные записи с одним
 идентификатором — ошибка. Часть с заголовком (`"portfolio"`) добавляет собственный
@@ -382,10 +382,10 @@ SliceSpec("market.pnl", "Рыночный результат", measure_label="Р
 (`graph/compiler.py`) собирает из этого граф LangGraph и вставляет агентов плагинов после
 их точки.
 
-В платформе два процесса (встроенное объявление `core`, `msa/workflows`):
+В платформе два процесса (встроенное объявление `core`, `msa/core`):
 
 - `stress_test`. Точки расширения: `after_event_parsed`, `before_scenario_approval`,
-  `after_calculation`, `before_report`. Схема — в `src/msa/workflows/stress_test.py`.
+  `after_calculation`, `before_report`. Схема — в `src/msa/core/stress_test.py`.
 - `explain_results`. Точка расширения: `after_explanation`.
 
 Точка гарантирует набор ключей состояния (`available`). Агент может читать только их.
@@ -656,7 +656,7 @@ MCP-сервера плагина для проверки без шлюза, `wo
 
 **Что такое ядро.** Всё в `src/msa/` вне `src/msa/plugins/<id>/` и всё в `ui/web/src/` вне
 `ui/web/src/plugins/<id>/`: SDK (`plugin_sdk`), контракты, движок, реестр, процессы и их
-основные агенты (`msa/workflows`, встроенное объявление `core`), MCP ядра, API, отчёт,
+основные агенты (`msa/core`, встроенное объявление `core`), MCP ядра, API, отчёт,
 экраны. Плагин — папка `src/msa/plugins/<id>/` и, по желанию, `ui/web/src/plugins/<id>/`.
 
 **Раскладка папки плагина.**

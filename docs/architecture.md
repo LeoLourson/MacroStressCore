@@ -53,7 +53,7 @@ LangGraph, собран из WorkflowSpec     ▼
 api ──► graph ──► agents ──► engine ◄── plugin_sdk (calc, report, ...) ◄─┼── plugins (credit,
  │        │         │           ▲            ▲                          │   equity, market,
  │        │         └──► mcp ───┘       platform (реестр) ─ находит ───►│   research)
- │        └──► workflows (встроенный core: процессы, агенты, MCP ядра)  │
+ │        └──► core (встроенный core: процессы, агенты, MCP ядра)       │
  └──► db ◄── mcp            reporting ──► platform                      │
 contracts ◄── все (и плагины)                                            │
 ```
@@ -70,7 +70,7 @@ contracts ◄── все (и плагины)                                  
   метрики, факторы, срезы, виды, правила, MCP-серверы), `CalculationModel`, `AgentPlugin`,
   `WorkflowSpec`, хелперы результата, вычисления ядра (`calc`), помощники отчёта
   (`report`), промпты (`prompts`), помощники тестов и проверка соответствия (`testing`).
-- **platform** — реестр: загружает встроенное объявление `core` (`msa/workflows`), затем
+- **platform** — реестр: загружает встроенное объявление `core` (`msa/core`), затем
   находит плагины в `msa.plugins`, проверяет объявления, строит каталоги.
 - **plugins** — единственное место, где известны типы инструментов, их математика и
   предметные агенты. `credit/math/` — помесячные модели семейств, календарь, метрики, PD и

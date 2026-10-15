@@ -1,9 +1,9 @@
-"""msa.activity: the waiting LLM call of the current node, and the LLM client's use of it."""
+"""msa.graph.activity: the waiting LLM call of the current node, and the LLM client's use of it."""
 
 import contextlib
 import json
 
-from msa import activity
+from msa.graph import activity
 from msa.integrations.llm.client import LLMClient
 from msa.integrations.llm.providers import Provider
 

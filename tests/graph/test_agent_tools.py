@@ -5,7 +5,7 @@ import json
 
 import pytest
 
-from msa import activity
+from msa.graph import activity
 from msa.graph import compiler
 from msa.graph.checkpoint import build_checkpointer
 from msa.graph.interrupts import start_run

@@ -6,7 +6,7 @@ from datetime import date
 
 from pydantic import BaseModel
 
-from msa import activity
+from msa.graph import activity
 from msa.agents import build_agents
 from msa.agents.ingest import IngestAgent
 from msa.contracts import PortfolioBundle, SourceDocument

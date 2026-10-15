@@ -2,7 +2,7 @@
 
 import pytest
 
-from msa import activity
+from msa.graph import activity
 from msa.api.run_service import RunService
 from msa.db.database import Database
 from msa.db.migrate import migrate

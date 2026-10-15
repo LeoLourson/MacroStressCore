@@ -8,7 +8,7 @@ from uuid import uuid4
 
 from sqlalchemy import delete, select, update
 
-from msa import activity
+from msa.graph import activity
 from msa.agents.advisory import channel_factors
 from msa.contracts.causal_answer import scenario_violations
 from msa.agents.ingest import SCENARIO, document_text, sentence_fragments

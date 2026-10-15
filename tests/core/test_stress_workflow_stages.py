@@ -1,6 +1,6 @@
-"""msa.workflows.stress_test: writing the report is a stage between portfolio and decision."""
+"""msa.core.stress_test: writing the report is a stage between portfolio and decision."""
 
-from msa.workflows.stress_test import STRESS_TEST
+from msa.core.stress_test import STRESS_TEST
 
 
 def stage(stage_id):

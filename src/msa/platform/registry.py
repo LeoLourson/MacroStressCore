@@ -1,6 +1,6 @@
 """Discovery and validation of plugins, and the catalogs everything else reads.
 
-At start-up the built-in ``core`` declaration (``msa.workflows``) and every package under
+At start-up the built-in ``core`` declaration (``msa.core``) and every package under
 ``msa.plugins`` are imported and their ``plugin`` declarations checked. The checks are
 all-or-nothing: the process does not start with a partial set of plugins, and the error
 lists every problem with the plugin that caused it.
@@ -39,7 +39,7 @@ from msa.plugin_sdk.version import SDK_VERSION, compatible, parse
 
 PACKAGE = "msa.plugins"
 #: The platform's own workflows and core agents: declared like a plugin, part of the core.
-BUILT_IN = "msa.workflows"
+BUILT_IN = "msa.core"
 CORE = "core"
 
 
@@ -335,7 +335,7 @@ def mcp_tools(spec: McpServerSpec) -> tuple[dict[str, Callable], list[str]]:
 def package_of(plugin: Plugin) -> str:
     """The package that declares ``plugin``: where its prompts and demo data live.
 
-    An installed plugin is ``msa.plugins.<id>`` (the core ``msa.workflows``); a plugin loaded
+    An installed plugin is ``msa.plugins.<id>`` (the core ``msa.core``); a plugin loaded
     from a folder under development has the module name it was loaded under.
     """
     module = next(

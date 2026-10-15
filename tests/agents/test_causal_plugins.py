@@ -8,7 +8,7 @@ from importlib import import_module
 
 import pytest
 
-from demo.build_catalog import CATALOG
+from demo.catalog import event_paths
 from msa.agents.advisory import AdvisoryAgent
 from msa.agents.aggregate import AggregateAgent
 from msa.agents.base import AgentError
@@ -38,7 +38,7 @@ from msa.plugin_sdk import (
 from msa.plugin_sdk.results import envelope, scalar
 from msa.prompts.registry import current_version
 from msa.validators import validate
-from msa.workflows import plugin as core_plugin
+from msa.core import plugin as core_plugin
 from tests.support import agents, confirm, positions, run_input, snapshot, stop
 
 
@@ -316,7 +316,7 @@ def test_stock_portfolio_runs_with_only_its_own_factor_graph(graph_factory):
 
 def library_payload(event_id, raw):
     """The event text as the platform ingests it: the document id is the text's sha256."""
-    text = json.loads((CATALOG / "events" / f"{event_id}.json").read_text("utf-8"))["text"]
+    text = json.loads(({p.stem: p for p in event_paths()}[event_id]).read_text("utf-8"))["text"]
     part = fragment(text, "p1")
     doc = SourceDocument(
         doc_id=part.sha256, sha256=part.sha256, mime="text/plain", fragments=[part]
