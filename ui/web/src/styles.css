@@ -24,19 +24,6 @@ body {
   max-width: calc(100vw - 24px);
 }
 
-.question-example {
-  height: auto;
-  min-height: 30px;
-  padding-block: 4px;
-  max-width: 100%;
-}
-
-.question-example .mantine-Button-label {
-  white-space: normal;
-  text-align: left;
-  line-height: 1.45;
-}
-
 .explanation-item,
 .question-text {
   overflow-wrap: anywhere;

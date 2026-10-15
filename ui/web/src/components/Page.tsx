@@ -3,10 +3,8 @@
 // apart by space and a smaller heading, never by a card within a card. The card padding and
 // the outer cell padding of a flush table are the same, so headings, text and the first
 // column of a table share one left edge.
-import { Anchor, Box, Group, Paper, Stack, Text, Title } from '@mantine/core';
-import { IconArrowLeft } from '@tabler/icons-react';
+import { Box, Group, Paper, Stack, Text, Title } from '@mantine/core';
 import type { ReactNode } from 'react';
-import { Link } from 'react-router';
 import { Hint } from './Term';
 
 /** The one narrow width: forms and a single column of reading. Everything else is full width. */
@@ -16,29 +14,20 @@ function Heading({ order, title, hint }: { order: 2 | 3 | 4; title: ReactNode; h
   return <Title order={order}>{hint ? <Hint text={hint}>{title}</Hint> : title}</Title>;
 }
 
-/** Back link, title with its hint, one line of facts, and the page's one main action. */
+/** Title with its hint, one line of facts, and the page's one main action. */
 export function PageHeader({
   title,
   hint,
-  back,
   meta,
   actions,
 }: {
   title: ReactNode;
   hint?: ReactNode;
-  back?: { to: string; label: string };
   meta?: ReactNode;
   actions?: ReactNode;
 }) {
   return (
     <Stack gap={6}>
-      {back && (
-        <Anchor component={Link} to={back.to} size="sm" w="fit-content">
-          <Group gap={4} wrap="nowrap">
-            <IconArrowLeft size={14} /> {back.label}
-          </Group>
-        </Anchor>
-      )}
       <Group justify="space-between" align="center" gap="sm" mih={36}>
         <Box style={{ flex: '1 1 320px', minWidth: 0 }}>
           <Heading order={2} title={title} hint={hint} />
@@ -83,7 +72,7 @@ export function PageSection({
     </Group>
   );
   return (
-    // A wide table scrolls inside its card; it never widens the page.
+    // A wide flush table scrolls inside its card; it never widens the page.
     <Paper p={flush ? 0 : 'lg'} className={flush ? 'flush' : undefined} style={{ minWidth: 0 }}>
       {flush ? (
         <>
@@ -91,7 +80,7 @@ export function PageSection({
           <Box style={{ overflowX: 'auto' }}>{children}</Box>
         </>
       ) : (
-        <Stack gap="md" style={{ overflowX: 'auto' }}>
+        <Stack gap="md">
           {head}
           {children}
         </Stack>

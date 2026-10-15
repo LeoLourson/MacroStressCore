@@ -122,7 +122,7 @@ export function steps(status: RunStatus, artifacts: Artifacts | undefined, me: M
       }
       case 'human_fix_graph':
         return canFixGraph(me)
-          ? { title, state: 'yours', note: 'Ждёт вашей проверки' }
+          ? { title, state: 'yours', note: stopOf(status)?.decision?.outcome === 'returned' ? 'Возвращён на доработку' : 'Ждёт вашей проверки' }
           : { title, state: 'others', note: 'Ждёт аналитика' };
       case 'human_approval':
         return canApprove(me)

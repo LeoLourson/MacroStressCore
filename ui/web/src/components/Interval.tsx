@@ -105,7 +105,7 @@ export function IntervalLegend({ base = false, tail = false, note }: { base?: bo
       {base && item(<Box w={16} h={6} bg="gray.4" style={{ borderRadius: 3 }} />, 'уровень до события')}
       {item(<Box w={16} h={6} bg="steel.3" style={{ borderRadius: 3 }} />, base ? 'P5–P95 после события' : 'P5–P95')}
       {item(<Box w={3} h={12} bg="steel.8" style={{ borderRadius: 2 }} />, base ? 'медиана после события' : 'медиана')}
-      {tail && item(<Box h={12} style={{ borderLeft: '2px dotted var(--mantine-color-dark-4)' }} />, 'средние потери в худших 5 % (ES95)')}
+      {tail && item(<Box h={12} style={{ borderLeft: '2px dotted var(--mantine-color-dark-4)' }} />, 'ES95')}
       {note && (
         <Text size="xs" c="dimmed">
           {note}

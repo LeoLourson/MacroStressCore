@@ -1,4 +1,4 @@
-import { Alert, Badge, Button, Center, CopyButton, Group, List, Loader, Paper, Select, Stack, Text, Textarea, Title } from '@mantine/core';
+import { Alert, Anchor, Badge, Button, Center, CopyButton, Group, List, Loader, Paper, Select, Stack, Text, Textarea, Title, Tooltip } from '@mantine/core';
 import { IconCheck, IconCopy, IconRefresh, IconSend, IconAlertTriangle, IconInfoCircle } from '@tabler/icons-react';
 import { Fragment, useRef, useState, type ReactNode } from 'react';
 import { useExplain, useExplanations } from '../../api/queries';
@@ -142,23 +142,26 @@ export function ExplainTab(props: RunTabProps) {
         <Stack gap="md">
           <Select label={<FieldHelp label="Что разобрать" help="Выберите весь портфель или отдельную позицию. Каждый вопрос рассматривается отдельно с данными этого стресс-теста." />}
             data={[{ value: '__portfolio__', label: 'Весь портфель' }, ...(artifacts.positions ?? []).map((p) => ({ value: p.position.position_id, label: `${names[p.position.position_id] ?? p.instrument.name} · ${p.position.position_id}` }))]}
-            value={position ?? '__portfolio__'} onChange={(value) => setPosition(value === '__portfolio__' ? null : value)} allowDeselect={false} searchable maw={420} />
+            value={position ?? '__portfolio__'} onChange={(value) => setPosition(value === '__portfolio__' ? null : value)} allowDeselect={false} searchable />
           <Textarea ref={input} label={<FieldHelp label="Ваш вопрос" help="Опишите, что хотите понять в результатах. Можно указать показатель или сравнить позиции. Каждый вопрос самостоятельный; расчёты и утверждённый отчёт он не меняет." />}
             placeholder="Например: почему эта позиция теряет больше остальных?"
             autosize minRows={3} maxRows={8} maxLength={2000 - prefix.length} value={question}
             onChange={(e) => { setQuestion(e.currentTarget.value); if (ask.error) ask.reset(); }}
             onKeyDown={(e) => { if (e.key === 'Enter' && (e.ctrlKey || e.metaKey) && !e.nativeEvent.isComposing) { e.preventDefault(); send(message, question); } }} />
-          {!items.length && <Group gap={4} align="center">
-            <Text size="sm" c="dimmed" mr={4}>Например:</Text>
-            {examples.map((example) => <Button key={example} type="button" className="question-example" size="xs" variant="light"
-              onClick={() => { setQuestion(example); input.current?.focus(); }}>{example}</Button>)}
-          </Group>}
+          {!items.length && <Stack gap={2} align="flex-start">
+            <Text size="sm" c="dimmed">Примеры вопросов</Text>
+            {examples.map((example) => <Anchor key={example} component="button" type="button" size="sm"
+              onClick={() => { setQuestion(example); input.current?.focus(); }}>{example}</Anchor>)}
+          </Stack>}
           {!ready && <Alert icon={<IconInfoCircle />} color="gray">Вопросы станут доступны после расчёта позиций. Проверьте сценарий и недостающие данные.</Alert>}
           {waiting && <Text size="sm" c="dimmed" role="status">Ответ готовится. Следующий вопрос можно написать сейчас и отправить после завершения.</Text>}
           {ask.error && <ErrorAlert error={ask.error} />}
-          <Group justify="space-between" gap="sm">
-            <Text size="xs" c="dimmed">{question.length} / {2000 - prefix.length} · Ctrl / ⌘ + Enter — отправить</Text>
-            <Button type="submit" leftSection={<IconSend size={16} />} loading={ask.isPending} disabled={!question.trim() || busy || !ready || message.length > 2000}>Получить объяснение</Button>
+          <Group gap="md">
+            <Tooltip label="Ctrl / ⌘ + Enter">
+              <Button type="submit" w="fit-content" leftSection={<IconSend size={16} />} loading={ask.isPending} disabled={!question.trim() || busy || !ready || message.length > 2000}>Получить объяснение</Button>
+            </Tooltip>
+            {/* The limit matters only near it. */}
+            {question.length > 1500 && <Text size="xs" c="dimmed" className="num">{question.length} / {2000 - prefix.length}</Text>}
           </Group>
         </Stack>
       </form>

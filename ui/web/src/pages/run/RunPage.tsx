@@ -27,7 +27,7 @@ import { day, timestamp } from '../../lib/format';
 import { TABS, available, defaultTab, steps, type Tab } from '../../lib/stages';
 import { ActivityTab } from './ActivityTab';
 import { ExplainTab } from './ExplainTab';
-import { NextAction } from './NextAction';
+import { NextMove, StopReason } from './NextAction';
 import { PortfolioTab } from './PortfolioTab';
 import { PositionsTab } from './positions/PositionsTab';
 import { ReportTab } from './ReportTab';
@@ -68,7 +68,6 @@ function Masthead({ status, artifacts }: RunTabProps) {
   );
   return (
     <PageHeader
-      back={{ to: '/', label: 'Все стресс-тесты' }}
       title={
         <Text inherit lineClamp={1} title={event}>
           {event || 'Стресс-тест'}
@@ -174,11 +173,15 @@ export function RunPage() {
           </Group>
         </Alert>
       )}
-      <RunSteps steps={steps(data.status, data.artifacts, me)} />
-      <NextAction {...data} me={me} tab={tab} onTab={setTab} />
-      {/* The same switch as every other in the app; on a phone it scrolls sideways. */}
+      <RunSteps
+        steps={steps(data.status, data.artifacts, me)}
+        action={<NextMove {...data} me={me} tab={tab} onTab={setTab} />}
+      />
+      <StopReason status={data.status} />
+      {/* The same switch as every other in the app, as wide as the content it switches; on a phone it scrolls sideways. */}
       <ScrollArea mt="xs" type="auto" scrollbars="x" offsetScrollbars>
         <SegmentedControl
+          fullWidth
           value={tab}
           onChange={(value) => setTab(value as Tab)}
           aria-label="Разделы стресс-теста"

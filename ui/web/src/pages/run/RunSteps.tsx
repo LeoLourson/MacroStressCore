@@ -1,5 +1,6 @@
 import { Box, Group, Loader, Text, ThemeIcon, Tooltip } from '@mantine/core';
 import { IconCheck, IconClock, IconExclamationMark, IconX } from '@tabler/icons-react';
+import type { ReactNode } from 'react';
 import { Elapsed } from '../../components/Elapsed';
 import type { StepState, StepView } from '../../lib/stages';
 
@@ -50,8 +51,9 @@ function Mark({ state, index }: { state: StepState; index: number }) {
 /**
  * The whole path of the stress test in one line: done steps are quiet, the current one carries
  * its note, the rest are dimmed. On a phone only the current step is shown, with its number.
+ * This person's move forward closes the line.
  */
-export function RunSteps({ steps }: { steps: StepView[] }) {
+export function RunSteps({ steps, action }: { steps: StepView[]; action?: ReactNode }) {
   // Where the run stands: the first step not done, or the last one once all are.
   const open = steps.findIndex((step) => step.state !== 'done');
   const here = open < 0 ? steps.length - 1 : open;
@@ -69,8 +71,8 @@ export function RunSteps({ steps }: { steps: StepView[] }) {
       </Text>
     );
   return (
-    <>
-      <Group gap="sm" wrap="nowrap" hiddenFrom="md">
+    <Group justify="space-between" gap="sm" wrap="nowrap" mih={30}>
+      <Group gap="sm" wrap="nowrap" hiddenFrom="md" style={{ minWidth: 0 }}>
         <Mark state={current.state} index={here} />
         <Text size="sm">
           <Text span size="sm" c="dimmed">
@@ -112,6 +114,7 @@ export function RunSteps({ steps }: { steps: StepView[] }) {
           );
         })}
       </Group>
-    </>
+      {action && <Box style={{ flexShrink: 0 }}>{action}</Box>}
+    </Group>
   );
 }
