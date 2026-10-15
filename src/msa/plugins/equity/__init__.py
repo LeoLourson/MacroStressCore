@@ -30,7 +30,8 @@ M = BASE_MONEY
 plugin = Plugin(
     plugin_id=PLUGIN_ID,
     version=PLUGIN_VERSION,
-    sdk=">=1.0,<2.0",
+    sdk=">=1.2,<2.0",
+    docs=("factor_stress.md",),
     label="Акции (факторный стресс)",
     description="Обыкновенные акции, длинные позиции, стресс рыночного, отраслевого и "
     "валютного факторов на горизонте.",

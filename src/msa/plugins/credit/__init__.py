@@ -99,7 +99,8 @@ BLOCKS = (
 plugin = Plugin(
     plugin_id=PLUGIN_ID,
     version=PLUGIN_VERSION,
-    sdk=">=1.0,<2.0",
+    sdk=">=1.2,<2.0",
+    docs=("trajectory.md", "pd.md", "covenants.md", "reverse_stress.md", "bond.md"),
     label="Кредитный риск",
     description="Помесячная модель заёмщика, PD и ожидаемые потери на совместных сценариях.",
     instrument_types=instrument_types(editor, from_draft),

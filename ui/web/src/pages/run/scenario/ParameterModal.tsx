@@ -1,4 +1,5 @@
 import { FieldHelp } from '../../../components/FieldHelp';
+import { MathText } from '../../../components/MathText';
 import { Alert, Button, Group, Modal, NumberInput, SegmentedControl, Select, SimpleGrid, Stack, Text, TextInput } from '@mantine/core';
 import { IconTrash, IconAlertTriangle } from '@tabler/icons-react';
 import { useEffect, useState } from 'react';
@@ -188,7 +189,7 @@ export function ParameterModal({
             )}
             {factorSpec(draft.factor)?.description && (
               <Text size="xs" c="dimmed">
-                {factorSpec(draft.factor)!.description}
+                <MathText>{factorSpec(draft.factor)!.description!}</MathText>
               </Text>
             )}
           </>

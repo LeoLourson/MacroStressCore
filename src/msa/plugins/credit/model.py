@@ -28,7 +28,7 @@ from .position_risk import (
 )
 
 PLUGIN_ID = "credit"
-PLUGIN_VERSION = "3.3.0"
+PLUGIN_VERSION = "3.4.0"
 SLICE = "credit.loss"
 REGISTRY_OPTION = "credit.registry_id"
 RUB = "RUB_million"

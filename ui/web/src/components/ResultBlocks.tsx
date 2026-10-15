@@ -10,6 +10,7 @@ import type { Entries } from '../lib/provenance';
 import { bySource, positionInputs } from '../lib/sources';
 import type { PositionViewProps } from '../plugins/sdk';
 import { IntervalText, ShiftText } from './Interval';
+import { MathText } from './MathText';
 import { SourceInputs, TracedNumber } from './Provenance';
 import { Subsection } from './Page';
 import { Term } from './Term';
@@ -130,7 +131,7 @@ export function MetricsBlock({
                 <Text size="sm">{metricLabel(id)}</Text>
                 {metricSpec(id)?.description && (
                   <Text size="xs" c="dimmed">
-                    {metricSpec(id)!.description}
+                    <MathText>{metricSpec(id)!.description!}</MathText>
                   </Text>
                 )}
               </Table.Td>

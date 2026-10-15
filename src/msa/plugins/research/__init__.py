@@ -164,8 +164,9 @@ DIGEST_TOOL = "research.notes.slice_digest"
 
 plugin = Plugin(
     plugin_id=PLUGIN_ID,
-    version="1.1.0",
-    sdk=">=1.1,<2.0",
+    version="1.2.0",
+    sdk=">=1.2,<2.0",
+    docs=("concentration.md",),
     label="Исследование концентрации (пример)",
     description="Пример агентного плагина: подграф с собственным состоянием, агент, "
     "читающий его результат, и агент со своим MCP-инструментом. Выключен по умолчанию.",

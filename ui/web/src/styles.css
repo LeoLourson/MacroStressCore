@@ -231,3 +231,45 @@ table:not([data-with-table-border]) :is(th, td):last-child {
 .flush table table :is(th, td):last-child {
   padding-inline-end: 0;
 }
+
+/* Formulas (components/Markdown.tsx): KaTeX's own fonts, the colour of the text around them,
+   a size that sits with Golos Text. A wide block formula scrolls inside its own line. */
+.katex {
+  font-size: 1.08em;
+  color: inherit;
+  /* Holds KaTeX's hidden MathML copy, so it cannot widen a phone screen. */
+  position: relative;
+}
+
+.katex-display {
+  margin: var(--mantine-spacing-xs) 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-block: 2px;
+}
+
+.doc-prose {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mantine-spacing-sm);
+  overflow-wrap: break-word;
+}
+
+.math-nowrap {
+  white-space: nowrap;
+}
+
+.doc-table-wrap {
+  overflow-x: auto;
+}
+
+/* A table on the text column: the outer cells carry no inner padding. */
+.doc-table th:first-child,
+.doc-table td:first-child {
+  padding-inline-start: 0;
+}
+
+.doc-table th:last-child,
+.doc-table td:last-child {
+  padding-inline-end: 0;
+}

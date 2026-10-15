@@ -14,8 +14,9 @@ from .kinds import FX_RATE, PRICE
 
 plugin = Plugin(
     plugin_id="market",
-    version="1.0.0",
-    sdk=">=1.0,<2.0",
+    version="1.1.0",
+    sdk=">=1.2,<2.0",
+    docs=("fx_and_pnl.md",),
     label="Рыночные факторы",
     description="Валютный фактор и портфельный срез рыночного результата.",
     factors=(

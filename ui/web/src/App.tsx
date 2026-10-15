@@ -15,6 +15,7 @@ import { resolveVariables, theme } from './theme';
 const NewRun = lazy(() => import('./pages/NewRun').then((m) => ({ default: m.NewRun })));
 const PortfolioEditor = lazy(() => import('./pages/PortfolioEditor').then((m) => ({ default: m.PortfolioEditor })));
 const Portfolios = lazy(() => import('./pages/Portfolios').then((m) => ({ default: m.Portfolios })));
+const Documentation = lazy(() => import('./pages/Documentation').then((m) => ({ default: m.Documentation })));
 const RunPage = lazy(() => import('./pages/run/RunPage').then((m) => ({ default: m.RunPage })));
 
 function page(element: ReactNode) {
@@ -41,6 +42,8 @@ const router = createBrowserRouter([
       { path: '/portfolios', element: page(<Portfolios />) },
       { path: '/portfolios/new', element: page(<PortfolioEditor />) },
       { path: '/runs/:runId', element: page(<RunPage />) },
+      { path: '/documentation', element: page(<Documentation />) },
+      { path: '/documentation/:owner/:slug', element: page(<Documentation />) },
       { path: '*', element: <Navigate to="/" replace /> },
     ],
   },

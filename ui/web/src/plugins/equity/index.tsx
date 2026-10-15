@@ -3,6 +3,7 @@
 // CalculationResult.details, the equity model's ShareDetails (plugins/equity/schemas.py).
 import { List, SimpleGrid, Stack } from '@mantine/core';
 import { ContributionsBlock, Fact, HistogramBlock, MetricsBlock, Section, SourcesBlock } from '../../components/ResultBlocks';
+import { MathText } from '../../components/MathText';
 import { Term } from '../../components/Term';
 import { compact, day, metricValue, number, percent } from '../../lib/format';
 import type { PositionViewProps, UiPlugin } from '../sdk';
@@ -94,7 +95,9 @@ function EquityPosition({ result, view, entries }: PositionViewProps) {
         <Section title="Соглашения модели">
           <List size="sm" spacing={4}>
             {d.conventions.map((line) => (
-              <List.Item key={line}>{line}</List.Item>
+              <List.Item key={line}>
+                <MathText>{line}</MathText>
+              </List.Item>
             ))}
           </List>
         </Section>

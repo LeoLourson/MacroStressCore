@@ -1,6 +1,7 @@
 import type {
   Activity,
   Artifacts,
+  Documentation,
   EventInput,
   Explanation,
   Graph,
@@ -154,6 +155,10 @@ export class ApiClient {
   /** The workflows and the agent plugins that may join them (GET /v1/workflows). */
   workflows() {
     return this.call<WorkflowView[]>('GET', '/v1/workflows');
+  }
+
+  docs() {
+    return this.call<Documentation>('GET', '/v1/docs');
   }
 
   start(

@@ -3,6 +3,8 @@ from contextlib import contextmanager
 from langgraph.checkpoint.memory import InMemorySaver
 from langgraph.checkpoint.postgres import PostgresSaver
 from langgraph.checkpoint.sqlite import SqliteSaver
+from psycopg.rows import dict_row
+from psycopg_pool import ConnectionPool
 
 
 def thread_id(run_id: str) -> str:
@@ -24,9 +26,21 @@ def build_checkpointer(mode="memory", *, connection_string=None):
     elif mode in {"sqlite", "postgres"}:
         if not connection_string:
             raise ValueError(f"{mode} requires connection_string")
-        saver_type = SqliteSaver if mode == "sqlite" else PostgresSaver
-        with saver_type.from_conn_string(connection_string) as saver:
-            saver.setup()
-            yield saver
+        if mode == "sqlite":
+            with SqliteSaver.from_conn_string(connection_string) as saver:
+                saver.setup()
+                yield saver
+        else:
+            # A pool, not one connection: the process outlives a database restart, and a
+            # connection the server dropped is replaced when the next checkpoint needs one.
+            with ConnectionPool(
+                connection_string,
+                kwargs={"autocommit": True, "prepare_threshold": 0, "row_factory": dict_row},
+                check=ConnectionPool.check_connection,
+                open=False,
+            ) as pool:
+                saver = PostgresSaver(pool)
+                saver.setup()
+                yield saver
     else:
         raise ValueError(f"Unknown checkpoint mode: {mode}")

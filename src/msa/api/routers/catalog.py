@@ -7,6 +7,7 @@ none of this carries portfolio data, so it is open to anyone who can reach the A
 from fastapi import APIRouter
 
 from msa.platform.catalog import asset_types, factors, models, slices, workflows
+from msa.platform.docs import documentation
 
 router = APIRouter(tags=["catalog"])
 
@@ -39,3 +40,9 @@ def slices_catalog():
 def workflows_catalog():
     """Workflows with their stages, nodes, extension points and the agents that join them."""
     return workflows()
+
+
+@router.get("/v1/docs")
+def docs_catalog():
+    """The mathematics: the platform's pages, then the pages each plugin carries."""
+    return documentation()

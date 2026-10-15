@@ -7,7 +7,7 @@ range blocks start-up rather than failing in the middle of a run.
 
 import re
 
-SDK_VERSION = "1.1.0"
+SDK_VERSION = "1.2.0"
 
 _VERSION = re.compile(r"^(\d+)\.(\d+)(?:\.(\d+))?$")
 _CLAUSE = re.compile(r"^(>=|<=|==|<|>)\s*(\d+(?:\.\d+){0,2})$")

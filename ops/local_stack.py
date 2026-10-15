@@ -153,6 +153,9 @@ def pg_up(password):
             stdin=subprocess.DEVNULL,
             stdout=subprocess.DEVNULL,
             stderr=subprocess.DEVNULL,
+            # On Windows it would also inherit the console: closing the terminal, or Ctrl+C
+            # in it, would stop the server under the API that stays up.
+            creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0),
         )
     # Also on reruns: a first start interrupted after initdb leaves a cluster without the database.
     created = subprocess.run(

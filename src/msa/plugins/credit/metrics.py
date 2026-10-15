@@ -14,7 +14,8 @@ METRICS: tuple[MetricSpec, ...] = (
         M,
         direction="higher_is_worse",
         aggregation="sum_by_realisation",
-        description="ΔEL = EL(стресс) − EL(база) за горизонт, по совместным реализациям.",
+        description=r"$\Delta\mathrm{EL} = \mathrm{EL}(\text{стресс}) - \mathrm{EL}(\text{база})$"
+        " за горизонт, по совместным реализациям.",
     ),
     MetricSpec(
         "credit.expected_loss",

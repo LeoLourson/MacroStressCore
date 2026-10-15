@@ -86,6 +86,10 @@ class Plugin:
     #: ``prompts/<name>-<version>.txt`` in the plugin's package, read with
     #: ``msa.prompts.registry.get("<plugin_id>.<name>")``.
     prompts: dict[str, str] = field(default_factory=dict)
+    #: Pages of the plugin's mathematics, Markdown files in the ``docs/`` folder of its
+    #: package, in reading order. Each starts with a ``# `` title; formulas are ``$...$`` and
+    #: ``$$...$$`` in KaTeX syntax. The documentation page of the app shows them.
+    docs: tuple[str, ...] = ()
     #: Options a run of each namespace passes to the plugin's models.
     run_options: Callable[[str], dict] | None = None
     demo: Callable[[], list[DemoCase]] | None = None

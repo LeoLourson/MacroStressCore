@@ -117,8 +117,9 @@ function Header() {
             <Logo />
           </Link>
           <Group gap="lg" wrap="nowrap" visibleFrom="sm">
-            <NavItem to="/" label="Стресс-тесты" match={(path) => !path.startsWith('/portfolios')} />
+            <NavItem to="/" label="Стресс-тесты" match={(path) => !/^\/(portfolios|documentation)/.test(path)} />
             <NavItem to="/portfolios" label="Портфели" match={(path) => path.startsWith('/portfolios')} />
+            <NavItem to="/documentation" label="Документация" match={(path) => path.startsWith('/documentation')} />
           </Group>
         </Group>
         <Group gap="md" wrap="nowrap">

@@ -49,7 +49,7 @@ from .schemas import (
 )
 
 PLUGIN_ID = "equity"
-PLUGIN_VERSION = "1.1.0"
+PLUGIN_VERSION = "1.2.0"
 MODEL_ID = "equity.factor_stress.v1"
 SLICE = "market.pnl"
 MARKET, SECTOR = "equity.market", "equity.sector"
@@ -381,8 +381,8 @@ class ShareFactorStress(CalculationModel):
             ],
             loss_histogram={"edges": edges.tolist(), "counts": counts.tolist()},
             conventions=[
-                "Цена на горизонте: P_T = P_0·exp(β_m·f_m + β_s·f_s + ε).",
-                "Отраслевой фактор f_s приходит по графу события через ОКВЭД эмитента; "
+                r"Цена на горизонте: $P_T = P_0 \exp(\beta_m f_m + \beta_s f_s + \varepsilon)$.",
+                "Отраслевой фактор $f_s$ приходит по графу события через ОКВЭД эмитента; "
                 "эластичности рёбер графа — допущения, которые утверждает аналитик.",
                 "Дивиденды заданы суммой на горизонт и пересчитаны по курсу конца горизонта.",
                 "P&L — к текущей стоимости; изменение к базе — за вычетом дивидендов базы.",

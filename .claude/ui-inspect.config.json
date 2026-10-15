@@ -369,6 +369,60 @@
           "wait": 1200
         }
       ]
+    },
+    {
+      "name": "docs-scenario",
+      "url": "/documentation/platform/scenario",
+      "actions": [
+        {
+          "wait": 2500
+        }
+      ]
+    },
+    {
+      "name": "docs-statistics",
+      "url": "/documentation/platform/statistics",
+      "actions": [
+        {
+          "wait": 2500
+        }
+      ]
+    },
+    {
+      "name": "docs-portfolio",
+      "url": "/documentation/platform/portfolio",
+      "actions": [
+        {
+          "wait": 2500
+        }
+      ]
+    },
+    {
+      "name": "docs-credit-trajectory",
+      "url": "/documentation/credit/trajectory",
+      "actions": [
+        {
+          "wait": 2500
+        }
+      ]
+    },
+    {
+      "name": "docs-credit-pd",
+      "url": "/documentation/credit/pd",
+      "actions": [
+        {
+          "wait": 2500
+        }
+      ]
+    },
+    {
+      "name": "docs-equity",
+      "url": "/documentation/equity/factor_stress",
+      "actions": [
+        {
+          "wait": 2500
+        }
+      ]
     }
   ]
 }

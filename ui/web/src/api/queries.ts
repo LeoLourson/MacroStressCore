@@ -132,6 +132,11 @@ export function useWorkflows() {
   return useQuery({ queryKey: ['workflows'], queryFn: () => client.workflows(), staleTime: Infinity });
 }
 
+export function useDocs() {
+  const client = useClient();
+  return useQuery({ queryKey: ['docs'], queryFn: () => client.docs(), staleTime: Infinity });
+}
+
 export function usePortfolios(enabled: boolean) {
   const client = useClient();
   return useQuery({ queryKey: ['portfolios', client.mode], queryFn: () => client.portfolios(), enabled });

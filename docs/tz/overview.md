@@ -1,8 +1,7 @@
 # MacroStress Core — обзор
 
 Технические детали для разработчиков — в
-[developer.md](developer.md), все формулы — в [math.md](math.md). Читать математику для
-понимания этого документа не обязательно.
+[developer.md](developer.md), математическая модель — в [math.md](math.md). 
 
 ## Содержание
 

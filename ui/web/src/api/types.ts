@@ -401,6 +401,19 @@ export interface WorkflowAgent {
   enabled: boolean;
 }
 
+/** One page of the documentation of the mathematics (GET /v1/docs). */
+export interface DocPage {
+  slug: string;
+  title: string;
+  markdown: string;
+}
+
+/** The platform's pages, then the pages each plugin carries. */
+export interface Documentation {
+  platform: DocPage[];
+  plugins: { plugin_id: string; label: string; version: string; pages: DocPage[] }[];
+}
+
 /** The execution graph as the screens show it: stages of nodes, extension points, agents. */
 export interface WorkflowView {
   workflow_id: string;

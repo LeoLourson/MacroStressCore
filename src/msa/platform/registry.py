@@ -237,6 +237,13 @@ def build(plugins: Iterable[Plugin]) -> Registry:
                     f"prompts/{name}-{version}.txt in the plugin's package"
                 )
 
+        for name in plugin.docs:
+            if doc_title(plugin, name) is None:
+                problems.append(
+                    f"{plugin.plugin_id}: doc {name!r} is not a file docs/{name} of the "
+                    "plugin's package starting with a '# ' title"
+                )
+
     # Words of evidence sources and authors are shared: a disagreement is a problem.
     for kind, attribute in (("source", "sources"), ("author", "authors")):
         worded: dict[str, tuple[str, str]] = {}
@@ -346,6 +353,26 @@ def prompt_file(plugin: Plugin, name: str, version: str):
     except ModuleNotFoundError:
         return None
     return path if path.is_file() else None
+
+
+def doc_file(plugin: Plugin, name: str):
+    """A page of a plugin's documentation, ``docs/<name>`` of its package."""
+    from importlib.resources import files
+
+    try:
+        path = files(package_of(plugin)).joinpath("docs", name)
+    except ModuleNotFoundError:
+        return None
+    return path if path.is_file() else None
+
+
+def doc_title(plugin: Plugin, name: str) -> str | None:
+    """The ``# `` title on the first line of a documentation page; ``None`` without one."""
+    path = doc_file(plugin, name)
+    if path is None:
+        return None
+    first = path.read_text(encoding="utf-8").partition("\n")[0]
+    return first[2:].strip() if first.startswith("# ") and first[2:].strip() else None
 
 
 def discover(package: str = PACKAGE) -> list[Plugin]:

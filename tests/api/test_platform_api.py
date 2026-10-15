@@ -97,6 +97,9 @@ def test_the_catalogs_come_from_the_plugins(client):
     assert factors["credit.working_capital"]["application"] == "additive"
     assert factors["market.fx"]["scope"] == "currency_pair"
     assert {item["slice_id"] for item in get(client, "/v1/slices")} >= {"credit.loss", "market.pnl"}
+    docs = get(client, "/v1/docs")
+    assert docs["platform"][0]["slug"] == "scenario"
+    assert "credit" in {group["plugin_id"] for group in docs["plugins"]}
     (workflow,) = [w for w in get(client, "/v1/workflows") if w["workflow_id"] == "stress_test"]
     assert [stage["title"] for stage in workflow["stages"]][0] == "Анализ события"
     assert {p["point_id"] for p in workflow["extension_points"]} == {
@@ -196,7 +199,7 @@ def test_a_run_goes_from_the_event_to_the_approved_report(client):
     status = wait(client, status["run_id"])
     run_id = status["run_id"]
     assert status["status"] == "human_fix_graph", status
-    assert status["workflow_id"] == "stress_test" and status["plugins"]["credit"] == "3.3.0"
+    assert status["workflow_id"] == "stress_test" and status["plugins"]["credit"] == "3.4.0"
     stop = status["pending_interrupt"][0]["payload"]
     post(client, f"/v1/demo/runs/{run_id}/resume", {"graph": stop["graph"]})
     status = wait(client, run_id)
