@@ -1,8 +1,9 @@
 """Библиотечное событие пилота АФК: повышение ключевой ставки 25.10.2024.
 
 Оно подготовлено для портфеля ``AFK-SYSTEMA-OCT-2024``. Портфель собирается генератором
-``demo.build_pilot_afk`` из данных ``demo/pilot-afk``. Текст события и источники читаются из
-каталога (``demo/events/HIST-KEY-RATE-2024-10.json`` и ``demo/pilot-afk/sources.json``):
+``demo.build_pilot_afk`` из ``demo/historical/afk-systema/research``. Текст события и источники
+читаются из каталога (``demo/historical/afk-systema/events/HIST-KEY-RATE-2024-10.json`` и
+``demo/historical/afk-systema/sources.json``):
 здесь только то, что должно попасть в библиотеку на стенде, где демо-каталог не переносится
 целиком.
 """
@@ -15,7 +16,7 @@ from msa.db.repositories.portfolios import PortfoliosRepository
 from msa.db.session import session_scope
 
 CATALOG = Path(__file__).resolve().parent
-ROOT = CATALOG / "pilot-afk"
+ROOT = CATALOG / "historical" / "afk-systema"
 EVENT_ID = "HIST-KEY-RATE-2024-10"
 PORTFOLIO_ID = "AFK-SYSTEMA-OCT-2024"
 #: Идентификатор пилота в ``demo_data`` плагинов; каталог сборки едет отдельной папкой.
@@ -23,7 +24,7 @@ MODULE_ID = "pilot-afk"
 
 
 def pilot_event(catalog=CATALOG, root=ROOT):
-    event = json.loads((catalog / "events" / f"{EVENT_ID}.json").read_text("utf-8"))
+    event = json.loads((root / "events" / f"{EVENT_ID}.json").read_text("utf-8"))
     sources = json.loads((root / "sources.json").read_text("utf-8"))
     return {
         "event_id": event["event_id"],
@@ -33,7 +34,7 @@ def pilot_event(catalog=CATALOG, root=ROOT):
             # Всё из файла события — в том числе слова аналитика о силе события
             # (``scenario_text``) — плюс источники пилота: библиотека и каталог не расходятся.
             **event["metadata"],
-            "dataset": "demo/pilot-afk",
+            "dataset": "demo/historical/afk-systema",
             "default_start": True,
             "portfolio_id": PORTFOLIO_ID,
             "sources": sources["sources"],

@@ -20,6 +20,7 @@ import { IconChevronDown, IconChevronRight, IconFileText, IconPlayerPlay } from 
 import { useEffect, useState, type FormEvent } from 'react';
 import { Link, Navigate, useLocation, useNavigate, useSearchParams } from 'react-router';
 import { useLibraryEvents, usePortfolio, usePortfolios, useStartRun, useWorkflows, type StartInput } from '../api/queries';
+import type { RerunState } from '../api/types';
 import { canRun, useSession } from '../auth/session';
 import { ErrorAlert } from '../components/ErrorAlert';
 import { NARROW, PageHeader, PageSection } from '../components/Page';
@@ -34,15 +35,6 @@ const SOURCE_LABELS: Record<Source, string> = {
   file: 'Документ',
   url: 'Ссылка',
 };
-
-/** What «Запустить заново» carries over from an earlier stress test. */
-export interface RerunState {
-  portfolioId?: string;
-  eventText?: string;
-  scenario?: string;
-  /** Start with the provider's stronger model: the earlier run's model could not build the graph. */
-  strongModel?: boolean;
-}
 
 /** One part of the form: a card of its own, so the three things a run needs read as three groups. */
 function Section({ title, children }: { title: string; children: React.ReactNode }) {

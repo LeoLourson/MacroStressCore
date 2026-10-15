@@ -2,8 +2,7 @@
 
 from msa.platform.catalog import asset_types, enabled_agents, models, workflows
 from msa.platform.registry import build, registry
-
-from . import minimal_plugin as mp
+from tests import minimal_plugin as mp
 
 
 def _registry():

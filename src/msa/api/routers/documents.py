@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Request
 
-from msa.agents.causal_output import reachable_factors, scenario_violations, sector_effects
+from msa.contracts.causal_answer import reachable_factors, scenario_violations, sector_effects
 from msa.validators import validate
 
 from ..dependencies import Authenticated, access

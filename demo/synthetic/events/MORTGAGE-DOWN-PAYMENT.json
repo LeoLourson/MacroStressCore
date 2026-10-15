@@ -1,0 +1,65 @@
+{
+  "event_id": "MORTGAGE-DOWN-PAYMENT",
+  "title": "Повышение первоначального взноса по льготной ипотеке",
+  "text": "Ужесточение требований к первоначальному взносу по льготной ипотеке",
+  "metadata": {
+    "portfolio_id": "MULTI-ASSET",
+    "synthetic": true,
+    "source": "Синтетическое событие демо-каталога",
+    "scenario_text": "Продажи квартир в новостройках упадут на 20–45 %, в центральном сценарии на 35 %. Объём строительства сократится на 5–15 %, в центральном сценарии на 10 %."
+  },
+  "mock_answer": {
+    "event_type": "Первоначальный взнос по ипотеке",
+    "channels": {
+      "housing_sales": "Продажи квартир в новостройках",
+      "construction_volume": "Объём жилищного строительства"
+    },
+    "links": [
+      {
+        "channel": "housing_sales",
+        "okved": "41.20",
+        "factor": "credit.revenue"
+      },
+      {
+        "channel": "construction_volume",
+        "okved": "23.61",
+        "factor": "credit.revenue"
+      }
+    ],
+    "scenario": {
+      "housing_sales": {
+        "kind": "triangular",
+        "low": -0.45,
+        "mode": -0.35,
+        "high": -0.2,
+        "label": "Продажи квартир в новостройках",
+        "unit": "fraction",
+        "factor": "credit.revenue",
+        "channel": "housing_sales"
+      },
+      "construction_volume": {
+        "kind": "triangular",
+        "low": -0.15,
+        "mode": -0.1,
+        "high": -0.05,
+        "label": "Объём строительства",
+        "unit": "fraction",
+        "factor": "credit.revenue",
+        "channel": "construction_volume"
+      }
+    }
+  },
+  "expect": {
+    "loses": [
+      "PROJECT-HOUSING",
+      "BOND-CONCRETE"
+    ],
+    "unaffected": [
+      "LOAN-MACHINERY",
+      "LOAN-LEASING",
+      "LOAN-FERTILIZER",
+      "SHARE-OIL",
+      "SHARE-US-TECH"
+    ]
+  }
+}

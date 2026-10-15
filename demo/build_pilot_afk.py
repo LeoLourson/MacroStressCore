@@ -1,13 +1,13 @@
 """Портфель пилота АФК: публичные «дочки» АФК «Система» на 24.10.2024.
 
-Собирается из данных ``demo/pilot-afk``: цены — закрытия MOEX ISS 24.10.2024, бета к индексу
-и остаточная волатильность — регрессия за 24.10.2023–24.10.2024 (``compute_beta.py``,
-``beta-computation.json``), число акций и дивиденды — задание пилота.
+Собирается из данных ``demo/historical/afk-systema/research``: цены — закрытия MOEX ISS
+24.10.2024, бета к индексу и остаточная волатильность — регрессия за 24.10.2023–24.10.2024
+(``compute_beta.py``, ``beta-computation.json``), число акций и дивиденды — задание пилота.
 
 Каждое число несёт источник: котировка и бета — ``historical_estimate`` с датой окна,
 оценка — ``expert_assumption`` с автором и датой сборки. Записи идут тем же путём, что у
-пилота «Эталон»: шапка в ``demo/portfolios``, части плагинов в их ``demo_data``, шапка
-снимка в ``demo/snapshots``.
+пилота «Эталон»: шапки в ``demo/historical/afk-systema/{portfolios,snapshots}``, части
+плагинов в их ``demo_data/historical/afk-systema``.
 
     uv run --frozen python -m demo.build_pilot_afk           # записать файлы
     uv run --frozen python -m demo.build_pilot_afk --check   # сверить с записанными
@@ -29,7 +29,10 @@ from msa.platform.registry import registry as current
 
 CATALOG = Path(__file__).resolve().parent
 REPOSITORY = CATALOG.parent
-PILOT = CATALOG / "pilot-afk"
+#: Коллекция этого исторического случая (``demo.catalog``).
+COLLECTION = "historical/afk-systema"
+CASE = CATALOG / COLLECTION
+PILOT = CASE / "research"
 #: Оценка пилота — авторская; датируется днём сборки каталога.
 AUTHOR = "pilot-afk:analyst"
 ASSUMED_ON = date(2026, 10, 15)
@@ -228,7 +231,7 @@ def portfolio(registry) -> tuple[dict, dict, list[dict]]:
             "snapshot_id": SNAPSHOT_ID,
             "builtin": True,
             "metadata": {
-                "source": "demo/pilot-afk",
+                "source": "demo/historical/afk-systema",
                 "synthetic": False,
                 "money_unit": "RUB_million",
                 "description": (
@@ -260,19 +263,19 @@ def outputs(registry=None) -> dict[Path, str]:
     if problems:
         raise ValueError(f"{PORTFOLIO_ID}: " + "; ".join(problems))
     files = {
-        CATALOG / "portfolios" / f"{PORTFOLIO_ID}.json": _json(header),
-        CATALOG / "snapshots" / f"{SNAPSHOT_ID}.json": _json(
+        CASE / "portfolios" / f"{PORTFOLIO_ID}.json": _json(header),
+        CASE / "snapshots" / f"{SNAPSHOT_ID}.json": _json(
             {
                 "snapshot_id": SNAPSHOT_ID,
                 "as_of": AS_OF.isoformat(),
                 "label": f"«Данные {NAME}»",
                 "kind": "demo",
                 "metadata": {
-                    "source": "demo/pilot-afk",
+                    "source": "demo/historical/afk-systema",
                     "synthetic": False,
                     "description": (
                         "Котировки MOEX ISS, бета и остаточная волатильность из "
-                        "demo/pilot-afk/beta-computation.json"
+                        "demo/historical/afk-systema/research/beta-computation.json"
                     ),
                 },
             }
@@ -294,10 +297,10 @@ def outputs(registry=None) -> dict[Path, str]:
         plugin_id = registry.plugin_of(item["kind"]).plugin_id
         snapshot_parts.setdefault(plugin_id, {})[item["item_id"]] = item
     for plugin_id, part in parts.items():
-        folder = _demo_data(registry, plugin_id) / "portfolios"
+        folder = _demo_data(registry, plugin_id) / COLLECTION / "portfolios"
         files[folder / f"{PORTFOLIO_ID}.json"] = _json(part)
     for plugin_id, part in snapshot_parts.items():
-        folder = _demo_data(registry, plugin_id) / "snapshots"
+        folder = _demo_data(registry, plugin_id) / COLLECTION / "snapshots"
         files[folder / f"{SNAPSHOT_ID}.json"] = _json(
             {"items": [part[key] for key in sorted(part)]}
         )

@@ -2,7 +2,7 @@
 
 Every call is a real MCP round trip over FastMCP's in-memory transport: the arguments are
 checked against the tool schema, and the server's ``audited`` wrapper writes the call to
-``audit_log`` under the run, node and attempt that made it (``msa.activity``).
+``audit_log`` under the run, node and attempt that made it (``msa.graph.activity``).
 
 All clients run on one event loop in its own thread. FastMCP servers are not safe to share
 between event loops: their lifespan and the in-memory task queue (Docket) belong to the loop
@@ -15,7 +15,7 @@ from datetime import date
 
 from fastmcp import Client
 
-from msa import activity
+from msa.graph import activity
 
 from .registry import build_servers
 from .tools import ToolError

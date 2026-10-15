@@ -3,7 +3,7 @@ from datetime import date
 from msa.agents.base import AgentFailure
 from msa.agents.draw_macro import ScenarioDraws
 from msa.agents.quant import QuantInput, not_calculated
-from msa.engine.catalog import ModelRunOutput
+from msa.engine.model_catalog import ModelRunOutput
 from msa.plugin_sdk.model import Diagnostics
 
 

@@ -1,0 +1,87 @@
+{
+  "event_id": "RECYCLING-FEE",
+  "title": "Утилизационный сбор на спецтехнику и задержки расчётов",
+  "text": "Введён утилизационный сбор на спецтехнику; расчёты через внешнеторговых платёжных посредников в Азии удлинились до 45 дней",
+  "metadata": {
+    "portfolio_id": "MULTI-ASSET",
+    "synthetic": true,
+    "source": "Синтетическое событие демо-каталога",
+    "scenario_text": "Утилизационный сбор поднимет стоимость закупки спецтехники на 6–14 %, в центральном сценарии на 10 %. Новые лизинговые сделки со спецтехникой сократятся на 4–12 %, в центральном сценарии на 8 %. Расчёты через платёжных посредников задержатся на 30–60 дней."
+  },
+  "mock_answer": {
+    "event_type": "Утилизационный сбор",
+    "channels": {
+      "equipment_cost": "Стоимость закупки спецтехники",
+      "leasing_deals": "Новые лизинговые сделки со спецтехникой",
+      "payment_delay": "Срок расчётов через посредников"
+    },
+    "links": [
+      {
+        "channel": "equipment_cost",
+        "okved": "46.63",
+        "factor": "credit.cogs"
+      },
+      {
+        "channel": "leasing_deals",
+        "okved": "64.91",
+        "factor": "credit.revenue"
+      },
+      {
+        "channel": "payment_delay",
+        "okved": "46.63",
+        "factor": "credit.working_capital"
+      },
+      {
+        "channel": "payment_delay",
+        "okved": "20.15",
+        "factor": "credit.working_capital"
+      }
+    ],
+    "scenario": {
+      "equipment_cost": {
+        "kind": "triangular",
+        "low": 0.06,
+        "mode": 0.1,
+        "high": 0.14,
+        "label": "Стоимость закупки спецтехники",
+        "unit": "fraction",
+        "factor": "credit.cogs",
+        "channel": "equipment_cost"
+      },
+      "leasing_deals": {
+        "kind": "triangular",
+        "low": -0.12,
+        "mode": -0.08,
+        "high": -0.04,
+        "label": "Новые лизинговые сделки",
+        "unit": "fraction",
+        "factor": "credit.revenue",
+        "channel": "leasing_deals"
+      },
+      "payment_delay": {
+        "kind": "uniform",
+        "low": 30.0,
+        "high": 60.0,
+        "label": "Задержка расчётов",
+        "unit": "days",
+        "factor": "credit.working_capital",
+        "channel": "payment_delay"
+      }
+    }
+  },
+  "expect": {
+    "loses": [
+      "LOAN-MACHINERY",
+      "LOAN-FERTILIZER"
+    ],
+    "reached": [
+      "LOAN-LEASING"
+    ],
+    "unaffected": [
+      "BOND-CONCRETE",
+      "PROJECT-HOUSING",
+      "SHARE-OIL",
+      "SHARE-US-TECH"
+    ]
+  }
+}

@@ -1,0 +1,90 @@
+{
+  "event_id": "REAL-INCOME-DROP",
+  "title": "Падение реальных доходов населения",
+  "text": "Реальные располагаемые доходы населения снижаются. Семьи сокращают расходы на рестораны и одежду сильнее, чем на продукты питания.",
+  "metadata": {
+    "portfolio_id": "CONSUMER-DEMAND",
+    "synthetic": true,
+    "source": "Синтетическое событие демо-каталога",
+    "scenario_text": "Реальные доходы снизятся на 3–8 %, в центральном сценарии на 6 %. Индекс МосБиржи снизится на 2–8 %, в центральном сценарии на 5 %."
+  },
+  "mock_answer": {
+    "event_type": "Падение реальных доходов",
+    "channels": {
+      "real_income": "Реальные доходы населения",
+      "stock_market": "Индекс МосБиржи"
+    },
+    "links": [
+      {
+        "channel": "real_income",
+        "okved": "47.11",
+        "factor": "credit.revenue",
+        "elasticity": 0.4
+      },
+      {
+        "channel": "real_income",
+        "okved": "10.11",
+        "factor": "credit.revenue",
+        "elasticity": 0.6
+      },
+      {
+        "channel": "real_income",
+        "okved": "10.51",
+        "factor": "credit.revenue",
+        "elasticity": 0.4
+      },
+      {
+        "channel": "real_income",
+        "okved": "56.10",
+        "factor": "credit.revenue",
+        "elasticity": 1.5
+      },
+      {
+        "channel": "real_income",
+        "okved": "47.71",
+        "factor": "credit.revenue",
+        "elasticity": 1.3
+      }
+    ],
+    "direct": [
+      {
+        "channel": "stock_market",
+        "factor": "equity.market",
+        "key": "MOEX"
+      }
+    ],
+    "scenario": {
+      "real_income": {
+        "kind": "triangular",
+        "low": -0.08,
+        "mode": -0.06,
+        "high": -0.03,
+        "label": "Реальные доходы населения",
+        "unit": "fraction",
+        "factor": "credit.revenue",
+        "channel": "real_income"
+      },
+      "moex": {
+        "kind": "triangular",
+        "low": -0.083382,
+        "mode": -0.051293,
+        "high": -0.020203,
+        "label": "Индекс МосБиржи",
+        "unit": "log_return",
+        "factor": "equity.market",
+        "key": "MOEX",
+        "channel": "stock_market"
+      }
+    }
+  },
+  "expect": {
+    "loses": [
+      "LOAN-SUPERMARKET-CHAIN",
+      "LOAN-MEAT-PROCESSOR",
+      "LOAN-DAIRY-PRODUCER",
+      "LOAN-RESTAURANT-CHAIN",
+      "LOAN-APPAREL-RETAILER",
+      "SHARE-SUPERMARKET-CHAIN"
+    ]
+  }
+}

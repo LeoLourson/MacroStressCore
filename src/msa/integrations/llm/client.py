@@ -7,7 +7,7 @@ from urllib.request import Request
 
 from pydantic import BaseModel
 
-from msa import activity
+from msa.graph import activity
 
 from .network import on_prem_url, open_without_redirect
 from .providers import active

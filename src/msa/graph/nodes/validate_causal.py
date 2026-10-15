@@ -1,4 +1,4 @@
-from msa.agents.causal_output import scenario_violations
+from msa.contracts.causal_answer import scenario_violations
 from msa.db.repositories.runs import json_payload
 from msa.engine.exposure import scenario_coverage
 from msa.plugin_sdk.model import RunOptions

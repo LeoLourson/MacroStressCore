@@ -1,5 +1,5 @@
 from msa.agents.base import AgentFailure
-from msa.agents.causal_output import ScenarioParameter
+from msa.contracts.causal_answer import ScenarioParameter
 from msa.agents.draw_macro import DrawInput, ScenarioDraws
 from msa.plugin_sdk.model import Diagnostics
 

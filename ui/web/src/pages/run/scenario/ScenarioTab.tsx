@@ -51,7 +51,7 @@ import { ActionBar, PageSection, Subsection } from '../../../components/Page';
 import { day, elasticityText, nodeLabels, number, plural, scenarioValue } from '../../../lib/format';
 import { factorLabel } from '../../../api/catalog';
 import { ACTIVE, stopOf } from '../../../lib/stages';
-import type { RerunState } from '../../NewRun';
+import type { RerunState } from '../../../api/types';
 import type { RunTabProps } from '../RunPage';
 import { EdgeDrawer, evidencePlaces, fragmentText } from './EdgeDrawer';
 import { edgeCaption, GRAPH_HINT, GraphCanvas } from './GraphCanvas';

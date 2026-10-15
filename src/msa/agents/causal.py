@@ -10,7 +10,7 @@ from msa.integrations.llm import LLMClient, MockLLM
 from msa.prompts.registry import current_version, messages_for
 
 from .base import AgentError
-from .causal_output import CausalAnswer, CausalOutput, ScenarioParameter
+from msa.contracts.causal_answer import CausalAnswer, CausalOutput, ScenarioParameter
 from .ingest import is_scenario
 
 
@@ -20,7 +20,7 @@ def _MOCK_EVENTS() -> dict:
 
     Keyed by the sha256 of the event text; written by ``demo/build_catalog.py``.
     """
-    return json.loads(files(__package__).joinpath("mock_events.json").read_text("utf-8"))
+    return json.loads(files("msa.integrations.llm").joinpath("mock_events.json").read_text("utf-8"))
 
 
 def _stems(text: str) -> set[str]:

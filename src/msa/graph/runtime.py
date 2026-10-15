@@ -6,7 +6,7 @@ from hashlib import sha256
 from langchain_core.runnables import RunnableConfig
 from pydantic import TypeAdapter
 
-from msa import activity
+from msa.graph import activity
 from msa.agents import Agents
 from msa.agents.base import AgentFailure, on_failure, with_retries
 from msa.db.repositories.runs import RunRepository, json_payload

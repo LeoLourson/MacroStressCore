@@ -1,6 +1,6 @@
 """The run from the event text to the published report, through both human stops."""
 
-from msa.agents.causal_output import ScenarioParameter
+from msa.contracts.causal_answer import ScenarioParameter
 from msa.graph.interrupts import pending_interrupt, resume_run, start_run
 
 from ..support import SCENARIO, agents, confirm, run_input, stop

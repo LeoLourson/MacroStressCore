@@ -2,12 +2,12 @@
 
 import pytest
 
-from msa import activity
 from msa.api.run_service import RunService
 from msa.db.database import Database
 from msa.db.migrate import migrate
 from msa.db.repositories.runs import ApplicationRunRepository
 from msa.db.session import engine
+from msa.graph import activity
 
 RUN = "RUN1"
 SCOPE = "demo"

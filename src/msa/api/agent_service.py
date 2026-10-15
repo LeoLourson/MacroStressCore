@@ -6,7 +6,7 @@ from datetime import date
 
 from pydantic import BaseModel
 
-from msa import activity
+from msa.graph import activity
 from msa.agents import build_agents
 from msa.agents.ingest import IngestAgent
 from msa.contracts import PortfolioBundle, SourceDocument
@@ -20,7 +20,7 @@ from msa.mcp.gateway import McpResolver, ToolGateway
 from msa.mcp.services import Services
 from msa.platform.registry import registry
 from msa.prompts.registry import current_version
-from msa.storage.originals import OriginalStore
+from msa.db.originals import OriginalStore
 from msa.version import code_sha256
 
 from .problem import Problem

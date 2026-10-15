@@ -11,7 +11,7 @@ from datetime import date
 from pydantic import BaseModel, Field
 
 from msa.contracts.domain import PositionContext
-from msa.engine.catalog import ModelRunOutput, run_model
+from msa.engine.model_catalog import ModelRunOutput, run_model
 from msa.engine.dispatch import not_run
 from msa.plugin_sdk.model import Diagnostics, PreparedInputs
 

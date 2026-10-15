@@ -14,7 +14,8 @@
 /src/msa/plugins/research/      @LeoLourson
 /ui/web/src/plugins/research/   @LeoLourson
 
-# The demo stand's headers and events; the positions and data are in each plugin's demo_data.
+# The demo catalog (synthetic/ and historical/<case>/ headers and events, sanity checks);
+# the positions and data are in each plugin's demo_data.
 /demo/                          @LeoLourson
 
 # Documentation.

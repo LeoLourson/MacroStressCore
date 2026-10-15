@@ -12,12 +12,12 @@ from demo import catalog as demo_catalog
 from msa.agents import Agents
 from msa.agents.advisory import AdvisoryAgent
 from msa.agents.aggregate import AggregateAgent
-from msa.agents.causal_output import CausalOutput
 from msa.agents.draw_macro import DrawMacroAgent
 from msa.agents.exposure import ExposureAgent, LocalResolver
 from msa.agents.ingest import fragment
 from msa.agents.quant import QuantAgent, QuantInput, not_calculated
 from msa.contracts import DataSnapshot, PortfolioBundle, SourceDocument
+from msa.contracts.causal_answer import CausalOutput
 from msa.contracts.domain import contexts
 from msa.graph.interrupts import pending_interrupt, resume_run
 from msa.platform.registry import registry

@@ -6,7 +6,7 @@ import type { Artifacts, Me, RunStatus } from '../../api/types';
 import { canApprove, canFixGraph } from '../../auth/session';
 import { reasonText } from '../../lib/labels';
 import type { Tab } from '../../lib/stages';
-import type { RerunState } from '../NewRun';
+import type { RerunState } from '../../api/types';
 
 /**
  * The one move forward for this person, shown at the end of the step line. The step itself

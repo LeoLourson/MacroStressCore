@@ -1,10 +1,11 @@
 """Load the demo catalog into the isolated demo schema.
 
 The data snapshots go first, then the portfolios that read them (the bundle format), then
-the event library (demo/events). Portfolios and snapshots are assembled by
-``demo.catalog``: the headers in demo/portfolios and demo/snapshots, the positions and data
-from each plugin's ``demo_data``. Built-in portfolios and events the catalog no longer has
-are removed; the historical pilot events (``demo.pilot``, ``demo.pilot_afk``) stay.
+the event library (``events/`` of every collection). Portfolios and snapshots are assembled
+by ``demo.catalog``: the headers in ``demo/synthetic`` and ``demo/historical/<case>``, the
+positions and data from each plugin's ``demo_data``. Built-in portfolios and events the
+catalog no longer has are removed; the historical pilot events (``demo.pilot``,
+``demo.pilot_afk``) stay.
 """
 
 import argparse
@@ -34,10 +35,7 @@ def seed_demo(bind, catalog=CATALOG):
             bundle = demo_catalog.bundle(portfolio_id, root=catalog)
             repository.seed_portfolio(bundle, registry=registry())
             counts[bundle.portfolio.portfolio_id] = len(bundle.positions)
-        events = [
-            json.loads(path.read_text(encoding="utf-8"))
-            for path in sorted((catalog / "events").glob("*.json"))
-        ]
+        events = demo_catalog.events(catalog)
         for event in events:
             repository.seed_event(event)
         repository.retire(

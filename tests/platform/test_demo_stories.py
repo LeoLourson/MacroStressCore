@@ -5,15 +5,12 @@ import json
 import pytest
 
 from demo import build_catalog
-from demo.catalog import bundle, snapshot
+from demo.catalog import bundle, events, snapshot
 from msa.db.repositories.portfolios import check_bundle
 from msa.platform.registry import registry
 
-STORIES = json.loads((build_catalog.CATALOG / "story_catalog.json").read_text("utf-8"))
-EVENTS = [
-    json.loads(path.read_text("utf-8"))
-    for path in sorted((build_catalog.CATALOG / "events").glob("*.json"))
-]
+STORIES = json.loads((build_catalog.SYNTHETIC / "story_catalog.json").read_text("utf-8"))
+EVENTS = events()
 STORY_EVENTS = [e for e in EVENTS if e["metadata"]["portfolio_id"] in STORIES["portfolios"]]
 
 
@@ -89,7 +86,7 @@ def test_story_expectations_cover_each_position_exactly_once(event):
 def test_library_event_reaches_report_and_meets_its_economic_expectations(event):
     # Exercise the real workflow, graph validation, model dispatch and report, without LLM/DB.
     # A blocked or failed calculation is a failure even though the sanity CLI exits with 0.
-    from sanity.checks import library_check
+    from demo.sanity.checks import library_check
 
     verdict = library_check(event)()
     assert verdict.ok is True, verdict.observed

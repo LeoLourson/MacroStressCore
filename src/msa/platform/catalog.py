@@ -98,7 +98,7 @@ def asset_types(registry=None) -> dict:
 
 
 def models(registry=None) -> list[dict]:
-    from msa.engine.catalog import describe_model
+    from msa.engine.model_catalog import describe_model
 
     registry = registry or current()
     result = []

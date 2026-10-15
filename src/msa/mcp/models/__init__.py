@@ -1,6 +1,6 @@
-from msa.engine.catalog import describe_model as describe
-from msa.engine.catalog import list_models as catalog
-from msa.engine.catalog import run_model as calculate
+from msa.engine.model_catalog import describe_model as describe
+from msa.engine.model_catalog import list_models as catalog
+from msa.engine.model_catalog import run_model as calculate
 
 from ..audit import CallContext
 

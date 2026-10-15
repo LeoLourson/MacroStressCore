@@ -18,8 +18,7 @@ from msa.db.repositories.runs import ApplicationRunRepository
 from msa.db.repositories.snapshots import SnapshotConflict, SnapshotsRepository
 from msa.db.session import engine, session_scope
 from msa.platform.registry import build
-
-from ..platform import minimal_plugin as mp
+from tests import minimal_plugin as mp
 
 
 @pytest.fixture(scope="module")

@@ -120,7 +120,7 @@
 | Движок | `src/msa/engine/` | снимок и разрешение данных, сценарии, передача шока, диспетчер, срезы, Шепли |
 | Агенты | `src/msa/agents/` | агенты процесса ядра и агент объяснения |
 | Граф выполнения | `src/msa/graph/` | компилятор процессов, узлы, журнал, остановки, чекпоинты |
-| Процессы | `src/msa/workflows/` | встроенное объявление `core`: `stress_test`, `explain_results`, MCP ядра |
+| Процессы | `src/msa/core/` | встроенное объявление `core`: `stress_test`, `explain_results`, MCP ядра |
 | MCP | `src/msa/mcp/` | серверы из реестра, шлюз, аудит вызовов |
 | Отчёт | `src/msa/reporting/` | дерево метрик, отчёт, рекомендации, трасса |
 | Валидаторы | `src/msa/validators/` | V1–V3, V7–V9, V11 |
@@ -228,7 +228,7 @@ DataSnapshot (as_of, items: SnapshotItem)        ── данные на дат
 
 ## 6. Процесс стресс-теста
 
-Процесс `stress_test` объявлен данными (`WorkflowSpec`, `src/msa/workflows/stress_test.py`)
+Процесс `stress_test` объявлен данными (`WorkflowSpec`, `src/msa/core/stress_test.py`)
 и собирается компилятором в граф LangGraph. Точки расширения — в квадратных скобках.
 
 ```
@@ -513,7 +513,7 @@ src/msa/plugins/<id>/
   __init__.py        plugin = Plugin(...)
   *.py               модели, схемы, отчёт, агенты, MCP-серверы
   prompts/           промпты агентов: <name>-v<N>.txt
-  demo_data/         части демо-портфелей и демо-снимка
+  demo_data/         части демо-портфелей и снимков: synthetic/, historical/<случай>/
   tests/             тесты плагина (пакет)
   README.md          что даёт плагин, ограничения, открытые вопросы
 ui/web/src/plugins/<id>/        (по желанию)
@@ -695,7 +695,7 @@ Problem Details.
 | `.\msa.ps1 rehearse <события>` | репетиция линии на поднятом стенде |
 | `uv run msa-plugin …` | плагины (раздел 10.9) |
 | `uv run --frozen python -m demo.build_catalog [--check]` | сборка и сверка демо-каталога |
-| `uv run --frozen python -m sanity` | проверки здравого смысла на синтетике |
+| `uv run --frozen python -m demo.sanity` | проверки здравого смысла на синтетике |
 | `ops/load_portfolio.py` | загрузка рабочего портфеля |
 
 ## 12. Интерфейс пользователя
@@ -793,7 +793,7 @@ Problem Details.
 | `MSA_DOCLING_ARTIFACTS_PATH` | модели разбора PDF |
 | `MSA_STORAGE_ROOT` | хранилище оригиналов документов |
 
-Демо-каталог: 18 портфелей, 21 событие библиотеки с готовыми ответами для профиля `mock` и
+Демо-каталог (`demo/synthetic/` и `demo/historical/<случай>/`, см. [demo/README.md](../../demo/README.md)): 18 портфелей, 21 событие библиотеки с готовыми ответами для профиля `mock` и
 пилотное историческое событие, снимки на 11.09.2026 (см. [README](../../README.md) и [demo-stories.md](../demo-stories.md)). Демо-данные
 плагина лежат в его папке `demo_data/`; общие файлы `demo/` при добавлении плагина не
 правятся.
@@ -808,7 +808,7 @@ uv run --frozen ruff check .            # стиль
 uv run --frozen ruff format --check .
 uv run --frozen lint-imports            # граница ядра и плагинов
 uv run msa-plugin check                 # соответствие всех плагинов
-uv run --frozen python -m sanity        # проверки здравого смысла
+uv run --frozen python -m demo.sanity        # проверки здравого смысла
 cd ui/web; npm run build                # манифест, совместимость UI-плагинов, типы, сборка
 ```
 
@@ -817,7 +817,7 @@ cd ui/web; npm run build                # манифест, совместимо
 | № | Критерий | Как проверить |
 |---|---|---|
 | 1 | Все автоматические проверки 17.1 зелёные | команды 17.1 |
-| 2 | Каждое событие демо-каталога проходит линию на своём портфеле до решения риск-менеджера | `python -m sanity M`, `msa.ps1 rehearse` |
+| 2 | Каждое событие демо-каталога проходит линию на своём портфеле до решения риск-менеджера | `python -m demo.sanity M`, `msa.ps1 rehearse` |
 | 3 | Числа кредитной модели совпадают с эталоном | `test_credit_reference.py` |
 | 4 | Расчёт не начинается без подтверждённого сценария, отчёт не публикуется без решения | тесты процесса и остановок (`tests/graph/`) |
 | 5 | Каждое число отчёта проходит V9; трасса открывает его происхождение | тесты отчёта, `/trace` |

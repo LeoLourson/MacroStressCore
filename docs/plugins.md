@@ -113,7 +113,7 @@ uv run msa-plugin ui-manifest                               # манифест �
 издержек в падение цены или вероятность дефолта без модели либо явного допущения.
 Промпты отчёта и объяснений используют смысл метрик и разделы плагинов, не навязывая
 кредитные разделы. Сквозной пример независимого типа актива без эмитента и без
-кредитных плагинов проверяется в `tests/platform/test_causal_plugins.py`.
+кредитных плагинов проверяется в `tests/agents/test_causal_plugins.py`.
 
 ### 3.1. Сначала экономический контракт
 
@@ -350,12 +350,15 @@ SliceSpec("market.pnl", "Рыночный результат", measure_label="Р
 Чтобы плагин участвовал в демо-стенде, его данные лежат в его папке, а общие файлы
 `demo/` не правятся:
 
-- `demo_data/portfolios/<portfolio_id>.json` — `{"parties", "instruments", "positions"}`
-  плагина в демо-портфеле (так `equity` добавляет `SHARE-OIL` и `SHARE-US-TECH` в MULTI-ASSET);
-- `demo_data/snapshots/<snapshot_id>.json` — `{"items"}`: их данные в демо-снимке.
+- `demo_data/<коллекция>/portfolios/<portfolio_id>.json` — `{"parties", "instruments",
+  "positions"}` плагина в демо-портфеле (так `equity` добавляет `SHARE-OIL` и `SHARE-US-TECH` в
+  MULTI-ASSET: `demo_data/synthetic/portfolios/MULTI-ASSET.json`);
+- `demo_data/<коллекция>/snapshots/<snapshot_id>.json` — `{"items"}`: их данные в демо-снимке.
 
-`demo/catalog.py` собирает портфель из заголовка `demo/portfolios/<id>.json` и частей всех
-плагинов в порядке реестра; снимок — из заголовка и элементов, упорядоченных по `item_id`.
+Коллекция — `synthetic` (вымышленные данные) или `historical/<случай>` (настоящие, например
+`historical/etalon`), как у заголовка в `demo/` ([demo/README.md](../demo/README.md)).
+`demo/catalog.py` собирает портфель из заголовка `demo/<коллекция>/portfolios/<id>.json` и частей
+всех плагинов той же коллекции в порядке реестра; снимок — из заголовка и элементов, упорядоченных по `item_id`.
 Один эмитент может прийти от двух плагинов, если записи совпадают; разные записи с одним
 идентификатором — ошибка. Часть с заголовком (`"portfolio"`) добавляет собственный
 демо-портфель плагина. Каталог читают `demo/seed_demo.py`, эталонный тест кредита и тесты
@@ -382,10 +385,10 @@ SliceSpec("market.pnl", "Рыночный результат", measure_label="Р
 (`graph/compiler.py`) собирает из этого граф LangGraph и вставляет агентов плагинов после
 их точки.
 
-В платформе два процесса (встроенное объявление `core`, `msa/workflows`):
+В платформе два процесса (встроенное объявление `core`, `msa/core`):
 
 - `stress_test`. Точки расширения: `after_event_parsed`, `before_scenario_approval`,
-  `after_calculation`, `before_report`. Схема — в `src/msa/workflows/stress_test.py`.
+  `after_calculation`, `before_report`. Схема — в `src/msa/core/stress_test.py`.
 - `explain_results`. Точка расширения: `after_explanation`.
 
 Точка гарантирует набор ключей состояния (`available`). Агент может читать только их.
@@ -656,7 +659,7 @@ MCP-сервера плагина для проверки без шлюза, `wo
 
 **Что такое ядро.** Всё в `src/msa/` вне `src/msa/plugins/<id>/` и всё в `ui/web/src/` вне
 `ui/web/src/plugins/<id>/`: SDK (`plugin_sdk`), контракты, движок, реестр, процессы и их
-основные агенты (`msa/workflows`, встроенное объявление `core`), MCP ядра, API, отчёт,
+основные агенты (`msa/core`, встроенное объявление `core`), MCP ядра, API, отчёт,
 экраны. Плагин — папка `src/msa/plugins/<id>/` и, по желанию, `ui/web/src/plugins/<id>/`.
 
 **Раскладка папки плагина.**
@@ -666,7 +669,7 @@ src/msa/plugins/<id>/
   __init__.py        plugin = Plugin(...)
   *.py               модели, схемы, отчёт, агенты, MCP-серверы
   prompts/           промпты агентов: <name>-v<N>.txt
-  demo_data/         части демо-портфелей и демо-снимка
+  demo_data/         части демо-портфелей и снимков: synthetic/, historical/<случай>/
   tests/             тесты плагина (пакет)
   README.md          что даёт плагин, его ограничения и открытые вопросы
 ui/web/src/plugins/<id>/

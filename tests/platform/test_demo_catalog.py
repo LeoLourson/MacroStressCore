@@ -9,10 +9,14 @@ from demo.catalog import (
     CatalogError,
     bundle,
     bundle_data,
+    collection_of,
+    collections,
+    event_paths,
     parts,
     portfolio_ids,
     snapshot,
     snapshot_data,
+    snapshot_ids,
 )
 from demo.pilot import EVENT_ID as PILOT_EVENT_ID
 from demo.pilot import seed_pilot
@@ -45,7 +49,7 @@ def _write_plugin(tmp_path, plugin_id, *, portfolios=None, snapshots=None):
     for kind, parts_by_id in (("portfolios", portfolios), ("snapshots", snapshots)):
         if not parts_by_id:
             continue
-        folder = package / "demo_data" / kind
+        folder = package / "demo_data" / "synthetic" / kind
         folder.mkdir(parents=True)
         for stem, data in parts_by_id.items():
             (folder / f"{stem}.json").write_text(json.dumps(data), encoding="utf-8")
@@ -54,14 +58,14 @@ def _write_plugin(tmp_path, plugin_id, *, portfolios=None, snapshots=None):
 
 @pytest.fixture
 def root(tmp_path):
-    """A temporary demo root with a core header for portfolio X-1 and snapshot S-1."""
+    """A temporary demo root with a synthetic header for portfolio X-1 and snapshot S-1."""
     demo_root = tmp_path / "demo"
-    (demo_root / "portfolios").mkdir(parents=True)
-    (demo_root / "snapshots").mkdir(parents=True)
-    (demo_root / "portfolios" / "X-1.json").write_text(
+    (demo_root / "synthetic" / "portfolios").mkdir(parents=True)
+    (demo_root / "synthetic" / "snapshots").mkdir(parents=True)
+    (demo_root / "synthetic" / "portfolios" / "X-1.json").write_text(
         json.dumps({"portfolio": {"portfolio_id": "X-1", "name": "X-1"}}), encoding="utf-8"
     )
-    (demo_root / "snapshots" / "S-1.json").write_text(
+    (demo_root / "synthetic" / "snapshots" / "S-1.json").write_text(
         json.dumps({"snapshot_id": "S-1", "as_of": "2026-01-01", "label": "S-1"}),
         encoding="utf-8",
     )
@@ -107,6 +111,36 @@ def test_snapshot_items_are_sorted_and_cover_credit_and_equity_kinds():
     kinds = {item.kind for item in items}
     assert {"financial_statement", "rate"} <= kinds
     assert {"price", "fx_rate", "sensitivity", "dividend"} <= kinds
+
+
+def test_every_item_says_whether_it_is_synthetic_as_its_collection_does():
+    assert collections(build_catalog.CATALOG)[0] == "synthetic"
+    assert {"historical/etalon", "historical/afk-systema"} <= set(
+        collections(build_catalog.CATALOG)
+    )
+    for path in event_paths():
+        collection = path.parent.parent.relative_to(build_catalog.CATALOG).as_posix()
+        synthetic = json.loads(path.read_text("utf-8"))["metadata"]["synthetic"]
+        assert synthetic is (collection == "synthetic"), path
+    for portfolio_id in portfolio_ids():
+        synthetic = bundle(portfolio_id).portfolio.metadata["synthetic"]
+        assert synthetic is (collection_of("portfolios", portfolio_id) == "synthetic")
+    for snapshot_id in snapshot_ids():
+        synthetic = snapshot(snapshot_id).metadata["synthetic"]
+        assert synthetic is (collection_of("snapshots", snapshot_id) == "synthetic")
+
+
+def test_a_header_contradicting_its_collection_raises(root):
+    case = root / "historical" / "case" / "portfolios"
+    case.mkdir(parents=True)
+    (case / "H-1.json").write_text(
+        json.dumps(
+            {"portfolio": {"portfolio_id": "H-1", "name": "H", "metadata": {"synthetic": True}}}
+        ),
+        encoding="utf-8",
+    )
+    with pytest.raises(CatalogError, match="H-1"):
+        portfolio_ids(root=root)
 
 
 # -- merging plugin parts -------------------------------------------------------------------
@@ -326,7 +360,7 @@ def test_the_generated_catalog_files_match_the_generator():
 
 
 def test_every_library_event_names_a_catalog_portfolio_and_what_must_follow():
-    events = sorted((build_catalog.CATALOG / "events").glob("*.json"))
+    events = event_paths()
     assert events
     for path in events:
         event = json.loads(path.read_text("utf-8"))
@@ -367,12 +401,12 @@ def test_each_snapshot_gets_a_header_with_its_label():
     headers = {
         path.stem: json.loads(text)
         for path, text in build_catalog.outputs().items()
-        if path.parent == build_catalog.CATALOG / "snapshots"
+        if path.parent == build_catalog.SYNTHETIC / "snapshots"
     }
     labels = {build_catalog.SNAPSHOT_ID: build_catalog.SNAPSHOT_LABEL} | dict(
         build_catalog.OWN_SNAPSHOTS.values()
     )
-    stories = json.loads((build_catalog.CATALOG / "story_catalog.json").read_text("utf-8"))
+    stories = json.loads((build_catalog.SYNTHETIC / "story_catalog.json").read_text("utf-8"))
     labels[stories["snapshot_id"]] = stories["snapshot_label"]
     assert {sid: header["label"] for sid, header in headers.items()} == labels
 
@@ -413,7 +447,7 @@ def _answer(event_id, factors) -> dict:
     from msa.agents.ingest import fragment
     from msa.contracts import SourceDocument
 
-    event = json.loads((build_catalog.CATALOG / "events" / f"{event_id}.json").read_text("utf-8"))
+    event = json.loads((build_catalog.SYNTHETIC / "events" / f"{event_id}.json").read_text("utf-8"))
     context = {
         "positions": [{"factors": [{"factor_id": f, "key": None} for f in factors]}],
         "factors": [
