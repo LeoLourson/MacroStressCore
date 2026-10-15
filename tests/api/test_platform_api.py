@@ -221,6 +221,23 @@ def test_a_run_goes_from_the_event_to_the_approved_report(client):
     assert wait(client, run_id)["status"] == "completed"
 
 
+def test_a_stopped_demo_run_is_deleted_with_its_results(client):
+    status = post(
+        client,
+        "/v1/demo/runs",
+        {"portfolio_id": "MULTI-ASSET", "event": {"kind": "library", "id": "RECYCLING-FEE"}},
+    )
+    run_id = wait(client, status["run_id"])["run_id"]
+    headers = {"X-API-Key": ANALYST}
+    assert client.delete(f"/v1/demo/runs/{run_id}", headers=headers).status_code == 204
+    assert client.get(f"/v1/demo/runs/{run_id}", headers=headers).status_code == 404
+    assert run_id not in {row["run_id"] for row in get(client, "/v1/demo/runs")}
+    assert client.delete(f"/v1/demo/runs/{run_id}", headers=headers).status_code == 404
+    # The risk manager does not delete, and production runs have no delete at all.
+    assert client.delete(f"/v1/demo/runs/{run_id}", headers={"X-API-Key": RISK}).status_code == 403
+    assert client.delete(f"/v1/runs/{run_id}", headers=headers).status_code == 405
+
+
 def _evidence():
     return {
         "kind": "expert_assumption",

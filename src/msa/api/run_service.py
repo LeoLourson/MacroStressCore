@@ -6,7 +6,7 @@ from datetime import date
 from hashlib import sha256
 from uuid import uuid4
 
-from sqlalchemy import select, update
+from sqlalchemy import delete, select, update
 
 from msa import activity
 from msa.agents.advisory import channel_factors
@@ -22,7 +22,7 @@ from msa.db.repositories.runs import (
 )
 from msa.db.repositories.snapshots import SnapshotsRepository
 from msa.engine.exposure import scenario_coverage
-from msa.graph.checkpoint import run_config
+from msa.graph.checkpoint import run_config, thread_id
 from msa.graph.compiler import describe
 from msa.graph.interrupts import drive, pending_interrupt, resume_run, start_run
 from msa.graph.workflow import build_graph
@@ -561,6 +561,31 @@ class RunService:
             self.limiter.release(scope, principal.key_id, run_id)
             raise
         return self.status(scope, run_id)
+
+    def delete(self, scope, run_id, principal):
+        """Remove a stopped run with its results, questions and checkpoints; the audit log stays."""
+        with self.db.session(scope) as session:
+            tables = tables_for(session)
+            job = tables["api_job"]
+            row = (
+                session.execute(
+                    select(job.c.kind, job.c.status).where(job.c.job_id == run_id).with_for_update()
+                )
+                .mappings()
+                .first()
+            )
+            if row is None or row["kind"] != "run":
+                raise KeyError(run_id)
+            if row["status"] in ACTIVE:
+                raise Problem(409, "Run is executing; delete it after it stops")
+            for name in ("run_explanation", "run_result", "run_node_result"):
+                table = tables[name]
+                session.execute(delete(table).where(table.c.run_id == run_id))
+            session.execute(delete(job).where(job.c.job_id == run_id))
+            run = tables["run"]
+            session.execute(delete(run).where(run.c.run_id == run_id))
+        self.checkpointer.delete_thread(thread_id(run_id))
+        self.db.audit(scope, principal.actor, "run.deleted", run_id=run_id)
 
     def names(self, scope, run_id):
         return self.job(scope, run_id)["payload"].get("position_names") or {}

@@ -169,6 +169,15 @@ export function useDeletePortfolio() {
   });
 }
 
+export function useDeleteRun() {
+  const client = useClient();
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (runId: string) => client.deleteRun(runId),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['runs'] }),
+  });
+}
+
 export function useLibraryEvents(enabled: boolean) {
   const client = useClient();
   return useQuery({ queryKey: ['events'], queryFn: () => client.events(), enabled });

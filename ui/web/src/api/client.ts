@@ -143,6 +143,15 @@ export class ApiClient {
     return this.call<{ portfolio_id: string; expires_at: string }>('POST', '/v1/demo/portfolios/draft', draft);
   }
 
+  /** A stopped demo run with its results; production runs are not deleted. */
+  async deleteRun(runId: string) {
+    const response = await fetch(apiUrl(`/v1/demo/runs/${encodeURIComponent(runId)}`), {
+      method: 'DELETE',
+      headers: { 'X-API-Key': this.apiKey },
+    });
+    if (!response.ok) throw new ApiError(response.status, 'HTTP error', await response.text());
+  }
+
   async deletePortfolio(portfolioId: string) {
     const response = await fetch(apiUrl(`/v1/demo/portfolios/${encodeURIComponent(portfolioId)}`), {
       method: 'DELETE',

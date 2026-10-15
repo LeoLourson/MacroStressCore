@@ -48,6 +48,14 @@ def status(run_id: str, request: Request, principal: Authenticated):
     return request.app.state.runs.status(access(request, principal), run_id)
 
 
+@router.delete("/v1/demo/runs/{run_id}", status_code=204)
+def delete(run_id: str, request: Request, principal: Authenticated):
+    """Remove a demo run; production runs stay as the bank's record."""
+    scope = access(request, principal, "run")
+    require_role(principal, "analyst", "demo")
+    request.app.state.runs.delete(scope, run_id, principal)
+
+
 @router.get("/v1/runs/{run_id}/report")
 @router.get("/v1/demo/runs/{run_id}/report")
 def report(run_id: str, request: Request, principal: Authenticated):

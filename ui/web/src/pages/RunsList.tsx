@@ -3,6 +3,7 @@ import {
   Center,
   Group,
   Loader,
+  Modal,
   Paper,
   SegmentedControl,
   Stack,
@@ -10,10 +11,10 @@ import {
   Text,
   TextInput,
 } from '@mantine/core';
-import { IconArrowRight, IconPlus, IconSearch } from '@tabler/icons-react';
+import { IconArrowRight, IconPlus, IconSearch, IconTrash } from '@tabler/icons-react';
 import { useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router';
-import { usePortfolios, useRuns } from '../api/queries';
+import { useDeleteRun, usePortfolios, useRuns } from '../api/queries';
 import type { Me, RunRow } from '../api/types';
 import { canApprove, canFixGraph, canRun, useSession } from '../auth/session';
 import { ErrorAlert } from '../components/ErrorAlert';
@@ -69,9 +70,13 @@ function PortfolioCell({ id, name }: { id: string; name?: string }) {
 }
 
 export function RunsList() {
-  const { me } = useSession();
+  const { me, mode } = useSession();
   const navigate = useNavigate();
   const runs = useRuns();
+  const remove = useDeleteRun();
+  const [deleting, setDeleting] = useState<RunRow | null>(null);
+  // Demo runs only: a production run stays as the bank's record.
+  const canDelete = mode === 'demo' && canRun(me);
   const [filter, setFilter] = useState<Filter>('all');
   const [search, setSearch] = useState('');
   const nameOf = usePortfolioName();
@@ -139,6 +144,7 @@ export function RunsList() {
                         <Table.Th w={180}>Портфель</Table.Th>
                         <Table.Th w={190}>Запущен</Table.Th>
                         <Table.Th w={240}>Решение</Table.Th>
+                        {canDelete && <Table.Th w={130} />}
                       </Table.Tr>
                     </Table.Thead>
                     <Table.Tbody>
@@ -193,6 +199,25 @@ export function RunsList() {
                               </Text>
                             )}
                           </Table.Td>
+                          {canDelete && (
+                            <Table.Td>
+                              {!ACTIVE.includes(row.status) && (
+                                <Button
+                                  size="xs"
+                                  variant="subtle"
+                                  color="gray"
+                                  leftSection={<IconTrash size={14} />}
+                                  onClick={(event) => {
+                                    event.stopPropagation();
+                                    remove.reset();
+                                    setDeleting(row);
+                                  }}
+                                >
+                                  Удалить
+                                </Button>
+                              )}
+                            </Table.Td>
+                          )}
                         </Table.Tr>
                       ))}
                     </Table.Tbody>
@@ -202,6 +227,27 @@ export function RunsList() {
             </Paper>
         </>
       )}
+      <Modal opened={!!deleting} onClose={() => setDeleting(null)} title="Удалить стресс-тест?" centered withCloseButton={false}>
+        <Stack>
+          <Text size="sm" lineClamp={4}>
+            Стресс-тест «{deleting?.event_text}» будет удалён вместе с графом, расчётом, отчётом и вопросами к нему.
+            Портфель останется.
+          </Text>
+          {remove.error && <ErrorAlert error={remove.error} />}
+          <Group justify="flex-end">
+            <Button variant="default" onClick={() => setDeleting(null)}>
+              Оставить
+            </Button>
+            <Button
+              color="gray"
+              loading={remove.isPending}
+              onClick={() => deleting && remove.mutate(deleting.run_id, { onSuccess: () => setDeleting(null) })}
+            >
+              Удалить
+            </Button>
+          </Group>
+        </Stack>
+      </Modal>
     </Stack>
   );
 }
