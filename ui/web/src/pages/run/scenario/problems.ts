@@ -58,7 +58,7 @@ export function gateWords(
   graphProblems: Violation[],
   scenarioProblems: Violation[],
   built: boolean,
-): { title: string; text: string; tone: 'task' | 'problem' | 'calm' } {
+): { title: string; text: string; quote?: string; tone: 'task' | 'problem' | 'calm' } {
   const decision = stop.decision;
   // Without a graph the checks only say its fields are missing; the stop says what to do.
   if (!built) {
@@ -71,7 +71,8 @@ export function gateWords(
   if (decision?.outcome === 'returned') {
     return {
       title: 'Риск-менеджер вернул отчёт на доработку',
-      text: `«${decision.reason ?? ''}» — ${approver(decision.by)}, ${timestamp(decision.at)}. После правки стресс-тест пересчитается и снова придёт на решение.`,
+      quote: `«${decision.reason ?? ''}» — ${approver(decision.by)}, ${timestamp(decision.at)}`,
+      text: 'После правки стресс-тест пересчитается и снова придёт на решение.',
       tone: 'task',
     };
   }

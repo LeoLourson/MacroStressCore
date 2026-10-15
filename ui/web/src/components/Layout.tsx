@@ -1,7 +1,6 @@
 import {
   AppShell,
   Avatar,
-  Box,
   Center,
   Container,
   Group,
@@ -9,7 +8,6 @@ import {
   Menu,
   SegmentedControl,
   Text,
-  Tooltip,
   UnstyledButton,
 } from '@mantine/core';
 import { IconChevronDown, IconLogout, IconUserCircle } from '@tabler/icons-react';
@@ -17,6 +15,7 @@ import { Link, NavLink, Navigate, Outlet, useLocation } from 'react-router';
 import type { Mode } from '../api/types';
 import { externalLlm, useSession } from '../auth/session';
 import { MODES, PROVIDERS, ROLES, label } from '../lib/labels';
+import { Hint } from './Term';
 
 function Logo() {
   return (
@@ -32,18 +31,17 @@ function LlmBadge({ external }: { external: boolean }) {
   const llm = me?.llm;
   if (!llm) return null;
   const name = label(PROVIDERS, llm.provider);
-  const text = external ? `${name} · для демонстрации` : llm.provider === 'mock' ? name : `${name} · ${llm.model}`;
+  // The line names the model; where it runs and what data it may see pop up.
+  const text = llm.provider === 'mock' || external ? name : `${name} · ${llm.model}`;
   const tip = external
-    ? `Внешняя языковая модель ${llm.model} (${llm.base_url}): работа только на синтетических демо-портфелях.`
+    ? `Модель ${llm.model}, внешний API: только синтетические портфели.`
     : llm.provider === 'mock'
       ? 'Граф строится по фикстуре без языковой модели.'
-      : `Модель ${llm.model} на ${llm.base_url}, внутри периметра.`;
+      : `Работает на ${llm.base_url}, внутри периметра.`;
   return (
-    <Tooltip label={tip} multiline maw={360}>
-      <Text size="xs" c="dimmed" visibleFrom="md">
-        LLM: {text}
-      </Text>
-    </Tooltip>
+    <Text size="xs" c="dimmed" visibleFrom="md" component="div">
+      <Hint text={tip}>LLM: {text}</Hint>
+    </Text>
   );
 }
 
@@ -59,19 +57,17 @@ function UserMenu() {
             <Avatar size={30} color="steel" radius="xl">
               <IconUserCircle size={20} />
             </Avatar>
-            <Box visibleFrom="sm">
-              <Text size="sm" fw={500} lh={1.2}>
-                {label(ROLES, me.role)}
-              </Text>
-              <Text size="xs" c="dimmed" lh={1.2}>
-                {me.actor}
-              </Text>
-            </Box>
+            {/* One line, on the header's line; the login is in the menu. */}
+            <Text size="sm" fw={500} visibleFrom="sm">
+              {label(ROLES, me.role)}
+            </Text>
             <IconChevronDown size={14} />
           </Group>
         </UnstyledButton>
       </Menu.Target>
       <Menu.Dropdown>
+        <Menu.Label>Вы вошли как {me.actor}</Menu.Label>
+        <Menu.Divider />
         {roles.length > 0 && (
           <>
             <Menu.Label>Войти в другой роли (демо)</Menu.Label>
@@ -114,7 +110,7 @@ function Header() {
   const { me, mode, modes, setMode } = useSession();
   const external = externalLlm(me);
   return (
-    <Container size="xl" h="100%">
+    <Container size="xl" h="100%" px={{ base: 'md', sm: 'lg' }}>
       <Group h="100%" justify="space-between" wrap="nowrap">
         <Group gap="xl" wrap="nowrap">
           <Link to="/" style={{ textDecoration: 'none' }}>

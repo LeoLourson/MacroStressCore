@@ -7,7 +7,6 @@ import { TracedNumber } from '../../components/Provenance';
 import { ResultStatus } from '../../components/RiskModel';
 import { ResultSummary } from '../../components/ResultSummary';
 import { PageSection, Subsection } from '../../components/Page';
-import { Term } from '../../components/Term';
 import { capitalize, describePath, formatter, number, pathValue, percent, positionTitle, slicePath } from '../../lib/format';
 import { ACTIONS, RESULT_STATUS, RULES, flagList, label, translateFlags } from '../../lib/labels';
 import type { Entries } from '../../lib/provenance';
@@ -17,7 +16,7 @@ import type { RunTabProps } from './RunPage';
 import { glossary } from './ReportText';
 import { useOrigins } from './useOrigins';
 
-function Slice({ item, artifacts, entries }: { item: SliceResult; artifacts: Artifacts; entries: Entries }) {
+function Slice({ item, artifacts, entries, several }: { item: SliceResult; artifacts: Artifacts; entries: Entries; several: boolean }) {
   const spec = sliceSpec(item.slice_id);
   const names = artifacts.position_names;
   const format = formatter(item.unit);
@@ -31,7 +30,8 @@ function Slice({ item, artifacts, entries }: { item: SliceResult; artifacts: Art
   return (
     <PageSection
       title={spec?.label ?? item.slice_id}
-      hint={spec?.description || undefined}
+      // Only several slices raise the question whether they add up.
+      hint={[spec?.description, several && 'Срезы считаются отдельно на одних и тех же сценариях: у каждого своя мера и база покрытия, между собой они не складываются.'].filter(Boolean).join(' ') || undefined}
       aside={item.status !== 'ok' && <ResultStatus status={item.status} />}
     >
         {q ? (
@@ -253,18 +253,8 @@ export function PortfolioTab({ status, artifacts }: RunTabProps) {
 
   return (
     <Stack gap="lg">
-      {/* Only several slices raise the question whether they add up. */}
-      {slices.length > 1 && (
-        <Group gap="xs" c="dimmed">
-          <IconInfoCircle size={16} />
-          <Text size="sm" maw="80ch">
-            <Term name="Срез портфеля">Срезы</Term> считаются отдельно на одних и тех же сценариях: у каждого своя мера и
-            база покрытия, между собой они не складываются.
-          </Text>
-        </Group>
-      )}
       {slices.map((item) => (
-        <Slice key={item.slice_id} item={item} artifacts={artifacts} entries={entries} />
+        <Slice key={item.slice_id} item={item} artifacts={artifacts} entries={entries} several={slices.length > 1} />
       ))}
       {portfolio.not_aggregated.length > 0 && (
         <Alert color="gray" icon={<IconInfoCircle />} title="Позиции вне итогов срезов">

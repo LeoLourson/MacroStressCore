@@ -76,7 +76,7 @@ export function ResultSummary({
         {es != null && (
           <Stack gap={0}>
             <Text size="xs" c="dimmed">
-              <Term name="ES95">Средние потери в худших 5 % (ES95)</Term>
+              <Term name="ES95">ES95</Term>
             </Text>
             <Text size="lg" className="num">
               {traced('es95', es)}

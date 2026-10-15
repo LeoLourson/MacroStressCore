@@ -264,7 +264,7 @@ export function NewRun() {
   return (
     <form onSubmit={submit}>
       <Stack gap="lg" maw={NARROW}>
-        <PageHeader back={{ to: '/', label: 'Все стресс-тесты' }} title="Новый стресс-тест" />
+        <PageHeader title="Новый стресс-тест" />
 
         <Section title="Портфель">
           {demo || portfolios.data?.length ? (

@@ -68,9 +68,6 @@ export function Login() {
                 </Paper>
               );
             })}
-            <Text size="xs" c="dimmed">
-              Демонстрационный режим: роль можно сменить в любой момент, данные синтетические.
-            </Text>
           </Stack>
         ) : (
           <Paper p="lg">

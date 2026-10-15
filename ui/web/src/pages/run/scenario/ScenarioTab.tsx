@@ -46,6 +46,7 @@ import type {
 } from '../../../api/types';
 import { canFixGraph, useSession } from '../../../auth/session';
 import { ErrorAlert } from '../../../components/ErrorAlert';
+import { Hint } from '../../../components/Term';
 import { ActionBar, PageSection, Subsection } from '../../../components/Page';
 import { day, elasticityText, nodeLabels, number, plural, scenarioValue } from '../../../lib/format';
 import { factorLabel } from '../../../api/catalog';
@@ -132,14 +133,16 @@ function Gate({
   const color = words.tone === 'problem' ? 'orange' : words.tone === 'task' ? 'yellow' : 'steel';
   const icon =
     words.tone === 'problem' ? <IconAlertTriangle /> : words.tone === 'task' ? <IconMessageReport /> : <IconInfoCircle />;
+  // A calm stop is said by the step line and the bar below; the banner is only for what to read or fix.
+  if (words.tone === 'calm' && !(built && assumed > 0)) return null;
   return (
-    <Alert color={color} icon={icon} title={words.title}>
+    <Alert color={color} icon={icon} title={<Hint text={words.text}>{words.title}</Hint>}>
       <Stack gap="xs">
-        <Text size="sm">{words.text}</Text>
+        {words.quote && <Text size="sm">{words.quote}</Text>}
         {built && assumed > 0 && (
           <Text size="sm">
-            В тексте нет величин для {plural(assumed, 'параметра', 'параметров', 'параметров')}: их оценила
-            модель, в таблице сценария они отмечены «Допущение». Проверьте их перед подтверждением.
+            {plural(assumed, 'параметр', 'параметра', 'параметров')} без величины в тексте: их оценила модель, в таблице
+            они отмечены «Допущение».
           </Text>
         )}
         {built && violations.length > 0 && (
