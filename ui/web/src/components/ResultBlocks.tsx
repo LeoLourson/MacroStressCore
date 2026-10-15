@@ -1,6 +1,6 @@
 // The standard blocks of a position's result, and the standard view built from the blocks
 // a plugin declares (ResultView.blocks). A UI plugin may use them in its own view.
-import { Box, Group, Stack, Table, Text, Title, Tooltip } from '@mantine/core';
+import { Box, Group, Stack, Table, Text, Tooltip } from '@mantine/core';
 import type { ReactNode } from 'react';
 import { metricLabel, metricSpec, type ViewBlock } from '../api/catalog';
 import type { CalculationResult, MetricValue, PositionContext, Quantiles, TraceNumber } from '../api/types';
@@ -11,19 +11,15 @@ import { bySource, positionInputs } from '../lib/sources';
 import type { PositionViewProps } from '../plugins/sdk';
 import { IntervalText, ShiftText } from './Interval';
 import { SourceInputs, TracedNumber } from './Provenance';
+import { Subsection } from './Page';
 import { Term } from './Term';
 
+/** A block of a position's result: the group heading of the page, its hint pops up. */
 export function Section({ title, hint, children }: { title: ReactNode; hint?: string; children: ReactNode }) {
   return (
-    <Stack gap="xs">
-      <Title order={5}>{title}</Title>
-      {hint && (
-        <Text size="xs" c="dimmed">
-          {hint}
-        </Text>
-      )}
+    <Subsection title={title} hint={hint || undefined}>
       {children}
-    </Stack>
+    </Subsection>
   );
 }
 

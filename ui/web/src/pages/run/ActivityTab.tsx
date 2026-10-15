@@ -1,10 +1,11 @@
-import { Badge, Center, Group, Loader, Paper, SimpleGrid, Stack, Table, Text, Title } from '@mantine/core';
+import { Badge, Center, Group, Loader, SimpleGrid, Stack, Table, Text } from '@mantine/core';
 import { IconCheck, IconX } from '@tabler/icons-react';
 import { useActivity } from '../../api/queries';
 import type { ActivityItem, WorkflowView } from '../../api/types';
 import { Elapsed } from '../../components/Elapsed';
+import { PageSection } from '../../components/Page';
 import { ErrorAlert } from '../../components/ErrorAlert';
-import { number, timestamp } from '../../lib/format';
+import { number, plural, timestamp } from '../../lib/format';
 import { label } from '../../lib/labels';
 import type { RunTabProps } from './RunPage';
 
@@ -29,6 +30,7 @@ const PURPOSES: Record<string, string> = {
 
 const SCHEMAS: Record<string, string> = {
   CausalOutput: 'граф влияния и сценарий',
+  CausalAnswer: 'граф влияния и сценарий',
   AdvisoryNarrative: 'текст резюме отчёта',
   tools: 'объяснение результатов',
 };
@@ -82,10 +84,9 @@ export function ActivityTab({ status, artifacts }: RunTabProps) {
   // Which model works is in the header; the cards count its calls.
   return (
     <Stack gap="lg">
-      <SimpleGrid cols={{ base: 1, sm: 2 }}>
-        <Paper p="md">
+      <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="lg">
+        <PageSection title="LLM">
           <Stack gap={4}>
-            <Title order={5}>LLM</Title>
             <Text size="sm">
               Ответов: <b>{llm.calls}</b>
               {llm.failed ? `, из них с ошибкой ${llm.failed}` : ''} · время {seconds(llm.duration_ms)}
@@ -94,10 +95,9 @@ export function ActivityTab({ status, artifacts }: RunTabProps) {
               Токены: запрос {number(llm.prompt_tokens, 0)}, ответ {number(llm.completion_tokens, 0)}
             </Text>
           </Stack>
-        </Paper>
-        <Paper p="md">
+        </PageSection>
+        <PageSection title="MCP">
           <Stack gap={4}>
-            <Title order={5}>MCP</Title>
             <Text size="sm">
               Вызовов: <b>{tools.calls}</b>
               {tools.failed ? `, из них с ошибкой ${tools.failed}` : ''} · время {seconds(tools.duration_ms)}
@@ -108,16 +108,16 @@ export function ActivityTab({ status, artifacts }: RunTabProps) {
               </Text>
             )}
           </Stack>
-        </Paper>
+        </PageSection>
       </SimpleGrid>
       {items.length === 0 ? (
         <Text size="sm" c="dimmed">
           Вызовов пока не было.
         </Text>
       ) : (
-        <Paper>
+        <PageSection flush title="Журнал вызовов" aside={plural(items.length, 'запись', 'записи', 'записей')}>
           <Table.ScrollContainer minWidth={900}>
-            <Table>
+            <Table verticalSpacing="sm">
               <Table.Thead>
                 <Table.Tr>
                   <Table.Th>Время</Table.Th>
@@ -195,7 +195,7 @@ export function ActivityTab({ status, artifacts }: RunTabProps) {
               </Table.Tbody>
             </Table>
           </Table.ScrollContainer>
-        </Paper>
+        </PageSection>
       )}
     </Stack>
   );

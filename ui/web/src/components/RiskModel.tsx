@@ -1,4 +1,5 @@
-import { Badge, Group, Text, Tooltip } from '@mantine/core';
+import { Badge, Group, List, Text, Tooltip } from '@mantine/core';
+import { Hint } from './Term';
 import { IconAlertTriangle, IconCheck, IconX } from '@tabler/icons-react';
 import { flagKind } from '../api/catalog';
 import type { CalculationResult } from '../api/types';
@@ -12,21 +13,28 @@ export function statusReasons(result: CalculationResult, shocks?: Record<string,
   return [...new Set(result.diagnostics.filter((d) => d.severity !== 'info').map((d) => d.message || d.code))];
 }
 
-/** The status in a word with its mark; a status other than ok says why, when told. */
+/** The status in a word with its mark; why a status is not ok pops up from the word. */
 export function ResultStatus({ status, reasons = [], size = 'sm' }: { status: string; reasons?: string[]; size?: 'xs' | 'sm' }) {
   const ok = status === 'ok';
+  const word = label(RESULT_STATUS, status);
   return (
-    <Group gap={4} wrap="nowrap" align="flex-start" c={ok ? 'teal.9' : undefined}>
-      {ok ? <IconCheck size={14} style={{ flexShrink: 0, marginTop: 3 }} /> : <IconAlertTriangle size={14} style={{ flexShrink: 0, marginTop: 3 }} />}
-      <Text size={size}>
-        <Text span inherit fw={ok ? 400 : 600} className="nowrap">
-          {label(RESULT_STATUS, status)}
-        </Text>
-        {reasons.length > 0 && (
-          <Text span inherit c="dimmed">
-            {': '}
-            {reasons.join('; ')}
-          </Text>
+    <Group gap={4} wrap="nowrap" align="center" c={ok ? 'teal.9' : undefined}>
+      {ok ? <IconCheck size={14} style={{ flexShrink: 0 }} /> : <IconAlertTriangle size={14} style={{ flexShrink: 0 }} />}
+      <Text size={size} fw={ok ? 400 : 600} className="nowrap">
+        {reasons.length > 0 ? (
+          <Hint
+            text={
+              <List size="xs" spacing={2}>
+                {reasons.map((reason) => (
+                  <List.Item key={reason}>{reason}</List.Item>
+                ))}
+              </List>
+            }
+          >
+            {word}
+          </Hint>
+        ) : (
+          word
         )}
       </Text>
     </Group>

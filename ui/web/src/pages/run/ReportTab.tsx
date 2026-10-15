@@ -1,4 +1,4 @@
-import { Center, Group, Loader, Paper, Stack, Table, Text, ThemeIcon, Title } from '@mantine/core';
+import { Center, Group, Loader, Paper, Stack, Table, Text, ThemeIcon } from '@mantine/core';
 import { IconRosetteDiscountCheck } from '@tabler/icons-react';
 import { useMemo } from 'react';
 import { useReport } from '../../api/queries';
@@ -7,7 +7,8 @@ import { canApprove, useSession } from '../../auth/session';
 import { ErrorAlert } from '../../components/ErrorAlert';
 import { ResultSummary } from '../../components/ResultSummary';
 import { sliceSpec } from '../../api/catalog';
-import { approver, day, percent, timestamp } from '../../lib/format';
+import { approver, day, percent, plural, timestamp } from '../../lib/format';
+import { PageSection } from '../../components/Page';
 import { AUTHORS, SOURCES, label } from '../../lib/labels';
 import { hasReport } from '../../lib/stages';
 import { pluginNotes } from '../../plugins';
@@ -49,14 +50,13 @@ function Assumptions({ items }: { items: Evidence[] }) {
     grouped.set(key, row);
   }
   return (
-    <Stack gap="xs">
-      <Title order={4}>Допущения экспертов</Title>
+    <PageSection title="Допущения экспертов" hint="Кто и на какую дату ввёл числа, которых нет в документе события и исторических оценках." flush={grouped.size > 0}>
       {grouped.size === 0 ? (
         <Text size="sm" c="dimmed">
           Допущений экспертов нет: все параметры взяты из документа или исторических оценок.
         </Text>
       ) : (
-        <Table withTableBorder>
+        <Table verticalSpacing="sm">
           <Table.Thead>
             <Table.Tr>
               <Table.Th>Автор</Table.Th>
@@ -77,7 +77,7 @@ function Assumptions({ items }: { items: Evidence[] }) {
           </Table.Tbody>
         </Table>
       )}
-    </Stack>
+    </PageSection>
   );
 }
 
@@ -107,28 +107,16 @@ export function ReportTab({ status, artifacts }: RunTabProps) {
     <Stack gap="lg">
       {status.status === 'completed' && <Stamp artifacts={artifacts} />}
       {headline && (
-        <Paper p={{ base: 'md', sm: 'xl' }}>
-          <Stack gap="sm">
-            <Title order={3}>Итог</Title>
-            <ResultSummary
-              item={headline}
-              artifacts={artifacts}
-              entries={entries}
-              conclusion={`${sliceSpec(headline.slice_id)?.label ?? headline.slice_id}: в итог вошли позиций — ${headline.included.length}, расчётом охвачено ${percent(headline.coverage.covered_share)}.`}
-            />
-          </Stack>
-        </Paper>
+        <PageSection
+          title={sliceSpec(headline.slice_id)?.label ?? headline.slice_id}
+          aside={`${plural(headline.included.length, 'позиция', 'позиции', 'позиций')} в итоге · охват ${percent(headline.coverage.covered_share)}`}
+        >
+          <ResultSummary item={headline} artifacts={artifacts} entries={entries} />
+        </PageSection>
       )}
-      <Paper p={{ base: 'md', sm: 'xl' }}>
-        <Stack gap="xs">
-          <ReportText
-            summary={data.summary}
-            numbers={data.numbers}
-            entries={entries}
-            names={names}
-          />
-        </Stack>
-      </Paper>
+      <PageSection title="Текст отчёта" hint="Так отчёт будет опубликован. Числа в тексте открывают своё происхождение.">
+        <ReportText summary={data.summary} numbers={data.numbers} entries={entries} names={names} />
+      </PageSection>
       <Assumptions items={data.assumptions} />
       {/* What the money figures rest on is in view before the signature. */}
       {Notes.map((Note, i) => (

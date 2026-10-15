@@ -1,6 +1,7 @@
-import { Code, Tooltip } from '@mantine/core';
+import { Code } from '@mantine/core';
 import { Fragment, useMemo, type ReactNode } from 'react';
 import type { Artifacts, NumberRef } from '../../api/types';
+import { Hint } from '../../components/Term';
 import { TracedNumber } from '../../components/Provenance';
 import { lowerFirst } from '../../lib/format';
 import { ACTIONS, AUTHORS, SOURCES, flagOne } from '../../lib/labels';
@@ -52,9 +53,9 @@ function glossed(text: string, names: Map<string, string>): ReactNode {
     const end = match.index + match[0].length;
     out.push(
       text.slice(at, match.index),
-      <Tooltip key={match.index} label={gloss}>
-        <span style={{ textDecoration: 'underline dotted', cursor: 'help' }}>{match[0]}</span>
-      </Tooltip>,
+      <Hint key={match.index} text={gloss}>
+        {match[0]}
+      </Hint>,
     );
     at = end;
   }
@@ -121,10 +122,12 @@ export function ReportText({
       runs(text).map((run, i) => {
         if (run.code) {
           const gloss = glossOf(run.text, names);
-          return (
-            <Tooltip key={i} label={gloss} disabled={!gloss}>
-              <Code style={gloss ? { cursor: 'help' } : undefined}>{run.text}</Code>
-            </Tooltip>
+          return gloss ? (
+            <Hint key={i} text={gloss}>
+              <Code>{run.text}</Code>
+            </Hint>
+          ) : (
+            <Code key={i}>{run.text}</Code>
           );
         }
         const marked = marker.mark(run.text).map((segment, j) =>

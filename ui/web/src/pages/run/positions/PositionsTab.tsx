@@ -1,4 +1,4 @@
-import { Badge, Group, Paper, SegmentedControl, Stack, Table, Text, TextInput, Title, UnstyledButton } from '@mantine/core';
+import { Badge, Group, SegmentedControl, Stack, Table, Text, TextInput, UnstyledButton } from '@mantine/core';
 import { IconAlertTriangle, IconArrowDown, IconArrowUp, IconCheck, IconSearch, IconSelector } from '@tabler/icons-react';
 import { useMemo, useState, type ReactNode } from 'react';
 import { useSearchParams } from 'react-router';
@@ -6,8 +6,8 @@ import { metricLabel, metricSpec, sliceSpec, viewFor } from '../../../api/catalo
 import type { CalculationResult, PortfolioResult, PositionContext } from '../../../api/types';
 import { Interval, IntervalLegend, Shift, scaleOf, type Scale } from '../../../components/Interval';
 import { ExecutionBadge, ResultStatus, statusReasons } from '../../../components/RiskModel';
-import { Term } from '../../../components/Term';
-import { formatter, plural, positionName, positionTitle, typeName } from '../../../lib/format';
+import { PageSection } from '../../../components/Page';
+import { formatter, positionName, positionTitle, typeName } from '../../../lib/format';
 import { shockLabels, translateFlags } from '../../../lib/labels';
 import { baselineOf } from '../../../plugins';
 import type { RunTabProps } from '../RunPage';
@@ -160,7 +160,7 @@ function SortHeader({ label, by, sort, onSort }: { label: string; by: string | n
       onClick={() => onSort(next)}
       aria-label={`${label}: упорядочить ${orderWords(by !== null, next.reverse)}${now}`}
       title={`Упорядочить ${orderWords(by !== null, next.reverse)}`}
-      style={{ display: 'inline-flex', alignItems: 'center', gap: 4, font: 'inherit', fontWeight: 600 }}
+      style={{ display: 'inline-flex', alignItems: 'center', gap: 4, font: 'inherit' }}
     >
       {label}
       <Icon size={14} color={active ? undefined : 'var(--mantine-color-dark-2)'} />
@@ -179,7 +179,7 @@ function MetricValueCell({ result, column }: { result: CalculationResult; column
   }
   if (value?.quantiles) {
     const q = value.quantiles;
-    return <Interval p05={q.p05} p50={q.p50} p95={q.p95} scale={column.scale} format={format} width={110} />;
+    return <Interval p05={q.p05} p50={q.p50} p95={q.p95} scale={column.scale} format={format} width="100%" />;
   }
   if (value?.value != null) {
     return (
@@ -205,7 +205,9 @@ function PositionTable({
   portfolio,
   shocks,
   onOpen,
+  hint,
 }: {
+  hint: ReactNode;
   group: Group_;
   rows: CalculationResult[];
   sort: Sort;
@@ -222,23 +224,27 @@ function PositionTable({
     rows.length > 1 ? (marks[rows[0].position_id] ?? []).filter((m) => rows.every((r) => marks[r.position_id].some((o) => o.key === m.key))) : [];
   const shared = new Set(common.map((m) => m.key));
   const several = group.types.length > 1;
+  const count = rows.length < group.results.length ? `${rows.length} из ${group.results.length}` : String(rows.length);
   return (
-    <Stack gap="xs">
-      {common.length > 0 && (
-        <Group gap="xs" align="flex-start" wrap="nowrap">
-          <Text size="xs" c="dimmed" className="nowrap" mt={1}>
-            У всех {plural(rows.length, 'позиции', 'позиций', 'позиций')}:
-          </Text>
-          <Stack gap={4}>
+    <PageSection
+      flush
+      title={`${group.types.map(typeName).join(', ')} · ${count}`}
+      hint={hint}
+      aside={
+        common.length > 0 && (
+          <>
+            <Text span size="xs" c="dimmed">
+              у всех:
+            </Text>
             {common.map((m) => (
-              <div key={m.key}>{m.node}</div>
+              <span key={m.key}>{m.node}</span>
             ))}
-          </Stack>
-        </Group>
-      )}
-      <Paper>
+          </>
+        )
+      }
+    >
         <Table.ScrollContainer minWidth={330 + 280 * group.columns.length}>
-          <Table verticalSpacing="sm" horizontalSpacing="md" highlightOnHover>
+          <Table verticalSpacing="sm" highlightOnHover>
             <Table.Thead>
               <Table.Tr>
                 <Table.Th aria-sort={ariaSort(sort, null)}>
@@ -303,8 +309,7 @@ function PositionTable({
             </Table.Tbody>
           </Table>
         </Table.ScrollContainer>
-      </Paper>
-    </Stack>
+    </PageSection>
   );
 }
 
@@ -408,18 +413,11 @@ export function PositionsTab({ status, artifacts }: RunTabProps) {
     return <Text c="dimmed">Результаты по позициям появятся после расчёта.</Text>;
   }
 
+  const hint = `${levels ? 'Показатели роста — уровень до события → медиана после, ниже рост и его диапазон' : 'Медиана и диапазон'} P5–P95 по общим сценариям. Шкала полос начинается с нуля и общая для столбца. Нажмите на строку, чтобы открыть разбор позиции.`;
   return (
     <Stack gap="lg">
-      <Stack gap={4}>
-        <Text size="sm" c="dimmed" maw={760}>
-          {levels
-            ? 'Показатели роста — уровень до события → медиана после, ниже рост и его диапазон '
-            : 'Медиана и диапазон '}
-          <Term name="P5–P95">P5–P95</Term> по общим сценариям. Нажмите на строку, чтобы открыть разбор позиции.
-        </Text>
-        {levels && <IntervalLegend base note="Шкала начинается с нуля и общая для столбца." />}
-      </Stack>
-      {(filters.length > 1 || results.length >= SEARCH_FROM) && (
+      <Group gap="lg" align="center" mih={30} style={{ rowGap: 'var(--mantine-spacing-xs)' }}>
+        {(filters.length > 1 || results.length >= SEARCH_FROM) && (
         <Group gap="md">
           {filters.length > 1 && (
             <SegmentedControl
@@ -441,14 +439,14 @@ export function PositionsTab({ status, artifacts }: RunTabProps) {
             />
           )}
         </Group>
-      )}
+        )}
+        <IntervalLegend base={levels} />
+      </Group>
       {shown.length === 0 && <Text className="empty">Нет позиций по этому условию.</Text>}
       {shown.map(({ group, sort, rows }) => (
-        <Stack key={group.key} gap="xs">
-          <Title order={5}>
-            {group.types.map(typeName).join(', ')} · {rows.length < group.results.length ? `${rows.length} из ${group.results.length}` : rows.length}
-          </Title>
           <PositionTable
+            key={group.key}
+            hint={hint}
             group={group}
             rows={rows}
             sort={sort}
@@ -459,7 +457,6 @@ export function PositionsTab({ status, artifacts }: RunTabProps) {
             shocks={shocks}
             onOpen={(id) => setChosen(id)}
           />
-        </Stack>
       ))}
       {untouched.length > 0 && (
         <Text size="sm" c="dimmed">

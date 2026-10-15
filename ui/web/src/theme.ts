@@ -43,9 +43,10 @@ export const theme = createTheme({
     fontWeight: '600',
     sizes: {
       h2: { fontSize: '20px', lineHeight: '1.3' },
-      h3: { fontSize: '16px' },
-      h4: { fontSize: '16px' },
-      h5: { fontSize: '14px' },
+      // Page, section, group: three levels and no more.
+      h3: { fontSize: '16px', lineHeight: '1.4' },
+      h4: { fontSize: '14px', lineHeight: '1.4' },
+      h5: { fontSize: '14px', lineHeight: '1.4' },
     },
   },
   defaultRadius: 'md',

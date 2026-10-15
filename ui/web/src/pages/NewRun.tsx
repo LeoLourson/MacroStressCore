@@ -5,10 +5,8 @@ import {
   Button,
   Checkbox,
   Collapse,
-  Divider,
   FileInput,
   Group,
-  Paper,
   SegmentedControl,
   Select,
   Stack,
@@ -16,15 +14,16 @@ import {
   Text,
   TextInput,
   Textarea,
-  Title,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { IconArrowLeft, IconChevronDown, IconChevronRight, IconFileText, IconPlayerPlay } from '@tabler/icons-react';
+import { IconChevronDown, IconChevronRight, IconFileText, IconPlayerPlay } from '@tabler/icons-react';
 import { useEffect, useState, type FormEvent } from 'react';
 import { Link, Navigate, useLocation, useNavigate, useSearchParams } from 'react-router';
 import { useLibraryEvents, usePortfolio, usePortfolios, useStartRun, useWorkflows, type StartInput } from '../api/queries';
 import { canRun, useSession } from '../auth/session';
 import { ErrorAlert } from '../components/ErrorAlert';
+import { NARROW, PageHeader, PageSection } from '../components/Page';
+import { Hint } from '../components/Term';
 import { metricValue, plural, typeName } from '../lib/format';
 
 type Source = 'library' | 'text' | 'file' | 'url';
@@ -45,16 +44,12 @@ export interface RerunState {
   strongModel?: boolean;
 }
 
-/** One part of the form: a quiet heading, separated from the previous part by a rule. */
-function Section({ title, first, children }: { title: string; first?: boolean; children: React.ReactNode }) {
+/** One part of the form: a card of its own, so the three things a run needs read as three groups. */
+function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <>
-      {!first && <Divider />}
-      <Stack gap="md">
-        <Title order={5}>{title}</Title>
-        {children}
-      </Stack>
-    </>
+    <PageSection title={title}>
+      <Stack gap="md">{children}</Stack>
+    </PageSection>
   );
 }
 
@@ -92,7 +87,7 @@ function PortfolioPositions({ portfolioId }: { portfolioId: string | null }) {
         </Anchor>
       </Group>
       <Collapse in={open}>
-        <Table withTableBorder>
+        <Table>
           <Table.Thead>
             <Table.Tr>
               <Table.Th>Позиция</Table.Th>
@@ -108,9 +103,9 @@ function PortfolioPositions({ portfolioId }: { portfolioId: string | null }) {
               return (
                 <Table.Tr key={position.position_id}>
                   <Table.Td>
-                    {position.position_id}
-                    <Text size="xs" c="dimmed">
-                      {instrument?.name}
+                    {instrument?.name ?? position.position_id}
+                    <Text size="xs" c="dimmed" ff="monospace">
+                      {position.position_id}
                     </Text>
                   </Table.Td>
                   <Table.Td>
@@ -138,18 +133,16 @@ function OptionalAgents({ chosen, onChange }: { chosen: string[]; onChange: (ids
   if (!agents.length) return null;
   return (
     <>
-      <Divider />
-      <Anchor component="button" type="button" size="sm" w="fit-content" c="dimmed" onClick={toggle}>
+      <Anchor component="button" type="button" size="sm" w="fit-content" onClick={toggle}>
         <Group gap={4}>
           {opened ? <IconChevronDown size={14} /> : <IconChevronRight size={14} />}
-          Дополнительные агенты (необязательно, {agents.length} на выбор)
+          <Hint text="Они пишут только в своё пространство и не меняют сценарий, расчёты и отчёт.">
+            Дополнительные агенты (необязательно, {agents.length} на выбор)
+          </Hint>
         </Group>
       </Anchor>
       <Collapse in={opened}>
         <Stack gap="xs">
-          <Text size="sm" c="dimmed">
-            Они пишут только в своё пространство и не меняют сценарий, расчёты и отчёт.
-          </Text>
           <Checkbox.Group value={chosen} onChange={onChange}>
             <Stack gap="xs">
               {agents.map((a) => (
@@ -270,19 +263,10 @@ export function NewRun() {
 
   return (
     <form onSubmit={submit}>
-      <Stack gap="lg" maw={860}>
-        <Stack gap={4}>
-          <Anchor component={Link} to="/" size="sm">
-            <Group gap={4}>
-              <IconArrowLeft size={14} /> Все стресс-тесты
-            </Group>
-          </Anchor>
-          <Title order={2}>Новый стресс-тест</Title>
-        </Stack>
+      <Stack gap="lg" maw={NARROW}>
+        <PageHeader back={{ to: '/', label: 'Все стресс-тесты' }} title="Новый стресс-тест" />
 
-        <Paper p="lg">
-        <Stack gap="lg">
-        <Section first title="Портфель">
+        <Section title="Портфель">
           {demo || portfolios.data?.length ? (
             <Select
               label={<FieldHelp label="Какой портфель проверяем" help="Выберите сохранённый портфель. Ниже можно проверить его состав перед запуском." />}
@@ -293,14 +277,12 @@ export function NewRun() {
               value={portfolioId}
               onChange={setPortfolioId}
               allowDeselect={false}
-              maw={420}
             />
           ) : (
             <TextInput
               label={<FieldHelp label="Идентификатор портфеля" help="Код портфеля в системах банка." />}
               value={portfolioId ?? ''}
               onChange={(e) => setPortfolioId(e.currentTarget.value)}
-              maw={420}
             />
           )}
           <PortfolioPositions portfolioId={portfolioId} />
@@ -326,7 +308,6 @@ export function NewRun() {
                 data={(events.data ?? []).map((e) => ({ value: e.event_id, label: e.title }))}
                 value={eventId}
                 onChange={pickEvent}
-                maw={520}
               />
               {chosen?.metadata?.description && (
                 <Text size="sm" c="dimmed">{chosen.metadata?.description}</Text>
@@ -373,7 +354,6 @@ export function NewRun() {
               value={file}
               onChange={setFile}
               clearable
-              maw={520}
             />
           )}
         </Section>
@@ -399,9 +379,8 @@ export function NewRun() {
               onChange={(e) => setStrong(e.currentTarget.checked)}
             />
           )}
+          <OptionalAgents chosen={agents} onChange={setAgents} />
         </Section>
-
-        <OptionalAgents chosen={agents} onChange={setAgents} />
 
         {missing && !(portfolioId?.trim() && event()) && (
           <Text c="orange.9" size="sm">
@@ -409,7 +388,6 @@ export function NewRun() {
           </Text>
         )}
         {start.error && <ErrorAlert error={start.error} />}
-        <Divider />
         <Group>
           <Button type="submit" size="md" leftSection={<IconPlayerPlay size={18} />} loading={start.isPending}>
             Запустить стресс-тест
@@ -418,8 +396,6 @@ export function NewRun() {
             Отмена
           </Button>
         </Group>
-        </Stack>
-        </Paper>
       </Stack>
     </form>
   );

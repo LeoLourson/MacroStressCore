@@ -161,12 +161,13 @@ function doneNote(stageId: string, artifacts: Artifacts | undefined): string {
 
 export type Tab = 'scenario' | 'positions' | 'portfolio' | 'report' | 'sources' | 'explain' | 'activity';
 
+/** The tabs in the order of what they hold: the grounds, then the results, then the tools. */
 export const TABS: { value: Tab; title: string; empty: string }[] = [
   { value: 'scenario', title: 'Сценарий и граф', empty: '' },
+  { value: 'sources', title: 'Источники данных', empty: 'Появится после расчёта по позициям' },
   { value: 'positions', title: 'Позиции', empty: 'Появится после расчёта по позициям' },
   { value: 'portfolio', title: 'Портфель', empty: 'Появится после сведения итогов по срезам портфеля' },
   { value: 'report', title: 'Отчёт', empty: 'Появится, когда отчёт будет написан' },
-  { value: 'sources', title: 'Источники данных', empty: 'Появится после расчёта по позициям' },
   { value: 'explain', title: 'Вопрос по результатам', empty: 'Появится после расчёта по позициям' },
   { value: 'activity', title: 'Вызовы LLM и MCP', empty: '' },
 ];

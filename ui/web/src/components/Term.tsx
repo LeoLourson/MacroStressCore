@@ -1,14 +1,19 @@
 import { Tooltip } from '@mantine/core';
+import { IconInfoCircle } from '@tabler/icons-react';
 import type { ReactNode } from 'react';
 import { GLOSSARY } from '../lib/labels';
 import { pluginGlossary } from '../plugins';
 
-/** Words with a short explanation on hover, keyboard focus or touch; a dotted underline marks them. */
+/**
+ * The one way a hint is shown: words with a small info mark, the explanation pops up on hover,
+ * keyboard focus or touch. Headings, field labels and terms in text all use it.
+ */
 export function Hint({ text, children }: { text: ReactNode; children: ReactNode }) {
   return (
     <Tooltip label={text} multiline maw={360} events={{ hover: true, focus: true, touch: true }}>
-      <span className="term" tabIndex={0}>
+      <span className="hint" tabIndex={0}>
         {children}
+        <IconInfoCircle className="hint-mark" aria-hidden />
       </span>
     </Tooltip>
   );

@@ -1,6 +1,6 @@
 import { ActionIcon, Alert, Anchor, Collapse, Drawer, Group, List, Stack, Table, Text, Title, Tooltip } from '@mantine/core';
 import { useHotkeys } from '@mantine/hooks';
-import { IconAlertTriangle, IconChevronDown, IconChevronUp, IconInfoCircle } from '@tabler/icons-react';
+import { IconChevronDown, IconChevronUp, IconInfoCircle } from '@tabler/icons-react';
 import { useEffect, useRef, useState } from 'react';
 import { flagKind, metricLabel, modelLabel, viewFor, type ResultView } from '../../../api/catalog';
 import type { Artifacts, CalculationResult, PositionContext } from '../../../api/types';
@@ -190,14 +190,15 @@ export function PositionDrawer({
               </List>
             </Alert>
           ) : (
+            // The status at the title already flags the result; here are the reasons, as text.
             important.length > 0 && (
-              <Alert color="orange" icon={<IconAlertTriangle />} title="Важно для чтения результата">
+              <Section title="Оговорки к результату">
                 <List size="sm" spacing={4}>
                   {important.map((line) => (
                     <List.Item key={line}>{line}</List.Item>
                   ))}
                 </List>
-              </Alert>
+              </Section>
             )
           )}
           {result.execution === 'completed' && (

@@ -9,12 +9,10 @@ import {
   List,
   Menu,
   Modal,
-  Paper,
   Stack,
   Table,
   Text,
   Textarea,
-  Title,
   Tooltip,
 } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
@@ -29,6 +27,8 @@ import {
   IconPlayerPlay,
   IconPlus,
   IconRefresh,
+  IconChevronDown,
+  IconChevronUp,
 } from '@tabler/icons-react';
 import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router';
@@ -46,14 +46,14 @@ import type {
 } from '../../../api/types';
 import { canFixGraph, useSession } from '../../../auth/session';
 import { ErrorAlert } from '../../../components/ErrorAlert';
-import { Term } from '../../../components/Term';
+import { ActionBar, PageSection, Subsection } from '../../../components/Page';
 import { day, elasticityText, nodeLabels, number, plural, scenarioValue } from '../../../lib/format';
 import { factorLabel } from '../../../api/catalog';
 import { ACTIVE, stopOf } from '../../../lib/stages';
 import type { RerunState } from '../../NewRun';
 import type { RunTabProps } from '../RunPage';
 import { EdgeDrawer, evidencePlaces, fragmentText } from './EdgeDrawer';
-import { edgeCaption, GraphCanvas } from './GraphCanvas';
+import { edgeCaption, GRAPH_HINT, GraphCanvas } from './GraphCanvas';
 import { channelsOf, newParameter, ParameterModal } from './ParameterModal';
 import { edgeFlagged, edgeIndex, failing, gateWords, parameterProblem, problemText, split } from './problems';
 import { useDraft, type Draft } from './useDraft';
@@ -133,7 +133,7 @@ function Gate({
   const icon =
     words.tone === 'problem' ? <IconAlertTriangle /> : words.tone === 'task' ? <IconMessageReport /> : <IconInfoCircle />;
   return (
-    <Alert color={color} icon={icon} title={words.title} styles={{ title: { fontSize: 'var(--mantine-font-size-md)' } }}>
+    <Alert color={color} icon={icon} title={words.title}>
       <Stack gap="xs">
         <Text size="sm">{words.text}</Text>
         {built && assumed > 0 && (
@@ -199,19 +199,8 @@ function ScenarioTable({
   const entries = Object.entries(parameters);
   return (
     <Stack gap="xs">
-      <Group justify="space-between">
-        <Text size="sm" c="dimmed">
-          По этим диапазонам строятся тысячи сценариев{' '}
-          <Term name="Монте-Карло">Монте-Карло</Term>, одинаковых для всех позиций.
-        </Text>
-        {editing && graph?.nodes.length ? (
-          <Button variant="light" size="xs" leftSection={<IconPlus size={14} />} onClick={onAdd}>
-            Добавить параметр
-          </Button>
-        ) : null}
-      </Group>
       {plan.text && (
-        <Text size="sm" c="dimmed">
+        <Text size="sm" c="dimmed" lineClamp={2} title={plan.text}>
           Как описали при запуске: «{plan.text.split(/\s+/).join(' ')}»
         </Text>
       )}
@@ -228,7 +217,7 @@ function ScenarioTable({
         </Text>
       ) : (
         <Table.ScrollContainer minWidth={720}>
-          <Table withTableBorder>
+          <Table>
             <Table.Thead>
               <Table.Tr>
                 <Table.Th>Параметр</Table.Th>
@@ -268,6 +257,11 @@ function ScenarioTable({
           </Table>
         </Table.ScrollContainer>
       )}
+      {editing && graph?.nodes.length ? (
+        <Button variant="subtle" size="xs" w="fit-content" leftSection={<IconPlus size={14} />} onClick={onAdd}>
+          Добавить параметр
+        </Button>
+      ) : null}
     </Stack>
   );
 }
@@ -275,12 +269,11 @@ function ScenarioTable({
 function Effects({ effects }: { effects: { label: string; sector: string; okved: string; factor: string; shock: number; unit: string }[] }) {
   if (!effects.length) return null;
   return (
-    <Stack gap="xs">
-      <Title order={5}>Влияние на отрасли в центральном сценарии</Title>
-      <Text size="sm" c="dimmed">
-        Значение параметра, пересчитанное через связи графа. Расчёт по позициям разыгрывает весь диапазон.
-      </Text>
-      <Table withTableBorder>
+    <Subsection
+      title="Влияние на отрасли в центральном сценарии"
+      hint="Значение параметра, пересчитанное через связи графа. Расчёт по позициям разыгрывает весь диапазон."
+    >
+      <Table>
         <Table.Thead>
           <Table.Tr>
             <Table.Th>Параметр</Table.Th>
@@ -305,7 +298,7 @@ function Effects({ effects }: { effects: { label: string; sector: string; okved:
           ))}
         </Table.Tbody>
       </Table>
-    </Stack>
+    </Subsection>
   );
 }
 
@@ -330,7 +323,7 @@ function EdgesTable({
       </Anchor>
       <Collapse in={opened}>
       <Table.ScrollContainer minWidth={720}>
-        <Table withTableBorder highlightOnHover>
+        <Table highlightOnHover>
           <Table.Thead>
             <Table.Tr>
               <Table.Th>Связь</Table.Th>
@@ -395,7 +388,7 @@ function JsonReplace({ opened, onClose, onLoad }: { opened: boolean; onClose: ()
     }
   };
   return (
-    <Modal opened={opened} onClose={onClose} title="Заменить граф целиком" size="xl">
+    <Modal opened={opened} onClose={onClose} title="Заменить граф целиком" size="xl" withCloseButton={false}>
       <Stack>
         <Text size="sm" c="dimmed">
           Для случаев, когда граф проще подготовить во внешнем редакторе. Граф попадёт в черновик и будет проверен.
@@ -446,8 +439,9 @@ function Body({
   const [editingName, setEditingName] = useState<string | null>(null);
   const [newOne, setNewOne] = useState<[string, ScenarioParameter] | null>(null);
   const [jsonOpen, setJsonOpen] = useState(false);
-  // The scenario opens on request; a problem in it opens it by itself.
-  const [scenarioOpen, setScenarioOpen] = useState(() => split(failing(stop?.violations)).scenario.length > 0);
+  // The person reviewing sees the scenario open: its assumptions are what they check. Otherwise
+  // it opens on request, or by itself when it has a problem.
+  const [scenarioOpen, setScenarioOpen] = useState(() => !!draft || split(failing(stop?.violations)).scenario.length > 0);
 
   const violations = useMemo(() => {
     if (refused) return refused;
@@ -515,7 +509,7 @@ function Body({
       : 'не задан';
 
   return (
-    <Stack gap="xl" pb={draft ? 96 : 0}>
+    <Stack gap="lg" pb={draft ? 96 : 0}>
       {stop && (
         <Gate
           stop={stop}
@@ -528,62 +522,52 @@ function Body({
         />
       )}
 
-      <Paper p="lg">
-        <Stack gap="md">
-          <Group justify="space-between" gap="xs">
-            <Title order={4}>
-              <Anchor
-                component="button"
-                type="button"
-                inherit
-                aria-expanded={scenarioOpen}
-                onClick={() => setScenarioOpen(!scenarioOpen)}
-              >
-                {scenarioOpen ? '▾' : '▸'} Сценарий
-              </Anchor>
-            </Title>
-            {!scenarioOpen && (
-              <Text size="sm" c="dimmed">
-                {scenarioSummary}
-              </Text>
-            )}
-          </Group>
-          <Collapse in={scenarioOpen}>
-            <Stack gap="lg">
-              <ScenarioTable
-                plan={plan}
-                parameters={parameters}
-                proposed={proposed}
-                editor={editor}
-                graph={graph}
-                document={document}
-                editing={!!draft}
-                pending={pending}
-                onEdit={setEditingName}
-                onAdd={() => graph && setNewOne(newParameter(parameters, graph, factors))}
-              />
-              <Effects effects={check.data?.effects ?? []} />
-              {!draft && plan.confirmed && (
-                <Text size="sm" c="dimmed">
-                  Сценарий подтверждён аналитиком.
-                </Text>
-              )}
-            </Stack>
-          </Collapse>
-        </Stack>
-      </Paper>
+      <PageSection
+        title="Сценарий"
+        hint={
+          <>
+            По этим диапазонам строятся тысячи сценариев Монте-Карло, одинаковых для всех позиций.
+          </>
+        }
+        aside={
+          <>
+            {!scenarioOpen && <span>{scenarioSummary}</span>}
+            <Button
+              variant="subtle"
+              size="xs"
+              aria-expanded={scenarioOpen}
+              rightSection={scenarioOpen ? <IconChevronUp size={14} /> : <IconChevronDown size={14} />}
+              onClick={() => setScenarioOpen(!scenarioOpen)}
+            >
+              {scenarioOpen ? 'Свернуть' : 'Показать'}
+            </Button>
+          </>
+        }
+      >
+        <Collapse in={scenarioOpen}>
+          <Stack gap="lg">
+            <ScenarioTable
+              plan={plan}
+              parameters={parameters}
+              proposed={proposed}
+              editor={editor}
+              graph={graph}
+              document={document}
+              editing={!!draft}
+              pending={pending}
+              onEdit={setEditingName}
+              onAdd={() => graph && setNewOne(newParameter(parameters, graph, factors))}
+            />
+            <Effects effects={check.data?.effects ?? []} />
+          </Stack>
+        </Collapse>
+      </PageSection>
 
-      <Paper p="lg">
-        <Stack gap="md">
-          <Group justify="space-between">
-            <Stack gap={0}>
-              <Title order={4}>Граф влияния</Title>
-              <Text size="sm" c="dimmed">
-                Как событие передаётся на финансы компаний портфеля: через каналы влияния на отрасли и их
-                показатели.
-              </Text>
-            </Stack>
-            {draft && (
+      <PageSection
+        title="Граф влияния"
+        hint={`Как событие передаётся на финансы компаний портфеля: через каналы влияния на отрасли и их показатели. ${GRAPH_HINT}`}
+        aside={
+          draft && (
               <Menu position="bottom-end">
                 <Menu.Target>
                   <ActionIcon variant="subtle" color="gray" aria-label="Дополнительно">
@@ -594,8 +578,9 @@ function Body({
                   <Menu.Item onClick={() => setJsonOpen(true)}>Заменить граф из JSON</Menu.Item>
                 </Menu.Dropdown>
               </Menu>
-            )}
-          </Group>
+          )
+        }
+      >
           {hasGraph ? (
             <>
               <GraphCanvas graph={graph!} flagged={flagged} selected={selected} onSelect={setSelected} />
@@ -624,8 +609,7 @@ function Body({
               {['queued', 'running'].includes(status.status) ? 'Граф строится…' : 'Граф не построен.'}
             </Text>
           )}
-        </Stack>
-      </Paper>
+      </PageSection>
 
       {graph && (
         <EdgeDrawer
@@ -675,46 +659,42 @@ function Body({
       )}
       <JsonReplace opened={jsonOpen} onClose={() => setJsonOpen(false)} onLoad={updateGraph} />
 
+      {draft && resume.error && !(resume.error instanceof ApiError && resume.error.status === 422) && (
+        <ErrorAlert error={resume.error} />
+      )}
       {draft && (
-        <Paper
-          p="md"
-          shadow="md"
-          style={{ position: 'sticky', bottom: 16, zIndex: 20, borderColor: 'var(--mantine-color-gray-4)' }}
-        >
-          <Stack gap="xs">
-            {resume.error && !(resume.error instanceof ApiError && resume.error.status === 422) && (
-              <ErrorAlert error={resume.error} />
-            )}
-            <Group justify="space-between">
-              <Text size="sm" c={blocking ? 'orange.9' : 'dimmed'}>
-                {!hasGraph
-                  ? 'Подтверждать нечего: графа нет'
-                  : blocking
+        <ActionBar
+          status={
+            <Text span inherit c={blocking ? 'orange.9' : undefined}>
+              {!hasGraph
+                ? 'Графа нет: подтверждать нечего'
+                : blocking
                   ? `${plural(violations.length, 'проблема мешает', 'проблемы мешают', 'проблем мешают')} продолжить`
                   : draft.changed
                     ? check.isFetching
                       ? 'Проверяем правки…'
-                      : 'Правки проверены и ещё не отправлены'
-                    : 'Правок нет: граф и сценарий будут приняты как есть'}
-              </Text>
-              <Group>
-                {draft.changed && (
-                  <Button variant="default" leftSection={<IconArrowBackUp size={16} />} onClick={() => { setRefused(null); draft.reset(); }}>
-                    Сбросить правки
-                  </Button>
-                )}
-                <Button
-                  leftSection={draft.changed ? <IconPlayerPlay size={16} /> : <IconCheck size={16} />}
-                  onClick={confirm}
-                  loading={resume.isPending}
-                  disabled={blocking || !hasGraph}
-                >
-                  {draft.changed ? 'Подтвердить правки и продолжить' : 'Подтвердить как есть'}
+                      : 'Правки проверены, ещё не отправлены'
+                    : 'Правок нет'}
+            </Text>
+          }
+          actions={
+            <>
+              {draft.changed && (
+                <Button variant="subtle" color="gray" leftSection={<IconArrowBackUp size={16} />} onClick={() => { setRefused(null); draft.reset(); }}>
+                  Сбросить правки
                 </Button>
-              </Group>
-            </Group>
-          </Stack>
-        </Paper>
+              )}
+              <Button
+                leftSection={draft.changed ? <IconPlayerPlay size={16} /> : <IconCheck size={16} />}
+                onClick={confirm}
+                loading={resume.isPending}
+                disabled={blocking || !hasGraph}
+              >
+                {draft.changed ? 'Подтвердить правки и продолжить' : 'Подтвердить как есть'}
+              </Button>
+            </>
+          }
+        />
       )}
     </Stack>
   );

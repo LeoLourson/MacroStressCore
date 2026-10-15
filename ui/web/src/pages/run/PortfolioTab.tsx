@@ -1,4 +1,4 @@
-import { Alert, Box, Code, Group, List, Paper, SimpleGrid, Stack, Table, Text, Title } from '@mantine/core';
+import { Alert, Box, Code, Group, List, SimpleGrid, Stack, Table, Text, Title } from '@mantine/core';
 import { IconAlertTriangle, IconInfoCircle } from '@tabler/icons-react';
 import { sliceSpec } from '../../api/catalog';
 import { useReport } from '../../api/queries';
@@ -6,6 +6,7 @@ import type { Artifacts, Report, SliceResult } from '../../api/types';
 import { TracedNumber } from '../../components/Provenance';
 import { ResultStatus } from '../../components/RiskModel';
 import { ResultSummary } from '../../components/ResultSummary';
+import { PageSection, Subsection } from '../../components/Page';
 import { Term } from '../../components/Term';
 import { capitalize, describePath, formatter, number, pathValue, percent, positionTitle, slicePath } from '../../lib/format';
 import { ACTIONS, RESULT_STATUS, RULES, flagList, label, translateFlags } from '../../lib/labels';
@@ -28,19 +29,11 @@ function Slice({ item, artifacts, entries }: { item: SliceResult; artifacts: Art
   );
   const notes = flagList(item.flags.filter((f) => !f.startsWith('included_by_rule:') && !f.startsWith('inclusion_rule:')));
   return (
-    <Paper p="lg">
-      <Stack gap="md">
-        <Group justify="space-between" align="flex-start">
-          <Stack gap={4}>
-            <Title order={4}>{spec?.label ?? item.slice_id}</Title>
-            {spec?.description && (
-              <Text size="sm" c="dimmed" maw="70ch">
-                {spec.description}
-              </Text>
-            )}
-          </Stack>
-          {item.status !== 'ok' && <ResultStatus status={item.status} />}
-        </Group>
+    <PageSection
+      title={spec?.label ?? item.slice_id}
+      hint={spec?.description || undefined}
+      aside={item.status !== 'ok' && <ResultStatus status={item.status} />}
+    >
         {q ? (
           <ResultSummary item={item} artifacts={artifacts} entries={entries} />
         ) : (
@@ -94,11 +87,8 @@ function Slice({ item, artifacts, entries }: { item: SliceResult; artifacts: Art
             )}
           </Stack>
           {contributions.length > 0 && es != null && es > 0 && (
-            <Stack gap="xs">
-              <Text size="sm" fw={600}>
-                Кто формирует хвост потерь
-              </Text>
-              <Stack gap={4}>
+            <Subsection title="Кто формирует хвост потерь" hint="Доля позиции в средних потерях худших 5 % сценариев (ES95).">
+              <Stack gap={6}>
                 {contributions.map((c) => {
                   const share = c.expected_shortfall_contribution / es;
                   return (
@@ -116,7 +106,7 @@ function Slice({ item, artifacts, entries }: { item: SliceResult; artifacts: Art
                   );
                 })}
               </Stack>
-            </Stack>
+            </Subsection>
           )}
         </SimpleGrid>
         {item.excluded.length > 0 && (
@@ -131,8 +121,7 @@ function Slice({ item, artifacts, entries }: { item: SliceResult; artifacts: Art
             </List>
           </Alert>
         )}
-      </Stack>
-    </Paper>
+    </PageSection>
   );
 }
 
@@ -145,15 +134,14 @@ function Recommendations({ report, artifacts }: { report: Report; artifacts: Art
     grouped.set(rec.position_id, [...(grouped.get(rec.position_id) ?? []), rec]);
   }
   return (
-    <Stack gap="xs">
-      <Title order={4}>Рекомендации</Title>
+    <PageSection title="Рекомендации" hint="Действия, которые правила назначили позициям по их показателям." flush={grouped.size > 0}>
       {grouped.size === 0 && (
         <Text size="sm" c="dimmed">
           Правила не назначили действий ни одной позиции.
         </Text>
       )}
       {grouped.size > 0 && (
-        <Table withTableBorder>
+        <Table verticalSpacing="sm">
           <Table.Thead>
             <Table.Tr>
               <Table.Th>Позиция</Table.Th>
@@ -192,7 +180,7 @@ function Recommendations({ report, artifacts }: { report: Report; artifacts: Art
           </Table.Tbody>
         </Table>
       )}
-    </Stack>
+    </PageSection>
   );
 }
 
@@ -230,18 +218,16 @@ export function Extensions({ artifacts }: { artifacts: Artifacts }) {
     ...(artifacts.workflow?.agents ?? []).map((a) => [a.agent_id, a.label]),
   ]);
   return (
-    <Stack gap="xs">
-      <Title order={4}>Дополнительные агенты</Title>
-      <Text size="sm" c="dimmed" maw="80ch">
-        Агенты плагинов пишут только в своё пространство: их выводы не меняют сценарий, расчёты и отчёт.
-      </Text>
+    <PageSection
+      title="Дополнительные агенты"
+      hint="Агенты плагинов пишут только в своё пространство: их выводы не меняют сценарий, расчёты и отчёт."
+    >
       {items.map(([agentId, output]) => {
         const View = output.failed === true ? null : agentComponent(agentId);
         return (
-        <Paper key={agentId} p="md">
-          <Stack gap={4}>
+          <Stack key={agentId} gap={4}>
             <Group gap="xs">
-              <Text fw={600}>{labels[agentId] ?? agentId}</Text>
+              <Title order={4}>{labels[agentId] ?? agentId}</Title>
               {output.failed === true && (
                 <Group gap={4}>
                   <IconAlertTriangle size={14} />
@@ -251,10 +237,9 @@ export function Extensions({ artifacts }: { artifacts: Artifacts }) {
             </Group>
             {View ? <View output={output} artifacts={artifacts} /> : <PlainOutput output={output} />}
           </Stack>
-        </Paper>
         );
       })}
-    </Stack>
+    </PageSection>
   );
 }
 
@@ -267,7 +252,7 @@ export function PortfolioTab({ status, artifacts }: RunTabProps) {
   const Notes = pluginNotes();
 
   return (
-    <Stack gap="xl">
+    <Stack gap="lg">
       {/* Only several slices raise the question whether they add up. */}
       {slices.length > 1 && (
         <Group gap="xs" c="dimmed">

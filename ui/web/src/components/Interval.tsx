@@ -192,10 +192,11 @@ export function Interval(props: {
 }) {
   const { p05, p50, p95, scale, format, width } = props;
   if (p05 == null || p50 == null || p95 == null) return <Text c="dimmed">—</Text>;
+  // The same build as a shift: the numbers, then the band under them.
   return (
-    <Group gap="md" wrap="nowrap" justify="flex-end">
+    <Stack gap={4} align="flex-end">
       <IntervalText p05={p05} p50={p50} p95={p95} format={format} />
-      <IntervalBar p05={p05} p50={p50} p95={p95} scale={scale} width={width} />
-    </Group>
+      <IntervalBar p05={p05} p50={p50} p95={p95} scale={scale} width={width ?? '100%'} />
+    </Stack>
   );
 }

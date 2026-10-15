@@ -1,4 +1,4 @@
-import { Box, Group, Text } from '@mantine/core';
+import { Box, Text } from '@mantine/core';
 import {
   Background,
   Controls,
@@ -69,7 +69,21 @@ function Card({ data }: NodeProps<Node<CardData>>) {
   );
 }
 
-const nodeTypes = { card: Card };
+type ColumnData = { title: string };
+
+/** A column's heading drawn inside the canvas, so it stays over its column at any zoom. */
+function ColumnHeading({ data }: NodeProps<Node<ColumnData>>) {
+  return (
+    <Text w={NODE_WIDTH} size="xs" fw={600} c="dimmed">
+      {data.title}
+    </Text>
+  );
+}
+
+const nodeTypes = { card: Card, column: ColumnHeading };
+
+export const GRAPH_HINT =
+  'На стрелках: знак (+ усиливает, − ослабляет), сила связи (эластичность) и задержка. Связи с проблемами — пунктиром со знаком ⚠. Стрелка без подписи ведёт к фактору прямого шока; его величина задаётся в сценарии. Нажмите на стрелку, чтобы открыть связь и её источники.';
 
 export function edgeCaption(sign: 1 | -1, text: string, lag: number): string {
   return `${sign === 1 ? '+' : '−'}${text}${lag ? ` · ${lag} мес.` : ''}`;
@@ -90,7 +104,15 @@ export function GraphCanvas({
   const { nodes, edges, height } = useMemo(() => {
     const columns = COLUMNS.map((kind) => graph.nodes.filter((n) => n.kind === kind));
     const rows = Math.max(1, ...columns.map((c) => c.length));
-    const placed: Node<CardData>[] = columns.flatMap((column, x) =>
+    const headings: Node<ColumnData>[] = COLUMNS.map((kind, x) => ({
+      id: `column-${kind}`,
+      type: 'column',
+      position: { x: x * COLUMN_WIDTH, y: -0.6 * ROW_HEIGHT },
+      data: { title: NODE_KINDS[kind] },
+      draggable: false,
+      selectable: false,
+    }));
+    const cards: Node<CardData>[] = columns.flatMap((column, x) =>
       column.map((node, y) => ({
         id: node.id,
         type: 'card',
@@ -103,6 +125,7 @@ export function GraphCanvas({
         selectable: false,
       })),
     );
+    const placed: Node[] = [...headings, ...cards];
     const lines: Edge[] = graph.edges.map((edge, index) => {
       const problem = flagged.has(index);
       const active = selected === index;
@@ -138,15 +161,7 @@ export function GraphCanvas({
   }, [graph, flagged, selected]);
 
   return (
-    <Box>
-      <Group gap="xl" mb="xs" px={4} wrap="nowrap" style={{ overflow: 'hidden' }}>
-        {COLUMNS.map((kind) => (
-          <Text key={kind} size="xs" c="dimmed" fw={600} tt="uppercase" w={COLUMN_WIDTH - 32}>
-            {NODE_KINDS[kind]}
-          </Text>
-        ))}
-      </Group>
-      <Box h={height} style={{ border: '1px solid var(--mantine-color-gray-3)', borderRadius: 'var(--mantine-radius-md)' }} bg="white">
+    <Box h={height} style={{ border: '1px solid var(--mantine-color-gray-3)', borderRadius: 'var(--mantine-radius-md)' }} bg="white">
         <ReactFlow
           nodes={nodes}
           edges={edges}
@@ -164,12 +179,6 @@ export function GraphCanvas({
           <Background gap={24} color="var(--mantine-color-gray-2)" />
           <Controls showInteractive={false} position="bottom-right" />
         </ReactFlow>
-      </Box>
-      <Text size="xs" c="dimmed" mt="xs">
-        На стрелках: знак (+ усиливает, − ослабляет), сила связи (эластичность) и задержка. Связи с
-        проблемами — пунктиром со знаком ⚠. Нажмите на стрелку, чтобы открыть связь и её источники.
-        Стрелка без подписи ведёт к фактору прямого шока; его величина задаётся в сценарии.
-      </Text>
     </Box>
   );
 }

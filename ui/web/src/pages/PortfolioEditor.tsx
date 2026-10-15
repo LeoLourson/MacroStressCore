@@ -10,7 +10,6 @@ import {
   FileButton,
   Group,
   NumberInput,
-  Paper,
   Select,
   SimpleGrid,
   Stack,
@@ -20,7 +19,7 @@ import {
   Title,
 } from '@mantine/core';
 import { notifications } from '@mantine/notifications';
-import { IconArrowLeft, IconDownload, IconPlus, IconTrash, IconUpload, IconAlertTriangle } from '@tabler/icons-react';
+import { IconAlertTriangle, IconCheck, IconChevronDown, IconChevronRight, IconDownload, IconPlus, IconTrash, IconUpload } from '@tabler/icons-react';
 import { useEffect, useState } from 'react';
 import { Link, Navigate, useNavigate, useSearchParams } from 'react-router';
 import { getCatalog, instrumentTypes, typeSpec, type EditorField, type EditorGroup } from '../api/catalog';
@@ -28,6 +27,7 @@ import { useCreatePortfolio } from '../api/queries';
 import type { DraftPosition, PortfolioDraft } from '../api/types';
 import { canRun, useClient, useSession } from '../auth/session';
 import { ErrorAlert } from '../components/ErrorAlert';
+import { PageHeader, PageSection } from '../components/Page';
 import { FieldHelp } from '../components/FieldHelp';
 import { typeName } from '../lib/format';
 import {
@@ -231,9 +231,12 @@ function Group_({
   );
   return (
     <Stack gap="xs">
-      <Anchor component="button" type="button" onClick={() => setOpen(!open)} w="fit-content">
-        <Title order={5}>
-          {open ? '▾' : '▸'} {group.title}
+      <Anchor component="button" type="button" onClick={() => setOpen(!open)} w="fit-content" aria-expanded={open}>
+        <Title order={4} c="inherit">
+          <Group gap={4} wrap="nowrap" align="center">
+            {open ? <IconChevronDown size={14} /> : <IconChevronRight size={14} />}
+            {group.title}
+          </Group>
         </Title>
       </Anchor>
       <Collapse in={open}>
@@ -410,41 +413,13 @@ export function PortfolioEditor() {
   };
 
   return (
-    <Stack gap="lg" maw={1100}>
-      <Stack gap={4}>
-        <Anchor component={Link} to="/portfolios" size="sm">
-          <Group gap={4}>
-            <IconArrowLeft size={14} /> Все портфели
-          </Group>
-        </Anchor>
-        <Title order={2}>{from ? 'Копия портфеля' : 'Новый портфель'}</Title>
-        <Text size="sm" c="dimmed" maw="80ch">
-          Каждое введённое число сохранится как допущение аналитика с вашим
-          именем и сегодняшней датой: отчёт сошлётся на него как на источник. Портфель хранится семь дней в демо-контуре.
-        </Text>
-      </Stack>
-
-      <Paper p="lg">
-        <Group align="flex-end" justify="space-between" gap="md">
-          <Group align="flex-end" gap="md">
-            <TextInput
-              label={<FieldHelp label="Название портфеля" help="Под этим названием портфель виден при запуске стресс-теста" />}
-              withAsterisk
-              value={draft.name}
-              onChange={(e) => setDraft({ ...draft, name: e.currentTarget.value })}
-              w={{ base: '100%', sm: 320 }}
-              maxLength={80}
-            />
-            <Select
-              label={<FieldHelp label="Базовая валюта" help="Валюта, в которой считаются итоги портфеля" />}
-              data={getCatalog().units.currencies.length ? getCatalog().units.currencies : ['RUB']}
-              value={draft.base_currency}
-              onChange={(v) => v && setDraft({ ...draft, base_currency: v })}
-              allowDeselect={false}
-              w={180}
-            />
-          </Group>
-          <Group gap="xs">
+    <Stack gap="lg">
+      <PageHeader
+        back={{ to: '/portfolios', label: 'Все портфели' }}
+        title={from ? 'Копия портфеля' : 'Новый портфель'}
+        hint="Каждое введённое число сохранится как допущение аналитика с вашим именем и сегодняшней датой: отчёт сошлётся на него как на источник. Портфель хранится семь дней в демо-контуре."
+        actions={
+          <>
             <FileButton
               accept="application/json,.json"
               onChange={(file) => {
@@ -467,18 +442,55 @@ export function PortfolioEditor() {
             <Button variant="default" leftSection={<IconDownload size={16} />} onClick={() => download(draft)}>
               Экспорт JSON
             </Button>
+          </>
+        }
+      />
+
+      <PageSection title="Портфель">
+          <Group align="flex-end" gap="md">
+            <TextInput
+              label={<FieldHelp label="Название портфеля" help="Под этим названием портфель виден при запуске стресс-теста" />}
+              withAsterisk
+              value={draft.name}
+              onChange={(e) => setDraft({ ...draft, name: e.currentTarget.value })}
+              w={{ base: '100%', sm: 320 }}
+              maxLength={80}
+            />
+            <Select
+              label={<FieldHelp label="Базовая валюта" help="Валюта, в которой считаются итоги портфеля" />}
+              data={getCatalog().units.currencies.length ? getCatalog().units.currencies : ['RUB']}
+              value={draft.base_currency}
+              onChange={(v) => v && setDraft({ ...draft, base_currency: v })}
+              allowDeselect={false}
+              w={180}
+            />
           </Group>
-        </Group>
         {importError && (
-          <Alert icon={<IconAlertTriangle />} color="orange" mt="md">
+          <Alert icon={<IconAlertTriangle />} color="orange">
             {importError}
           </Alert>
         )}
-      </Paper>
+      </PageSection>
 
-      <Paper>
+      <PageSection
+        flush
+        title="Позиции"
+        aside={
+          <Button
+            variant="subtle"
+            size="xs"
+            leftSection={<IconPlus size={14} />}
+            onClick={() => {
+              setDraft({ ...draft, positions: [...draft.positions, emptyPosition(draft.positions.length + 1, draft.base_currency)] });
+              setSelected(draft.positions.length);
+            }}
+          >
+            Добавить позицию
+          </Button>
+        }
+      >
         <Table.ScrollContainer minWidth={620}>
-        <Table highlightOnHover>
+        <Table highlightOnHover verticalSpacing="sm">
           <Table.Thead>
             <Table.Tr>
               <Table.Th>Позиция</Table.Th>
@@ -503,7 +515,7 @@ export function PortfolioEditor() {
                     <Text size="sm" fw={500}>
                       {p.name || '—'}
                     </Text>
-                    <Text size="xs" c="dimmed">
+                    <Text size="xs" c="dimmed" ff="monospace">
                       {p.position_id}
                     </Text>
                   </Table.Td>
@@ -512,12 +524,12 @@ export function PortfolioEditor() {
                   <Table.Td>{p.currency}</Table.Td>
                   <Table.Td>
                     {missing ? (
-                      <Badge color="orange" c="orange.9">
+                      <Badge color="orange" c="dark.7" leftSection={<IconAlertTriangle size={12} color="var(--mantine-color-orange-8)" />}>
                         не хватает {missing}
                       </Badge>
                     ) : (
-                      <Badge color="teal" c="teal.9">
-                        ✓ готова
+                      <Badge color="teal" c="teal.9" leftSection={<IconCheck size={12} />}>
+                        готова
                       </Badge>
                     )}
                   </Table.Td>
@@ -543,27 +555,12 @@ export function PortfolioEditor() {
           </Table.Tbody>
         </Table>
         </Table.ScrollContainer>
-        <Group p="sm">
-          <Button
-            variant="subtle"
-            leftSection={<IconPlus size={16} />}
-            onClick={() => {
-              setDraft({ ...draft, positions: [...draft.positions, emptyPosition(draft.positions.length + 1, draft.base_currency)] });
-              setSelected(draft.positions.length);
-            }}
-          >
-            Добавить позицию
-          </Button>
-        </Group>
-      </Paper>
+      </PageSection>
 
       {position && (
-        <Paper p="lg">
-          <Stack gap="md">
-            <Title order={4}>{position.name || position.position_id || 'Позиция'}</Title>
-            <PositionEditor key={selected} position={position} base={draft.base_currency} onChange={update} />
-          </Stack>
-        </Paper>
+        <PageSection title={position.name || position.position_id || 'Позиция'}>
+          <PositionEditor key={selected} position={position} base={draft.base_currency} onChange={update} />
+        </PageSection>
       )}
 
       {touched && issues.length > 0 && (
