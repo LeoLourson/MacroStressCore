@@ -2,7 +2,7 @@
 
 Отчёт по [README.md](README.md) (состав портфеля), [catalog-notes.md](catalog-notes.md) (как
 собраны данные), `beta-computation.json` (расчёт и факт) и дампу прогона в `runs/`. Допуски —
-как в пилоте «Эталон» ([docs/todo/README.md](../../docs/todo/README.md)): 20 % по суммам,
+как в пилоте «Эталон» ([docs/manual-tests/README.md](../../docs/manual-tests/README.md)): 20 % по суммам,
 0,5 по коэффициентам, 5 п.п. по доходности акций, один месяц по срокам. Все доходности ниже —
 логарифмические, как их считает модель (`equity.log_return`); суммы — млн ₽.
 

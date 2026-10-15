@@ -1,3 +1,11 @@
+# Исследовательский скрипт пилота «Эталон». Каталог собирается не из него: build_pilot_afk.py
+# читает demo/pilot-afk/beta-computation.json, который пишет demo/pilot-afk/compute_beta.py.
+# Отличия от версии АФК (по факту кода): одна бумага ETLN против MOEXBMI вместо MTSS/OZON/SGZH/ETLN;
+# окна 2023-07-01..2024-06-30 и календарный 2023 вместо года до 24.10.2024; данные из
+# etln-quotes-2023-01_2024-12.json и moex-index-2023-01_2024-12.json в demo/pilot-etalon/
+# вместо market-data.json; дополнительно пишет se_alpha, моменты и σ индекса, но не считает
+# доходность окна после события, отраслевые индексы и остаточную σ; отказывается перезаписать
+# beta-computation.json без --force; формула беты та же (лог-доходности, ddof = 1).
 """Beta of ETLN against MOEXBMI on daily returns, plus the audit trail for the report.
 
 Windows:

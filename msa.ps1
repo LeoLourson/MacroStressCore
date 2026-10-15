@@ -1,3 +1,7 @@
+# Scripts in ops/: local_stack.py (up/down/status/logs), rehearse.py (dress rehearsal),
+#   init_env.py, check_services.py, load_portfolio.py, web_build.py.
+# Linux/macOS equivalent: uv run --frozen python ops/local_stack.py up [deepseek|local|mock] | down | status | logs [name]
+#   and uv run --frozen python ops/rehearse.py [EVENT ...]
 # Native stack on Windows without Docker: PostgreSQL + the API with the browser app.
 #   .\msa.ps1 up [deepseek|local|mock] | down | status | logs [name] | rehearse [RECYCLING-FEE MORTGAGE-DOWN-PAYMENT]
 #   deepseek — DeepSeek API (DEEPSEEK_API_KEY), local — LM Studio on 127.0.0.1:1234, mock — no LLM
