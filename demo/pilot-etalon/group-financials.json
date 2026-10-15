@@ -1,0 +1,455 @@
+{
+  "entity": "ГК «Эталон» (Etalon Group PLC / группа «Эталон»)",
+  "borrower_position_type": "corp_loan",
+  "description": "Публичные финансовые показатели группы «Эталон» на две даты снимка. Деньги — млн ₽. Источник — консолидированная отчётность по МСФО, опубликованная на etalongroup.com. Пояснения к каждому числу — в group-financials.md.",
+  "units": "million_rub",
+  "currency": "RUB",
+  "reporting_standard": "IFRS",
+  "reporting_entity_at_snapshot": "Etalon Group PLC (Кипр); редомициляция в МКПАО «Эталон Груп» завершена в 2025 году, к датам снимка не относится",
+  "generated_at": "2026-10-15",
+  "dates": ["2023-12-31", "2024-06-30"],
+  "sources": {
+    "FY2023": {
+      "title": "МСФО за 12М2023, рус. (аудировано, подписано 22.03.2024)",
+      "url": "https://www.etalongroup.com/upload/iblock/5a6/55zplka16d0b01lfezinbge0g9dso29q/EtalonGroup_FY2023_IFRS.pdf"
+    },
+    "1H2024": {
+      "title": "МСФО за 6М2024, рус. (неаудировано, утверждено 28.08.2024)",
+      "url": "https://www.etalongroup.com/upload/iblock/957/lrsqmzb473ceti78riivnc0n5dy9yrkr/EHtalon_Konsolidirovannaja_otchetnost_po_MSFO_za_6M_2024.pdf"
+    },
+    "FY2024": {
+      "title": "МСФО за 12М2024, рус. (аудировано, утверждено 21.03.2025)",
+      "url": "https://www.etalongroup.com/upload/iblock/301/gp79q7coj5tvuemunqq0vyklg3q2xeuv/EHtalon_Konsolidirovannaja_otchetnost_po_MSFO_za_12M_2024.pdf"
+    },
+    "PR2024": {
+      "title": "Пресс-релиз о финансовых результатах за 2024 год, 24.03.2025",
+      "url": "https://etalongroup.com/news/finansovye-rezultaty-za-2024-god-rost-vyruchki-na-44-i-ebitda-na-52-do-rekordnykh-urovney/"
+    }
+  },
+  "metrics": {
+    "revenue": {
+      "platform_name": "revenue",
+      "title_ru": "Выручка",
+      "required": true,
+      "note": "За 12М2023 — пересчитанная величина (исходно опубликовано 88 791; в FY2024 Прим. 2 f исправлено представление услуг сервисных управляющих организаций, +1 861). За 6М2024 — как опубликовано в 1П2024.",
+      "values": {
+        "2023-12-31": {
+          "period": "12М2023",
+          "value_million_rub": 90652,
+          "source_url": "https://www.etalongroup.com/upload/iblock/301/gp79q7coj5tvuemunqq0vyklg3q2xeuv/EHtalon_Konsolidirovannaja_otchetnost_po_MSFO_za_12M_2024.pdf",
+          "source_section": "FY2024, примечание 2(f) и консолидированный отчёт о прибыли или убытке (графа 2023)",
+          "note": "Пересчёт: до корректировки 88 791, исправление +1 861. Валовая прибыль не изменилась (29 971)."
+        },
+        "2024-06-30": {
+          "period": "6М2024",
+          "value_million_rub": 57360,
+          "source_url": "https://www.etalongroup.com/upload/iblock/957/lrsqmzb473ceti78riivnc0n5dy9yrkr/EHtalon_Konsolidirovannaja_otchetnost_po_MSFO_za_6M_2024.pdf",
+          "source_section": "1П2024, консолидированный отчёт о прибыли или убытке",
+          "note": "Как опубликовано. Сравнительная графа 6М2023 — 33 499."
+        }
+      }
+    },
+    "cogs": {
+      "platform_name": "cogs",
+      "title_ru": "Себестоимость продаж",
+      "required": true,
+      "note": "В отчётности приводится со знаком минус; значение записано по модулю. Не включает ОХАР и коммерческие расходы.",
+      "values": {
+        "2023-12-31": {
+          "period": "12М2023",
+          "value_million_rub": 60681,
+          "source_url": "https://www.etalongroup.com/upload/iblock/301/gp79q7coj5tvuemunqq0vyklg3q2xeuv/EHtalon_Konsolidirovannaja_otchetnost_po_MSFO_za_12M_2024.pdf",
+          "source_section": "FY2024, примечание 2(f) и консолидированный отчёт о прибыли или убытке (графа 2023)",
+          "note": "Пересчёт: до корректировки 58 820, исправление +1 861."
+        },
+        "2024-06-30": {
+          "period": "6М2024",
+          "value_million_rub": 37792,
+          "source_url": "https://www.etalongroup.com/upload/iblock/957/lrsqmzb473ceti78riivnc0n5dy9yrkr/EHtalon_Konsolidirovannaja_otchetnost_po_MSFO_za_6M_2024.pdf",
+          "source_section": "1П2024, консолидированный отчёт о прибыли или убытке; примечание 6",
+          "note": "Как опубликовано."
+        }
+      }
+    },
+    "net_debt": {
+      "platform_name": "net_debt",
+      "title_ru": "Чистый долг (чистый корпоративный долг)",
+      "required": true,
+      "note": "Взята раскрытая эмитентом мера «чистый корпоративный долг» = кредиты и займы − обеспеченное проектное финансирование − денежные средства и эквиваленты. Это единственная мера чистого долга, раскрытая на обе даты снимка в одном документе. Не равна «валовый долг минус деньги» (108 887 и 135 244 — пересчёт) и не равна «скорректированному чистому долгу» (31 447 на 31.12.2023 по определению FY2024 и 31 751 на 30.06.2024).",
+      "values": {
+        "2023-12-31": {
+          "period": "на 31.12.2023",
+          "value_million_rub": 37039,
+          "source_url": "https://www.etalongroup.com/upload/iblock/957/lrsqmzb473ceti78riivnc0n5dy9yrkr/EHtalon_Konsolidirovannaja_otchetnost_po_MSFO_za_6M_2024.pdf",
+          "source_section": "1П2024, не-МСФО, «Отношение чистого корпоративного долга к скорректированной EBITDA»",
+          "note": "118 611 − 71 848 − 9 724 = 37 039. Подтверждается FY2023 и FY2024 не-МСФО."
+        },
+        "2024-06-30": {
+          "period": "на 30.06.2024",
+          "value_million_rub": 62546,
+          "source_url": "https://www.etalongroup.com/upload/iblock/957/lrsqmzb473ceti78riivnc0n5dy9yrkr/EHtalon_Konsolidirovannaja_otchetnost_po_MSFO_za_6M_2024.pdf",
+          "source_section": "1П2024, не-МСФО, «Отношение чистого корпоративного долга к скорректированной EBITDA»",
+          "note": "142 243 − 72 698 − 6 999 = 62 546. Неаудированные данные."
+        }
+      }
+    },
+    "borrowing_rate": {
+      "platform_name": "borrowing_rate",
+      "title_ru": "Средневзвешенная ставка по долгу (доля)",
+      "required": true,
+      "note": "Средневзвешенная НОМИНАЛЬНАЯ ставка по всему текущему кредитному портфелю, включая льготные ставки по проектному финансированию, покрытому эскроу (до 0,01 %). Ставка по корпоративному долгу отдельно не раскрыта.",
+      "values": {
+        "2023-12-31": {
+          "period": "на 31.12.2023",
+          "value": 0.0873,
+          "value_percent": 8.73,
+          "source_url": "https://www.etalongroup.com/upload/iblock/957/lrsqmzb473ceti78riivnc0n5dy9yrkr/EHtalon_Konsolidirovannaja_otchetnost_po_MSFO_za_6M_2024.pdf",
+          "source_section": "1П2024, примечание 16, текст под таблицей условий кредитов",
+          "note": "Дублируется в FY2023 примечание 23. Годом ранее, на 31.12.2022 — 5,22 %."
+        },
+        "2024-06-30": {
+          "period": "на 30.06.2024",
+          "value": 0.102,
+          "value_percent": 10.2,
+          "source_url": "https://www.etalongroup.com/upload/iblock/957/lrsqmzb473ceti78riivnc0n5dy9yrkr/EHtalon_Konsolidirovannaja_otchetnost_po_MSFO_za_6M_2024.pdf",
+          "source_section": "1П2024, примечание 16, текст под таблицей условий кредитов",
+          "note": "Часть займов имеет переменную ставку, привязанную к ключевой ставке ЦБ (16 % на 30.06.2024). К 31.12.2024 ставка выросла до 11,51 % (FY2024 примечание 23)."
+        }
+      }
+    },
+    "opex": {
+      "platform_name": "opex",
+      "title_ru": "Операционные расходы (ОХАР + коммерческие)",
+      "required": false,
+      "note": "Сумма строк «Общехозяйственные и административные расходы» и «Коммерческие расходы» из отчёта о прибыли. Отдельной строки «операционные расходы» в МСФО-отчётности нет. Не включает обесценение дебиторской задолженности, прочие доходы и прочие расходы.",
+      "values": {
+        "2023-12-31": {
+          "period": "12М2023",
+          "value_million_rub": 12633,
+          "source_url": "https://www.etalongroup.com/upload/iblock/301/gp79q7coj5tvuemunqq0vyklg3q2xeuv/EHtalon_Konsolidirovannaja_otchetnost_po_MSFO_za_12M_2024.pdf",
+          "source_section": "FY2024, консолидированный отчёт о прибыли или убытке (графа 2023); примечание 8",
+          "note": "7 475 (ОХАР) + 5 158 (коммерческие) = 12 633. Пересчёту не подвергались."
+        },
+        "2024-06-30": {
+          "period": "6М2024",
+          "value_million_rub": 6667,
+          "source_url": "https://www.etalongroup.com/upload/iblock/957/lrsqmzb473ceti78riivnc0n5dy9yrkr/EHtalon_Konsolidirovannaja_otchetnost_po_MSFO_za_6M_2024.pdf",
+          "source_section": "1П2024, консолидированный отчёт о прибыли или убытке; примечание 7",
+          "note": "3 702 (ОХАР) + 2 965 (коммерческие) = 6 667. Как опубликовано."
+        }
+      }
+    },
+    "cash": {
+      "platform_name": "cash",
+      "title_ru": "Денежные средства и их эквиваленты",
+      "required": false,
+      "note": "Деньги на эскроу-счетах в эту строку не входят (см. escrow).",
+      "values": {
+        "2023-12-31": {
+          "period": "на 31.12.2023",
+          "value_million_rub": 9724,
+          "source_url": "https://www.etalongroup.com/upload/iblock/957/lrsqmzb473ceti78riivnc0n5dy9yrkr/EHtalon_Konsolidirovannaja_otchetnost_po_MSFO_za_6M_2024.pdf",
+          "source_section": "1П2024, консолидированный отчёт о финансовом положении (графа 31.12.2023); примечание 14",
+          "note": "Совпадает с FY2023 ОФП, примечание 20."
+        },
+        "2024-06-30": {
+          "period": "на 30.06.2024",
+          "value_million_rub": 6999,
+          "source_url": "https://www.etalongroup.com/upload/iblock/957/lrsqmzb473ceti78riivnc0n5dy9yrkr/EHtalon_Konsolidirovannaja_otchetnost_po_MSFO_za_6M_2024.pdf",
+          "source_section": "1П2024, консолидированный отчёт о финансовом положении; примечание 14",
+          "note": "Неаудированные данные."
+        }
+      }
+    },
+    "capex": {
+      "platform_name": "capex",
+      "title_ru": "Приобретение основных средств и нематериальных активов",
+      "required": false,
+      "note": "Кассовый отток по инвестиционной деятельности, значение по модулю. Не включает инвестиции в ассоциированные организации и совместные предприятия (9 014 в 12М2023, 0 в 6М2024) и не включает капвложения в строительство, которые идут через запасы.",
+      "values": {
+        "2023-12-31": {
+          "period": "12М2023",
+          "value_million_rub": 2146,
+          "source_url": "https://www.etalongroup.com/upload/iblock/5a6/55zplka16d0b01lfezinbge0g9dso29q/EtalonGroup_FY2023_IFRS.pdf",
+          "source_section": "FY2023, консолидированный отчёт о движении денежных средств, инвестиционная деятельность",
+          "note": "Как опубликовано."
+        },
+        "2024-06-30": {
+          "period": "6М2024",
+          "value_million_rub": 1640,
+          "source_url": "https://www.etalongroup.com/upload/iblock/957/lrsqmzb473ceti78riivnc0n5dy9yrkr/EHtalon_Konsolidirovannaja_otchetnost_po_MSFO_za_6M_2024.pdf",
+          "source_section": "1П2024, консолидированный отчёт о движении денежных средств, инвестиционная деятельность",
+          "note": "Неаудированные данные."
+        }
+      }
+    },
+    "dividend": {
+      "platform_name": "dividend",
+      "title_ru": "Выплаченные дивиденды",
+      "required": false,
+      "note": "Прямые утверждения в примечаниях о капитале: за оба периода группа не объявляла и не выплачивала дивиденды.",
+      "values": {
+        "2023-12-31": {
+          "period": "12М2023",
+          "value_million_rub": 0,
+          "source_url": "https://www.etalongroup.com/upload/iblock/5a6/55zplka16d0b01lfezinbge0g9dso29q/EtalonGroup_FY2023_IFRS.pdf",
+          "source_section": "FY2023, примечание 21(c)",
+          "note": "«За финансовый год, закончившийся 31 декабря 2023 года, Группа не объявляла и не выплачивала дивиденды»."
+        },
+        "2024-06-30": {
+          "period": "6М2024",
+          "value_million_rub": 0,
+          "source_url": "https://www.etalongroup.com/upload/iblock/957/lrsqmzb473ceti78riivnc0n5dy9yrkr/EHtalon_Konsolidirovannaja_otchetnost_po_MSFO_za_6M_2024.pdf",
+          "source_section": "1П2024, примечание 15(a)",
+          "note": "«В первом полугодии 2024 года Группа не объявляла и не выплачивала дивиденды»."
+        }
+      }
+    },
+    "scheduled_amortisation": {
+      "platform_name": "scheduled_amortisation",
+      "title_ru": "Плановое погашение основного долга",
+      "required": false,
+      "disclosed": false,
+      "note": "НЕ РАСКРЫТО. Графика и сумм планового (контрактного) погашения основного долга нет ни в FY2023, ни в 1П2024, ни в FY2024. Раскрыты только фактические погашения прошлых периодов и год погашения по каждой кредитной выборке в примечании к кредитам и займам.",
+      "values": {
+        "2023-12-31": {
+          "period": "12М2023",
+          "value_million_rub": null,
+          "source_url": null,
+          "source_section": null,
+          "note": "Фактическое погашение кредитов и займов за 12М2023 — 29 150 (FY2023 ОДДС), плюс погашение проектного финансирования зачётом против эскроу 18 003. Это факт прошлого периода, не план."
+        },
+        "2024-06-30": {
+          "period": "6М2024",
+          "value_million_rub": null,
+          "source_url": null,
+          "source_section": null,
+          "note": "Фактическое погашение кредитов и займов за 6М2024 — 11 014 (1П2024 ОДДС), плюс погашение проектного финансирования зачётом против эскроу 12 938. См. соответствующие source_url в групповых записях."
+        }
+      }
+    },
+    "credit_limit": {
+      "platform_name": "credit_limit",
+      "title_ru": "Лимит кредитования",
+      "required": false,
+      "disclosed": false,
+      "note": "НЕ РАСКРЫТО. Раскрыт только остаток НЕИСПОЛЬЗОВАННЫХ кредитных линий: 169 012 на 31.12.2023 и 162 838 на 30.06.2024. Общий лимит по договорам не приводится.",
+      "values": {
+        "2023-12-31": {
+          "period": "на 31.12.2023",
+          "value_million_rub": null,
+          "source_url": null,
+          "source_section": null,
+          "note": "Справочно: неиспользованные кредитные линии 169 012 (FY2023 примечание 23; 1П2024 примечание 16)."
+        },
+        "2024-06-30": {
+          "period": "на 30.06.2024",
+          "value_million_rub": null,
+          "source_url": null,
+          "source_section": null,
+          "note": "Справочно: неиспользованные кредитные линии 162 838 (1П2024 примечание 16)."
+        }
+      }
+    },
+    "revolver_drawn": {
+      "platform_name": "revolver_drawn",
+      "title_ru": "Выбрано по возобновляемым кредитным линиям",
+      "required": false,
+      "disclosed": false,
+      "note": "НЕ РАСКРЫТО. Возобновляемые линии отдельным классом не выделены; в примечании к кредитам и займам раскрыты обеспеченные банковские кредиты, обеспеченное проектное финансирование, необеспеченные кредиты, выпущенные облигации и ЦФА.",
+      "values": {
+        "2023-12-31": {
+          "period": "на 31.12.2023",
+          "value_million_rub": null,
+          "source_url": null,
+          "source_section": null,
+          "note": null
+        },
+        "2024-06-30": {
+          "period": "на 30.06.2024",
+          "value_million_rub": null,
+          "source_url": null,
+          "source_section": null,
+          "note": null
+        }
+      }
+    },
+    "ebitda": {
+      "platform_name": "ebitda",
+      "title_ru": "EBITDA (расчёт эмитента)",
+      "required": false,
+      "note": "Показатель не-МСФО, обзорной проверкой не покрыт. На 30.06.2024 значение относится к 12 месяцам, закончившимся 30.06.2024 (LTM), а не к полугодию.",
+      "values": {
+        "2023-12-31": {
+          "period": "12М2023",
+          "value_million_rub": 18135,
+          "source_url": "https://www.etalongroup.com/upload/iblock/5a6/55zplka16d0b01lfezinbge0g9dso29q/EtalonGroup_FY2023_IFRS.pdf",
+          "source_section": "FY2023, не-МСФО, «Отношение скорректированного чистого долга к скорректированной EBITDA»",
+          "note": "Скорректированная EBITDA за 12М2023 — 19 425. Формула: валовая прибыль − ОХАР − коммерческие + амортизация."
+        },
+        "2024-06-30": {
+          "period": "LTM, 12 месяцев, закончившихся 30.06.2024",
+          "value_million_rub": 25444,
+          "source_url": "https://www.etalongroup.com/upload/iblock/957/lrsqmzb473ceti78riivnc0n5dy9yrkr/EHtalon_Konsolidirovannaja_otchetnost_po_MSFO_za_6M_2024.pdf",
+          "source_section": "1П2024, не-МСФО, «Отношение скорректированного чистого долга к скорректированной EBITDA»",
+          "note": "LTM. Скорректированная EBITDA за тот же LTM — 26 405."
+        }
+      }
+    },
+    "equity": {
+      "platform_name": "equity",
+      "title_ru": "Итого капитал",
+      "required": false,
+      "note": "Включает неконтролирующую долю (808 на 30.06.2024, 0 на 31.12.2023).",
+      "values": {
+        "2023-12-31": {
+          "period": "на 31.12.2023",
+          "value_million_rub": 70891,
+          "source_url": "https://www.etalongroup.com/upload/iblock/957/lrsqmzb473ceti78riivnc0n5dy9yrkr/EHtalon_Konsolidirovannaja_otchetnost_po_MSFO_za_6M_2024.pdf",
+          "source_section": "1П2024, консолидированный отчёт о финансовом положении (графа 31.12.2023)",
+          "note": "Капитал, относимый к собственникам Компании — 70 891."
+        },
+        "2024-06-30": {
+          "period": "на 30.06.2024",
+          "value_million_rub": 70202,
+          "source_url": "https://www.etalongroup.com/upload/iblock/957/lrsqmzb473ceti78riivnc0n5dy9yrkr/EHtalon_Konsolidirovannaja_otchetnost_po_MSFO_za_6M_2024.pdf",
+          "source_section": "1П2024, консолидированный отчёт о финансовом положении",
+          "note": "Капитал, относимый к собственникам Компании — 69 394, неконтролирующая доля — 808."
+        }
+      }
+    },
+    "interest_expense": {
+      "platform_name": "interest_expense",
+      "title_ru": "Процентные расходы (по кредитам и займам + по аренде)",
+      "required": false,
+      "note": "Полные «Финансовые расходы» шире: 15 776 за 12М2023 и 12 792 за 6М2024 (включая амортизацию дисконта по кредиторской задолженности 2 551 / 1 618 и прочее).",
+      "values": {
+        "2023-12-31": {
+          "period": "12М2023",
+          "value_million_rub": 12713,
+          "source_url": "https://www.etalongroup.com/upload/iblock/5a6/55zplka16d0b01lfezinbge0g9dso29q/EtalonGroup_FY2023_IFRS.pdf",
+          "source_section": "FY2023, примечание 11, «Финансовые доходы и расходы»",
+          "note": "11 792 (кредиты и займы) + 921 (аренда). Проценты уплаченные денежными средствами — 6 015."
+        },
+        "2024-06-30": {
+          "period": "6М2024",
+          "value_million_rub": 11117,
+          "source_url": "https://www.etalongroup.com/upload/iblock/957/lrsqmzb473ceti78riivnc0n5dy9yrkr/EHtalon_Konsolidirovannaja_otchetnost_po_MSFO_za_6M_2024.pdf",
+          "source_section": "1П2024, примечание 9, «Финансовые доходы и расходы»",
+          "note": "10 629 (кредиты и займы, включая 4 178 корректировки до базовой ставки) + 488 (аренда). Проценты уплаченные денежными средствами — 5 342."
+        }
+      }
+    },
+    "escrow": {
+      "platform_name": "escrow",
+      "title_ru": "Средства на эскроу-счетах",
+      "required": false,
+      "note": "Не входят в балансовые денежные средства. Управляются банками до завершения строительства.",
+      "values": {
+        "2023-12-31": {
+          "period": "на 31.12.2023",
+          "value_million_rub": 77440,
+          "source_url": "https://www.etalongroup.com/upload/iblock/957/lrsqmzb473ceti78riivnc0n5dy9yrkr/EHtalon_Konsolidirovannaja_otchetnost_po_MSFO_za_6M_2024.pdf",
+          "source_section": "1П2024, примечание 14, «Остаток денежных средств на эскроу-счетах»",
+          "note": "Совпадает с FY2023 примечание 20 и FY2024 примечание 20."
+        },
+        "2024-06-30": {
+          "period": "на 30.06.2024",
+          "value_million_rub": 93008,
+          "source_url": "https://www.etalongroup.com/upload/iblock/957/lrsqmzb473ceti78riivnc0n5dy9yrkr/EHtalon_Konsolidirovannaja_otchetnost_po_MSFO_za_6M_2024.pdf",
+          "source_section": "1П2024, примечание 14, «Остаток денежных средств на эскроу-счетах»",
+          "note": "Изменение за 6М2024: поступления 33 017, раскрытие (17 449)."
+        }
+      }
+    },
+    "project_financing": {
+      "platform_name": "project_financing",
+      "title_ru": "Обеспеченное проектное финансирование",
+      "required": false,
+      "note": "Финансирование с покрытием деньгами на эскроу-счетах. Полные обязательства по проектному финансированию в отчёте о финансовом положении отдельно не выделены.",
+      "values": {
+        "2023-12-31": {
+          "period": "на 31.12.2023",
+          "value_million_rub": 71848,
+          "source_url": "https://www.etalongroup.com/upload/iblock/957/lrsqmzb473ceti78riivnc0n5dy9yrkr/EHtalon_Konsolidirovannaja_otchetnost_po_MSFO_za_6M_2024.pdf",
+          "source_section": "1П2024, не-МСФО, «Отношение чистого корпоративного долга к скорректированной EBITDA»",
+          "note": "Подтверждается FY2023 и FY2024 не-МСФО. На 31.12.2024 — 103 126."
+        },
+        "2024-06-30": {
+          "period": "на 30.06.2024",
+          "value_million_rub": 72698,
+          "source_url": "https://www.etalongroup.com/upload/iblock/957/lrsqmzb473ceti78riivnc0n5dy9yrkr/EHtalon_Konsolidirovannaja_otchetnost_po_MSFO_za_6M_2024.pdf",
+          "source_section": "1П2024, не-МСФО, «Отношение чистого корпоративного долга к скорректированной EBITDA»",
+          "note": "Неаудированные данные."
+        }
+      }
+    },
+    "net_corporate_debt_to_ebitda": {
+      "platform_name": "net_corporate_debt_to_ebitda",
+      "title_ru": "Чистый корпоративный долг / скорректированная EBITDA",
+      "required": false,
+      "note": "Мультипликатор эмитента: чистый корпоративный долг / скорректированная LTM EBITDA. В пресс-релизе FY2024 мультипликатор на 31.12.2024 указан как 2,5x, в отчётности — 2,41; базы EBITDA различаются.",
+      "values": {
+        "2023-12-31": {
+          "period": "на 31.12.2023",
+          "value": 1.91,
+          "source_url": "https://www.etalongroup.com/upload/iblock/957/lrsqmzb473ceti78riivnc0n5dy9yrkr/EHtalon_Konsolidirovannaja_otchetnost_po_MSFO_za_6M_2024.pdf",
+          "source_section": "1П2024, не-МСФО, «Отношение чистого корпоративного долга к скорректированной EBITDA»",
+          "note": "37 039 / 19 425 = 1,91. Подтверждается FY2023 и FY2024 не-МСФО."
+        },
+        "2024-06-30": {
+          "period": "на 30.06.2024",
+          "value": 2.37,
+          "source_url": "https://www.etalongroup.com/upload/iblock/957/lrsqmzb473ceti78riivnc0n5dy9yrkr/EHtalon_Konsolidirovannaja_otchetnost_po_MSFO_za_6M_2024.pdf",
+          "source_section": "1П2024, не-МСФО, «Отношение чистого корпоративного долга к скорректированной EBITDA»",
+          "note": "62 546 / 26 405 = 2,37."
+        }
+      }
+    },
+    "shares_outstanding": {
+      "platform_name": "shares_outstanding",
+      "title_ru": "Средневзвешенное число акций в обращении",
+      "required": false,
+      "unit": "шт.",
+      "note": "Относится к Etalon Group PLC. Выпущено и полностью оплачено на 31.12.2023: 383 445 362 обыкновенных акций и 20 000 привилегированных без права на дивиденды. Разводняющих инструментов нет. После редомициляции 2025 года число акций другое.",
+      "values": {
+        "2023-12-31": {
+          "period": "12М2023",
+          "value_million_rub": 383441416,
+          "value_unit": "shares",
+          "source_url": "https://www.etalongroup.com/upload/iblock/5a6/55zplka16d0b01lfezinbge0g9dso29q/EtalonGroup_FY2023_IFRS.pdf",
+          "source_section": "FY2023, примечание 22, «Прибыль на акцию»",
+          "note": "Поле value_million_rub в этой записи содержит количество акций, а не млн ₽ (см. unit)."
+        },
+        "2024-06-30": {
+          "period": "6М2024",
+          "value_million_rub": 383441416,
+          "value_unit": "shares",
+          "source_url": "https://www.etalongroup.com/upload/iblock/957/lrsqmzb473ceti78riivnc0n5dy9yrkr/EHtalon_Konsolidirovannaja_otchetnost_po_MSFO_za_6M_2024.pdf",
+          "source_section": "1П2024, примечание 15(b), «Средневзвешенное количество акций и прибыль на акцию»",
+          "note": "Поле value_million_rub в этой записи содержит количество акций, а не млн ₽ (см. unit)."
+        }
+      }
+    }
+  },
+  "control_sources": {
+    "PR2024": {
+      "revenue_2024_million_rub_approx": 131000,
+      "ebitda_2024_million_rub": 27600,
+      "net_loss_2024_million_rub": -6900,
+      "net_corporate_debt_to_ebitda_2024": 2.5,
+      "escrow_2024_million_rub": 112300,
+      "project_debt_escrow_coverage_2024": 1.1,
+      "average_debt_rate_2024_percent": 11.5,
+      "note": "Контрольный источник для FY2024, к датам снимка не относится. Расхождение по мультипликатору (2,5x против 2,41 в отчётности) объясняется разной базой EBITDA."
+    }
+  },
+  "not_disclosed": [
+    "scheduled_amortisation — план погашения основного долга по годам",
+    "credit_limit — общий лимит кредитования по договорам",
+    "revolver_drawn — выборка по возобновляемым кредитным линиям",
+    "средневзвешенная ставка по корпоративному долгу отдельно от проектного",
+    "помесячная и поквартальная разбивка остатков долга, процентов и эскроу внутри полугодия",
+    "поквартальный EBITDA (публикуется только годовой и LTM)"
+  ]
+}

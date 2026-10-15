@@ -1,0 +1,88 @@
+{
+  "items": [
+    {
+      "item_id": "dividend:ETALON-JUN-2024:SHARE-ETLN",
+      "kind": "dividend",
+      "subject": "ETALON-JUN-2024:SHARE-ETLN",
+      "observed_on": "2024-06-30",
+      "values": {
+        "amount": {
+          "value": 0.0,
+          "unit": "RUB_per_unit",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "pilot-etalon:estimate",
+              "locator": "дивиденды за 2022–2025 годы не начислялись",
+              "fragment_sha256": "3e96b702f23f285e92ed40e9e7aa9339013a7a9786cfe3782f83ab42e97d0e77",
+              "author": "pilot-etalon:analyst",
+              "as_of": "2026-10-15"
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "horizon_months": 12,
+        "entered_by": "pilot-etalon:analyst"
+      },
+      "evidence": []
+    },
+    {
+      "item_id": "sensitivity:ETALON-JUN-2024:SHARE-ETLN",
+      "kind": "sensitivity",
+      "subject": "ETALON-JUN-2024:SHARE-ETLN",
+      "observed_on": "2024-06-30",
+      "values": {
+        "beta_market": {
+          "value": 1.515,
+          "unit": "ratio",
+          "evidence": [
+            {
+              "kind": "historical_estimate",
+              "source_id": "PILOT-ETALON",
+              "locator": "бета к MOEXBMI за 07.2023–06.2024 (253 наблюдения)",
+              "fragment_sha256": "6ab3b97b3a6b6bb5053f140c16dd91e23a4d9365008e4b77916dd2b1bf6e7985",
+              "author": null,
+              "as_of": null
+            }
+          ]
+        },
+        "beta_sector": {
+          "value": 1.0,
+          "unit": "ratio",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "pilot-etalon:estimate",
+              "locator": "отраслевой фактор задан как доходность застройщиков сверх рынка; коэффициент 1,0 — допущение",
+              "fragment_sha256": "20067d70f11ae0cdbae227dca879c2202730e69b5aaa2d7fbfc9e86b5cc0eebe",
+              "author": "pilot-etalon:analyst",
+              "as_of": "2026-10-15"
+            }
+          ]
+        },
+        "residual_volatility": {
+          "value": 0.31,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "historical_estimate",
+              "source_id": "PILOT-ETALON",
+              "locator": "σ 36,73 % при β 1,515 и σ индекса 12,99 %",
+              "fragment_sha256": "877d5c50d214bf328b595901d0773ec6252141489c41653852ea87e6323055aa",
+              "author": null,
+              "as_of": null
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "method": "expert",
+        "market_index": "MOEX",
+        "sector": "real_estate",
+        "entered_by": "pilot-etalon:analyst"
+      },
+      "evidence": []
+    }
+  ]
+}

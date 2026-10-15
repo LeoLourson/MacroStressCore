@@ -1,0 +1,87 @@
+{
+ "https://xn--80az8a.xn--d1aqf.xn--p1ai/portal-kn/api/sales/portal/table/exists?externalId=54558": {
+  "exists": false
+ },
+ "https://xn--80az8a.xn--d1aqf.xn--p1ai/portal-kn/api/kn/objects/54558/deptrans-rating": {
+  "objId": 54558,
+  "categoryRates": []
+ },
+ "https://xn--80az8a.xn--d1aqf.xn--p1ai/portal-kn/api/kn/objects/54558/flats?flatGroupType=premises&limit=5&offset=0": {
+  "data": [
+   {
+    "elemId": "86454a6528f5b74fcdee23d5ea4577ab",
+    "odsId": "54558/4/65",
+    "type": "Нежилое помещение",
+    "totalArea": 2.7,
+    "rooms": null,
+    "entranceNumber": 1,
+    "floorNumber": -1,
+    "status": null,
+    "price": null,
+    "pricePerSquareMeter": null,
+    "imageIdSmall": null
+   },
+   {
+    "elemId": "7ad68d297a1ce237adf265cd3f67750e",
+    "odsId": "54558/4/66",
+    "type": "Нежилое помещение",
+    "totalArea": 2.7,
+    "rooms": null,
+    "entranceNumber": 2,
+    "floorNumber": -1,
+    "status": null,
+    "price": null,
+    "pricePerSquareMeter": null,
+    "imageIdSmall": null
+   },
+   {
+    "elemId": "a09cb28af382ac1bf8978c0f085042d3",
+    "odsId": "54558/5/1",
+    "type": "Машино-место",
+    "totalArea": 13.3,
+    "rooms": null,
+    "entranceNumber": 1,
+    "floorNumber": -1,
+    "status": null,
+    "price": null,
+    "pricePerSquareMeter": null,
+    "imageIdSmall": null
+   },
+   {
+    "elemId": "72f4bb3ca631db4bab3737f41ec2fe71",
+    "odsId": "54558/5/10",
+    "type": "Машино-место",
+    "totalArea": 13.3,
+    "rooms": null,
+    "entranceNumber": 1,
+    "floorNumber": -1,
+    "status": null,
+    "price": null,
+    "pricePerSquareMeter": null,
+    "imageIdSmall": null
+   },
+   {
+    "elemId": "a2cd3e04706a9792de0bf00fbc7df950",
+    "odsId": "54558/5/11",
+    "type": "Машино-место",
+    "totalArea": 13.3,
+    "rooms": null,
+    "entranceNumber": 1,
+    "floorNumber": -1,
+    "status": null,
+    "price": null,
+    "pricePerSquareMeter": null,
+    "imageIdSmall": null
+   }
+  ],
+  "limit": 5,
+  "offset": 0,
+  "total": 92
+ },
+ "https://xn--80az8a.xn--d1aqf.xn--p1ai/portal-kn/api/kn/objects/54558": {
+  "status": "INTERNAL_SERVER_ERROR",
+  "error": "INTERNAL_ERROR",
+  "message": "Произошла ошибка",
+  "timestamp": "2026-10-15T12:17:17.008876131"
+ }
+}

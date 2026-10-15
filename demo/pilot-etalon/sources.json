@@ -1,0 +1,250 @@
+{
+  "case_id": "PILOT-ETALON",
+  "accessed_at": "2026-10-15",
+  "source_policy": "Открытые публичные источники: раскрытие эмитента, проектное финансирование банка, ЕИСЖС и отчётность застройщика, статистика Банка России, котировки Московской биржи. Закрытые данные (ставка по проектному кредиту, помесячные эскроу) в список не включены.",
+  "sources": [
+    {
+      "source_id": "G1",
+      "publisher": "Московская биржа",
+      "title": "Карточка бумаги ETLN (MOEX ISS API)",
+      "url": "https://iss.moex.com/iss/engines/stock/markets/shares/securities/ETLN.json",
+      "source_type": "exchange_api",
+      "supports": ["ISIN RU000A10C1L6", "число акций 783179820", "второй котировальный список", "текущая цена"]
+    },
+    {
+      "source_id": "G2",
+      "publisher": "Московская биржа",
+      "title": "История сделок ETLN, режим TQBR (MOEX ISS API)",
+      "url": "https://iss.moex.com/iss/history/engines/stock/markets/shares/boards/TQBR/securities/ETLN.json",
+      "source_type": "exchange_api",
+      "supports": ["дневные котировки вокруг 23.12.2023", "дневные котировки вокруг 01.07.2024", "ряды с 03.02.2020"]
+    },
+    {
+      "source_id": "G3",
+      "publisher": "Группа «Эталон»",
+      "title": "Финансовые результаты за 2024 год",
+      "url": "https://etalongroup.com/news/finansovye-rezultaty-za-2024-god-rost-vyruchki-na-44-i-ebitda-na-52-do-rekordnykh-urovney/",
+      "source_type": "issuer_press_release",
+      "supports": ["выручка 131 млрд", "EBITDA 27,6 млрд", "чистый убыток 6,9 млрд", "эскроу 112,3 млрд", "покрытие проектного долга эскроу 1,1x", "средняя ставка по долгу 11,5% на 31.12.2024"]
+    },
+    {
+      "source_id": "G4",
+      "publisher": "Группа «Эталон»",
+      "title": "Операционные результаты за 4 квартал и 12 месяцев 2024 года",
+      "url": "https://etalongroup.com/news/1216/",
+      "source_type": "issuer_operational_report",
+      "supports": ["продажи и поступления по кварталам 2023-2024", "доля ипотечных продаж", "ставка по проектному долгу 4,3% на конец ноября 2024"]
+    },
+    {
+      "source_id": "G5",
+      "publisher": "Группа «Эталон»",
+      "title": "Консолидированная отчётность по МСФО за 12 месяцев 2024 года (PDF)",
+      "url": "https://www.etalongroup.com/upload/iblock/301/gp79q7coj5tvuemunqq0vyklg3q2xeuv/EHtalon_Konsolidirovannaja_otchetnost_po_MSFO_za_12M_2024.pdf",
+      "source_type": "issuer_ifrs_report",
+      "supports": ["выручка", "EBITDA", "эскроу", "проектное финансирование", "чистый долг", "процентные расходы", "средневзвешенная ставка в примечании"]
+    },
+    {
+      "source_id": "G6",
+      "publisher": "Группа «Эталон»",
+      "title": "Консолидированная отчётность по МСФО за 12 месяцев 2023 года (PDF)",
+      "url": "https://www.etalongroup.com/upload/iblock/5a6/55zplka16d0b01lfezinbge0g9dso29q/EtalonGroup_FY2023_IFRS.pdf",
+      "source_type": "issuer_ifrs_report",
+      "supports": ["показатели на дату события пилота, 23.12.2023"]
+    },
+    {
+      "source_id": "G7",
+      "publisher": "Группа «Эталон»",
+      "title": "Консолидированная отчётность по МСФО за 6 месяцев 2024 года (PDF)",
+      "url": "https://www.etalongroup.com/upload/iblock/957/lrsqmzb473ceti78riivnc0n5dy9yrkr/EHtalon_Konsolidirovannaja_otchetnost_po_MSFO_za_6M_2024.pdf",
+      "source_type": "issuer_ifrs_report",
+      "supports": ["показатели на дату портфеля 30.06.2024 по заданию"]
+    },
+    {
+      "source_id": "G8",
+      "publisher": "Банк России",
+      "title": "Обзор рынка ипотечного жилищного кредитования за декабрь 2023 года",
+      "url": "https://www.cbr.ru/statistics/bank_sector/mortgage/Indicator_mortgage/1223/",
+      "source_type": "regulator_statistics",
+      "supports": ["выдачи 785,5 млрд", "доля льготных программ 83,8%", "ИЖК по ДДУ 435,5 млрд", "ставка 7,91%"]
+    },
+    {
+      "source_id": "G9",
+      "publisher": "Банк России",
+      "title": "Обзор рынка ипотечного жилищного кредитования за январь 2024 года",
+      "url": "https://www.cbr.ru/statistics/bank_sector/mortgage/Indicator_mortgage/0124/",
+      "source_type": "regulator_statistics",
+      "supports": ["выдачи льготной ипотеки в 3,4 раза меньше", "191,5 млрд рублей", "оговорка о сезонности"]
+    },
+    {
+      "source_id": "G10",
+      "publisher": "Банк России",
+      "title": "Обзор рынка ипотечного жилищного кредитования за июль 2024 года",
+      "url": "https://www.cbr.ru/statistics/bank_sector/mortgage/Indicator_mortgage/0724/",
+      "source_type": "regulator_statistics",
+      "supports": ["факт после завершения массовой программы", "ДДУ -75,3%", "доля господдержки 51,9%"]
+    },
+    {
+      "source_id": "P1",
+      "publisher": "Банк ДОМ.РФ",
+      "title": "Банк ДОМ.РФ направит 11,4 млрд рублей на строительство 14 домов в Омске",
+      "url": "https://domrfbank.ru/press/construction-and-housing/bank-dom-rf-napravit-11-4-mlrd-rubley-na-stroitelstvo-14-domov-v-omske/",
+      "source_type": "bank_press_release",
+      "supports": ["лимит кредита 11,4 млрд рублей", "кредитная линия открыта Группе «Эталон»", "14 корпусов первой очереди", "2711 квартир"],
+      "note": "Из автоматических запросов страница отдаёт антибот-страницу; текст подтверждён перепечатками (P2, P3)."
+    },
+    {
+      "source_id": "P2",
+      "publisher": "АК&М",
+      "title": "Банк ДОМ.РФ предоставит 11,4 млрд руб. на строительство 14 домов в Омске",
+      "url": "https://www.akm.ru/news/bank_dom_rf_predostavit_11_4_mlrd_rub_na_stroitelstvo_14_domov_v_omske/",
+      "source_type": "news_reprint",
+      "supports": ["сумма и предмет кредитной линии"]
+    },
+    {
+      "source_id": "P3",
+      "publisher": "Строительная газета",
+      "title": "В Омске построят масштабный жилой комплекс за 11,4 миллиарда",
+      "url": "https://stroygaz.ru/news/dwelling/v-omske-postroyat-masshtabnyy-zhiloy-kompleks-za-11-4-milliarda/",
+      "source_type": "news_reprint",
+      "supports": ["кредитная линия открыта Группе «Эталон»", "150 тыс. кв. м и 2711 квартир первой очереди", "70% строительства в области идёт через эскроу"]
+    },
+    {
+      "source_id": "P4",
+      "publisher": "ЕИСЖС, наш.дом.рф",
+      "title": "Карточка объекта 54558, ЖК «Зелёная Река»",
+      "url": "https://xn--80az8a.xn--d1aqf.xn--p1ai/сервисы/каталог-новостроек/объект/54558",
+      "source_type": "state_information_system",
+      "supports": ["проектная декларация", "разрешительная документация", "отчётность застройщика", "динамика продаж"],
+      "note": "Объект 54558 — вторая очередь, корпуса 1–5. Для не-браузерных запросов закрыта антиботом: 403 с заголовком X-SP-CRID на HTML-карточке, на /сервисы/api/ и на /portal-kn/api/. Первая очередь — отдельный объект 47652, см. P14."
+    },
+    {
+      "source_id": "P5",
+      "publisher": "Всеостройке.рф",
+      "title": "ЖК «Зеленая Река», застройщик Эталон",
+      "url": "https://xn--b1agapfwapgcl.xn--p1ai/zhk/zelenaja-reka/",
+      "source_type": "aggregator",
+      "supports": ["перечень 18 проектных деклараций с номерами и датами", "срок ввода 2024-2029", "этажность, паркинг"]
+    },
+    {
+      "source_id": "P6",
+      "publisher": "Checko",
+      "title": "ООО «СЗ «Эталон-Омск», ОГРН 1215500012452",
+      "url": "https://checko.ru/company/1215500012452",
+      "source_type": "company_registry_aggregator",
+      "supports": ["реквизиты застройщика", "учредитель и залог доли у Банка ДОМ.РФ", "управляющая организация"],
+      "note": "Страница финансов: https://checko.ru/company/1215500012452/finances — выручка 4,8 млрд, чистый убыток 2,5 млрд, капитал -3,6 млрд за 2025 год."
+    },
+    {
+      "source_id": "P7",
+      "publisher": "Минстрой России",
+      "title": "Приказ от 12.10.2018 № 656/пр — форма отчётности застройщика",
+      "url": "https://www.mos.ru/upload/content/files/e0e21a54bb33adbc41d378bdb3213344/2025_EOMGSN.pdf",
+      "source_type": "regulation_overview",
+      "supports": ["состав формы: разделы I-V", "графа 12.4 — средства по целевому назначению", "нормативы Н1, Н2, НСС", "сроки сдачи"]
+    },
+    {
+      "source_id": "P8",
+      "publisher": "КонсультантПлюс",
+      "title": "214-ФЗ, статья 3.1 — раскрытие информации застройщиком",
+      "url": "https://www.consultant.ru/document/cons_doc_LAW_51038/302aa518a2c33dfc84a296f1d109dfe94e35097c/",
+      "source_type": "law_text",
+      "supports": ["раскрытие через ЕИСЖС", "свободный доступ", "ежеквартальные нормативы"]
+    },
+    {
+      "source_id": "P9",
+      "publisher": "Radar новостроек",
+      "title": "ЖК «Зеленая Река», продажи и цены",
+      "url": "https://www.radar-novostroek.ru/project/etalon/zelenaya-reka",
+      "source_type": "market_aggregator",
+      "supports": ["160 квартир в продаже", "средняя цена 206 771 руб./кв. м", "546 ДДУ из 2229", "сроки сдачи"]
+    },
+    {
+      "source_id": "P10",
+      "publisher": "Группа «Эталон»",
+      "title": "Ввод в эксплуатацию нового дома в ЖК «Зеленая Река»",
+      "url": "https://etalongroup.ru/msk/news/etalon-vvel-v-ekspluatatsiyu-novyy-dom-v-omskom-zhilom-kvartale-zelenaya-reka/",
+      "source_type": "developer_news",
+      "supports": ["ввод корпусов", "первая очередь 14 домов, 242,6 тыс. кв. м, 2711 квартир"]
+    },
+    {
+      "source_id": "P11",
+      "publisher": "ЕИСЖС, наш.дом.рф",
+      "title": "Файловый API проектных деклараций",
+      "url": "https://xn--80az8a.xn--d1aqf.xn--p1ai/api/ext/file/<hex-имя-файла+32 знака>?filename=objNNNNN-pd55-NNNNNN.pdf",
+      "source_type": "state_information_system_file_api",
+      "supports": ["PDF проектных деклараций без авторизации", "планируемая стоимость строительства", "целевой кредит: сумма, задолженность, неиспользованный остаток, срок", "банк эскроу и уполномоченный банк", "количество ДДУ и цены"],
+      "note": "Капчей не закрыт, в отличие от HTML-карточки и пути /сервисы/api/. Хеш не подбирается, но ссылки индексируются поисковиками. Путь /files/<uuid> отдаёт 403."
+    },
+    {
+      "source_id": "P12",
+      "publisher": "Сибдом (omsk.sibdom.ru)",
+      "title": "ЖК Зеленая река, 2 очередь, к 1-5 — документы объекта",
+      "url": "https://omsk.sibdom.ru/novostroyki/omsk/11770-Zelenaya-reka-2-ochered-k-1-5/",
+      "source_type": "aggregator_document_mirror",
+      "supports": ["проектная декларация от 06.02.2025 (файл 406441)", "проектная декларация от 07.04.2026 (файл 512811)", "разрешение на строительство (файл 406440)", "программа проверок Госстройнадзора Омской области (файл 443923)"],
+      "note": "Документы скачиваются напрямую по /file/download/<id>/?key=<key> без капчи. Скачанные PDF лежат в docs/."
+    },
+    {
+      "source_id": "P13",
+      "publisher": "Госстройнадзор Омской области",
+      "title": "Программа проверок, дело 04-04/18ж-2025 от 15.08.2025",
+      "url": "https://omsk.sibdom.ru/file/download/443923/?key=e8e97138a2a765077331c9baf86e95e4",
+      "source_type": "supervision_document",
+      "supports": ["застройщик ООО «СЗ «Эталон-Омск», ОГРН 1215500012452, ИНН 5501271610", "разрешение на строительство № 55-36-5-2025 от 28.01.2025", "объект 60 458 кв. м, 621 квартира, 259 машино-мест"]
+    },
+    {
+      "source_id": "P14",
+      "publisher": "ЕИСЖС, наш.дом.рф",
+      "title": "Проектная декларация № 55-000133 от 16.12.2025, первая очередь ЖК «Зелёная Река» (объект ЕИСЖС 47652)",
+      "url": "https://xn--80az8a.xn--d1aqf.xn--p1ai/api/ext/file/70726F6A6465636C2E646F63732E697A643A06104021A55649C984378E368C55B317?filename=obj47652-pd55-000133.pdf",
+      "source_type": "state_information_system_file_api",
+      "supports": [
+        "кредитор БАНК ДОМ.РФ, ИНН 7725038124: сумма кредита 2 664 006 000,00, задолженность 2 500 304 925,09, неиспользованный остаток 163 701 074,91, срок 31.03.2028 (раздел 19.6.1)",
+        "второй кредитор «Эталон-Финанс», ИНН 7705619586: 1 640 000 000,00 / 1 418 825 583,69 / 221 174 416,31, срок 31.03.2029 (раздел 19.6 (2))",
+        "планируемая стоимость строительства 4 085 019 353,00 (раздел 18.1.1)",
+        "счета эскроу в БАНК ДОМ.РФ, ИНН 7725038124 (разделы 19.2.2, 19.2.3); уполномоченный банк — Банк ДОМ.РФ, ОГРН 1037739527077, БИК 044525266 (раздел 19.4)",
+        "планируемая дата передачи объекта 28.02.2026 (раздел 17.2.2)",
+        "действующих ДДУ на эскроу 372 квартиры и 42 машино-места, их суммарная цена 3 173 810 122 рублей (раздел 19.7)",
+        "дата первичного размещения 22.08.2022, участок 55:36:130126:8745"
+      ],
+      "note": "Хеш найден поисковым индексом, карточка объекта в браузере не потребовалась. Копия отражает конец 2025 года, а портфель собирается на 30.06.2024; версия на середину 2024 года не найдена."
+    },
+    {
+      "source_id": "P15",
+      "publisher": "Бетоний.ру",
+      "title": "Датасет данных из деклараций застройщиков, выгрузка от 24.11.2025",
+      "url": "https://betonij.ru/data/current/agg/",
+      "source_type": "third_party_declaration_aggregator",
+      "supports": [
+        "помесячные срезы по каждому объекту застройщиков Москвы (регион 77)",
+        "поля разделов декларации: 18.1.1 стоимость строительства, 19.6.1 лимит и задолженность по целевому кредиту, 19.2.2 и 19.2.3 банк эскроу",
+        "26 разрешений на строительство группы «Эталон» в Москве, 668 пообъектных строк"
+      ],
+      "note": "Регионов кроме Москвы в датасете нет, поэтому омский проект им не покрывается. Сырые архивы положены в mirror/."
+    },
+    {
+      "source_id": "P16",
+      "publisher": "Бетоний.ру",
+      "title": "Формат выгрузок v4 — сопоставление полей разделам декларации",
+      "url": "https://betonij.ru/format/",
+      "source_type": "data_dictionary",
+      "supports": ["bank_funding_bank = 19.6.1.2", "bank_funding_total = 19.6.1.4", "bank_funding_used = 19.6.1.5", "bank_funding_avail = 19.6.1.6", "bank_funding_due = 19.6.1.7", "funding_cost_rub = 18.1.1", "escrow_agent = 19.2.2", "escrow_inn = 19.2.3"]
+    },
+    {
+      "source_id": "P17",
+      "publisher": "Бетоний.ру",
+      "title": "Пример первичной декларации для сверки парсера (объект 38362, ПД 77-002143)",
+      "url": "https://betonij.ru/data/example/obj38362_pd77-002143_01.pdf",
+      "source_type": "primary_document_copy",
+      "supports": ["в PDF раздел 19.6.1.4 равен 6 716 945 934,41 — ровно то же значение стоит в поле bank_funding_total датасета", "тождество задолженность + неиспользованный остаток = сумма кредита выполняется на первичном документе"]
+    },
+    {
+      "source_id": "P18",
+      "publisher": "Сибдом (omsk.sibdom.ru)",
+      "title": "ЖК Зеленая река, 2 очередь, к 6-8 — документы объекта",
+      "url": "https://omsk.sibdom.ru/novostroyki/omsk/13962-Zelenaya-reka-2-ochered-k-6-8/",
+      "source_type": "aggregator_document_mirror",
+      "supports": ["десять проектных деклараций этой очереди с 25.02.2026 по 06.10.2026", "срок сдачи 2 квартал 2029", "621 квартира в корпусах"]
+    }
+  ]
+}

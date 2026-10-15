@@ -795,6 +795,206 @@
       }
     }
   },
+  "e1a3a17483d88b99cfc7dea4200f1bb5bc47ad427d1479385d6170bd262d97af": {
+    "event_type": "Ужесточение массовой льготной ипотеки",
+    "channels": {
+      "housing_sales": "Новые продажи жилья",
+      "payment_delay": "Задержка поступления денег",
+      "debt_cost": "Ставка по долгу",
+      "developer_shares": "Акции застройщиков",
+      "market_repricing": "Переоценка рынка акций"
+    },
+    "links": [
+      {
+        "channel": "housing_sales",
+        "okved": "41.20",
+        "factor": "credit.revenue",
+        "lag": 0,
+        "elasticity": 1
+      },
+      {
+        "channel": "payment_delay",
+        "okved": "41.20",
+        "factor": "credit.working_capital",
+        "lag": 0,
+        "elasticity": 1
+      },
+      {
+        "channel": "debt_cost",
+        "okved": "41.20",
+        "factor": "credit.interest",
+        "lag": 0,
+        "elasticity": 1
+      },
+      {
+        "channel": "developer_shares",
+        "okved": "41.20",
+        "factor": "equity.sector",
+        "lag": 0,
+        "elasticity": 1
+      }
+    ],
+    "direct": [
+      {
+        "channel": "market_repricing",
+        "factor": "equity.market",
+        "key": "MOEX"
+      }
+    ],
+    "scenario": {
+      "housing_sales": {
+        "kind": "triangular",
+        "low": -0.25,
+        "mode": -0.15,
+        "high": -0.08,
+        "label": "Новые продажи жилья",
+        "unit": "fraction",
+        "factor": "credit.revenue",
+        "channel": "housing_sales"
+      },
+      "payment_delay": {
+        "kind": "triangular",
+        "low": 5,
+        "mode": 10,
+        "high": 20,
+        "label": "Задержка поступления денег",
+        "unit": "days",
+        "factor": "credit.working_capital",
+        "channel": "payment_delay"
+      },
+      "debt_cost": {
+        "kind": "triangular",
+        "low": 0.01,
+        "mode": 0.02,
+        "high": 0.03,
+        "label": "Ставка по долгу",
+        "unit": "fraction",
+        "factor": "credit.interest",
+        "channel": "debt_cost"
+      },
+      "developer_shares": {
+        "kind": "triangular",
+        "low": -0.2,
+        "mode": -0.1,
+        "high": -0.03,
+        "label": "Акции застройщиков",
+        "unit": "fraction",
+        "factor": "equity.sector",
+        "channel": "developer_shares"
+      },
+      "moex": {
+        "kind": "triangular",
+        "low": -0.150823,
+        "mode": -0.083382,
+        "high": -0.020203,
+        "label": "Индекс МосБиржи",
+        "unit": "log_return",
+        "factor": "equity.market",
+        "key": "MOEX",
+        "channel": "market_repricing"
+      }
+    }
+  },
+  "df5b707cc77e3da63b605101588a4fcc3fec6fe009dafa42daa52ecd752b3514": {
+    "event_type": "Завершение массовой льготной ипотеки",
+    "channels": {
+      "housing_sales": "Новые продажи жилья",
+      "payment_delay": "Задержка поступления денег",
+      "debt_cost": "Ставка по долгу",
+      "developer_shares": "Акции застройщиков",
+      "market_repricing": "Переоценка рынка акций"
+    },
+    "links": [
+      {
+        "channel": "housing_sales",
+        "okved": "41.20",
+        "factor": "credit.revenue",
+        "lag": 0,
+        "elasticity": 1
+      },
+      {
+        "channel": "payment_delay",
+        "okved": "41.20",
+        "factor": "credit.working_capital",
+        "lag": 1,
+        "elasticity": 1
+      },
+      {
+        "channel": "debt_cost",
+        "okved": "41.20",
+        "factor": "credit.interest",
+        "lag": 1,
+        "elasticity": 1
+      },
+      {
+        "channel": "developer_shares",
+        "okved": "41.20",
+        "factor": "equity.sector",
+        "lag": 0,
+        "elasticity": 1
+      }
+    ],
+    "direct": [
+      {
+        "channel": "market_repricing",
+        "factor": "equity.market",
+        "key": "MOEX"
+      }
+    ],
+    "scenario": {
+      "housing_sales": {
+        "kind": "triangular",
+        "low": -0.35,
+        "mode": -0.2,
+        "high": -0.1,
+        "label": "Новые продажи жилья",
+        "unit": "fraction",
+        "factor": "credit.revenue",
+        "channel": "housing_sales"
+      },
+      "payment_delay": {
+        "kind": "triangular",
+        "low": 8,
+        "mode": 18,
+        "high": 30,
+        "label": "Задержка поступления денег",
+        "unit": "days",
+        "factor": "credit.working_capital",
+        "channel": "payment_delay"
+      },
+      "debt_cost": {
+        "kind": "triangular",
+        "low": 0.005,
+        "mode": 0.02,
+        "high": 0.035,
+        "label": "Ставка по долгу",
+        "unit": "fraction",
+        "factor": "credit.interest",
+        "channel": "debt_cost"
+      },
+      "developer_shares": {
+        "kind": "triangular",
+        "low": -0.2,
+        "mode": -0.11,
+        "high": -0.04,
+        "label": "Акции застройщиков",
+        "unit": "fraction",
+        "factor": "equity.sector",
+        "channel": "developer_shares"
+      },
+      "moex": {
+        "kind": "triangular",
+        "low": -0.174353,
+        "mode": -0.105361,
+        "high": -0.040822,
+        "label": "Индекс МосБиржи",
+        "unit": "log_return",
+        "factor": "equity.market",
+        "key": "MOEX",
+        "channel": "market_repricing"
+      }
+    }
+  },
   "e40b7ccaa1a0d77ff01c8dba14c49a104e17f6d3a24846c6482a5fef28d837c7": {
     "event_type": "Льготная ипотека",
     "channels": {

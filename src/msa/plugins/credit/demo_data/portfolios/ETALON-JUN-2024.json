@@ -1,0 +1,242 @@
+{
+  "parties": [
+    {
+      "party_id": "ETALON-GROUP",
+      "name": "МКПАО «Эталон Груп»",
+      "kind": "company",
+      "okved": "41.20",
+      "description": "Жилищное строительство; отчётная головная компания группы Etalon Group PLC (до редомициляции 2025 года)",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "pilot-etalon:estimate",
+          "locator": "карточка контрагента ETALON-GROUP",
+          "fragment_sha256": "b1b4868047e9baa96e62698da93e165e6e12c5c7353cdedfcde37842fafa7574",
+          "author": "pilot-etalon:analyst",
+          "as_of": "2026-10-15"
+        }
+      ]
+    },
+    {
+      "party_id": "ETALON-OMSK",
+      "name": "ООО «СЗ «Эталон-Омск»",
+      "kind": "company",
+      "okved": "41.20",
+      "description": "Застройщик ЖК «Зелёная Река» (Омск); проектное финансирование Банка ДОМ.РФ и АО «Эталон-Финанс», счета эскроу в Банке ДОМ.РФ",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "pilot-etalon:estimate",
+          "locator": "карточка контрагента ETALON-OMSK",
+          "fragment_sha256": "d32f7080f895355c30756f85f5bb690fa38342c8aa27c4bb71046dd3af17c790",
+          "author": "pilot-etalon:analyst",
+          "as_of": "2026-10-15"
+        }
+      ]
+    }
+  ],
+  "instruments": [
+    {
+      "instrument_id": "ETALON-JUN-2024:LOAN-ETALON",
+      "instrument_type": "corp_loan",
+      "name": "Корпоративный кредит: МКПАО «Эталон Груп»",
+      "currency": "RUB",
+      "issuer_id": "ETALON-GROUP",
+      "terms": {
+        "covenants": [],
+        "collateral": []
+      },
+      "schema_version": "1"
+    },
+    {
+      "instrument_id": "ETALON-JUN-2024:PROJECT-ZELENAYA-REKA",
+      "instrument_type": "pf_escrow",
+      "name": "Проектное финансирование: ООО «СЗ «Эталон-Омск»",
+      "currency": "RUB",
+      "issuer_id": "ETALON-OMSK",
+      "terms": {
+        "covenants": [],
+        "collateral": [],
+        "credit_limit": {
+          "value": 4304.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "historical_estimate",
+              "source_id": "DECL-47652",
+              "locator": "раздел 19.6: 2 664 Банк ДОМ.РФ + 1 640 Эталон-Финанс",
+              "fragment_sha256": "5556d21393ec536b4acd26d8a976abce406acfe6a4052ba6d4bf291174bd1246"
+            }
+          ]
+        },
+        "base_rate": {
+          "value": 0.2,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "pilot-etalon:estimate",
+              "locator": "ставка проектного финансирования без субсидии: оценка",
+              "fragment_sha256": "26de43de89fcfa67ea3ff9b13f9af2c945fec0c0c882d3489944895cbc8ab24a",
+              "author": "pilot-etalon:analyst",
+              "as_of": "2026-10-15"
+            }
+          ]
+        },
+        "subsidized_rate": {
+          "value": 0.04,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "pilot-etalon:estimate",
+              "locator": "льготная ставка при покрытии эскроу: 3,5–4,3 % в 2024 году",
+              "fragment_sha256": "c3a397d7289001a23d16ef975898b4a54dd8cf67f70d07b19be72a63a14e9676",
+              "author": "pilot-etalon:analyst",
+              "as_of": "2026-10-15"
+            }
+          ]
+        }
+      },
+      "schema_version": "1"
+    }
+  ],
+  "positions": [
+    {
+      "position_id": "LOAN-ETALON",
+      "instrument_id": "ETALON-JUN-2024:LOAN-ETALON",
+      "params": {
+        "ead": {
+          "value": 5000.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "pilot-etalon:estimate",
+              "locator": "сумма под риском: позиция банка в группе, задаёт аналитик",
+              "fragment_sha256": "26c67ab4dc64fdb57581066fa0d81efe89a548dd29f6103dae07585d4bd19d3f",
+              "author": "pilot-etalon:analyst",
+              "as_of": "2026-10-15"
+            }
+          ]
+        },
+        "lgd": {
+          "value": 0.45,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "pilot-etalon:estimate",
+              "locator": "потери при дефолте: оценка, в раскрытии её нет",
+              "fragment_sha256": "179dee1f033b8fc7626913f1ba4a1d6094c2fdc201d27c486a565c753b175356",
+              "author": "pilot-etalon:analyst",
+              "as_of": "2026-10-15"
+            }
+          ]
+        },
+        "ccf": {
+          "value": 1.0,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "pilot-etalon:estimate",
+              "locator": "коэффициент кредитной конверсии: значение по умолчанию",
+              "fragment_sha256": "8c4b47046b9ef81f02262644b8ec5a6451bafba224ca0247d076587d0f91c9ca",
+              "author": "pilot-etalon:analyst",
+              "as_of": "2026-10-15"
+            }
+          ]
+        },
+        "import_share": {
+          "value": 0.0,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "pilot-etalon:estimate",
+              "locator": "доля импорта в затратах: у застройщика не выделяется",
+              "fragment_sha256": "0edcaa7b4b317e3ed95967b67655ff0b3bd01d5538db4c59aa6b1b4b8ba86c45",
+              "author": "pilot-etalon:analyst",
+              "as_of": "2026-10-15"
+            }
+          ]
+        },
+        "driver_elasticity": {},
+        "proxy_peer_ids": [],
+        "status": "ok",
+        "flags": []
+      },
+      "schema_version": "1",
+      "model_id": null
+    },
+    {
+      "position_id": "PROJECT-ZELENAYA-REKA",
+      "instrument_id": "ETALON-JUN-2024:PROJECT-ZELENAYA-REKA",
+      "params": {
+        "ead": {
+          "value": 4304.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "historical_estimate",
+              "source_id": "DECL-47652",
+              "locator": "раздел 19.6: сумма двух целевых кредитов",
+              "fragment_sha256": "6a0c7660238d97664af8e75e9c015a82a677a963f02cb7c1ccd5806bc3ab53ef"
+            }
+          ]
+        },
+        "lgd": {
+          "value": 0.35,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "pilot-etalon:estimate",
+              "locator": "потери при дефолте проекта: оценка",
+              "fragment_sha256": "c9b53e3258400278403e7d03f5d08a034e3b489865a93b0499549483934e51da",
+              "author": "pilot-etalon:analyst",
+              "as_of": "2026-10-15"
+            }
+          ]
+        },
+        "ccf": {
+          "value": 1.0,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "pilot-etalon:estimate",
+              "locator": "коэффициент кредитной конверсии: значение по умолчанию",
+              "fragment_sha256": "8c4b47046b9ef81f02262644b8ec5a6451bafba224ca0247d076587d0f91c9ca",
+              "author": "pilot-etalon:analyst",
+              "as_of": "2026-10-15"
+            }
+          ]
+        },
+        "import_share": {
+          "value": 0.0,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "pilot-etalon:estimate",
+              "locator": "доля импорта в затратах: не выделяется",
+              "fragment_sha256": "0cc2d08a2fa1d3dbdb36d2e8c1e6dfb93527d6f1ab1c67099fc30fb07e5cb8b9",
+              "author": "pilot-etalon:analyst",
+              "as_of": "2026-10-15"
+            }
+          ]
+        },
+        "driver_elasticity": {},
+        "proxy_peer_ids": [],
+        "status": "ok",
+        "flags": [
+          "ead_is_credit_limit"
+        ]
+      },
+      "schema_version": "1",
+      "model_id": null
+    }
+  ]
+}

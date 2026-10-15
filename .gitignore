@@ -11,5 +11,7 @@ ui/web/dist/
 # Generated from the server's registry before every UI build (npm run build).
 ui/web/src/plugins/manifest.json
 graphify-out/
+# Машинные выгрузки прогонов пилота: пересобираются demo/pilot-etalon/backtest.py.
+demo/pilot-etalon/runs/
 CLAUDE.md
 AGENTS.md

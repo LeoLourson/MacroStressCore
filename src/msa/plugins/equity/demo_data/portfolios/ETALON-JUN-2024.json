@@ -1,0 +1,61 @@
+{
+  "parties": [
+    {
+      "party_id": "ETALON-GROUP",
+      "name": "МКПАО «Эталон Груп»",
+      "kind": "company",
+      "okved": "41.20",
+      "description": "Жилищное строительство; отчётная головная компания группы Etalon Group PLC (до редомициляции 2025 года)",
+      "evidence": [
+        {
+          "kind": "expert_assumption",
+          "source_id": "pilot-etalon:estimate",
+          "locator": "карточка контрагента ETALON-GROUP",
+          "fragment_sha256": "b1b4868047e9baa96e62698da93e165e6e12c5c7353cdedfcde37842fafa7574",
+          "author": "pilot-etalon:analyst",
+          "as_of": "2026-10-15"
+        }
+      ]
+    }
+  ],
+  "instruments": [
+    {
+      "instrument_id": "ETALON-JUN-2024:SHARE-ETLN",
+      "instrument_type": "common_stock",
+      "name": "Акция ETLN: МКПАО «Эталон Груп»",
+      "currency": "RUB",
+      "issuer_id": "ETALON-GROUP",
+      "terms": {
+        "ticker": "ETLN",
+        "market_index": "MOEX",
+        "sector": "real_estate"
+      },
+      "schema_version": "1"
+    }
+  ],
+  "positions": [
+    {
+      "position_id": "SHARE-ETLN",
+      "instrument_id": "ETALON-JUN-2024:SHARE-ETLN",
+      "params": {
+        "quantity": {
+          "value": 1000000.0,
+          "unit": "shares",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "pilot-etalon:estimate",
+              "locator": "количество акций в позиции: задаёт аналитик",
+              "fragment_sha256": "94b9b07a3f3e657e69d0e212c994e433f058efcaaf44b9564024168d43443cfd",
+              "author": "pilot-etalon:analyst",
+              "as_of": "2026-10-15"
+            }
+          ]
+        },
+        "direction": "long"
+      },
+      "schema_version": "1",
+      "model_id": null
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+{
+    "computed": "2026-10-15",
+    "method": "beta = cov(r_ETLN, r_index) / var(r_index); r = ln(P_t/P_t-1); sample moments (ddof=1)",
+    "etln_source": "MOEX ISS / ETLN / TQBR",
+    "index_source": "MOEX ISS / MOEXBMI / SNDX",
+    "results": {
+        "main": {
+            "start": "2023-07-01",
+            "end": "2024-06-30",
+            "first_common_day": "2023-07-03",
+            "last_common_day": "2024-06-28",
+            "prices": 254,
+            "observations": 253,
+            "mean_r_etln": -0.00012711541107672213,
+            "mean_r_index": 0.0004947021737862522,
+            "cov": 0.00010150946293866813,
+            "var_etln": 0.0005354921311372425,
+            "var_index": 6.700380353289594e-05,
+            "beta": 1.5149806068670628,
+            "corr": 0.5358956787328281,
+            "r2": 0.2871841784845185,
+            "alpha_daily": -0.0008765796105378737,
+            "alpha_annualised_pct": -22.089806185554416,
+            "se_beta": 0.15080545133727125,
+            "se_alpha_daily": 0.0012342456245917459,
+            "t_beta": 10.045927341703718,
+            "beta_95ci": [
+                1.219401922246011,
+                1.8105592914881146
+            ],
+            "sigma_daily_etln_pct": 2.3140702909316357,
+            "sigma_daily_index_pct": 0.8185585106325383,
+            "sigma_annual_etln_pct": 36.734727036767964,
+            "sigma_annual_index_pct": 12.9942135161347
+        },
+        "calendar_2023": {
+            "start": "2023-01-01",
+            "end": "2023-12-31",
+            "first_common_day": "2023-01-03",
+            "last_common_day": "2023-12-29",
+            "prices": 254,
+            "observations": 253,
+            "mean_r_etln": 0.00224986048431788,
+            "mean_r_index": 0.0014281577525053033,
+            "cov": 9.505810557653102e-05,
+            "var_etln": 0.0005601133660846032,
+            "var_index": 7.146983947912793e-05,
+            "beta": 1.3300450409475428,
+            "corr": 0.47510519957253267,
+            "r2": 0.2257249506608561,
+            "alpha_daily": 0.000350346347907413,
+            "alpha_annualised_pct": 8.828727967266808,
+            "se_beta": 0.1555066728533892,
+            "se_alpha_daily": 0.0013307136286726284,
+            "t_beta": 8.552977287357319,
+            "beta_95ci": [
+                1.0252519621549,
+                1.6348381197401856
+            ],
+            "sigma_daily_etln_pct": 2.366671430690376,
+            "sigma_daily_index_pct": 0.8453983645544147,
+            "sigma_annual_etln_pct": 37.56974424364904,
+            "sigma_annual_index_pct": 13.420282988350221
+        }
+    }
+}

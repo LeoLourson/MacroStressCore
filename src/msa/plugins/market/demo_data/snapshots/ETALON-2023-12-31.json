@@ -1,0 +1,30 @@
+{
+  "items": [
+    {
+      "item_id": "price:ETALON-DEC-2023:SHARE-ETLN",
+      "kind": "price",
+      "subject": "ETALON-DEC-2023:SHARE-ETLN",
+      "observed_on": "2023-12-31",
+      "values": {
+        "price": {
+          "value": 83.22,
+          "unit": "RUB_per_unit",
+          "evidence": [
+            {
+              "kind": "historical_estimate",
+              "source_id": "MOEX-ISS",
+              "locator": "ETLN TQBR, закрытие 29.12.2023",
+              "fragment_sha256": "abf746bcf5d870fbd6a77110c4abe1a41d3e90d2b2070e366bb9e4ad969c6222",
+              "author": null,
+              "as_of": null
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "entered_by": "pilot-etalon:analyst"
+      },
+      "evidence": []
+    }
+  ]
+}

@@ -1,0 +1,352 @@
+{
+  "items": [
+    {
+      "item_id": "financial_statement:ETALON-GROUP",
+      "kind": "financial_statement",
+      "subject": "ETALON-GROUP",
+      "observed_on": "2024-06-30",
+      "values": {
+        "revenue": {
+          "value": 114513.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "historical_estimate",
+              "source_id": "IFRS-6M2024",
+              "locator": "LTM на 30.06.2024: 90 652 + 57 360 − 33 499",
+              "fragment_sha256": "d8a6625720e1d0394a43c748c20acdeb4ddc1e82a8fc98c4ff529f2d7b541149",
+              "author": null,
+              "as_of": null
+            }
+          ]
+        },
+        "cogs": {
+          "value": 76220.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "historical_estimate",
+              "source_id": "IFRS-6M2024",
+              "locator": "LTM на 30.06.2024: 60 681 + 37 792 − 22 253",
+              "fragment_sha256": "801ae20901683c4ec1f2589726dd00ae7efa52c0a817a06fde2e57a38eea6508",
+              "author": null,
+              "as_of": null
+            }
+          ]
+        },
+        "net_debt": {
+          "value": 62546.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "historical_estimate",
+              "source_id": "IFRS-6M2024",
+              "locator": "Не-МСФО: чистый корпоративный долг",
+              "fragment_sha256": "4ea4b2105b8a06cb2ec673235ace00aebae744046fafd5faee0ec5ad198e536e",
+              "author": null,
+              "as_of": null
+            }
+          ]
+        },
+        "borrowing_rate": {
+          "value": 0.102,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "historical_estimate",
+              "source_id": "IFRS-6M2024",
+              "locator": "Прим. 16: средневзвешенная ставка 10,2 %",
+              "fragment_sha256": "c121e2d58e2775312ec1a20c2a04d1e93574d7488491536b5bf293bdfcdb44c8",
+              "author": null,
+              "as_of": null
+            }
+          ]
+        },
+        "opex": {
+          "value": 13693.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "historical_estimate",
+              "source_id": "IFRS-6M2024",
+              "locator": "LTM на 30.06.2024: 12 633 + 6 667 − 5 607",
+              "fragment_sha256": "029b579f387780c308ab663bdafd98d7b55d33f00548c52db6f399886ee5dabf",
+              "author": null,
+              "as_of": null
+            }
+          ]
+        },
+        "cash": {
+          "value": 6999.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "historical_estimate",
+              "source_id": "IFRS-6M2024",
+              "locator": "ОФП: денежные средства и их эквиваленты",
+              "fragment_sha256": "a26ca71876ac525a972b16ee08e3bb5d8fa270a5457876ce603654e0a5bed87c",
+              "author": null,
+              "as_of": null
+            }
+          ]
+        },
+        "dso": {
+          "value": 45.0,
+          "unit": "days",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "pilot-etalon:estimate",
+              "locator": "оборачиваемость дебиторки: не раскрыта, значение по умолчанию",
+              "fragment_sha256": "536571a6583b451ab0b223133caea56df3c614c4a048cb7e9e047e9f563699b6",
+              "author": "pilot-etalon:analyst",
+              "as_of": "2026-10-15"
+            }
+          ]
+        },
+        "dio": {
+          "value": 30.0,
+          "unit": "days",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "pilot-etalon:estimate",
+              "locator": "оборачиваемость запасов: не раскрыта, значение по умолчанию",
+              "fragment_sha256": "284899a47bc41742a41c52b499062b0459a1b3b9a54a7f57a234c4d2ec669a80",
+              "author": "pilot-etalon:analyst",
+              "as_of": "2026-10-15"
+            }
+          ]
+        },
+        "dpo": {
+          "value": 30.0,
+          "unit": "days",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "pilot-etalon:estimate",
+              "locator": "оборачиваемость кредиторки: не раскрыта, значение по умолчанию",
+              "fragment_sha256": "24223758a61fa4dd8aa0f346dbb804caa2fbaab2046e867c7edd994cd0a4a231",
+              "author": "pilot-etalon:analyst",
+              "as_of": "2026-10-15"
+            }
+          ]
+        },
+        "tax_rate": {
+          "value": 0.2,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "pilot-etalon:estimate",
+              "locator": "ставка налога на прибыль: значение по умолчанию",
+              "fragment_sha256": "15717a28868a2385590008b10a4cb097cc7e7d324091afb112a7a21eabdcef50",
+              "author": "pilot-etalon:analyst",
+              "as_of": "2026-10-15"
+            }
+          ]
+        },
+        "demand_elasticity": {
+          "value": -1.0,
+          "unit": "ratio",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "pilot-etalon:estimate",
+              "locator": "эластичность спроса: значение по умолчанию",
+              "fragment_sha256": "d365a2be05d63f01bbe2c5cc2fc3d21b71889ffef609286ba83ba69395497535",
+              "author": "pilot-etalon:analyst",
+              "as_of": "2026-10-15"
+            }
+          ]
+        },
+        "pass_through": {
+          "value": 0.0,
+          "unit": "fraction",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "pilot-etalon:estimate",
+              "locator": "перенос затрат в цену: у застройщика не выделяется",
+              "fragment_sha256": "759c53d841b14805bcdfdc6f40b4bc10a84e8e948d1f7106fd9107d145229c73",
+              "author": "pilot-etalon:analyst",
+              "as_of": "2026-10-15"
+            }
+          ]
+        },
+        "gross_debt": {
+          "value": 142243.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "historical_estimate",
+              "source_id": "IFRS-6M2024",
+              "locator": "ОФП: кредиты и займы",
+              "fragment_sha256": "42a17c1770b68073a668d41350fcd9458b9672a47e66c93e90fab30c2e97a3bd",
+              "author": null,
+              "as_of": null
+            }
+          ]
+        },
+        "capex": {
+          "value": 3280.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "historical_estimate",
+              "source_id": "pilot-etalon:estimate",
+              "locator": "поддерживающий capex: 2 × 1 640 (6М2024), помесячных нет",
+              "fragment_sha256": "a5853e48affbdb9bc7266de3d2d6973ca894af9edd158dc7bbe5669deee049b9",
+              "author": null,
+              "as_of": null
+            }
+          ]
+        },
+        "dividend": {
+          "value": 0.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "historical_estimate",
+              "source_id": "IFRS-6M2024",
+              "locator": "Прим. 15(a): дивиденды не объявлялись и не платились",
+              "fragment_sha256": "5ed97bff70e997fe9fbe32d584bb3117f5cb17279dd2a0db3b918047485d23fd",
+              "author": null,
+              "as_of": null
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "standard": "management",
+        "entered_by": "pilot-etalon:analyst"
+      },
+      "evidence": []
+    },
+    {
+      "item_id": "financial_statement:ETALON-OMSK",
+      "kind": "financial_statement",
+      "subject": "ETALON-OMSK",
+      "observed_on": "2024-06-30",
+      "values": {
+        "equity": {
+          "value": 100.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "historical_estimate",
+              "source_id": "pilot-etalon:estimate",
+              "locator": "оценка: из 600 млн ₽ своих средств к 30.06.2024 вложено 500",
+              "fragment_sha256": "96f2684ced47a2869f5001518717e179a2e1176a55934891d6ea1189717055ed",
+              "author": null,
+              "as_of": null
+            }
+          ]
+        },
+        "capex_month_1_12": {
+          "value": 95.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "pilot-etalon:estimate",
+              "locator": "смета 4 085 млн ₽ / 43 месяца строительства",
+              "fragment_sha256": "02f897c6bfc5a5c87cef528b799de3a333671e4d424127abc52ddfc3da498fc9",
+              "author": "pilot-etalon:analyst",
+              "as_of": "2026-10-15"
+            }
+          ]
+        },
+        "monthly_sales": {
+          "value": 77.4,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "pilot-etalon:estimate",
+              "locator": "калибровка: 3 174 млн ₽ накопленных ДДУ / 41 месяц",
+              "fragment_sha256": "457f3fe9654ecf511e1f267a70efc1950739ef3539f452067e4782c52fa9381d",
+              "author": "pilot-etalon:analyst",
+              "as_of": "2026-10-15"
+            }
+          ]
+        },
+        "capex_month_13_24": {
+          "value": 95.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "pilot-etalon:estimate",
+              "locator": "тот же месячный темп стройки",
+              "fragment_sha256": "07173fe205f690af9187c1c67f6c89a71741052452c28785860b0ba0c86b2e88",
+              "author": "pilot-etalon:analyst",
+              "as_of": "2026-10-15"
+            }
+          ]
+        },
+        "sales_start_month": {
+          "value": 1.0,
+          "unit": "months",
+          "evidence": [
+            {
+              "kind": "expert_assumption",
+              "source_id": "pilot-etalon:estimate",
+              "locator": "продажи идут с 2022 года",
+              "fragment_sha256": "2868e2a8482fe579fa3b96d8d1ad15568edb504e8f947b3ad2fb93d91b15300c",
+              "author": "pilot-etalon:analyst",
+              "as_of": "2026-10-15"
+            }
+          ]
+        },
+        "commissioning_month": {
+          "value": 20.0,
+          "unit": "months",
+          "evidence": [
+            {
+              "kind": "historical_estimate",
+              "source_id": "DECL-47652",
+              "locator": "раздел 17.2.2: передача 28.02.2026, это месяц 20",
+              "fragment_sha256": "5ea8473fea1da3384014e6659636d26576b72efd9eec80f5d8d3c012a023b8a0",
+              "author": null,
+              "as_of": null
+            }
+          ]
+        },
+        "debt": {
+          "value": 1900.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "historical_estimate",
+              "source_id": "pilot-etalon:estimate",
+              "locator": "калибровка: 23 месяца × 95 − 500 вложенных своих средств + проценты",
+              "fragment_sha256": "6443bfeec1c0a7e7c2006d0daa522cfd80eb9f400b5f98879f56d88048f75aab",
+              "author": null,
+              "as_of": null
+            }
+          ]
+        },
+        "escrow": {
+          "value": 1780.0,
+          "unit": "RUB_million",
+          "evidence": [
+            {
+              "kind": "historical_estimate",
+              "source_id": "pilot-etalon:estimate",
+              "locator": "калибровка: 23 месяца продаж × 77,4",
+              "fragment_sha256": "9c7d0cb091f14fe9de348fe03abb3b165d13c623c902d36bcfb144003fcac5db",
+              "author": null,
+              "as_of": null
+            }
+          ]
+        }
+      },
+      "attributes": {
+        "standard": "management",
+        "entered_by": "pilot-etalon:analyst"
+      },
+      "evidence": []
+    }
+  ]
+}
